@@ -1,0 +1,21 @@
+name: governance-framework
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pandas
+  - numpy
+  - jupyter
+  - jupyterlab
+  - openpyxl
+  - matplotlib
+  - plotly
+  - ipykernel
+  - requests
+  - pyyaml
+  - pip
+  - pip:
+      - wbgapi
+      - pandas-datareader
+      - pdfplumber
