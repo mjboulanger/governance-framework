@@ -9,79 +9,119 @@ Run `print_stale_sources()` from `src/download_log.py` to identify sources needi
 
 Full attempt and success dates for each source are recorded in `data/raw/download_log.csv`.
 Run `print_stale_sources()` from `src/download_log.py` to see current status.
-
-| Source ID | Source Name | Frequency | Last Manual Step Required |
-|-----------|-------------|-----------|--------------------------|
-| VDEM | V-Dem Full+Others | Annual (March) | Yes — form download |
-| WGI | World Bank WGI | Annual | No — API |
-| WDI | World Bank WDI | Annual | No — API |
-| WJP | WJP Rule of Law Index | Annual | Yes — Excel download |
-| FH_FIW | Freedom House FIW | Annual | Yes — Excel download |
-| FSI | Fragile States Index | Annual | Yes — Excel download |
-| IMF_FISCAL_RULES | IMF Fiscal Rules Database | Annual | Yes — Excel download |
-| IMF_AREAER | IMF AREAER | Annual | Yes — Excel download |
-| IMF_IMAPP | IMF iMaPP | Annual | Yes — Excel download |
-| IMF_SPI | WB Statistical Performance Indicators | Annual | No — API |
-| ROMELLI_CBI | Romelli CBI Index | Irregular | Yes — replication data |
-| DINCER_CB | Dincer-Eichengreen CB Transparency | Irregular | Yes — replication data |
-| REINHART_ROGOFF | Reinhart-Rogoff Exchange Rate | Irregular | Yes — replication data |
-| UNODC_HOMICIDE | UNODC Homicide Statistics | Annual | Yes — Excel download |
-| PTS | Political Terror Scale | Annual | Yes — Excel download |
-| POWELL_THYNE | Powell-Thyne Coup Database | Annual | Yes — CSV download |
-| UCDP | Uppsala Conflict Data Program | Annual | Yes — CSV download |
-| ACLED | ACLED | Continuous | Yes — API key required |
-| TI_CPI | TI Corruption Perceptions Index | Annual | Yes — Excel download |
-| RSF_WPFI | RSF World Press Freedom Index | Annual | Yes — CSV download |
-| CPJ | Committee to Protect Journalists | Continuous | Yes — CSV download |
-| CIVICUS | CIVICUS Monitor | Annual | Yes — Excel download |
-| IDEA_EMB | IDEA EMB Database | Irregular | Yes — Excel download |
-| PEI | Electoral Integrity Project | Per-election | Yes — CSV download |
-| CCP | Comparative Constitutions Project | Irregular | Yes — CSV download |
-| DPI | Database of Political Institutions | Annual | Yes — Excel download |
-| GPI | Global Peace Index | Annual | Yes — Excel download |
-| ODIN | Open Data Inventory | Biennial | Yes — CSV download |
-| PEFA | PEFA | Per-country 4-7yr | Yes — PDF extraction |
-| OBS | Open Budget Survey | Biennial | Yes — Excel download |
-| FATF | FATF Mutual Evaluation Ratings | Per-country 10yr | Yes — web scrape |
-| BASEL_AML | Basel AML Index | Annual | Yes — Excel download |
-| HERITAGE_TR | Heritage Trade Freedom | Annual | Yes — Excel download |
-| HERITAGE_PR | Heritage Property Rights | Annual | Yes — Excel download |
-| WB_LPI | World Bank LPI | Irregular | No — API |
-| OECD_TFI | OECD Trade Facilitation Indicators | Biennial | Yes — Excel download |
-| KOF_TRADE | KOF Globalisation Index | Annual | Yes — Excel download |
-| UNCTAD_NTM | UNCTAD NTM Database | Irregular | Yes — Excel download |
-| YALE_EPI | Yale EPI | Biennial | Yes — CSV download |
-| CLIMATE_LAWS | LSE Climate Laws Database | Continuous | Yes — CSV download |
-| ND_GAIN | ND-GAIN Country Index | Annual | Yes — CSV download |
-| IRENA_CAPACITY | IRENA Renewables Capacity | Annual | Yes — Excel download |
-| IRENA_POLICY | IRENA Renewable Energy Policies | Continuous | Yes — Excel download |
-| WB_CARBON | WB Carbon Pricing Dashboard | Annual | Yes — Excel download |
-| WTO_TFA | WTO TFA Implementation | Continuous | Yes — web scrape |
-| IPU_PARLINE | IPU Parline | Continuous | Yes — web scrape |
-| RTI_RATING | RTI Rating | Irregular | Yes — Excel download |
-| TI_POLFINANCE | TI Political Finance Database | Irregular | Yes — Excel download |
-| WIPO | WIPO IP Statistics | Annual | No — API |
-| ILO_SOCIAL | ILO Social Security Coverage | Annual | No — API |
-| WB_INFORMAL | WB Informal Economy Database | Irregular | Yes — Excel download |
-| FRASER_REG | Fraser Regulation Area | Annual | Yes — Excel download |
-| FRASER_LEGAL | Fraser Legal System | Annual | Yes — Excel download |
-| PEW_GRI | Pew GRI / SHI | Annual | Yes — Excel download |
-| WB_WBL | WB Women Business and the Law | Annual | No — API |
-| NELDA | NELDA | Irregular | Yes — CSV download |
-| IDEA_PARTIP | IDEA Global State of Democracy | Annual | Yes — Excel download |
-| BCI | Bayesian Corruption Indicator | Irregular | Yes — CSV download |
-| GLOBAL_DATA_BAROMETER | Global Data Barometer | Irregular | Yes — CSV download |
-| IMF_SPI_SDDS | IMF SDDS Subscriptions | Continuous | Yes — web scrape |
-| WHO_GHO | WHO Global Health Observatory | Annual | No — API |
-| UNESCO_UIS | UNESCO Institute for Statistics | Annual | No — API |
-| UNDP_HDI | UNDP HDI Sub-indicators | Annual | Yes — CSV download |
-| WB_HCI | WB Human Capital Index | Biennial | No — API |
-| POLITY5 | Polity5 | Irregular | Yes — Excel download |
-| LINZER_STATON | Linzer-Staton Judicial Independence | Irregular | Yes — CSV download |
-| ICNL | ICNL Civic Freedom Monitor | Irregular | Yes — manual review |
-| HANSON_SIGMAN | Hanson-Sigman State Capacity | Irregular | Yes — CSV download |
+Within each category, sources are ordered by number of indicators used in the framework.
 
 ---
+
+### Category 1: PDF extraction (most manual)
+
+| Source ID | Source Name | Frequency |
+|-----------|-------------|-----------|
+| PEFA | PEFA | Per-country 4–7yr |
+| IMF_FSAP | IMF FSAP / BCP / IOSCO / IAIS | Per-country 5–10yr |
+| ICNL | ICNL Civic Freedom Monitor | Irregular |
+
+---
+
+### Category 2: Email form download
+
+| Source ID | Source Name | Frequency |
+|-----------|-------------|-----------|
+| VDEM | V-Dem Full+Others | Annual (March) |
+
+---
+
+### Category 3: Web scrape
+
+| Source ID | Source Name | Frequency |
+|-----------|-------------|-----------|
+| FATF | FATF Compliance Ratings | Per-country ~10yr |
+| IPU_PARLINE | IPU Parline | Continuous |
+| WTO_TFA | WTO TFA Implementation | Continuous |
+| IMF_SPI_SDDS | IMF SDDS Subscriptions | Continuous |
+| CPJ | Committee to Protect Journalists | Continuous |
+
+---
+
+### Category 4: Manual Excel / CSV download — annual or biennial
+
+| Source ID | Source Name | Frequency |
+|-----------|-------------|-----------|
+| WJP | WJP Rule of Law Index | Annual |
+| FH_FIW | Freedom House FIW | Annual |
+| YALE_EPI | Yale EPI | Biennial |
+| OECD_TFI | OECD Trade Facilitation Indicators | Biennial |
+| FSI | Fragile States Index | Annual |
+| ND_GAIN | ND-GAIN Country Index | Annual |
+| IRENA_CAPACITY | IRENA Renewables Capacity Statistics | Annual |
+| IRENA_POLICY | IRENA Renewable Energy Policies | Continuous |
+| KOF_TRADE | KOF Globalisation Index — Trade | Annual |
+| FRASER_REG | Fraser Economic Freedom — Regulation | Annual |
+| FRASER_LEGAL | Fraser Economic Freedom — Legal System | Annual |
+| OBS | Open Budget Survey | Biennial |
+| ODIN | Open Data Inventory | Biennial |
+| IMF_FISCAL_RULES | IMF Fiscal Rules Database | Annual |
+| IMF_AREAER | IMF AREAER | Annual |
+| IMF_IMAPP | IMF iMaPP | Annual |
+| UCDP | Uppsala Conflict Data Program | Annual |
+| DPI | Database of Political Institutions | Annual |
+| IDEA_PARTIP | IDEA Global State of Democracy | Annual |
+| UNDP_HDI | UNDP HDI Sub-indicators | Annual |
+| WB_CARBON | World Bank Carbon Pricing Dashboard | Annual |
+| UNODC_HOMICIDE | UNODC Homicide Statistics | Annual |
+| PTS | Political Terror Scale | Annual |
+| POWELL_THYNE | Powell-Thyne Coup Database | Annual |
+| TI_CPI | TI Corruption Perceptions Index | Annual |
+| RSF_WPFI | RSF World Press Freedom Index | Annual |
+| CIVICUS | CIVICUS Monitor | Annual |
+| GPI | Global Peace Index | Annual |
+| HERITAGE_TR | Heritage Trade Freedom | Annual |
+| HERITAGE_PR | Heritage Property Rights | Annual |
+| CLIMATE_LAWS | LSE Grantham Climate Laws Database | Continuous |
+| PEW_GRI | Pew GRI / SHI | Annual |
+| BASEL_AML | Basel AML Index | Annual |
+
+---
+
+### Category 5: Manual Excel / CSV download — irregular
+
+| Source ID | Source Name | Frequency |
+|-----------|-------------|-----------|
+| CCP | Comparative Constitutions Project | Irregular |
+| PEI | Electoral Integrity Project | Per-election |
+| POLITY5 | Polity5 | Irregular |
+| NELDA | NELDA | Irregular |
+| UNCTAD_NTM | UNCTAD NTM Database | Irregular |
+| WB_INFORMAL | World Bank Informal Economy Database | Irregular |
+| RTI_RATING | RTI Rating | Irregular |
+| TI_POLFINANCE | TI Political Finance Database | Irregular |
+| IDEA_EMB | IDEA EMB Database | Irregular |
+| GLOBAL_DATA_BAROMETER | Global Data Barometer | Irregular |
+| ROMELLI_CBI | Romelli CBI Index | Irregular |
+| DINCER_CB | Dincer-Eichengreen CB Transparency | Irregular |
+| REINHART_ROGOFF | Reinhart-Rogoff Exchange Rate | Irregular |
+| HANSON_SIGMAN | Hanson-Sigman State Capacity | Irregular |
+| LINZER_STATON | Linzer-Staton Judicial Independence | Irregular |
+| BCI | Bayesian Corruption Indicator | Irregular |
+
+---
+
+### Category 6: Automated API (least manual)
+
+| Source ID | Source Name | Frequency |
+|-----------|-------------|-----------|
+| WB_WDI | World Bank WDI | Annual |
+| WHO_GHO | WHO Global Health Observatory | Annual |
+| UNESCO_UIS | UNESCO Institute for Statistics | Annual |
+| WGI | World Bank WGI | Annual |
+| IMF_SPI | WB Statistical Performance Indicators | Annual |
+| WB_WBL | World Bank Women Business and the Law | Annual |
+| ACLED | ACLED | Continuous |
+| WIPO | WIPO IP Statistics | Annual |
+| ILO_SOCIAL | ILO Social Security Coverage | Annual |
+| WB_LPI | World Bank LPI | Irregular |
+| WB_HCI | World Bank Human Capital Index | Biennial |
+
 
 ## Per-Source Instructions
 
