@@ -1,8 +1,9 @@
 import pandas as pd
 import os
 from datetime import datetime
+from config import RAW_DIR
 
-LOG_PATH = r"C:\Users\mjbou\governance-framework\data\raw\download_log.csv"
+LOG_PATH = os.path.join(RAW_DIR, "download_log.csv")
 
 COLUMNS = [
     "source_id",

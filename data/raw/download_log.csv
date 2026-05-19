@@ -1,1 +1,2 @@
 source_id,last_attempted_date,last_successful_download_date,data_as_of_date,local_filename,latest_available_version,no_update_reason,notes
+VDEM,2026-05-19,2026-05-19,2026-03,vdem_full_v16.csv,v16,,Full+Others CSV. Extracted from ZIP. Manual download via email form.
