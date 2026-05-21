@@ -48,7 +48,6 @@ Within each category, sources are ordered by number of indicators used in the fr
 |-----------|-------------|-----------|
 | YALE_EPI | Yale EPI | Biennial |
 | OECD_TFI | OECD Trade Facilitation Indicators | Biennial |
-| FSI | Fragile States Index | Annual |
 | ND_GAIN | ND-GAIN Country Index | Annual |
 | IRENA_CAPACITY | IRENA Renewables Capacity Statistics | Annual |
 | IRENA_POLICY | IRENA Renewable Energy Policies | Continuous |
@@ -108,6 +107,7 @@ Within each category, sources are ordered by number of indicators used in the fr
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
 | WB_WDI | World Bank WDI | Annual |
+| FSI | Fragile States Index | Annual |
 | WHO_GHO | WHO Global Health Observatory | Annual |
 | UNESCO_UIS | UNESCO Institute for Statistics | Annual |
 | WGI | World Bank WGI | Annual |
