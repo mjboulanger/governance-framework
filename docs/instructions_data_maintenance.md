@@ -151,6 +151,14 @@ Sources with no manual steps are omitted from this section.
 
 ---
 
+### FSI — Fragile States Index
+**Normally:** No action required — fully automated.
+
+**If pipeline fails:**
+1. Go to: https://fragilestatesindex.org/excel/
+2. Download the latest year's Excel file
+3. Place in `data/raw/` and load manually in `notebooks/exploration/07_fsi_pipeline.ipynb`
+
 *Per-source instructions for remaining sources will be added as each pipeline is built.*
 
 ---
