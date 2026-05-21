@@ -47,7 +47,6 @@ Within each category, sources are ordered by number of indicators used in the fr
 
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
-| WJP | WJP Rule of Law Index | Annual |
 | FH_FIW | Freedom House FIW | Annual |
 | YALE_EPI | Yale EPI | Biennial |
 | OECD_TFI | OECD Trade Facilitation Indicators | Biennial |
@@ -106,10 +105,11 @@ Within each category, sources are ordered by number of indicators used in the fr
 
 ---
 
-### Category 6: Automated API (least manual)
+### Category 6: Automated API or direct download (least manual)
 
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
+| WJP | WJP Rule of Law Index | Annual |
 | WB_WDI | World Bank WDI | Annual |
 | WHO_GHO | WHO Global Health Observatory | Annual |
 | UNESCO_UIS | UNESCO Institute for Statistics | Annual |
@@ -142,6 +142,24 @@ Within each category, sources are ordered by number of indicators used in the fr
 - **Check for new release:** https://www.v-dem.net/data/dataset-archive/
 - **Notes:** URL changes with each version — check archive page for latest.
 
+### WGI — World Bank Worldwide Governance Indicators
+
+- **Current version:** 2024 data (released March 2026)
+- **Update frequency:** Annual, typically March
+- **Manual step required:** No — fully automated via `wbgapi`
+- **Source ID in wbgapi:** db=3
+- **Indicators:** 6 components, `.EST` format (estimate, -2.5 to +2.5)
+- **Coverage:** 1996–present. Annual from 2003, biennial 1996–2002
+- **Notes:** Metadata and latest year derived automatically from API. No hardcoding required.
+
+### WJP — World Justice Project Rule of Law Index
+
+- **Current version:** 2025 (covers 2012–2025, no 2017 edition)
+- **Update frequency:** Annual, typically October
+- **Manual step required:** No — fully automated
+- **URL pattern:** `https://worldjusticeproject.org/rule-of-law-index/downloads/{YEAR}_wjp_rule_of_law_index_HISTORICAL_DATA_FILE.xlsx`
+- **Auto-detection:** Pipeline tries current year, falls back to prior years, validates Content-Type to confirm Excel file
+- **Notes:** 2017 edition was not published. Sub-indicator 6.5 retained for Property Rights concept.
 ---
 
 *Per-source instructions for remaining sources will be added as each pipeline is built.*

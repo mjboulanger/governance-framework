@@ -1,3 +1,4 @@
 source_id,last_attempted_date,last_successful_download_date,data_as_of_date,local_filename,latest_available_version,no_update_reason,notes
 WGI,2026-05-20,2026-05-20,2026-03,wgi_clean.csv,2024,,"6 indicators, .EST (estimate) format. Source 3 in wbgapi. Annual from 2003, biennial 1996-2002."
 VDEM,2026-05-19,2026-05-21,2026-05,vdem_full_v16.csv,v16,,Full+Others CSV. Extracted from ZIP. Manual download via email form required annually.
+WJP,2026-05-21,2026-05-21,2025,wjp_clean.csv,2025,,Historical Data sheet. Factors 2-8 plus sub-indicator 6.5. Automated download from worldjusticeproject.org. 2017 edition not published.
