@@ -2,13 +2,12 @@
 
 This document contains update and download instructions for all data sources in the governance framework.
 Run `print_stale_sources()` from `src/download_log.py` to identify sources needing refresh.
+Full attempt and success dates for each source are recorded in `data/raw/download_log.csv`.
 
 ---
 
 ## Update Frequency Reference
 
-Full attempt and success dates for each source are recorded in `data/raw/download_log.csv`.
-Run `print_stale_sources()` from `src/download_log.py` to see current status.
 Within each category, sources are ordered by number of indicators used in the framework.
 
 ---
@@ -47,7 +46,6 @@ Within each category, sources are ordered by number of indicators used in the fr
 
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
-| FH_FIW | Freedom House FIW | Annual |
 | YALE_EPI | Yale EPI | Biennial |
 | OECD_TFI | OECD Trade Facilitation Indicators | Biennial |
 | FSI | Fragile States Index | Annual |
@@ -105,11 +103,10 @@ Within each category, sources are ordered by number of indicators used in the fr
 
 ---
 
-### Category 6: Automated API or direct download (least manual)
+### Category 6: Automated — API or direct download (least manual)
 
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
-| WJP | WJP Rule of Law Index | Annual |
 | WB_WDI | World Bank WDI | Annual |
 | WHO_GHO | WHO Global Health Observatory | Annual |
 | UNESCO_UIS | UNESCO Institute for Statistics | Annual |
@@ -121,45 +118,84 @@ Within each category, sources are ordered by number of indicators used in the fr
 | ILO_SOCIAL | ILO Social Security Coverage | Annual |
 | WB_LPI | World Bank LPI | Irregular |
 | WB_HCI | World Bank Human Capital Index | Biennial |
+| WJP | WJP Rule of Law Index | Annual |
+| FH_FIW | Freedom House FIW | Annual |
 
+---
 
 ## Per-Source Instructions
+
+Actions the user must take, or may need to take, for each source.
+Sources with no manual steps are omitted from this section.
 
 ---
 
 ### VDEM — V-Dem Full+Others
+**Every year (March):**
+1. Go to: https://www.v-dem.net/data/the-v-dem-dataset/
+2. Click "Download Country-Year: V-Dem Full+Others" (latest version)
+3. Fill in the form — email required, select CSV format
+4. Save the ZIP to `C:\Users\mjbou\Downloads`
+5. Update `VDEM_VERSION` in `notebooks/exploration/03_vdem_pipeline.ipynb` (e.g. `"17"` for v17)
+6. Re-run the notebook
 
-- **Current version:** v16 (March 2026), covers 1789–2024
-- **Update frequency:** Annual, typically March
-- **Manual step required:** Yes — email form submission
-- **Instructions:**
-  1. Go to: https://www.v-dem.net/data/the-v-dem-dataset/
-  2. Click "Download Country-Year: V-Dem Full+Others" (latest version)
-  3. Fill in the form — email required, select CSV format
-  4. Extract the ZIP and place the CSV in `data/raw/`
-  5. Rename to `vdem_full_v{VERSION}.csv` e.g. `vdem_full_v16.csv`
-  6. Update `VDEM_VERSION` in `notebooks/exploration/03_vdem_pipeline.ipynb`
-- **Check for new release:** https://www.v-dem.net/data/dataset-archive/
-- **Notes:** URL changes with each version — check archive page for latest.
+---
 
-### WGI — World Bank Worldwide Governance Indicators
+### FH_FIW — Freedom House Freedom in the World
+**Normally:** No action required — fully automated.
 
-- **Current version:** 2024 data (released March 2026)
-- **Update frequency:** Annual, typically March
-- **Manual step required:** No — fully automated via `wbgapi`
-- **Source ID in wbgapi:** db=3
-- **Indicators:** 6 components, `.EST` format (estimate, -2.5 to +2.5)
-- **Coverage:** 1996–present. Annual from 2003, biennial 1996–2002
-- **Notes:** Metadata and latest year derived automatically from API. No hardcoding required.
+**If pipeline fails to find a file:**
+1. Email datarequest@freedomhouse.org with subject "FIW Data Request"
+2. Place the received Excel file in `data/raw/`
+3. Update the pipeline notebook `06_fh_fiw_pipeline.ipynb` to load from the local file instead
 
-### WJP — World Justice Project Rule of Law Index
-
-- **Current version:** 2025 (covers 2012–2025, no 2017 edition)
-- **Update frequency:** Annual, typically October
-- **Manual step required:** No — fully automated
-- **URL pattern:** `https://worldjusticeproject.org/rule-of-law-index/downloads/{YEAR}_wjp_rule_of_law_index_HISTORICAL_DATA_FILE.xlsx`
-- **Auto-detection:** Pipeline tries current year, falls back to prior years, validates Content-Type to confirm Excel file
-- **Notes:** 2017 edition was not published. Sub-indicator 6.5 retained for Property Rights concept.
 ---
 
 *Per-source instructions for remaining sources will be added as each pipeline is built.*
+
+---
+
+## Source Technical Notes
+
+Reference information about each source's access method, URL patterns, and technical details.
+
+---
+
+### VDEM — V-Dem Full+Others
+- URL: https://www.v-dem.net/data/the-v-dem-dataset/
+- Check for new release: https://www.v-dem.net/data/dataset-archive/
+- URL changes with each version — check archive page for latest
+- File naming convention: `vdem_full_v{VERSION}.csv`
+- Variables: 65 indicators across all framework concepts
+- Coverage: 1789–present, ~180 countries, annual
+
+---
+
+### WGI — World Bank Worldwide Governance Indicators
+- Access: `wbgapi`, db=3, indicator prefix `GOV_WGI_`
+- Metadata and latest year derived automatically from API — no hardcoding
+- Coverage: 1996–present; annual from 2003, biennial 1996–2002
+- Indicators: 6 components, `.EST` format (estimate, -2.5 to +2.5)
+
+---
+
+### WJP — World Justice Project Rule of Law Index
+- URL pattern: `https://worldjusticeproject.org/rule-of-law-index/downloads/{YEAR}_wjp_rule_of_law_index_HISTORICAL_DATA_FILE.xlsx`
+- Auto-detection: pipeline tries current year, falls back to prior years, validates Content-Type
+- 2017 edition was not published
+- Sub-indicator 6.5 retained for Property Rights concept
+- Coverage: 2012–present (no 2017), 142–143 countries
+
+---
+
+### FH_FIW — Freedom House Freedom in the World
+- URL pattern: `/sites/default/files/{YYYY}-{MM}/All_data_FIW_2013-{END}.xlsx`
+- Auto-detection: constructs candidate URLs from recent year/month combinations, validates Content-Type
+- Sub-components used: A (Electoral Process), D (Expression and Belief), E (Associational Rights), G (Personal Autonomy) plus sub-questions
+- Countries only — territories excluded
+- FH changed data distribution policy in 2026; direct download may eventually be gated
+- Coverage: 2013–present, 195 countries
+
+---
+
+*Technical notes for remaining sources will be added as each pipeline is built.*
