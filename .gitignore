@@ -23,3 +23,6 @@ desktop.ini
 data/raw/*.csv
 data/raw/*.zip
 !data/raw/download_log.csv
+
+# Machine-specific environment variables
+.env

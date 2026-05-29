@@ -19,3 +19,4 @@ dependencies:
       - wbgapi
       - pandas-datareader
       - pdfplumber
+      - python-dotenv
