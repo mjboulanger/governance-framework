@@ -1,6 +1,49 @@
 # Data Maintenance Instructions
 
-This document contains update and download instructions for all data sources in the governance framework.
+This document contains instructions for setting up the project on a new machine, and for maintaining and updating data sources.
+
+---
+
+## Machine Setup
+
+### First-time setup on a new machine
+
+1. Clone the repo:
+   `git clone https://github.com/mjboulanger/governance-framework.git`
+
+2. Navigate to the project folder:
+   - **Mac:** `cd ~/Documents/governance-framework`
+   - **Windows:** `cd C:\Users\{username}\governance-framework`
+
+3. Create conda environment:
+   `conda env create -f environment.yml`
+   `conda activate governance-framework`
+
+4. Create a `.env` file in the project root with machine-specific paths:
+
+   **Mac:**
+   `PROJECT_ROOT=/Users/{username}/Documents/governance-framework`
+   `DOWNLOADS_DIR=/Users/{username}/Downloads`
+
+   **Windows:**
+   `PROJECT_ROOT=C:\Users\{username}\governance-framework`
+   `DOWNLOADS_DIR=C:\Users\{username}\Downloads`
+
+5. Register the Jupyter kernel:
+   `python -m ipykernel install --user --name governance-framework --display-name "governance-framework"`
+
+6. Launch JupyterLab:
+   `jupyter lab`
+
+### Notes
+- The `.env` file is machine-specific and not tracked by git — each machine needs its own
+- Large raw data files (`data/raw/`) are not tracked by git — re-run pipelines to regenerate them
+- Processed files (`data/processed/`) are tracked by git and available immediately after cloning
+
+---
+
+## Data Update Instructions
+
 Run `print_stale_sources()` from `src/download_log.py` to identify sources needing refresh.
 Full attempt and success dates for each source are recorded in `data/raw/download_log.csv`.
 
@@ -67,7 +110,6 @@ Within each category, sources are ordered by number of indicators used in the fr
 | UNODC_HOMICIDE | UNODC Homicide Statistics | Annual |
 | PTS | Political Terror Scale | Annual |
 | POWELL_THYNE | Powell-Thyne Coup Database | Annual |
-| TI_CPI | TI Corruption Perceptions Index | Annual |
 | RSF_WPFI | RSF World Press Freedom Index | Annual |
 | CIVICUS | CIVICUS Monitor | Annual |
 | GPI | Global Peace Index | Annual |
@@ -111,6 +153,7 @@ Within each category, sources are ordered by number of indicators used in the fr
 | WHO_GHO | WHO Global Health Observatory | Annual |
 | UNESCO_UIS | UNESCO Institute for Statistics | Annual |
 | WGI | World Bank WGI | Annual |
+| TI_CPI | TI Corruption Perceptions Index | Annual |
 | IMF_SPI | WB Statistical Performance Indicators | Annual |
 | WB_WBL | World Bank Women Business and the Law | Annual |
 | ACLED | ACLED | Continuous |
@@ -135,7 +178,7 @@ Sources with no manual steps are omitted from this section.
 1. Go to: https://www.v-dem.net/data/the-v-dem-dataset/
 2. Click "Download Country-Year: V-Dem Full+Others" (latest version)
 3. Fill in the form — email required, select CSV format
-4. Save the ZIP to `C:\Users\mjbou\Downloads`
+4. Save the ZIP to your Downloads folder
 5. Update `VDEM_VERSION` in `notebooks/exploration/03_vdem_pipeline.ipynb` (e.g. `"17"` for v17)
 6. Re-run the notebook
 
@@ -158,6 +201,18 @@ Sources with no manual steps are omitted from this section.
 1. Go to: https://fragilestatesindex.org/excel/
 2. Download the latest year's Excel file
 3. Place in `data/raw/` and load manually in `notebooks/exploration/07_fsi_pipeline.ipynb`
+
+---
+
+### TI_CPI — Transparency International Corruption Perceptions Index
+**Normally:** No action required — fully automated via Our World in Data.
+
+**If pipeline fails:**
+1. Go to: https://ourworldindata.org/grapher/ti-corruption-perception-index
+2. Click "Download" then CSV
+3. Place file in `data/raw/` and update pipeline to load locally
+
+---
 
 *Per-source instructions for remaining sources will be added as each pipeline is built.*
 
@@ -203,6 +258,24 @@ Reference information about each source's access method, URL patterns, and techn
 - Countries only — territories excluded
 - FH changed data distribution policy in 2026; direct download may eventually be gated
 - Coverage: 2013–present, 195 countries
+
+---
+
+### FSI — Fragile States Index
+- Download page: https://fragilestatesindex.org/excel/
+- Auto-detection: scrapes page for all Excel links, deduplicates by year, downloads and stacks all years from FRAMEWORK_START_YEAR
+- Requires browser User-Agent header to avoid 403 block
+- Indicators used: C1 (Security Apparatus), C2 (Factionalized Elites), C3 (Group Grievance), P2 (Public Services)
+- Coverage: 2006–present, ~179 countries, annual
+- Note: 2024 and 2025 editions not yet on download page as of May 2026 — data currency gap
+
+---
+
+### TI_CPI — Transparency International Corruption Perceptions Index
+- Source: Our World in Data historical panel (original data: Transparency International)
+- URL: `https://ourworldindata.org/grapher/ti-corruption-perception-index.csv?v=1&csvType=full&useColumnShortNames=false`
+- TI direct Excel files are password-protected — OWID is the practical access route
+- Coverage: 2012–present, 182 countries
 
 ---
 
