@@ -9,9 +9,11 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 # ============================================================
 # IMPORTANT: Variable names defined here are reserved.
 # Do not redefine these names in notebooks or other modules.
-# Reserved names: PROJECT_ROOT, RAW_DIR, PROCESSED_DIR,
+# Reserved names: 
+# PROJECT_ROOT, RAW_DIR, PROCESSED_DIR,
 # OUTPUTS_DIR, NOTEBOOKS_DIR, REPORTS_DIR, DOCS_DIR, SRC_DIR,
 # DOWNLOADS_DIR, FRAMEWORK_START_YEAR, CURRENT_YEAR, SSL_VERIFY
+# ACLED_EMAIL, ACLED_PASSWORD
 # ============================================================
 
 # ============================================================
@@ -47,3 +49,9 @@ try:
     SSL_VERIFY = True
 except Exception:
     SSL_VERIFY = False
+
+# ============================================================
+# API credentials — set in .env file, never hardcode
+# ============================================================
+ACLED_EMAIL = os.environ.get('ACLED_EMAIL', '')
+ACLED_PASSWORD = os.environ.get('ACLED_PASSWORD', '')
