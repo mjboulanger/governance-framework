@@ -50,6 +50,11 @@ try:
 except Exception:
     SSL_VERIFY = False
 
+# Standard browser User-Agent header — used for sources that block automated requests
+BROWSER_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+}
+
 # ============================================================
 # API credentials — set in .env file, never hardcode
 # ============================================================
