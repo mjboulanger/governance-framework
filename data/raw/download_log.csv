@@ -8,3 +8,5 @@ TI_CPI,2026-05-21,2026-05-21,2024,ti_cpi_clean.csv,2024,,Downloaded from Our Wor
 IMF_SPI,2026-05-31,2026-05-31,2026-04,spi_clean.csv,2024,,6 SPI indicators — overall score plus 5 pillars. Full coverage from 2016; partial from 2004. 221 countries.
 UCDP,2026-06-01,2026-06-01,2024,ucdp_clean.csv,25.1,,"Country-year organized violence dataset. 16 indicators across state-based, non-state, and one-sided violence. Auto-detects latest version. Coverage: 1989-2024, 199 countries."
 WB_WDI,2026-05-29,2026-06-01,2026-04,wdi_clean.csv,2025,,32 service delivery indicators. Fetched one at a time to avoid API timeout. 266 economies including aggregates.
+FRASER_REG,2026-06-02,2026-06-02,2023,fraser_clean.csv,EFW 2025,,"Areas 2 (Legal System), 4 (Trade Freedom), 5 (Regulation). Auto-detects latest annual report page. Panel dataset chain-linked. Coverage: 1990-2023, 165 countries. Annual from 2000, quinquennial before."
+FRASER_LEGAL,2026-06-02,2026-06-02,2023,fraser_clean.csv,EFW 2025,,Same file as FRASER_REG — fraser_clean.csv. Area 2: Legal System and Property Rights.
