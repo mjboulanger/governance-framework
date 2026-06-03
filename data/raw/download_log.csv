@@ -8,5 +8,14 @@ IMF_SPI,2026-05-31,2026-05-31,2026-04,spi_clean.csv,2024,,6 SPI indicators — o
 UCDP,2026-06-01,2026-06-01,2024,ucdp_clean.csv,25.1,,"Country-year organized violence dataset. 16 indicators across state-based, non-state, and one-sided violence. Auto-detects latest version. Coverage: 1989-2024, 199 countries."
 WB_WDI,2026-05-29,2026-06-01,2026-04,wdi_clean.csv,2025,,32 service delivery indicators. Fetched one at a time to avoid API timeout. 266 economies including aggregates.
 FSI,2026-05-21,2026-06-02,2023,fsi_clean.csv,2023,,"Indicators C1, C2, C3, P2. All years scraped and stacked automatically. Latest on page: 2023. 2024/2025 not yet available."
-FRASER_REG,2026-06-02,2026-06-02,2023,fraser_clean.csv,EFW 2025,,"Areas 2 (Legal System), 4 (Trade Freedom), 5 (Regulation). Auto-detects latest annual report page. Panel dataset chain-linked. Coverage: 1990-2023, 165 countries. Annual from 2000, quinquennial before."
-FRASER_LEGAL,2026-06-02,2026-06-02,2023,fraser_clean.csv,EFW 2025,,Same file as FRASER_REG — fraser_clean.csv. Area 2: Legal System and Property Rights.
+FRASER_REG,2026-06-02,2026-06-03,2023,fraser_clean.csv,EFW 2025,,"Areas 2 (Legal System), 4 (Trade Freedom), 5 (Regulation). Auto-detects latest annual report page. Panel dataset chain-linked. Coverage: 1990-2023, 165 countries. Annual from 2000, quinquennial before."
+FRASER_LEGAL,2026-06-02,2026-06-03,2023,fraser_clean.csv,EFW 2025,,Same file as FRASER_REG — fraser_clean.csv. Area 2: Legal System and Property Rights.
+GPI,2026-06-03,2026-06-03,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: gpi_gpi.
+PTS,2026-06-03,2026-06-03,2025,qog_clean.csv,QoG Jan26,,"Sourced via QoG Standard TS dataset. Variables: gd_ptsa (Amnesty), gd_ptsh (HRW), gd_ptss (State Dept)."
+OBS,2026-06-03,2026-06-03,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: ibp_obi (Open Budget Index).
+ND_GAIN,2026-06-03,2026-06-03,2025,qog_clean.csv,QoG Jan26,,"Sourced via QoG Standard TS dataset. Variables: gain_gov (governance readiness), gain_read (readiness). Master PDF specifies these sub-scores not overall index."
+BCI,2026-06-03,2026-06-03,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: bci_bci.
+HANSON_SIGMAN,2026-06-03,2026-06-03,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: lld_capacity. Double-counting caveat: incorporates V-Dem and other sources we use.
+CCP,2026-06-03,2026-06-03,2025,qog_clean.csv,QoG Jan26,,"Sourced via QoG Standard TS dataset. Variables: ccp_syst, ccp_market, ccp_civil, ccp_infoacc, ccp_equal. Note: judicial independence and separation of powers sub-dimensions not clearly captured in QoG CCP variable subset — gap flagged."
+PEI,2026-06-03,2026-06-03,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: pei_peii_1. Per-election cadence — high missingness expected.
+KOF_TRADE,2026-06-03,2026-06-03,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: dr_eg (Economic Globalisation). MISMATCH: master PDF calls for Trade Globalization subindex specifically. dr_eg covers trade+financial. Decision flagged in framework_decisions.md.

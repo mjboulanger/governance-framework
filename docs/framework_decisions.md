@@ -29,12 +29,35 @@ The following sources were originally listed as standalone pipelines in the mast
 
 ---
 
+### Sources Subsumed by QoG Pipeline
+The following sources were originally listed as standalone pipelines but are available via the QoG Standard Time-Series dataset (`qog_std_ts_jan{YY}.csv`). One pipeline (`14_qog_pipeline.ipynb`) covers all of them.
+
+| Source | QoG Variable(s) | Notes |
+|--------|----------------|-------|
+| KOF_TRADE | dr_eg | ⚠️ MISMATCH — see below |
+| PTS | gd_ptsa, gd_ptsh, gd_ptss | All three source-agency versions retained |
+| OBS | ibp_obi | Open Budget Index score 0-100 |
+| ND_GAIN | gain_gov, gain_read | Sub-scores per master PDF spec |
+| BCI | bci_bci | Currency verification recommended at metric pass |
+| HANSON_SIGMAN | lld_capacity | Double-counting caveat: incorporates V-Dem and other sources |
+| CCP | ccp_syst, ccp_market, ccp_civil, ccp_infoacc, ccp_equal | Gap: judicial independence and separation of powers sub-dimensions not in QoG CCP subset |
+| PEI | pei_peii_1 | Per-election cadence; high missingness expected |
+| GPI | gpi_gpi | Optional cross-check; deprioritized per framework decisions |
+
+**QoG version:** Jan 2026 (`qog_std_ts_jan26.csv`). Updated annually, direct CSV download, no registration required. URL pattern: `https://www.qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`.
+
+**⚠️ KOF_TRADE mismatch:** Master PDF specifies "KOF Globalisation Index — Trade Globalization subindex" as Primary tier 1 for Trade governance concept. QoG Standard dataset contains only `dr_eg` (KOF Economic Globalisation Index), which combines trade and financial globalization. The trade-specific sub-index (`dr_trade` or similar) is not in QoG. **Decision pending:** either build a separate KOF pipeline to access the trade sub-index directly from kof.ethz.ch, or accept `dr_eg` as a proxy with documented scope mismatch. Holding position: use `dr_eg` as proxy, flag at metric pass.
+
+**CCP gap:** QoG includes 18 CCP variables — a subset of CCP's full variable set. Master PDF calls for specific sub-dimensions including judicial independence constitutional features and separation of powers provisions. These are not clearly identifiable in the 18 QoG CCP variables. Mitigation: the direct V-Dem judicial independence and legislative constraint indicators (primary tier 1) cover these dimensions with better measurement quality than CCP variables would anyway. CCP remains as supplementary de jure reference.
+
+---
+
 ### Sources Deprioritized — Coverage Superseded
 
 | Source | Decision | Rationale |
 |--------|----------|-----------|
 | RSF WPFI | Optional manual cross-check only | Media freedom covered comprehensively by V-Dem primary indicators. RSF 2022+ uses new methodology incompatible with pre-2022 series. No automated download available. |
-| GPI | Optional manual cross-check only | Political stability covered by UCDP + FSI + WGI PV + V-Dem. IEP blocks automated downloads. |
+| GPI | Optional manual cross-check only (included in QoG as gpi_gpi) | Political stability covered by UCDP + FSI + WGI PV + V-Dem. Available in QoG so included at no marginal cost. |
 | Heritage TR | Deprioritized | Fraser Area 4 (Trade Freedom) covers same concept with superior academic methodology. Heritage adds ~20 countries but not within target sample. |
 | Heritage PR | Deprioritized | Fraser Area 2 (Legal System) + WJP + V-Dem cover property rights more comprehensively. Heritage adds nothing not already captured. |
 
@@ -64,6 +87,36 @@ The following sources were originally listed as standalone pipelines in the mast
 | TI CPI | Category 4 manual | Automated via OWID CSV |
 | WJP | Category 4 manual | Automated direct URL detection |
 | FH FIW | Category 4 manual | Automated URL detection |
+| KOF_TRADE | Category 4 manual | Via QoG automated download |
+| PTS | Category 4 manual | Via QoG automated download |
+| OBS | Category 4 manual | Via QoG automated download |
+| ND_GAIN | Category 4 manual | Via QoG automated download |
+| BCI | Category 5 irregular | Via QoG automated download |
+| HANSON_SIGMAN | Category 5 irregular | Via QoG automated download |
+| CCP | Category 5 irregular | Via QoG automated download |
+| PEI | Category 5 irregular | Via QoG automated download |
+| GPI | Category 4 manual | Via QoG automated download |
+
+---
+
+### Sources Not in QoG — Requiring Separate Pipelines
+
+| Source | Concept | Priority |
+|--------|---------|----------|
+| CIVICUS | Political participation, Civil society | High — Primary tier 1, unique data |
+| DPI | Political settlement, Electoral process | High — Primary tier 2 |
+| POWELL_THYNE | Political settlement, Political stability | High — Primary tier 1 |
+| UNODC_HOMICIDE | Personal security | High — Primary tier 1 |
+| ROMELLI_CBI | Macroeconomic policy | High — Primary tier 1 |
+| IRENA_CAPACITY | Environmental/climate governance | High — Primary tier 1 |
+| CLIMATE_LAWS | Environmental/climate governance | High — Primary tier 1 |
+| IMF_FISCAL_RULES | Macroeconomic policy | High — Primary tier 1 |
+| IMF_AREAER | Macroeconomic policy | High — Primary tier 1 |
+| IMF_IMAPP | Macroeconomic policy | High — Primary tier 1 |
+| ODIN | Statistical infrastructure | Medium — Primary tier 1 |
+| BASEL_AML | Financial sector | Medium — Primary tier 1 |
+| PEW_GRI | Civil liberties | Medium — Primary tier 2 |
+| KOF_TRADE (sub-index) | Trade governance | Decision pending — using dr_eg proxy |
 
 ---
 
@@ -82,17 +135,21 @@ The following sources were originally listed as standalone pipelines in the mast
 | 11_acled_pipeline | ACLED | — | — | Pending Research tier |
 | 12_ucdp_pipeline | UCDP | ucdp_clean.csv | 16 | 1990–2024, 199 countries |
 | 13_fraser_pipeline | Fraser EFW | fraser_clean.csv | 3 areas | 1990–2023, 165 countries |
+| 14_qog_pipeline | QoG Standard TS (9 sources) | qog_clean.csv | 16 | 1990–2025, 200 countries |
 
 ---
 
 ## Outstanding Decisions
 
+- KOF_TRADE: build separate KOF pipeline for trade sub-index vs accept dr_eg proxy — decision pending
 - Heritage TR and Heritage PR: confirm final decision to deprioritize before master PDF regeneration
 - RSF WPFI: confirm manual cross-check only status
-- GPI: confirm manual cross-check only status
 - ACLED: complete pipeline once Research tier approved
-- Concept 26 (Government transparency): reconsider before finalizing — significant indicator overlap with other concepts
+- Concept 25 (Government transparency and openness): reconsider before finalizing — significant indicator overlap
 - SOE Governance (Concept 10): deferred to v2
+- EPI sub-components: QoG has wrong granularity — address via separate Yale EPI pipeline
+- NELDA: too stale in QoG (2020) — evaluate at metric pass whether to build separate pipeline
+- IDEA EMB Database: not same as QoG ideaesd_* variables — evaluate at metric pass
 
 ---
 
