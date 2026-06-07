@@ -43,10 +43,11 @@ The following sources were originally listed as standalone pipelines but are ava
 | CCP | ccp_syst, ccp_market, ccp_civil, ccp_infoacc, ccp_equal | Gap: judicial independence and separation of powers sub-dimensions not in QoG CCP subset |
 | PEI | pei_peii_1 | Per-election cadence; high missingness expected |
 | GPI | gpi_gpi | Optional cross-check; deprioritized per framework decisions |
+| WB_INFORMAL | ied_mimic, ied_dge | Informal economy size % GDP; coverage 1990-2020 |
 
 **QoG version:** Jan 2026 (`qog_std_ts_jan26.csv`). Updated annually, direct CSV download, no registration required. URL pattern: `https://www.qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`.
 
-**⚠️ KOF_TRADE mismatch:** Master PDF specifies "KOF Globalisation Index — Trade Globalization subindex" as Primary tier 1 for Trade governance concept. QoG Standard dataset contains only `dr_eg` (KOF Economic Globalisation Index), which combines trade and financial globalization. The trade-specific sub-index (`dr_trade` or similar) is not in QoG. **Decision pending:** either build a separate KOF pipeline to access the trade sub-index directly from kof.ethz.ch, or accept `dr_eg` as a proxy with documented scope mismatch. Holding position: use `dr_eg` as proxy, flag at metric pass.
+**⚠️ KOF_TRADE mismatch:** Master PDF specifies "KOF Globalisation Index — Trade Globalization subindex" as Primary tier 1 for Trade governance concept. QoG Standard dataset contains only `dr_eg` (KOF Economic Globalisation Index), which combines trade and financial globalization. The trade-specific sub-index is not in QoG. **Decision:** use `dr_eg` as proxy, flag at metric pass. Fraser Area 4 (Trade Freedom) retained as additional trade openness measure — see below.
 
 **CCP gap:** QoG includes 18 CCP variables — a subset of CCP's full variable set. Master PDF calls for specific sub-dimensions including judicial independence constitutional features and separation of powers provisions. These are not clearly identifiable in the 18 QoG CCP variables. Mitigation: the direct V-Dem judicial independence and legislative constraint indicators (primary tier 1) cover these dimensions with better measurement quality than CCP variables would anyway. CCP remains as supplementary de jure reference.
 
@@ -62,6 +63,8 @@ The following sources were originally listed as standalone pipelines but are ava
 | Heritage PR | Deprioritized | Fraser Area 2 (Legal System) + WJP + V-Dem cover property rights more comprehensively. Heritage adds nothing not already captured. |
 
 **On Fraser vs Heritage:** Fraser Institute EFW is the academically preferred economic freedom dataset — peer-reviewed methodology, transparent component weights, chain-linked historical series. Heritage Index is a policy advocacy product with less transparent methodology and no chain-linked series. Where the two overlap, Fraser is used.
+
+**On Fraser Area 4 (Trade Freedom):** The master PDF dropped Fraser Area 4 from Trade governance (Concept 11) due to overlap with Heritage Trade Freedom. Since Heritage TR was subsequently deprioritized, Fraser Area 4 is now retained as the primary trade openness index source alongside KOF. This reverses the master PDF's drop decision for Area 4.
 
 ---
 
@@ -96,6 +99,7 @@ The following sources were originally listed as standalone pipelines but are ava
 | CCP | Category 5 irregular | Via QoG automated download |
 | PEI | Category 5 irregular | Via QoG automated download |
 | GPI | Category 4 manual | Via QoG automated download |
+| WB_INFORMAL | Category 5 irregular | Via QoG automated download |
 
 ---
 
@@ -120,6 +124,19 @@ The following sources were originally listed as standalone pipelines but are ava
 
 ---
 
+## Variable-Level Decisions
+
+### V-Dem "factionalism" variable (Concept 1 — Political settlement)
+Master PDF listed "factionalism" as a V-Dem indicator alongside v2pepwrses, v2pepwrsoc, v2x_egal, v2psoppaut. No V-Dem variable with "faction" or "fract" in the name exists in V-Dem v16. The candidates `v2pscnslnl` (party system consolidation) and `v2pscomprg` (party competition) are not direct factionalism measures. **Decision:** no additional V-Dem variable added. The factionalism dimension for Political settlement is covered by FSI C2 (Factionalized Elites) — Primary tier 1, already in pipeline.
+
+### FSI indicator naming discrepancy
+Master PDF labels FSI Factionalized Elites as "P1" and Group Grievance as "S1" — these are incorrect FSI codes. Correct codes are C2 (Factionalized Elites) and C3 (Group Grievance). Our pipeline correctly uses C2 and C3. The master PDF labels are erroneous but the indicators are correct.
+
+### Fraser Area 2 — property sub-components
+Master PDF specifies "property sub-components only" for Property rights concept (Concept 17). We pull the full Area 2 aggregate score. This is a metric-level pass issue — at the pipeline level, having Area 2 is correct. At the metric pass, select the property-specific sub-components within Area 2.
+
+---
+
 ## Pipelines Built
 
 | Notebook | Source | Output File | Indicators | Coverage |
@@ -135,15 +152,13 @@ The following sources were originally listed as standalone pipelines but are ava
 | 11_acled_pipeline | ACLED | — | — | Pending Research tier |
 | 12_ucdp_pipeline | UCDP | ucdp_clean.csv | 16 | 1990–2024, 199 countries |
 | 13_fraser_pipeline | Fraser EFW | fraser_clean.csv | 3 areas | 1990–2023, 165 countries |
-| 14_qog_pipeline | QoG Standard TS (9 sources) | qog_clean.csv | 16 | 1990–2025, 200 countries |
+| 14_qog_pipeline | QoG Standard TS (10 sources) | qog_clean.csv | 18 | 1990–2025, 200 countries |
 
 ---
 
 ## Outstanding Decisions
 
 - KOF_TRADE: build separate KOF pipeline for trade sub-index vs accept dr_eg proxy — decision pending
-- Heritage TR and Heritage PR: confirm final decision to deprioritize before master PDF regeneration
-- RSF WPFI: confirm manual cross-check only status
 - ACLED: complete pipeline once Research tier approved
 - Concept 25 (Government transparency and openness): reconsider before finalizing — significant indicator overlap
 - SOE Governance (Concept 10): deferred to v2
