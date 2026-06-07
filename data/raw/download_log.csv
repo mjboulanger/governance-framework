@@ -9,6 +9,7 @@ WB_WDI,2026-05-29,2026-06-01,2026-04,wdi_clean.csv,2025,,32 service delivery ind
 FSI,2026-05-21,2026-06-02,2023,fsi_clean.csv,2023,,"Indicators C1, C2, C3, P2. All years scraped and stacked automatically. Latest on page: 2023. 2024/2025 not yet available."
 FRASER_REG,2026-06-02,2026-06-03,2023,fraser_clean.csv,EFW 2025,,"Areas 2 (Legal System), 4 (Trade Freedom), 5 (Regulation). Auto-detects latest annual report page. Panel dataset chain-linked. Coverage: 1990-2023, 165 countries. Annual from 2000, quinquennial before."
 FRASER_LEGAL,2026-06-02,2026-06-03,2023,fraser_clean.csv,EFW 2025,,Same file as FRASER_REG — fraser_clean.csv. Area 2: Legal System and Property Rights.
+VDEM,2026-05-19,2026-06-07,2026-03,vdem_full_v16.csv,v16,,Full+Others CSV. Extracted from ZIP. Manual download via email form required annually.
 GPI,2026-06-03,2026-06-07,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: gpi_gpi.
 PTS,2026-06-03,2026-06-07,2025,qog_clean.csv,QoG Jan26,,"Sourced via QoG Standard TS dataset. Variables: gd_ptsa (Amnesty), gd_ptsh (HRW), gd_ptss (State Dept)."
 OBS,2026-06-03,2026-06-07,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: ibp_obi (Open Budget Index).
@@ -18,4 +19,4 @@ HANSON_SIGMAN,2026-06-03,2026-06-07,2025,qog_clean.csv,QoG Jan26,,Sourced via Qo
 CCP,2026-06-03,2026-06-07,2025,qog_clean.csv,QoG Jan26,,"Sourced via QoG Standard TS dataset. Variables: ccp_syst, ccp_market, ccp_civil, ccp_infoacc, ccp_equal. Note: judicial independence and separation of powers sub-dimensions not clearly captured in QoG CCP variable subset — gap flagged."
 PEI,2026-06-03,2026-06-07,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: pei_peii_1. Per-election cadence — high missingness expected.
 KOF_TRADE,2026-06-03,2026-06-07,2025,qog_clean.csv,QoG Jan26,,Sourced via QoG Standard TS dataset. Variable: dr_eg (Economic Globalisation). MISMATCH: master PDF calls for Trade Globalization subindex specifically. dr_eg covers trade+financial. Decision flagged in framework_decisions.md.
-VDEM,2026-05-19,2026-06-07,2026-03,vdem_full_v16.csv,v16,,Full+Others CSV. Extracted from ZIP. Manual download via email form required annually.
+WB_INFORMAL,2026-06-07,2026-06-07,2020,qog_clean.csv,QoG Jan26,,"Sourced via QoG Standard TS dataset. Variables: ied_mimic (MIMIC model), ied_dge (DGE model). Coverage: 1990-2020, ~180 countries. Proxy for state administrative reach."
