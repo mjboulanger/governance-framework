@@ -44,10 +44,11 @@ The following sources were originally listed as standalone pipelines but are ava
 | PEI | pei_peii_1 | Per-election cadence; high missingness expected |
 | GPI | gpi_gpi | Optional cross-check; deprioritized per framework decisions |
 | WB_INFORMAL | ied_mimic, ied_dge | Informal economy size % GDP; coverage 1990-2020 |
+| ROMELLI_CBI | cbie_index, cbie_policy, cbie_lending | Coverage: 1923-2023, 155 countries |
 
 **QoG version:** Jan 2026 (`qog_std_ts_jan26.csv`). Updated annually, direct CSV download, no registration required. URL pattern: `https://www.qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`.
 
-**⚠️ KOF_TRADE mismatch:** Master PDF specifies "KOF Globalisation Index — Trade Globalization subindex" as Primary tier 1 for Trade governance concept. QoG Standard dataset contains only `dr_eg` (KOF Economic Globalisation Index), which combines trade and financial globalization. The trade-specific sub-index is not in QoG. **Decision:** use `dr_eg` as proxy, flag at metric pass. Fraser Area 4 (Trade Freedom) retained as additional trade openness measure — see below.
+**⚠️ KOF_TRADE mismatch:** Master PDF specifies "KOF Globalisation Index — Trade Globalization subindex" as Primary tier 1 for Trade governance concept. QoG Standard dataset contains only `dr_eg` (KOF Economic Globalisation Index), which combines trade and financial globalization. The trade-specific sub-index is not in QoG. **Decision:** use `dr_eg` as proxy, flag at metric pass. Fraser Area 4 (Trade Freedom) retained as additional trade openness measure.
 
 **CCP gap:** QoG includes 18 CCP variables — a subset of CCP's full variable set. Master PDF calls for specific sub-dimensions including judicial independence constitutional features and separation of powers provisions. These are not clearly identifiable in the 18 QoG CCP variables. Mitigation: the direct V-Dem judicial independence and legislative constraint indicators (primary tier 1) cover these dimensions with better measurement quality than CCP variables would anyway. CCP remains as supplementary de jure reference.
 
@@ -73,10 +74,13 @@ The following sources were originally listed as standalone pipelines but are ava
 | Source | Constraint | Status |
 |--------|-----------|--------|
 | ACLED | Requires Research tier API access — free tier gives aggregated data only | Pending approval — email sent to research@acleddata.com June 2026 |
+| BASEL_AML | Expert Edition (free CSV access) requires institutional affiliation | Deferred pending eligibility — see below |
 | UCDP API | Token required since February 2026 | Using bulk ZIP download instead — no token needed |
 | WHO GHO API | OData API deprecated end-2025; new implementation at data.who.int not stable | Subsumed by WDI |
 | TI CPI | Direct Excel files password-protected | Using OWID historical panel CSV instead |
 | FSI | 2024 and 2025 editions not yet on download page as of May 2026 | Data currency gap — latest available: 2023 |
+
+**Basel AML access note:** Expert Edition subscription is free for public-sector, multilateral, non-profit, and academic organisations. Personal email accounts are not eligible. If institutional affiliation becomes available: apply at index.baselgovernance.org/subscription and automate via direct CSV download. If not: build FATF scraper (Category 3) as alternative for AML/CFT coverage, or accept gap in Financial sector concept. Same deferral situation as ACLED.
 
 ---
 
@@ -100,6 +104,7 @@ The following sources were originally listed as standalone pipelines but are ava
 | PEI | Category 5 irregular | Via QoG automated download |
 | GPI | Category 4 manual | Via QoG automated download |
 | WB_INFORMAL | Category 5 irregular | Via QoG automated download |
+| ROMELLI_CBI | Category 5 irregular | Via QoG automated download |
 
 ---
 
@@ -111,14 +116,13 @@ The following sources were originally listed as standalone pipelines but are ava
 | DPI | Political settlement, Electoral process | High — Primary tier 2 |
 | POWELL_THYNE | Political settlement, Political stability | High — Primary tier 1 |
 | UNODC_HOMICIDE | Personal security | High — Primary tier 1 |
-| ROMELLI_CBI | Macroeconomic policy | High — Primary tier 1 |
 | IRENA_CAPACITY | Environmental/climate governance | High — Primary tier 1 |
 | CLIMATE_LAWS | Environmental/climate governance | High — Primary tier 1 |
 | IMF_FISCAL_RULES | Macroeconomic policy | High — Primary tier 1 |
 | IMF_AREAER | Macroeconomic policy | High — Primary tier 1 |
 | IMF_IMAPP | Macroeconomic policy | High — Primary tier 1 |
 | ODIN | Statistical infrastructure | Medium — Primary tier 1 |
-| BASEL_AML | Financial sector | Medium — Primary tier 1 |
+| BASEL_AML | Financial sector | Medium — Primary tier 1 (deferred) |
 | PEW_GRI | Civil liberties | Medium — Primary tier 2 |
 | KOF_TRADE (sub-index) | Trade governance | Decision pending — using dr_eg proxy |
 
@@ -152,7 +156,7 @@ Master PDF specifies "property sub-components only" for Property rights concept 
 | 11_acled_pipeline | ACLED | — | — | Pending Research tier |
 | 12_ucdp_pipeline | UCDP | ucdp_clean.csv | 16 | 1990–2024, 199 countries |
 | 13_fraser_pipeline | Fraser EFW | fraser_clean.csv | 3 areas | 1990–2023, 165 countries |
-| 14_qog_pipeline | QoG Standard TS (10 sources) | qog_clean.csv | 18 | 1990–2025, 200 countries |
+| 14_qog_pipeline | QoG Standard TS (11 sources) | qog_clean.csv | 21 | 1990–2025, 200 countries |
 
 ---
 
@@ -160,6 +164,7 @@ Master PDF specifies "property sub-components only" for Property rights concept 
 
 - KOF_TRADE: build separate KOF pipeline for trade sub-index vs accept dr_eg proxy — decision pending
 - ACLED: complete pipeline once Research tier approved
+- BASEL_AML: complete pipeline once Expert Edition access obtained (requires institutional affiliation)
 - Concept 25 (Government transparency and openness): reconsider before finalizing — significant indicator overlap
 - SOE Governance (Concept 10): deferred to v2
 - EPI sub-components: QoG has wrong granularity — address via separate Yale EPI pipeline
