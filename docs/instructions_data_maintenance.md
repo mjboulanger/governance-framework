@@ -97,7 +97,6 @@ Within each category, sources are ordered by number of indicators used in the fr
 
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
-| YALE_EPI | Yale EPI | Biennial |
 | OECD_TFI | OECD Trade Facilitation Indicators | Biennial |
 | IRENA_POLICY | IRENA Renewable Energy Policies | Continuous |
 | ODIN | Open Data Inventory | Biennial |
@@ -105,7 +104,6 @@ Within each category, sources are ordered by number of indicators used in the fr
 | IMF_AREAER | IMF AREAER | Annual |
 | DPI | Database of Political Institutions | Annual |
 | IDEA_PARTIP | IDEA Global State of Democracy | Annual |
-| WB_CARBON | World Bank Carbon Pricing Dashboard | Annual |
 | CIVICUS | CIVICUS Monitor | Annual |
 | CLIMATE_LAWS | LSE Grantham / Climate Policy Radar | Continuous |
 | PEW_GRI | Pew GRI / SHI | Annual |
@@ -147,6 +145,8 @@ Within each category, sources are ordered by number of indicators used in the fr
 | UNODC_HOMICIDE | UNODC Homicide Statistics | Annual | Active |
 | IRENA_CAPACITY | IRENA Renewables Capacity Statistics | Annual | Active |
 | IMF_IMAPP | IMF iMaPP | Annual | Active |
+| YALE_EPI | Yale EPI | Biennial | Active |
+| WB_CARBON | World Bank Carbon Pricing Dashboard | Annual | Active |
 | ACLED | ACLED | Continuous | Pending Research tier |
 | BASEL_AML | Basel AML Index | Annual | Pending Expert Edition access |
 | WJP | WJP Rule of Law Index | Annual | Active |
@@ -275,6 +275,26 @@ Sources with no manual steps are omitted from this section.
 
 ---
 
+### YALE_EPI — Yale Environmental Performance Index
+**Normally:** No action required — fully automated.
+
+**If pipeline fails:**
+1. Go to: https://epi.yale.edu/epi-downloads
+2. Download the latest edition results CSV
+3. Place file in `data/raw/` and update pipeline to load locally
+
+---
+
+### WB_CARBON — World Bank Carbon Pricing Dashboard
+**Normally:** No action required — fully automated via Our World in Data.
+
+**If pipeline fails:**
+1. Go to: https://ourworldindata.org/grapher/carbon-tax-instruments
+2. Click "Download" then CSV
+3. Place file in `data/raw/` and update pipeline to load locally
+
+---
+
 ### ACLED — Armed Conflict Location and Event Data
 **Status:** Pending Research tier approval — pipeline not yet active.
 
@@ -378,19 +398,7 @@ Reference information about each source's access method, URL patterns, and techn
 - Access: `wbgapi`, db=2
 - Fetch one indicator at a time to avoid API timeout (~1 min per indicator)
 - Coverage: 1990–present, 266 economies including aggregates
-- Indicators: 34 total across the following dimensions:
-  - Education outcomes (3): primary completion rate, primary enrollment, secondary enrollment
-  - Education system quality (4): expenditure % GDP, expenditure % govt, pupil-teacher ratios
-  - Health outcomes (4): under-5 mortality, DPT immunization, measles immunization, maternal mortality
-  - Health system capacity (4): physicians/1000, nurses/1000, hospital beds/1000, UHC coverage index
-  - Infrastructure (3): electricity access, basic water access, basic sanitation access
-  - Gender equality — WBL 2.0 (3): legal framework, supportive framework, enforcement perceptions
-  - Logistics (1): LPI overall score
-  - Human capital (1): HCI+ overall total
-  - IP protection — WIPO (4): patent applications resident/nonresident, trademark applications resident/nonresident
-  - Social protection — ILO (3): overall coverage, safety net coverage, social insurance coverage
-  - HDI sub-indicators (2): life expectancy, GNI per capita PPP
-  - Trade governance — tariffs (2): tariff rate simple mean, tariff rate weighted mean
+- Indicators: 34 total across education, health, infrastructure, gender equality, logistics, human capital, IP protection, social protection, HDI sub-indicators, and tariffs
 - Sources subsumed: WHO GHO, UNESCO UIS, WB WBL, WB LPI, WB HCI, WIPO, ILO_SOCIAL, UNDP_HDI
 
 ---
@@ -398,7 +406,6 @@ Reference information about each source's access method, URL patterns, and techn
 ### WJP — World Justice Project Rule of Law Index
 - URL pattern: `https://worldjusticeproject.org/rule-of-law-index/downloads/{YEAR}_wjp_rule_of_law_index_HISTORICAL_DATA_FILE.xlsx`
 - Auto-detection: pipeline tries current year, falls back to prior years, validates Content-Type
-- 2017 edition was not published
 - Sub-indicator 6.5 retained for Property Rights concept
 - Coverage: 2012–present (no 2017), 142–143 countries
 
@@ -408,25 +415,22 @@ Reference information about each source's access method, URL patterns, and techn
 - URL pattern: `/sites/default/files/{YYYY}-{MM}/All_data_FIW_2013-{END}.xlsx`
 - Auto-detection: constructs candidate URLs from recent year/month combinations
 - Sub-components used: A, D, E, G plus sub-questions
-- Countries only — territories excluded
 - Coverage: 2013–present, 195 countries
 
 ---
 
 ### FSI — Fragile States Index
 - Download page: https://fragilestatesindex.org/excel/
-- Auto-detection: scrapes page for all Excel links, deduplicates by year, downloads and stacks all years
-- Requires BROWSER_HEADERS from config.py to avoid 403 block
+- Auto-detection: scrapes page for all Excel links, deduplicates by year
+- Requires BROWSER_HEADERS from config.py
 - Indicators: C1, C2, C3, P2
 - Coverage: 2006–present, ~179 countries, annual
-- Note: 2024 and 2025 editions not yet on download page as of June 2026
 
 ---
 
 ### TI_CPI — Transparency International Corruption Perceptions Index
 - Source: Our World in Data (original: Transparency International)
 - URL: `https://ourworldindata.org/grapher/ti-corruption-perception-index.csv?v=1&csvType=full&useColumnShortNames=false`
-- TI direct Excel files are password-protected — OWID is the practical access route
 - Coverage: 2012–present, 182 countries
 
 ---
@@ -434,18 +438,15 @@ Reference information about each source's access method, URL patterns, and techn
 ### IMF_SPI — World Bank Statistical Performance Indicators
 - Access: `wbgapi`, db=2
 - Indicators: 6 (overall score + 5 pillars)
-- Full coverage from 2016; partial coverage from 2004
-- Coverage: 221 countries
+- Coverage: 2004–present, 221 countries
 
 ---
 
 ### UCDP — Uppsala Conflict Data Program
 - Download page: https://ucdp.uu.se/downloads/
-- Auto-detection: tries version codes from current year backwards, validates Content-Type
+- Auto-detection: tries version codes from current year backwards
 - URL pattern: `https://ucdp.uu.se/downloads/{folder}/{prefix}-{version}-csv.zip`
-- UCDP API requires token since Feb 2026 — bulk ZIP download used instead
 - Coverage: 1989–present, 199 countries, annual
-- Indicators: 16 across state-based, non-state, and one-sided violence
 
 ---
 
@@ -453,18 +454,16 @@ Reference information about each source's access method, URL patterns, and techn
 - Auto-detection: scrapes annual report page to find XLSX URL
 - Requires BROWSER_HEADERS from config.py
 - Indicators: Area 2 (Legal System), Area 4 (Trade Freedom), Area 5 (Regulation)
-- Coverage: 1990–2023, 165 countries; annual from 2000, quinquennial before
-- Note: data year lags publication year by ~2 years
+- Coverage: 1990–2023, 165 countries
 
 ---
 
 ### QOG — Quality of Government Standard Time-Series
 - URL pattern: `https://www.qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`
 - Auto-detection: tries current year and falls back to prior years
-- Free, no registration, direct CSV, 68MB, 204 countries, 1946–2025
+- Free, no registration, direct CSV, ~68MB
 - Sources covered: KOF_TRADE (dr_eg proxy), PTS, OBS, ND_GAIN, BCI, HANSON_SIGMAN, CCP, PEI, GPI, WB_INFORMAL, ROMELLI_CBI
-- ⚠️ KOF mismatch: `dr_eg` is Economic Globalisation (trade+financial), not Trade sub-index
-- See docs/framework_decisions.md for full details
+- See docs/framework_decisions.md for KOF mismatch and CCP gap details
 
 ---
 
@@ -472,7 +471,6 @@ Reference information about each source's access method, URL patterns, and techn
 - URL: `http://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt`
 - Direct TXT download, continuously updated
 - Version embedded in data (format: V{YYYY}.{MM}.{DD}) — auto-detected
-- Indicators: successful coup, failed coup, alleged coup, auto-coup
 - Coverage: 1950–present, 204 countries
 
 ---
@@ -488,7 +486,7 @@ Reference information about each source's access method, URL patterns, and techn
 - Source: Our World in Data (original: IRENA/Ember)
 - URL: `https://ourworldindata.org/grapher/share-electricity-renewables.csv?v=1&csvType=full&useColumnShortNames=false`
 - Note: using share of electricity from renewables (%) as proxy for raw capacity (MW)
-- Coverage: 1990–2025, 226 countries
+- Coverage: 1990–present, 226 countries
 
 ---
 
@@ -498,7 +496,26 @@ Reference information about each source's access method, URL patterns, and techn
 - Aggregated from monthly to annual country-year format
 - Indicators: tightening actions, loosening actions, net tightening, LTV average
 - Coverage: 1990–2024, 135 countries
-- Latest vintage: 2025-09-29
+
+---
+
+### YALE_EPI — Yale Environmental Performance Index
+- Download page: https://epi.yale.edu/epi-downloads (multiple pages)
+- Auto-detection: scrapes all pages to find all available edition results CSVs
+- Years parsed from filenames — no hardcoding
+- All available editions stacked automatically
+- Consistent sub-indices across editions: EPI, CCH, ECO, HLT, BDH, AGR, FSH, WRS
+- Extended sub-indices (newer editions only): MKP, MPE, MHP
+- Note: methodology differs between editions — limited comparability
+- Coverage: ~180 countries, biennial
+
+---
+
+### WB_CARBON — World Bank Carbon Pricing Dashboard
+- Source: Our World in Data (original: World Carbon Pricing Database, Dolphin & Merkle)
+- URL: `https://ourworldindata.org/grapher/carbon-tax-instruments.csv?v=1&csvType=full&useColumnShortNames=false`
+- Indicator: carbon tax instrument coverage (categorical: No tax / National / Sub-national)
+- Coverage: 1989–present, 201 countries, annual
 
 ---
 
@@ -511,21 +528,18 @@ Reference information about each source's access method, URL patterns, and techn
 ### RSF_WPFI — RSF World Press Freedom Index
 - Optional manual cross-check only — no automated pipeline
 - Media freedom covered by V-Dem primary indicators
-- 2022+ uses new methodology — not comparable to pre-2022
 
 ---
 
 ### ACLED — Armed Conflict Location and Event Data
-- Authentication: cookie-based via POST to `https://acleddata.com/user/login?_format=json`
-- Credentials in `.env` as ACLED_EMAIL and ACLED_PASSWORD
+- Authentication: cookie-based via `.env` (ACLED_EMAIL, ACLED_PASSWORD)
 - Requires Research tier access — pending approval as of June 2026
 
 ---
 
 ### BASEL_AML — Basel AML Index
 - Expert Edition (CSV) requires institutional affiliation — pending access as of June 2026
-- Public Edition only has PDF download
-- Alternative: FATF scraper (Category 3) if Expert Edition not obtainable
+- Alternative: FATF scraper (Category 3)
 
 ---
 
