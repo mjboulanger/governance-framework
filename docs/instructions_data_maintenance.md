@@ -103,7 +103,6 @@ Within each category, sources are ordered by number of indicators used in the fr
 | ODIN | Open Data Inventory | Biennial |
 | IMF_FISCAL_RULES | IMF Fiscal Rules Database | Irregular (~2-3yr) |
 | IMF_AREAER | IMF AREAER | Annual |
-| IMF_IMAPP | IMF iMaPP | Annual |
 | DPI | Database of Political Institutions | Annual |
 | IDEA_PARTIP | IDEA Global State of Democracy | Annual |
 | WB_CARBON | World Bank Carbon Pricing Dashboard | Annual |
@@ -147,6 +146,7 @@ Within each category, sources are ordered by number of indicators used in the fr
 | POWELL_THYNE | Powell-Thyne Coup Database | Continuous | Active |
 | UNODC_HOMICIDE | UNODC Homicide Statistics | Annual | Active |
 | IRENA_CAPACITY | IRENA Renewables Capacity Statistics | Annual | Active |
+| IMF_IMAPP | IMF iMaPP | Annual | Active |
 | ACLED | ACLED | Continuous | Pending Research tier |
 | BASEL_AML | Basel AML Index | Annual | Pending Expert Edition access |
 | WJP | WJP Rule of Law Index | Annual | Active |
@@ -265,6 +265,16 @@ Sources with no manual steps are omitted from this section.
 
 ---
 
+### IMF_IMAPP — IMF Integrated Macroprudential Policy Database
+**Normally:** No action required — fully automated.
+
+**If pipeline fails:**
+1. Go to: https://www.elibrary-areaer.imf.org/Macroprudential/Pages/iMaPPDatabase.aspx
+2. Download the latest ZIP file
+3. Place ZIP in `data/raw/` and update pipeline to load locally
+
+---
+
 ### ACLED — Armed Conflict Location and Event Data
 **Status:** Pending Research tier approval — pipeline not yet active.
 
@@ -298,17 +308,9 @@ Sources with no manual steps are omitted from this section.
 
 ### IMF_AREAER — IMF Annual Report on Exchange Arrangements
 **Every year:**
-1. Go to: https://www.imf.org/en/publications/areaer
-2. Download the latest dataset
-3. Place in `data/raw/` and run pipeline notebook
-
----
-
-### IMF_IMAPP — IMF Integrated Macroprudential Policy Database
-**Every year:**
-1. Go to: https://www.imf.org/en/topics/imapp
-2. Download the latest dataset
-3. Place in `data/raw/` and run pipeline notebook
+1. Go to: https://www.elibrary-areaer.imf.org/
+2. Navigate to Indices tab for FARI and ACI index data
+3. Download and place in `data/raw/` and run pipeline notebook
 
 ---
 
@@ -390,51 +392,6 @@ Reference information about each source's access method, URL patterns, and techn
   - HDI sub-indicators (2): life expectancy, GNI per capita PPP
   - Trade governance — tariffs (2): tariff rate simple mean, tariff rate weighted mean
 - Sources subsumed: WHO GHO, UNESCO UIS, WB WBL, WB LPI, WB HCI, WIPO, ILO_SOCIAL, UNDP_HDI
-
----
-
-### WHO_GHO — WHO Global Health Observatory
-- No standalone pipeline — all required indicators available via WDI (see WB_WDI above)
-
----
-
-### UNESCO_UIS — UNESCO Institute for Statistics
-- No standalone pipeline — all required indicators available via WDI (see WB_WDI above)
-
----
-
-### WB_WBL — World Bank Women, Business and the Law
-- No standalone pipeline — WBL 2.0 indicators available via WDI (see WB_WDI above)
-- Old WBL 1.0 codes (SG.LAW.INDX series) archived in 2024 following methodology change
-- New WBL 2.0 codes: GD_WBL_OVL_LAW, GD_WBL_OVL_SFR, GD_WBL_OVL_ENF
-
----
-
-### WB_LPI — World Bank Logistics Performance Index
-- No standalone pipeline — available via WDI as LP.LPI.OVRL.XQ (see WB_WDI above)
-
----
-
-### WB_HCI — World Bank Human Capital Index
-- No standalone pipeline — standard HCI not available via API
-- Using HCI+ overall total (HD_HCIP_OVRL_TO) as substitute
-- Available via WDI (see WB_WDI above)
-
----
-
-### WIPO — World Intellectual Property Organization
-- No standalone pipeline — patent and trademark data available via WDI (see WB_WDI above)
-
----
-
-### ILO_SOCIAL — ILO Social Security Coverage
-- No standalone pipeline — available via World Bank API (see WB_WDI above)
-
----
-
-### UNDP_HDI — UNDP Human Development Index
-- No standalone pipeline — sub-indicators available via WDI (see WB_WDI above)
-- Years of schooling not available via WDI — enrollment rates used as substitute
 
 ---
 
@@ -532,6 +489,16 @@ Reference information about each source's access method, URL patterns, and techn
 - URL: `https://ourworldindata.org/grapher/share-electricity-renewables.csv?v=1&csvType=full&useColumnShortNames=false`
 - Note: using share of electricity from renewables (%) as proxy for raw capacity (MW)
 - Coverage: 1990–2025, 226 countries
+
+---
+
+### IMF_IMAPP — IMF Integrated Macroprudential Policy Database
+- URL pattern: `https://www.elibrary-areaer.imf.org/Macroprudential/Documents/iMaPP_database-{YYYY}-{MM}-{DD}.zip`
+- Auto-detection: iterates dates backwards from today to find latest ZIP
+- Aggregated from monthly to annual country-year format
+- Indicators: tightening actions, loosening actions, net tightening, LTV average
+- Coverage: 1990–2024, 135 countries
+- Latest vintage: 2025-09-29
 
 ---
 

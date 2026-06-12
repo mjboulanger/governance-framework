@@ -23,3 +23,4 @@ POWELL_THYNE,2026-06-12,2026-06-12,2026-01,powell_thyne_clean.csv,V2026.01.13,,"
 UNODC_HOMICIDE,2026-06-12,2026-06-12,2024,unodc_clean.csv,2024,,"Homicide rate per 100,000. Downloaded via OWID historical panel. Coverage: 1990-2024, 208 countries."
 IRENA_CAPACITY,2026-06-12,2026-06-12,2025,irena_clean.csv,2025,,"Share of electricity from renewables (%). Downloaded via OWID. Original source: IRENA/Ember. Coverage: 1990-2025, 226 countries."
 WB_WDI,2026-05-29,2026-06-12,2026-04,wdi_clean.csv,2025,,34 service delivery indicators. Fetched one at a time to avoid API timeout. 266 economies including aggregates.
+IMF_IMAPP,2026-06-12,2026-06-12,2025-09,imapp_clean.csv,2025-09-29,,"Macroprudential policy tightening/loosening actions and LTV limits. Aggregated from monthly to annual. Auto-detects latest ZIP by date iteration. Coverage: 1990-2024, 135 countries."
