@@ -1,0 +1,675 @@
+country_name,year,civicus_score,civicus_rating
+Afghanistan,2022,30.15,Repressed
+Afghanistan,2023,12.16,Closed
+Afghanistan,2024,11.0,Closed
+Afghanistan,2025,7.68,Closed
+Albania,2023,69.33,Narrowed
+Albania,2024,64.0,Narrowed
+Albania,2025,68.21,Narrowed
+Algeria,2023,31.18,Repressed
+Algeria,2024,31.0,Repressed
+Algeria,2025,26.86,Repressed
+Andorra,2023,85.57,Open
+Andorra,2024,82.0,Open
+Andorra,2025,82.59,Open
+Angola,2023,35.08,Repressed
+Angola,2024,28.0,Repressed
+Angola,2025,23.97,Repressed
+Antigua and Barbuda,2023,78.82,Narrowed
+Antigua and Barbuda,2024,79.0,Narrowed
+Antigua and Barbuda,2025,71.12,Narrowed
+Argentina,2022,70.37,Narrowed
+Argentina,2023,68.84,Narrowed
+Argentina,2024,65.0,Narrowed
+Argentina,2025,59.3,Obstructed
+Armenia,2022,56.36,Obstructed
+Armenia,2023,63.96,Narrowed
+Armenia,2024,69.0,Narrowed
+Armenia,2025,66.06,Narrowed
+Australia,2023,80.05,Narrowed
+Australia,2024,76.0,Narrowed
+Australia,2025,80.48,Narrowed
+Austria,2023,86.25,Open
+Austria,2024,84.0,Open
+Austria,2025,82.83,Open
+Azerbaijan,2022,15.05,Closed
+Azerbaijan,2023,16.01,Closed
+Azerbaijan,2024,14.0,Closed
+Azerbaijan,2025,11.95,Closed
+Bahamas,2023,88.31,Open
+Bahamas,2024,87.0,Open
+Bahamas,2025,88.0,Open
+Bahrain,2022,12.02,Closed
+Bahrain,2023,15.48,Closed
+Bahrain,2024,18.0,Closed
+Bahrain,2025,16.62,Closed
+Bangladesh,2022,24.88,Repressed
+Bangladesh,2023,20.12,Closed
+Bangladesh,2024,24.0,Repressed
+Bangladesh,2025,29.13,Repressed
+Barbados,2023,94.98,Open
+Barbados,2024,95.0,Open
+Barbados,2025,89.85,Open
+Belarus,2022,16.32,Closed
+Belarus,2023,15.75,Closed
+Belarus,2024,10.0,Closed
+Belarus,2025,8.6,Closed
+Belgium,2023,78.54,Narrowed
+Belgium,2024,80.0,Narrowed
+Belgium,2025,77.42,Narrowed
+Belize,2022,66.53,Narrowed
+Belize,2023,72.81,Narrowed
+Belize,2024,75.0,Narrowed
+Belize,2025,78.5,Narrowed
+Benin,2023,47.28,Obstructed
+Benin,2024,51.0,Obstructed
+Benin,2025,48.8,Obstructed
+Bhutan,2023,52.67,Obstructed
+Bhutan,2024,50.0,Obstructed
+Bhutan,2025,50.74,Obstructed
+Bolivia,2023,51.65,Obstructed
+Bolivia,2024,51.0,Obstructed
+Bolivia,2025,50.14,Obstructed
+Bosnia & Herzegovina,2023,55.81,Obstructed
+Bosnia & Herzegovina,2024,57.0,Obstructed
+Bosnia & Herzegovina,2025,56.88,Obstructed
+Botswana,2022,53.62,Obstructed
+Botswana,2023,59.83,Obstructed
+Botswana,2024,69.0,Narrowed
+Botswana,2025,72.0,Narrowed
+Brazil,2022,43.11,Obstructed
+Brazil,2023,49.31,Obstructed
+Brazil,2024,52.0,Obstructed
+Brazil,2025,55.17,Obstructed
+Brunei Darussalam,2023,33.59,Repressed
+Brunei Darussalam,2024,35.0,Repressed
+Brunei Darussalam,2025,29.58,Repressed
+Bulgaria,2022,68.65,Narrowed
+Bulgaria,2023,69.81,Narrowed
+Bulgaria,2024,70.0,Narrowed
+Bulgaria,2025,65.48,Narrowed
+Burkina Faso,2023,45.56,Obstructed
+Burkina Faso,2024,34.0,Repressed
+Burkina Faso,2025,25.17,Repressed
+Burundi,2022,18.02,Closed
+Burundi,2023,27.69,Repressed
+Burundi,2024,23.0,Repressed
+Burundi,2025,12.12,Closed
+Cambodia,2023,31.47,Repressed
+Cambodia,2024,27.0,Repressed
+Cambodia,2025,27.02,Repressed
+Cameroon,2023,26.07,Repressed
+Cameroon,2024,26.0,Repressed
+Cameroon,2025,22.5,Repressed
+Canada,2022,82.84,Open
+Canada,2023,81.09,Open
+Canada,2024,82.0,Open
+Canada,2025,82.0,Open
+Cape Verde,2023,88.16,Open
+Cape Verde,2024,87.0,Open
+Cape Verde,2025,87.68,Open
+Central African Republic,2022,20.22,Closed
+Central African Republic,2023,30.91,Repressed
+Central African Republic,2024,33.0,Repressed
+Central African Republic,2025,34.83,Repressed
+Chad,2022,27.56,Repressed
+Chad,2023,25.06,Repressed
+Chad,2024,26.0,Repressed
+Chad,2025,30.75,Repressed
+Chile,2023,66.63,Narrowed
+Chile,2024,80.0,Narrowed
+Chile,2025,76.28,Narrowed
+China,2022,9.87,Closed
+China,2023,12.88,Closed
+China,2024,10.0,Closed
+China,2025,9.67,Closed
+Colombia,2022,31.02,Repressed
+Colombia,2023,36.82,Repressed
+Colombia,2024,38.0,Repressed
+Colombia,2025,40.0,Repressed
+Comoros,2023,45.96,Obstructed
+Comoros,2024,50.0,Obstructed
+Comoros,2025,56.19,Obstructed
+Costa Rica,2022,72.04,Narrowed
+Costa Rica,2023,80.16,Narrowed
+Costa Rica,2024,77.0,Narrowed
+Costa Rica,2025,78.06,Narrowed
+Croatia,2023,74.33,Narrowed
+Croatia,2024,74.0,Narrowed
+Croatia,2025,70.83,Narrowed
+Cuba,2022,12.99,Closed
+Cuba,2023,13.6,Closed
+Cuba,2024,16.0,Closed
+Cuba,2025,13.15,Closed
+Cyprus,2023,78.59,Narrowed
+Cyprus,2024,80.0,Narrowed
+Cyprus,2025,75.03,Narrowed
+Czech Republic,2023,89.73,Open
+Czech Republic,2024,86.0,Open
+Czech Republic,2025,86.85,Open
+Côte d'Ivoire,2023,53.5,Obstructed
+Côte d'Ivoire,2024,57.0,Obstructed
+Côte d'Ivoire,2025,52.96,Obstructed
+Democratic Republic of the Congo,2022,22.05,Repressed
+Democratic Republic of the Congo,2023,33.27,Repressed
+Democratic Republic of the Congo,2024,27.0,Repressed
+Democratic Republic of the Congo,2025,25.62,Repressed
+Denmark,2023,88.46,Open
+Denmark,2024,94.0,Open
+Denmark,2025,88.67,Open
+Djibouti,2022,14.15,Closed
+Djibouti,2023,19.58,Closed
+Djibouti,2024,19.0,Closed
+Djibouti,2025,12.48,Closed
+Dominica,2023,80.06,Narrowed
+Dominica,2024,78.0,Narrowed
+Dominica,2025,70.09,Narrowed
+Dominican Republic,2023,72.8,Narrowed
+Dominican Republic,2024,76.0,Narrowed
+Dominican Republic,2025,73.95,Narrowed
+Ecuador,2023,46.66,Obstructed
+Ecuador,2024,48.0,Obstructed
+Ecuador,2025,46.73,Obstructed
+Egypt,2023,17.97,Closed
+Egypt,2024,20.0,Closed
+Egypt,2025,17.83,Closed
+El Salvador,2022,50.99,Obstructed
+El Salvador,2023,45.99,Obstructed
+El Salvador,2024,45.0,Obstructed
+El Salvador,2025,35.15,Repressed
+Equatorial Guinea,2023,18.58,Closed
+Equatorial Guinea,2024,17.0,Closed
+Equatorial Guinea,2025,14.82,Closed
+Eritrea,2022,8.89,Closed
+Eritrea,2023,3.19,Closed
+Eritrea,2024,2.0,Closed
+Eritrea,2025,4.0,Closed
+Estonia,2023,93.4,Open
+Estonia,2024,91.0,Open
+Estonia,2025,95.81,Open
+Eswatini,2023,23.98,Repressed
+Eswatini,2024,19.0,Closed
+Eswatini,2025,15.43,Closed
+Ethiopia,2022,32.3,Repressed
+Ethiopia,2023,31.12,Repressed
+Ethiopia,2024,20.0,Closed
+Ethiopia,2025,20.49,Closed
+Fiji,2022,52.35,Obstructed
+Fiji,2023,56.4,Obstructed
+Fiji,2024,62.0,Narrowed
+Fiji,2025,64.7,Narrowed
+Finland,2023,95.25,Open
+Finland,2024,92.0,Open
+Finland,2025,88.92,Open
+France,2023,71.21,Narrowed
+France,2024,67.0,Narrowed
+France,2025,60.42,Obstructed
+Gabon,2023,39.92,Repressed
+Gabon,2024,40.0,Repressed
+Gabon,2025,53.84,Obstructed
+Gambia,2023,54.95,Obstructed
+Gambia,2024,51.0,Obstructed
+Gambia,2025,46.68,Obstructed
+Georgia,2022,67.92,Narrowed
+Georgia,2023,62.16,Narrowed
+Georgia,2024,54.0,Obstructed
+Georgia,2025,34.29,Repressed
+Germany,2023,75.67,Narrowed
+Germany,2024,67.0,Narrowed
+Germany,2025,60.25,Obstructed
+Ghana,2022,69.88,Narrowed
+Ghana,2023,54.55,Obstructed
+Ghana,2024,56.0,Obstructed
+Ghana,2025,60.28,Obstructed
+Greece,2022,61.56,Narrowed
+Greece,2023,57.7,Obstructed
+Greece,2024,57.0,Obstructed
+Greece,2025,51.18,Obstructed
+Grenada,2023,82.4,Open
+Grenada,2024,91.0,Open
+Grenada,2025,89.0,Open
+Guatemala,2022,46.3,Obstructed
+Guatemala,2023,38.58,Repressed
+Guatemala,2024,40.0,Repressed
+Guatemala,2025,40.31,Repressed
+Guinea,2022,25.31,Repressed
+Guinea,2023,25.75,Repressed
+Guinea,2024,30.0,Repressed
+Guinea,2025,28.71,Repressed
+Guinea Bissau,2023,49.23,Obstructed
+Guinea Bissau,2024,41.0,Obstructed
+Guinea Bissau,2025,43.53,Obstructed
+Guyana,2023,75.38,Narrowed
+Guyana,2024,73.0,Narrowed
+Guyana,2025,70.51,Narrowed
+Haiti,2023,37.14,Repressed
+Haiti,2024,39.0,Repressed
+Haiti,2025,34.24,Repressed
+Honduras,2022,33.53,Repressed
+Honduras,2023,35.81,Repressed
+Honduras,2024,37.0,Repressed
+Honduras,2025,38.03,Repressed
+Hong Kong,2022,30.06,Repressed
+Hong Kong,2023,20.39,Closed
+Hong Kong,2024,20.0,Closed
+Hong Kong,2025,15.86,Closed
+Hungary,2023,49.71,Obstructed
+Hungary,2024,46.0,Obstructed
+Hungary,2025,46.0,Obstructed
+Iceland,2023,86.66,Open
+Iceland,2024,89.0,Open
+Iceland,2025,85.5,Open
+India,2022,34.94,Repressed
+India,2023,31.38,Repressed
+India,2024,33.0,Repressed
+India,2025,30.0,Repressed
+Indonesia,2022,46.12,Obstructed
+Indonesia,2023,44.11,Obstructed
+Indonesia,2024,48.0,Obstructed
+Indonesia,2025,42.28,Obstructed
+Iran,2022,15.26,Closed
+Iran,2023,11.24,Closed
+Iran,2024,8.0,Closed
+Iran,2025,8.74,Closed
+Iraq,2022,20.91,Repressed
+Iraq,2023,18.97,Closed
+Iraq,2024,18.0,Closed
+Iraq,2025,17.59,Closed
+Ireland,2023,88.48,Open
+Ireland,2024,81.0,Open
+Ireland,2025,89.31,Open
+Israel,2023,50.55,Obstructed
+Israel,2024,47.0,Obstructed
+Israel,2025,39.32,Repressed
+Italy,2023,67.27,Narrowed
+Italy,2024,65.0,Narrowed
+Italy,2025,60.0,Obstructed
+Jamaica,2023,75.32,Narrowed
+Jamaica,2024,84.0,Open
+Jamaica,2025,83.94,Open
+Japan,2022,75.09,Narrowed
+Japan,2023,78.78,Narrowed
+Japan,2024,84.0,Open
+Japan,2025,87.72,Open
+Jordan,2023,39.78,Repressed
+Jordan,2024,39.0,Repressed
+Jordan,2025,31.0,Repressed
+Kazakhstan,2022,39.71,Repressed
+Kazakhstan,2023,27.29,Repressed
+Kazakhstan,2024,31.0,Repressed
+Kazakhstan,2025,30.48,Repressed
+Kenya,2022,41.95,Obstructed
+Kenya,2023,49.94,Obstructed
+Kenya,2024,37.0,Repressed
+Kenya,2025,31.14,Repressed
+Kiribati,2023,86.07,Open
+Kiribati,2024,91.0,Open
+Kiribati,2025,100.0,Open
+Kosovo,2023,71.43,Narrowed
+Kosovo,2024,62.0,Narrowed
+Kosovo,2025,67.0,Narrowed
+Kuwait,2022,34.97,Repressed
+Kuwait,2023,32.34,Repressed
+Kuwait,2024,27.0,Repressed
+Kuwait,2025,27.97,Repressed
+Kyrgyzstan,2023,39.67,Repressed
+Kyrgyzstan,2024,36.0,Repressed
+Kyrgyzstan,2025,32.19,Repressed
+Laos,2023,6.39,Closed
+Laos,2024,6.0,Closed
+Laos,2025,5.42,Closed
+Latvia,2023,89.3,Open
+Latvia,2024,86.0,Open
+Latvia,2025,85.58,Open
+Lebanon,2023,46.78,Obstructed
+Lebanon,2024,44.0,Obstructed
+Lebanon,2025,50.0,Obstructed
+Lesotho,2023,52.39,Obstructed
+Lesotho,2024,52.0,Obstructed
+Lesotho,2025,59.67,Obstructed
+Liberia,2023,48.92,Obstructed
+Liberia,2024,63.0,Narrowed
+Liberia,2025,54.84,Obstructed
+Libya,2023,29.39,Repressed
+Libya,2024,28.0,Repressed
+Libya,2025,27.0,Repressed
+Liechtenstein,2023,93.06,Open
+Liechtenstein,2024,95.0,Open
+Liechtenstein,2025,91.58,Open
+Lithuania,2023,91.14,Open
+Lithuania,2024,83.0,Open
+Lithuania,2025,85.1,Open
+Luxembourg,2023,89.72,Open
+Luxembourg,2024,94.0,Open
+Luxembourg,2025,93.68,Open
+Madagascar,2023,46.84,Obstructed
+Madagascar,2024,41.0,Obstructed
+Madagascar,2025,34.85,Repressed
+Malawi,2022,46.85,Obstructed
+Malawi,2023,60.09,Obstructed
+Malawi,2024,58.0,Obstructed
+Malawi,2025,49.78,Obstructed
+Malaysia,2022,44.5,Obstructed
+Malaysia,2023,45.65,Obstructed
+Malaysia,2024,50.0,Obstructed
+Malaysia,2025,49.74,Obstructed
+Maldives,2022,49.75,Obstructed
+Maldives,2023,44.23,Obstructed
+Maldives,2024,51.0,Obstructed
+Maldives,2025,50.18,Obstructed
+Mali,2023,31.89,Repressed
+Mali,2024,30.0,Repressed
+Mali,2025,26.39,Repressed
+Malta,2023,79.91,Narrowed
+Malta,2024,80.0,Narrowed
+Malta,2025,77.99,Narrowed
+Marshall Islands,2023,92.78,Open
+Marshall Islands,2024,96.0,Open
+Marshall Islands,2025,89.68,Open
+Mauritania,2023,38.88,Repressed
+Mauritania,2024,40.0,Repressed
+Mauritania,2025,43.64,Obstructed
+Mauritius,2023,77.3,Narrowed
+Mauritius,2024,76.0,Narrowed
+Mauritius,2025,77.14,Narrowed
+Mexico,2022,31.44,Repressed
+Mexico,2023,40.21,Repressed
+Mexico,2024,40.0,Repressed
+Mexico,2025,40.01,Repressed
+Micronesia,2023,89.68,Open
+Micronesia,2024,90.0,Open
+Micronesia,2025,89.68,Open
+Moldova,2023,75.22,Narrowed
+Moldova,2024,71.0,Narrowed
+Moldova,2025,72.08,Narrowed
+Monaco,2023,90.71,Open
+Monaco,2024,91.0,Open
+Monaco,2025,87.62,Open
+Mongolia,2022,65.29,Narrowed
+Mongolia,2023,66.99,Narrowed
+Mongolia,2024,60.0,Obstructed
+Mongolia,2025,59.33,Obstructed
+Montenegro,2023,78.14,Narrowed
+Montenegro,2024,76.0,Narrowed
+Montenegro,2025,76.59,Narrowed
+Morocco,2023,45.11,Obstructed
+Morocco,2024,43.0,Obstructed
+Morocco,2025,41.65,Obstructed
+Mozambique,2023,39.35,Repressed
+Mozambique,2024,39.0,Repressed
+Mozambique,2025,27.28,Repressed
+Myanmar,2022,32.77,Repressed
+Myanmar,2023,11.11,Closed
+Myanmar,2024,10.0,Closed
+Myanmar,2025,10.09,Closed
+Namibia,2022,71.66,Narrowed
+Namibia,2023,70.94,Narrowed
+Namibia,2024,80.0,Narrowed
+Namibia,2025,80.15,Narrowed
+Nauru,2023,59.78,Obstructed
+Nauru,2024,59.0,Obstructed
+Nauru,2025,60.0,Obstructed
+Nepal,2023,41.23,Obstructed
+Nepal,2024,50.0,Obstructed
+Nepal,2025,47.55,Obstructed
+Netherlands,2023,81.78,Open
+Netherlands,2024,76.0,Narrowed
+Netherlands,2025,75.29,Narrowed
+New Zealand,2023,90.5,Open
+New Zealand,2024,89.0,Open
+New Zealand,2025,92.24,Open
+Nicaragua,2022,19.86,Closed
+Nicaragua,2023,9.07,Closed
+Nicaragua,2024,8.0,Closed
+Nicaragua,2025,5.0,Closed
+Niger,2022,40.79,Obstructed
+Niger,2023,34.84,Repressed
+Niger,2024,36.0,Repressed
+Niger,2025,31.66,Repressed
+Nigeria,2022,35.37,Repressed
+Nigeria,2023,31.92,Repressed
+Nigeria,2024,31.0,Repressed
+Nigeria,2025,36.23,Repressed
+North Korea,2022,4.53,Closed
+North Korea,2023,2.97,Closed
+North Korea,2024,3.0,Closed
+North Korea,2025,2.17,Closed
+North Macedonia,2023,71.39,Narrowed
+North Macedonia,2024,74.0,Narrowed
+North Macedonia,2025,69.17,Narrowed
+Norway,2023,93.64,Open
+Norway,2024,97.0,Open
+Norway,2025,98.1,Open
+Occupied Palestinian Territories,2023,23.34,Repressed
+Occupied Palestinian Territories,2024,13.0,Closed
+Occupied Palestinian Territories,2025,12.55,Closed
+Oman,2022,28.96,Repressed
+Oman,2023,21.95,Repressed
+Oman,2024,23.0,Repressed
+Oman,2025,19.46,Closed
+Pakistan,2023,26.74,Repressed
+Pakistan,2024,28.0,Repressed
+Pakistan,2025,24.4,Repressed
+Palau,2023,92.78,Open
+Palau,2024,96.0,Open
+Palau,2025,89.68,Open
+Panama,2022,68.06,Narrowed
+Panama,2023,69.66,Narrowed
+Panama,2024,71.0,Narrowed
+Panama,2025,73.2,Narrowed
+Papua New Guinea,2022,56.12,Obstructed
+Papua New Guinea,2023,59.57,Obstructed
+Papua New Guinea,2024,54.0,Obstructed
+Papua New Guinea,2025,53.51,Obstructed
+Paraguay,2022,56.44,Obstructed
+Paraguay,2023,52.41,Obstructed
+Paraguay,2024,56.0,Obstructed
+Paraguay,2025,51.62,Obstructed
+Peru,2023,42.88,Obstructed
+Peru,2024,40.0,Repressed
+Peru,2025,39.75,Repressed
+Philippines,2022,28.94,Repressed
+Philippines,2023,31.08,Repressed
+Philippines,2024,34.0,Repressed
+Philippines,2025,37.83,Repressed
+Poland,2023,55.51,Obstructed
+Poland,2024,66.0,Narrowed
+Poland,2025,69.0,Narrowed
+Portugal,2023,86.54,Open
+Portugal,2024,83.0,Open
+Portugal,2025,81.0,Open
+Qatar,2022,32.55,Repressed
+Qatar,2023,26.65,Repressed
+Qatar,2024,29.0,Repressed
+Qatar,2025,21.1,Repressed
+Republic of the Congo,2022,32.74,Repressed
+Republic of the Congo,2023,33.2,Repressed
+Republic of the Congo,2024,30.0,Repressed
+Republic of the Congo,2025,28.42,Repressed
+Romania,2023,73.1,Narrowed
+Romania,2024,70.0,Narrowed
+Romania,2025,61.24,Narrowed
+Russia,2022,28.06,Repressed
+Russia,2023,17.49,Closed
+Russia,2024,14.0,Closed
+Russia,2025,12.91,Closed
+Rwanda,2022,23.71,Repressed
+Rwanda,2023,22.81,Repressed
+Rwanda,2024,25.0,Repressed
+Rwanda,2025,24.96,Repressed
+Saint Lucia,2023,88.31,Open
+Saint Lucia,2024,88.0,Open
+Saint Lucia,2025,81.43,Open
+Samoa,2024,81.85,Open
+Samoa,2025,81.0,Open
+San Marino,2023,96.9,Open
+San Marino,2024,97.0,Open
+San Marino,2025,93.81,Open
+Sao Tome and Principe,2023,82.15,Open
+Sao Tome and Principe,2024,82.0,Open
+Sao Tome and Principe,2025,88.2,Open
+Saudi Arabia,2022,14.23,Closed
+Saudi Arabia,2023,3.94,Closed
+Saudi Arabia,2024,4.0,Closed
+Saudi Arabia,2025,4.69,Closed
+Senegal,2022,49.8,Obstructed
+Senegal,2023,31.04,Repressed
+Senegal,2024,40.0,Repressed
+Senegal,2025,46.91,Obstructed
+Serbia,2023,55.94,Obstructed
+Serbia,2024,49.0,Obstructed
+Serbia,2025,38.15,Repressed
+Seychelles,2023,75.57,Narrowed
+Seychelles,2024,75.0,Narrowed
+Seychelles,2025,80.0,Narrowed
+Sierra Leone,2022,51.61,Obstructed
+Sierra Leone,2023,46.56,Obstructed
+Sierra Leone,2024,48.0,Obstructed
+Sierra Leone,2025,44.22,Obstructed
+Singapore,2022,38.81,Repressed
+Singapore,2023,28.38,Repressed
+Singapore,2024,31.0,Repressed
+Singapore,2025,30.49,Repressed
+Slovakia,2023,80.33,Narrowed
+Slovakia,2024,79.0,Narrowed
+Slovakia,2025,67.15,Narrowed
+Slovenia,2023,70.39,Narrowed
+Slovenia,2024,84.0,Open
+Slovenia,2025,85.06,Open
+Solomon Islands,2023,67.55,Narrowed
+Solomon Islands,2024,69.0,Narrowed
+Solomon Islands,2025,69.0,Narrowed
+Somalia,2022,28.88,Repressed
+Somalia,2023,29.48,Repressed
+Somalia,2024,28.0,Repressed
+Somalia,2025,28.18,Repressed
+Somaliland,2023,34.66,Repressed
+Somaliland,2024,40.0,Repressed
+Somaliland,2025,33.73,Repressed
+South Africa,2022,59.4,Obstructed
+South Africa,2023,54.82,Obstructed
+South Africa,2024,60.0,Obstructed
+South Africa,2025,59.79,Obstructed
+South Korea,2023,78.86,Narrowed
+South Korea,2024,73.0,Narrowed
+South Korea,2025,72.93,Narrowed
+South Sudan,2022,20.92,Repressed
+South Sudan,2023,25.15,Repressed
+South Sudan,2024,25.0,Repressed
+South Sudan,2025,21.0,Repressed
+Spain,2023,69.14,Narrowed
+Spain,2024,72.0,Narrowed
+Spain,2025,67.73,Narrowed
+Sri Lanka,2022,45.53,Obstructed
+Sri Lanka,2023,31.27,Repressed
+Sri Lanka,2024,37.0,Repressed
+Sri Lanka,2025,40.29,Repressed
+St Kitts and Nevis,2023,82.81,Open
+St Kitts and Nevis,2024,85.0,Open
+St Kitts and Nevis,2025,89.68,Open
+St Vincent and the Grenadines,2023,83.77,Open
+St Vincent and the Grenadines,2024,91.0,Open
+St Vincent and the Grenadines,2025,87.62,Open
+Sudan,2023,21.08,Repressed
+Sudan,2024,21.0,Repressed
+Sudan,2025,9.03,Closed
+Suriname,2023,77.38,Narrowed
+Suriname,2024,77.0,Narrowed
+Suriname,2025,80.0,Narrowed
+Sweden,2023,85.05,Open
+Sweden,2024,87.0,Open
+Sweden,2025,81.0,Open
+Switzerland,2023,84.92,Open
+Switzerland,2024,82.0,Open
+Switzerland,2025,78.36,Narrowed
+Syria,2022,6.05,Closed
+Syria,2023,6.17,Closed
+Syria,2024,6.0,Closed
+Syria,2025,6.26,Closed
+Taiwan,2023,81.92,Open
+Taiwan,2024,82.0,Open
+Taiwan,2025,87.92,Open
+Tajikistan,2023,11.61,Closed
+Tajikistan,2024,11.0,Closed
+Tajikistan,2025,9.95,Closed
+Tanzania,2022,34.93,Repressed
+Tanzania,2023,32.37,Repressed
+Tanzania,2024,36.0,Repressed
+Tanzania,2025,26.23,Repressed
+Thailand,2023,35.69,Repressed
+Thailand,2024,39.0,Repressed
+Thailand,2025,34.24,Repressed
+Timor-Leste,2022,60.0,Obstructed
+Timor-Leste,2023,68.6,Narrowed
+Timor-Leste,2024,71.0,Narrowed
+Timor-Leste,2025,71.97,Narrowed
+Togo,2022,30.17,Repressed
+Togo,2023,38.82,Repressed
+Togo,2024,38.0,Repressed
+Togo,2025,29.29,Repressed
+Tonga,2022,77.6,Narrowed
+Tonga,2023,76.85,Narrowed
+Tonga,2024,78.0,Narrowed
+Tonga,2025,80.03,Narrowed
+Trinidad and Tobago,2023,76.13,Narrowed
+Trinidad and Tobago,2024,83.0,Open
+Trinidad and Tobago,2025,83.96,Open
+Tunisia,2023,37.21,Repressed
+Tunisia,2024,37.0,Repressed
+Tunisia,2025,33.85,Repressed
+Turkey,2023,27.39,Repressed
+Turkey,2024,24.0,Repressed
+Turkey,2025,22.76,Repressed
+Turkmenistan,2023,7.84,Closed
+Turkmenistan,2024,9.0,Closed
+Turkmenistan,2025,4.42,Closed
+Tuvalu,2023,90.71,Open
+Tuvalu,2024,91.0,Open
+Tuvalu,2025,87.62,Open
+Uganda,2022,28.98,Repressed
+Uganda,2023,29.54,Repressed
+Uganda,2024,30.0,Repressed
+Uganda,2025,27.97,Repressed
+Ukraine,2022,47.31,Obstructed
+Ukraine,2023,44.57,Obstructed
+Ukraine,2024,50.0,Obstructed
+Ukraine,2025,52.4,Obstructed
+United Arab Emirates,2022,14.5,Closed
+United Arab Emirates,2023,15.05,Closed
+United Arab Emirates,2024,11.0,Closed
+United Arab Emirates,2025,9.0,Closed
+United Kingdom,2023,57.51,Obstructed
+United Kingdom,2024,60.0,Obstructed
+United Kingdom,2025,59.5,Obstructed
+United States of America,2022,57.84,Obstructed
+United States of America,2023,65.33,Narrowed
+United States of America,2024,62.0,Narrowed
+United States of America,2025,56.4,Obstructed
+Uruguay,2023,84.45,Open
+Uruguay,2024,88.0,Open
+Uruguay,2025,84.46,Open
+Uzbekistan,2023,18.39,Closed
+Uzbekistan,2024,20.0,Closed
+Uzbekistan,2025,17.96,Closed
+Vanuatu,2022,74.25,Narrowed
+Vanuatu,2023,75.22,Narrowed
+Vanuatu,2024,78.0,Narrowed
+Vanuatu,2025,68.54,Narrowed
+Venezuela,2023,20.32,Closed
+Venezuela,2024,16.0,Closed
+Venezuela,2025,14.24,Closed
+Vietnam,2022,16.12,Closed
+Vietnam,2023,13.45,Closed
+Vietnam,2024,10.0,Closed
+Vietnam,2025,13.1,Closed
+Yemen,2022,11.64,Closed
+Yemen,2023,11.57,Closed
+Yemen,2024,14.0,Closed
+Yemen,2025,13.11,Closed
+Zambia,2023,52.66,Obstructed
+Zambia,2024,52.0,Obstructed
+Zambia,2025,53.25,Obstructed
+Zimbabwe,2022,31.21,Repressed
+Zimbabwe,2023,29.74,Repressed
+Zimbabwe,2024,30.0,Repressed
+Zimbabwe,2025,28.48,Repressed

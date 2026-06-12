@@ -103,7 +103,6 @@ Within each category, sources are ordered by number of indicators used in the fr
 | IMF_FISCAL_RULES | IMF Fiscal Rules Database | Irregular (~2-3yr) |
 | IMF_AREAER | IMF AREAER | Annual |
 | IDEA_PARTIP | IDEA Global State of Democracy | Annual |
-| CIVICUS | CIVICUS Monitor | Annual |
 | CLIMATE_LAWS | LSE Grantham / Climate Policy Radar | Continuous |
 | PEW_GRI | Pew GRI / SHI | Annual |
 | RSF_WPFI | RSF World Press Freedom Index | Annual (optional cross-check only) |
@@ -147,6 +146,7 @@ Within each category, sources are ordered by number of indicators used in the fr
 | YALE_EPI | Yale EPI | Biennial | Active |
 | WB_CARBON | World Bank Carbon Pricing Dashboard | Annual | Active |
 | DPI | Database of Political Institutions | Annual | Active |
+| CIVICUS | CIVICUS Monitor | Annual | Active |
 | ACLED | ACLED | Continuous | Pending Research tier |
 | BASEL_AML | Basel AML Index | Annual | Pending Expert Edition access |
 | WJP | WJP Rule of Law Index | Annual | Active |
@@ -305,6 +305,16 @@ Sources with no manual steps are omitted from this section.
 
 ---
 
+### CIVICUS — CIVICUS Monitor
+**Normally:** No action required — fully automated via CIVICUS REST API.
+
+**If pipeline fails:**
+1. Go to: https://monitor.civicus.org
+2. Navigate to Data Centre and download ratings data
+3. Place in `data/raw/` and update pipeline to load locally
+
+---
+
 ### ACLED — Armed Conflict Location and Event Data
 **Status:** Pending Research tier approval — pipeline not yet active.
 
@@ -344,14 +354,6 @@ Sources with no manual steps are omitted from this section.
 **Every 2 years:**
 1. Go to: https://odin.opendatawatch.com/data
 2. Click "Download complete data for all available countries, years, and indicators"
-3. Place in `data/raw/` and run pipeline notebook
-
----
-
-### CIVICUS — CIVICUS Monitor
-**Every year:**
-1. Go to: https://monitor.civicus.org
-2. Navigate to Data Centre and download ratings data
 3. Place in `data/raw/` and run pipeline notebook
 
 ---
@@ -444,7 +446,7 @@ Sources with no manual steps are omitted from this section.
 ### QOG — Quality of Government Standard Time-Series
 - URL pattern: `https://www.qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`
 - Sources covered: KOF_TRADE (dr_eg proxy), PTS, OBS, ND_GAIN, BCI, HANSON_SIGMAN, CCP, PEI, GPI, WB_INFORMAL, ROMELLI_CBI
-- See docs/framework_decisions.md for KOF mismatch and CCP gap details
+- See docs/framework_decisions.md for details
 
 ---
 
@@ -493,6 +495,16 @@ Sources with no manual steps are omitted from this section.
 - Auto-detects latest version by iterating years backwards
 - 31 variables: government composition, fragmentation, checks/balances, electoral system
 - Coverage: 1975–2023, 182 countries
+
+---
+
+### CIVICUS — CIVICUS Monitor
+- Access: REST API — `monitor.civicus.org/api/countries/`
+- No registration required
+- Returns all countries with full ratings history; latest rating per year retained
+- 5-point categorical rating: Open/Narrowed/Obstructed/Repressed/Closed
+- Note: API only returns data from 2022 — historical data pre-2022 not accessible via API
+- Coverage: 199 countries, 2022–present, annual
 
 ---
 
