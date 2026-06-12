@@ -5,7 +5,6 @@ FH_FIW,2026-05-21,2026-05-21,2025,fh_fiw_clean.csv,2025,,"Sub-categories A, D, E
 TI_CPI,2026-05-21,2026-05-21,2024,ti_cpi_clean.csv,2024,,Downloaded from Our World in Data (OWID) historical panel. Source: TI CPI via OWID API. Covers 2012-present. TI direct files are password protected.
 IMF_SPI,2026-05-31,2026-05-31,2026-04,spi_clean.csv,2024,,6 SPI indicators — overall score plus 5 pillars. Full coverage from 2016; partial from 2004. 221 countries.
 UCDP,2026-06-01,2026-06-01,2024,ucdp_clean.csv,25.1,,"Country-year organized violence dataset. 16 indicators across state-based, non-state, and one-sided violence. Auto-detects latest version. Coverage: 1989-2024, 199 countries."
-WB_WDI,2026-05-29,2026-06-01,2026-04,wdi_clean.csv,2025,,32 service delivery indicators. Fetched one at a time to avoid API timeout. 266 economies including aggregates.
 FSI,2026-05-21,2026-06-02,2023,fsi_clean.csv,2023,,"Indicators C1, C2, C3, P2. All years scraped and stacked automatically. Latest on page: 2023. 2024/2025 not yet available."
 FRASER_REG,2026-06-02,2026-06-03,2023,fraser_clean.csv,EFW 2025,,"Areas 2 (Legal System), 4 (Trade Freedom), 5 (Regulation). Auto-detects latest annual report page. Panel dataset chain-linked. Coverage: 1990-2023, 165 countries. Annual from 2000, quinquennial before."
 FRASER_LEGAL,2026-06-02,2026-06-03,2023,fraser_clean.csv,EFW 2025,,Same file as FRASER_REG — fraser_clean.csv. Area 2: Legal System and Property Rights.
@@ -23,3 +22,4 @@ WB_INFORMAL,2026-06-07,2026-06-07,2020,qog_clean.csv,QoG Jan26,,"Sourced via QoG
 POWELL_THYNE,2026-06-12,2026-06-12,2026-01,powell_thyne_clean.csv,V2026.01.13,,"Country-year coup data. Variables: successful, failed, alleged, auto-coup. Coverage: 1950-2025, 204 countries. Version auto-detected from data."
 UNODC_HOMICIDE,2026-06-12,2026-06-12,2024,unodc_clean.csv,2024,,"Homicide rate per 100,000. Downloaded via OWID historical panel. Coverage: 1990-2024, 208 countries."
 IRENA_CAPACITY,2026-06-12,2026-06-12,2025,irena_clean.csv,2025,,"Share of electricity from renewables (%). Downloaded via OWID. Original source: IRENA/Ember. Coverage: 1990-2025, 226 countries."
+WB_WDI,2026-05-29,2026-06-12,2026-04,wdi_clean.csv,2025,,34 service delivery indicators. Fetched one at a time to avoid API timeout. 266 economies including aggregates.
