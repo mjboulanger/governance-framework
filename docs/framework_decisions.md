@@ -22,11 +22,11 @@ The following sources were originally listed as standalone pipelines in the mast
 | UNDP HDI | Life expectancy, GNI per capita PPP | SP.DYN.LE00.IN, NY.GNP.PCAP.PP.CD |
 | WB TARIFFS | Tariff rate applied, simple mean and weighted mean | TM.TAX.MRCH.SM.AR.ZS, TM.TAX.MRCH.WM.AR.ZS |
 
-**Note on WB WBL:** Old WBL 1.0 indicator codes (SG.LAW.INDX series) were archived by World Bank in 2024. New WBL 2.0 codes used instead.
+**Note on WB WBL:** Old WBL 1.0 indicator codes (SG.LAW.INDX series) archived by World Bank in 2024. New WBL 2.0 codes used instead.
 
 **Note on WB HCI:** Standard HCI (HD.HCI.OVRL) not available via API. HCI+ (HD_HCIP_OVRL_TO) used as substitute.
 
-**Note on WB TARIFFS:** WB tariff data (Primary tier 1 for Trade governance) was missing from original pipeline — added in June 2026. Both simple mean and weighted mean retained.
+**Note on WB TARIFFS:** Was missing from original pipeline — added June 2026. Both simple mean and weighted mean retained.
 
 ---
 
@@ -47,17 +47,17 @@ The following sources are available via the QoG Standard Time-Series dataset. On
 | WB_INFORMAL | ied_mimic, ied_dge | Informal economy size % GDP; coverage 1990-2020 |
 | ROMELLI_CBI | cbie_index, cbie_policy, cbie_lending | Coverage: 1923-2023, 155 countries |
 | POLITY5 | p_polity2, p_durable | Supplementary. Coverage: 1946-2020. Polity project not updated since ~2018 — QoG version as current as source |
-| NELDA | nelda_fme, nelda_mbbe, nelda_mtop, nelda_noe, nelda_noea, nelda_noel, nelda_oa, nelda_rpae, nelda_vcdbe, nelda_noee | Per-election cadence, ~2000-2020. NELDA latest release is 2020 |
+| NELDA | nelda_fme, nelda_mbbe, nelda_mtop, nelda_noe, nelda_noea, nelda_noel, nelda_oa, nelda_rpae, nelda_vcdbe, nelda_noee | Per-election cadence, ~2000-2020. Latest release is 2020 |
 
-**QoG version:** Jan 2026 (`qog_std_ts_jan26.csv`). Updated annually, direct CSV download, no registration required. URL pattern: `https://www.qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`.
+**QoG version:** Jan 2026. Updated annually, direct CSV download, no registration required. URL pattern: `https://www.qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`.
 
-**⚠️ KOF_TRADE mismatch:** Master PDF specifies "KOF Globalisation Index — Trade Globalization subindex." QoG only has `dr_eg` (KOF Economic Globalisation — combines trade and financial). Trade-specific sub-index not in QoG. Decision: use `dr_eg` as proxy, flag at metric pass. Fraser Area 4 retained as additional trade openness source.
+**⚠️ KOF_TRADE mismatch:** Master PDF specifies KOF Trade Globalization subindex. QoG only has `dr_eg` (KOF Economic Globalisation — combines trade and financial). Decision: use `dr_eg` as proxy, flag at metric pass. Fraser Area 4 retained as additional trade openness source.
 
-**CCP gap:** QoG includes only 18 CCP variables. Judicial independence and separation of powers sub-dimensions not clearly captured. Mitigation: V-Dem judicial independence indicators (Primary tier 1) cover these dimensions with better quality anyway.
+**CCP gap:** QoG includes only 18 CCP variables. Judicial independence and separation of powers sub-dimensions not clearly captured. Mitigation: V-Dem judicial indicators cover these dimensions with better quality.
 
 ---
 
-### Sources Deprioritized — Coverage Superseded
+### Sources Deprioritized — Coverage Superseded or Stale
 
 | Source | Decision | Rationale |
 |--------|----------|-----------|
@@ -66,6 +66,7 @@ The following sources are available via the QoG Standard Time-Series dataset. On
 | Heritage TR | Deprioritized | Fraser Area 4 supersedes. |
 | Heritage PR | Deprioritized | Fraser Area 2 + WJP + V-Dem supersede. |
 | DINCER_CB | Deprioritized | Stale (latest data 2019). Romelli CBI in QoG (2023) covers same concept with more recent data. |
+| LINZER_STATON | Deprioritized | Stale (latest update 2015, covers to 2015). IDEA GSoD explicitly notes it has been discontinued. V-Dem has v2juhcind, v2juncind, v2jucomp, v2jupack, v2jupurge — current to 2025 and purpose-built for judicial independence. V-Dem fully supersedes. |
 
 **On Fraser vs Heritage:** Fraser is academically preferred — peer-reviewed methodology, transparent weights, chain-linked series. Heritage is a policy advocacy product. Where they overlap, Fraser is used.
 
@@ -86,8 +87,12 @@ The following sources are available via the QoG Standard Time-Series dataset. On
 | OECD_TFI | JS-rendered simulator only — no API, not in OECD SDMX system | Manual Category 4 |
 | IMF Fiscal Rules | DataMapper blocked, no direct Excel URL | Manual Category 4 |
 | IMF AREAER | Portal-based, no direct download | Manual Category 4 |
+| UNCTAD_NTM | Bulk download API returns 403; TRAINS portal is JS-rendered | Manual Category 4 |
+| RTI_RATING | JS-rendered wpdatatables table; AJAX endpoint requires auth token | Manual Category 4 |
+| REINHART_ROGOFF | No stable direct download URL found; data only to 2016 | Manual Category 4 — low priority |
+| CIVICUS pre-2022 | CIVICUS API only returns data from 2022; pre-2022 not accessible | Historical gap — accepted |
 
-**Basel AML note:** Expert Edition free for public-sector, multilateral, non-profit, and academic organisations. Personal email not eligible. If institutional affiliation obtained: apply at index.baselgovernance.org/subscription. Alternative: FATF scraper (Category 3).
+**Basel AML note:** Expert Edition free for institutional users. Personal email not eligible. Alternative: FATF scraper (Category 3).
 
 ---
 
@@ -137,13 +142,16 @@ Master PDF incorrectly labels C2 as "P1" and C3 as "S1". Pipeline correctly uses
 Master PDF specifies "property sub-components only" for Property rights. We pull full Area 2 aggregate. Metric-level pass decision — select property-specific sub-components at that stage.
 
 ### EPI cross-sectional limitation
-Yale EPI only makes 2022 and 2024 editions available for download. No full time series accessible. Pipeline stacks both editions on 8 consistent sub-indices. 2024-only sub-indices (MKP, MPE, MHP) are NaN for 2022 rows.
+Yale EPI only makes 2022 and 2024 editions available for download. Pipeline stacks both editions on 8 consistent sub-indices. 2024-only sub-indices (MKP, MPE, MHP) are NaN for 2022 rows. Methodology differs between editions — limited comparability.
 
 ### IRENA proxy
 Master PDF calls for IRENA Renewables Capacity Statistics (MW). Using share of electricity from renewables (%) as proxy — more interpretable cross-country, normalises for country size.
 
 ### WB TARIFFS gap resolved
-Master PDF lists "World Bank tariff data (WITS/WDI)" as Primary tier 1 for Trade governance. Was missing from original WDI pipeline. Added in June 2026: TM.TAX.MRCH.SM.AR.ZS (simple mean) and TM.TAX.MRCH.WM.AR.ZS (weighted mean).
+Was missing from original WDI pipeline. Added June 2026: TM.TAX.MRCH.SM.AR.ZS and TM.TAX.MRCH.WM.AR.ZS.
+
+### Polity5 and NELDA staleness
+Both have latest data at 2020 in QoG. This reflects the source datasets themselves — Polity project not updated since ~2018, NELDA latest release is 2020. QoG version is as current as the direct source. Both added to QoG pipeline at no marginal cost.
 
 ---
 
@@ -178,14 +186,13 @@ Master PDF lists "World Bank tariff data (WITS/WDI)" as Primary tier 1 for Trade
 
 - KOF_TRADE: build separate KOF pipeline for trade sub-index vs accept dr_eg proxy — decision pending
 - ACLED: complete pipeline once Research tier approved
-- BASEL_AML: complete once Expert Edition access obtained (requires institutional affiliation)
+- BASEL_AML: complete once Expert Edition access obtained
 - Concept 25 (Government transparency): reconsider before finalizing — significant indicator overlap
 - SOE Governance (Concept 10): deferred to v2
 - EPI sub-components: specific policy/institutional sub-components to select at metric pass
-- IDEA EMB Database: not same as QoG ideaesd_* variables — evaluate at metric pass
+- IDEA EMB Database: evaluate at metric pass
 - Category 3 web scrapes not yet built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
-- Category 4 manual pipelines not yet built: OECD_TFI, IMF_FISCAL_RULES, IMF_AREAER, CLIMATE_LAWS, ODIN, IRENA_POLICY, IDEA_PARTIP, PEW_GRI
-- Category 5 irregular pipelines not yet built: REINHART_ROGOFF, LINZER_STATON, RTI_RATING, TI_POLFINANCE, GLOBAL_DATA_BAROMETER, UNCTAD_NTM
+- Category 4 manual pipelines not yet built: OECD_TFI, IMF_FISCAL_RULES, IMF_AREAER, CLIMATE_LAWS, ODIN, IRENA_POLICY, IDEA_PARTIP, PEW_GRI, RTI_RATING, TI_POLFINANCE, GLOBAL_DATA_BAROMETER, UNCTAD_NTM, REINHART_ROGOFF
 - Category 1 PDF extraction not yet built: PEFA, IMF_FSAP, ICNL
 
 ---
