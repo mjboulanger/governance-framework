@@ -175,21 +175,17 @@ Only sources requiring manual action are listed. Automated sources need no actio
 1. Go to: https://climate-laws.org and complete the data download request form (free)
 2. Download the CSV (delivered via link)
 3. Save to Downloads folder (replacing any older copy)
-4. Pipeline pending build
+4. Re-run `notebooks/exploration/26_climate_laws_pipeline.ipynb` — auto-detects Document_Data_Download*.csv by glob; no manual edit needed
 
 ### ODIN — Open Data Inventory
 **On each update:**
 1. Go to: https://odin.opendatawatch.com/data
 2. Download complete data (delivered as a ZIP of per-year Excel files)
-3. Save to Downloads folder (replacing any older copy)
-4. Pipeline pending build
+3. Save to Downloads folder (replacing any older copy). **Keep only the current ODIN ZIP in Downloads** — the pipeline globs *data*.zip and validates by contents, so a stale ODIN ZIP could be ambiguous.
+4. Re-run `notebooks/exploration/27_odin_pipeline.ipynb` — auto-detects the ZIP, stacks per-edition Excels; no manual edit needed
 
-### IRENA_POLICY — IRENA Renewable Energy Policies
-**On each update:**
-1. Go to: https://www.irena.org/Data/Downloads/Tools
-2. Download the Renewable Energy Policy stats tool (.xlsb)
-3. Save to Downloads folder (replacing any older copy)
-4. Pipeline pending build (requires `pyxlsb` engine)
+### IRENA_POLICY — DEPRIORITIZED (not built)
+No clean downloadable renewable-policy dataset exists. The IRENA "Stats Tool" .xlsb is renewable STATISTICS (capacity/generation/finance), not policy. IRENA's renewable-policy work is report-based analysis. The only structured renewable-policy data is the joint IEA/IRENA Policies & Measures DB (api.iea.org/policies?csv=true), which has no clean renewable filter and would duplicate Climate Laws. DEFERRED: IRENA national renewable-energy TARGETS via the planned PDF-extraction infrastructure.
 
 ### WB_CARBON — World Bank Carbon Pricing Dashboard
 **Normally:** No action required — fully automated (auto-detects latest month-stamped xlsx).
@@ -281,5 +277,11 @@ Manual ZIP. Auto-detects `Global-Restrictions-on-Religion*.zip`, extracts CSV. H
 Manual Excel. Auto-detects `*Fiscal Rules*.xlsx`. Robust NAME-BASED column selection from the 4-row nested header (composite keys: parent rows forward-filled, leaf row un-filled; substring match; fails loudly on rename). Presence + quality (legal basis 1-5, enforcement, compliance, monitoring, correction). **MANUAL UPDATE only if IMF renames a header section** — selector will raise a clear error.
 
 ---
+
+### CLIMATE_LAWS
+Manual CSV (free registration) from climate-laws.org. Auto-detects Document_Data_Download*.csv in Downloads. Cumulative stock of domestic climate laws/policies per country-year + new_laws flow. UNFCCC excluded; Legislative+Executive kept; deduped to Family ID. NATIONAL-ONLY (EU-level EUR docs dropped to avoid double-count with national transpositions; subnational dropped). 1900 plausibility floor on dates (fixed validation constant, not a vintage). Coverage: 199 countries.
+
+### ODIN
+Manual ZIP from odin.opendatawatch.com/data. Globs *data*.zip and validates by contents (ZIP must contain year-named Excels — filename is unstable). Sub-scores are a TRANSPARENT SIMPLE-MEAN aggregation of ODIN's per-category element scores — NOT ODIN's official 0-100 index. Raw ~0-2 scale (ranking valid, downstream-normalized). Biennial editions stacked. Overlaps substantially with IMF SPI. Coverage: 200 countries. MANUAL: keep only the current ODIN ZIP in Downloads.
 
 *Technical notes for not-yet-built sources will be added as each pipeline is built.*

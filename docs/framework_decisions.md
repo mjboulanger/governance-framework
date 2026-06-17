@@ -67,6 +67,7 @@ Available via the QoG Standard Time-Series dataset. One pipeline (`14_qog_pipeli
 | Heritage PR | Deprioritized | Fraser Area 2 + WJP + V-Dem supersede. |
 | DINCER_CB | Deprioritized | Stale (data ends mid-2010s). Romelli CBI in QoG covers same concept, more recent. |
 | LINZER_STATON | Deprioritized | Stale and discontinued per IDEA. V-Dem judicial indicators (v2juhcind, v2juncind, v2jucomp, v2jupack, v2jupurge) current and purpose-built. V-Dem fully supersedes. |
+| IRENA_POLICY | Deprioritized — not built | No clean downloadable renewable-policy dataset exists. IRENA's own downloads are statistics (capacity/generation/finance); its renewable-policy work is report-based analysis. The joint IEA/IRENA Policies & Measures DB (api.iea.org/policies?csv=true) has no clean renewable filter and would duplicate Climate Laws. Renewable deployment covered by IRENA capacity; energy/climate policy by Climate Laws; carbon pricing by WB Carbon; performance by EPI. |
 
 **Fraser vs Heritage:** Fraser academically preferred — peer-reviewed, transparent weights, chain-linked. Heritage is policy-advocacy. Where they overlap, Fraser used.
 **Fraser Area 4 (Trade Freedom):** Master PDF dropped it for Heritage overlap. Since Heritage TR deprioritized, Fraser Area 4 retained as primary trade openness index alongside KOF.
@@ -89,9 +90,9 @@ Available via the QoG Standard Time-Series dataset. One pipeline (`14_qog_pipeli
 | UNCTAD_NTM | Bulk download API returns 403; TRAINS portal JS-rendered | Manual Category 4 |
 | RTI_RATING | JS-rendered wpdatatables; AJAX endpoint needs auth token | Manual Category 4 |
 | REINHART_ROGOFF | No stable direct URL; data ends mid-2010s | Manual Category 4 — low priority |
-| CLIMATE_LAWS | Registration form required (free) | Manual Category 4 — obtained |
+| CLIMATE_LAWS | Registration form required (free) | BUILT (national-only cumulative stock) |
 | PEW_GRI | Free account required | Manual Category 4 — obtained |
-| IRENA_POLICY | .xlsb binary, no API | Manual Category 4 — obtained |
+| IRENA_POLICY | No clean policy dataset exists | DEPRIORITIZED (see deprioritized table) |
 | CIVICUS pre-window | CIVICUS API only returns recent years; earlier data not accessible via API | Historical gap — accepted |
 | EPI | Only two most recent editions downloadable; no full archive | Cross-sectional limitation — accepted |
 
@@ -177,6 +178,23 @@ Key methodological decisions:
 - **Revenue/GDP** to be computed downstream at the metric pass using WDI GDP, as an economic-materiality check (note: revenue understates free-allocation ETSs).
 - **⚠️ Coverage:** ~71 countries — materially below the ~150 target, but this reflects the genuine concentration of carbon pricing, not a data defect. Flagged, not corrected.
 
+### Climate Laws — national-only cumulative stock
+Source: Climate Change Laws of the World (LSE Grantham / Climate Policy Radar), manual CSV (free registration), auto-detected in Downloads. Measures cumulative stock of domestic climate laws/policies per country-year (plus new-law annual flow).
+- **UNFCCC category excluded** (international reporting — National Communications, NDCs, Global Stocktake submissions — not domestic governance). Legislative + Executive categories kept.
+- **Deduplicated to Family ID** so document variants of one law count once.
+- **NATIONAL-ONLY.** EU-level (EUR) documents are DROPPED — initially considered EU-expansion (attributing EU laws to members), but that double-counts EU law against members' own national transpositions (which are separately recorded), and the data has no reliable flag to identify transpositions. National records capture most transposed EU law anyway. Subnational tokens (e.g. BR-XX) dropped; the national code (BRA) is retained where present.
+- Distinct laws counted per (country, Family ID) — never collapsed on (country, year), which would undercount.
+- Malformed/missing dates dropped (a fixed 1900 plausibility floor, not a data vintage).
+- Coverage: 199 countries — strong.
+
+### ODIN — transparent aggregation, not the official index
+Source: Open Data Inventory (Open Data Watch), manual ZIP of per-edition Excels, auto-detected by content validation (ZIP must contain year-named Excels, since the filename "2016-2024 data.zip" is unstable).
+- The workbook has NO official country-level 0-100 index — only per-category element scores (0-10) across 22 data categories.
+- Sub-scores (coverage, openness, overall) are a TRANSPARENT SIMPLE-MEAN aggregation of those category element scores — explicitly NOT ODIN's official national index (which uses ODIN's own category/element weighting and scaling). Raw ~0-2 scale; ranking is valid, absolute values for downstream normalization only.
+- Coverage elements: indicator coverage, data availability (5/10yr), admin levels. Openness elements: machine readability, non-proprietary, download options, metadata, terms of use.
+- Overlaps substantially with IMF SPI (statistical capacity) — ODIN's distinctive angle is open-data accessibility. Kept per user decision despite overlap.
+- Biennial editions stacked. Coverage: 200 countries.
+
 ## Pipelines Built
 
 | Notebook | Source | Output File | Indicators | Coverage |
@@ -204,6 +222,8 @@ Key methodological decisions:
 | 23_idea_partip | IDEA GSoD | idea_gsod_clean.csv | 13 | full series, 174 countries |
 | 24_pew_gri | Pew GRI | pew_gri_clean.csv | 2 | from mid-2000s, 198 countries |
 | 25_imf_fiscal_rules | IMF Fiscal Rules | imf_fiscal_rules_clean.csv | 28 (presence + quality) | full series, 123 countries |
+| 26_climate_laws | Climate Laws (LSE/CPR) | climate_laws_clean.csv | 2 (cumulative stock + new flow) | full series, 199 countries |
+| 27_odin | ODIN (Open Data Watch) | odin_clean.csv | 3 (coverage, openness, overall) | biennial editions, 200 countries |
 
 ---
 
@@ -215,10 +235,11 @@ Key methodological decisions:
 - Concept 25 (Government transparency): reconsider before finalizing — indicator overlap
 - SOE Governance (Concept 10): deferred to v2
 - EPI sub-components: select policy/institutional sub-components at metric pass
+- IRENA renewable-energy TARGETS (national ambition signal, e.g. % renewable by year): a genuinely additive policy measure, but only available embedded in IRENA reports/NDC analysis — DEFERRED to the planned Category 1 PDF-extraction infrastructure, not a clean download
 - iMaPP in-force precision: parse text records if current-stock needed (deferred)
 - WGI standard errors: optional enhancement for ranking confidence — not a master-PDF gap, user discretion
 - Category 3 web scrapes not built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
-- Category 4 manual not built: OECD_TFI, IMF_AREAER, ODIN, IRENA_POLICY, UNCTAD_NTM, RTI_RATING, TI_POLFINANCE, GLOBAL_DATA_BAROMETER, REINHART_ROGOFF, CLIMATE_LAWS (downloaded, pipeline pending)
+- Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM, RTI_RATING, TI_POLFINANCE, GLOBAL_DATA_BAROMETER, REINHART_ROGOFF (ODIN and CLIMATE_LAWS now built; IRENA_POLICY deprioritized)
 - Category 1 PDF extraction not built: PEFA, IMF_FSAP (macroprudential + financial-sector quality assessment), ICNL
 
 ---
