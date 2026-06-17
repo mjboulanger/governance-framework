@@ -195,6 +195,27 @@ Source: Open Data Inventory (Open Data Watch), manual ZIP of per-edition Excels,
 - Overlaps substantially with IMF SPI (statistical capacity) — ODIN's distinctive angle is open-data accessibility. Kept per user decision despite overlap.
 - Biennial editions stacked. Coverage: 200 countries.
 
+### Political Finance (IDEA) — directionally-defensible transparency score
+Source ID retained as **TI_POLFINANCE** for continuity, but the structured data is from **International IDEA's Political Finance Database** (181 countries, 58 questions, launched 2003), NOT Transparency International. TI produces report-based analysis and standards, not a comparable structured country panel; IDEA is the authoritative structured source. Automated via a direct .xlsx export endpoint (`idea.int/data-tools/export?type=region_only&themeId=302&world=all`).
+
+**What it measures — and critically, what it does NOT:**
+- Measures the **de jure regulatory framework** (rules on paper) for money in politics.
+- Does NOT measure enforcement, compliance, actual money/flows, or influence/corruption. IDEA explicitly states laws on the books ≠ adherence. The de jure/de facto gap is real (e.g. the USA scores high on disclosure *rules* despite well-known money-in-politics concerns). Enforcement/outcome dimensions are covered elsewhere (V-Dem political-finance items, WGI/V-Dem corruption indices).
+
+**Directionality judgment (the heart of this pipeline — a documented exception to no-hardcoding):**
+Of the 58 questions, ~43 are binary (Yes/No), but "Yes" is NOT uniformly "better governance." A naive density count would embed the contestable assumption IDEA warns against. We therefore score an **equal-weighted mean of only the 20 binary questions where "Yes = better governance" is defensible**, hand-curated and specified explicitly in the pipeline:
+- **INCLUDED (20):** foreign-donation bans (Q1-2), anonymous-donation bans (Q7-8), government-contractor donation bans (Q9-10), partial-state-owned-firm donation bans (Q11-12), abuse-of-state-resources ban (Q13), procurement-linked-donor ban (Q26), banking-system requirement (Q27), vote-buying ban (Q38), and ALL of reporting/oversight/disclosure (Q47-54). These are transparency, anti-corruption-source, and oversight provisions with defensible directionality.
+- **EXCLUDED — contested or reverse-signed:** corporate/union donation bans (Q3-6, ban-vs-disclosure is a legitimate model choice); ALL contribution and spending limits (Q14-22, Q39-46, speech-vs-fairness tension, constitutionally barred in some democracies); party commercial-activity and loan bans (Q23-25, can perversely weaken party independence); ALL public funding (Q28-37, a model choice orthogonal to governance quality).
+- The resulting construct is best read as **political-finance transparency & oversight**, not "regulation breadth" or "integrity."
+
+**Other decisions:**
+- Binary questions auto-detected by answer-set membership (Yes/No/Sometimes/No data/Not applicable ≥80%); the 20 included are then selected by explicit (category, question-number) list.
+- Coding: Yes=1, No=0, Sometimes=0.5; No data / Not applicable -> NaN (excluded from the mean).
+- **Reliability floor:** countries answering <10 of the 20 included questions have their score set to NaN but are kept in the file (3 countries: SWZ, GNQ, STP); `polfin_n_answered` carries the count. Zero-answer rows (43 — authoritarian one-party states and small dependencies with no party-finance regime to code) are dropped entirely.
+- Regional aggregates excluded; sovereign ISO3 only.
+- Wave-updated cross-section (questions revised 2012/2016/2018/2020/2022; 2023 update refreshed 25 countries). The export carries no data-year column, so `data_as_of_date` is the retrieval date with a note that the true vintage is IDEA's latest update round.
+- Coverage: 180 countries (177 scored).
+
 ## Pipelines Built
 
 | Notebook | Source | Output File | Indicators | Coverage |
@@ -224,6 +245,7 @@ Source: Open Data Inventory (Open Data Watch), manual ZIP of per-edition Excels,
 | 25_imf_fiscal_rules | IMF Fiscal Rules | imf_fiscal_rules_clean.csv | 28 (presence + quality) | full series, 123 countries |
 | 26_climate_laws | Climate Laws (LSE/CPR) | climate_laws_clean.csv | 2 (cumulative stock + new flow) | full series, 199 countries |
 | 27_odin | ODIN (Open Data Watch) | odin_clean.csv | 3 (coverage, openness, overall) | biennial editions, 200 countries |
+| 29_polfinance | IDEA Political Finance DB | polfinance_clean.csv | 1 score + n_answered | cross-section, 180 countries (177 scored) |
 
 ---
 
@@ -239,7 +261,7 @@ Source: Open Data Inventory (Open Data Watch), manual ZIP of per-edition Excels,
 - iMaPP in-force precision: parse text records if current-stock needed (deferred)
 - WGI standard errors: optional enhancement for ranking confidence — not a master-PDF gap, user discretion
 - Category 3 web scrapes not built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
-- Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM, RTI_RATING, TI_POLFINANCE, GLOBAL_DATA_BAROMETER, REINHART_ROGOFF (ODIN and CLIMATE_LAWS now built; IRENA_POLICY deprioritized)
+- Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM, RTI_RATING, GLOBAL_DATA_BAROMETER, REINHART_ROGOFF (ODIN, CLIMATE_LAWS, TI_POLFINANCE now built — TI_POLFINANCE turned out automatable via IDEA export; IRENA_POLICY deprioritized)
 - Category 1 PDF extraction not built: PEFA, IMF_FSAP (macroprudential + financial-sector quality assessment), ICNL
 
 ---

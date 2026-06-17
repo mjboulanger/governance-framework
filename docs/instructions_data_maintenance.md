@@ -192,6 +192,12 @@ No clean downloadable renewable-policy dataset exists. The IRENA "Stats Tool" .x
 **MANUAL UPDATE only when:** (a) a new SOVEREIGN country adopts carbon pricing — add it to the national-name→ISO3 dict in `20_wb_carbon_pipeline.ipynb` (the pipeline prints unmapped jurisdictions to catch this); (b) EU/EEA ETS membership changes — update the EU27+ member list in the same cell.
 **If the dashboard download fails** (rate-limited or moved): wait and re-run; if the URL pattern changed, find the current xlsx at https://carbonpricingdashboard.worldbank.org and update the base path.
 
+### TI_POLFINANCE — Political Finance (International IDEA)
+**Normally:** No action required — fully automated. The pipeline downloads the IDEA Political Finance Database directly via its .xlsx export endpoint (`idea.int/data-tools/export?type=region_only&themeId=302&world=all`) and validates the response is a spreadsheet.
+**Note on source naming:** the source ID is TI_POLFINANCE for continuity, but the data is from International IDEA (the authoritative structured source), not Transparency International.
+**MANUAL UPDATE only when:** IDEA revises its question set (last revised 2022). The pipeline scores a hand-curated list of 20 directionally-defensible binary questions (see `29_polfinance_pipeline.ipynb` INCLUDED_QUESTIONS and the rationale in framework_decisions.md). If IDEA renumbers or changes questions, revisit that inclusion list — the pipeline asserts each included question resolves to exactly one column and will raise loudly if the schema shifts.
+**Scope reminder:** de jure regulation only (rules on paper, not enforcement/compliance/actual money).
+
 ### OECD_TFI — OECD Trade Facilitation Indicators
 Manual only. JS-rendered simulator at https://sim.oecd.org/default.ashx?ds=TFI — no API. Export per income/region group. Alternatively email tad.contact@oecd.org for the full dataset. Pipeline pending.
 
@@ -283,5 +289,8 @@ Manual CSV (free registration) from climate-laws.org. Auto-detects Document_Data
 
 ### ODIN
 Manual ZIP from odin.opendatawatch.com/data. Globs *data*.zip and validates by contents (ZIP must contain year-named Excels — filename is unstable). Sub-scores are a TRANSPARENT SIMPLE-MEAN aggregation of ODIN's per-category element scores — NOT ODIN's official 0-100 index. Raw ~0-2 scale (ranking valid, downstream-normalized). Biennial editions stacked. Overlaps substantially with IMF SPI. Coverage: 200 countries. MANUAL: keep only the current ODIN ZIP in Downloads.
+
+### TI_POLFINANCE
+Automated .xlsx export from International IDEA Political Finance Database (themeId=302). Score = equal-weighted mean of 20 directionally-defensible binary questions (Yes=1/No=0/Sometimes=0.5; No data/NA=NaN). Reliability floor: <10 of 20 answered -> NaN (kept), 0 answered -> dropped. Binary questions auto-detected by answer-set membership; the 20 included selected by explicit (category, question#) list encoding a directionality judgment. Wave-updated cross-section; no data-year in export (data_as_of = retrieval date). 180 countries (177 scored).
 
 *Technical notes for not-yet-built sources will be added as each pipeline is built.*
