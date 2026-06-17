@@ -1,5 +1,8 @@
 # Data Maintenance Instructions
 
+**As-of date (last manually updated):** 2026-06-17
+**⚠️ MANUAL SNAPSHOT:** This document is maintained by hand and does NOT auto-update. Source categories, URLs, version labels, and per-source steps below were accurate as of the date above. When sources change their access methods or a new vintage is released, this document must be updated manually. Any place where a value must be hand-edited on update is flagged inline with **MANUAL UPDATE**.
+
 This document contains instructions for setting up the project on a new machine, and for maintaining and updating data sources.
 
 ---
@@ -19,9 +22,12 @@ This document contains instructions for setting up the project on a new machine,
    `conda env create -f environment.yml`
    `conda activate governance-framework`
 
-4. Create a `.env` file in the project root with machine-specific paths and credentials:
-
-   **Mac:**
+4. Create a `.env` file in the project root with machine-specific paths and credentials.
+   **On Windows, create it with ASCII encoding to avoid a BOM that breaks parsing:**
+   ```powershell
+   Set-Content -Path .env -Encoding ascii -Value "PROJECT_ROOT=C:\Users\{username}\governance-framework`nDOWNLOADS_DIR=C:\Users\{username}\Downloads`nACLED_EMAIL=your_acled_email`nACLED_PASSWORD=your_acled_password"
+   ```
+   **On Mac:**
    ```
    PROJECT_ROOT=/Users/{username}/Documents/governance-framework
    DOWNLOADS_DIR=/Users/{username}/Downloads
@@ -29,31 +35,27 @@ This document contains instructions for setting up the project on a new machine,
    ACLED_PASSWORD=your_acled_password
    ```
 
-   **Windows:**
-   ```
-   PROJECT_ROOT=C:\Users\{username}\governance-framework
-   DOWNLOADS_DIR=C:\Users\{username}\Downloads
-   ACLED_EMAIL=your_acled_email
-   ACLED_PASSWORD=your_acled_password
-   ```
+5. Install python-dotenv if missing: `pip install python-dotenv`
 
-5. Register the Jupyter kernel:
+6. Register the Jupyter kernel:
    `python -m ipykernel install --user --name governance-framework --display-name "governance-framework"`
 
-6. Launch JupyterLab:
-   `jupyter lab`
+7. Launch JupyterLab: `jupyter lab`
 
 ### Notes
 - The `.env` file is machine-specific and not tracked by git — each machine needs its own
-- Large raw data files (`data/raw/`) are not tracked by git — re-run pipelines to regenerate them
-- Processed files (`data/processed/`) are tracked by git and available immediately after cloning
+- `data/raw/` is not tracked by git — re-run pipelines to regenerate
+- `data/processed/` is tracked by git and available immediately after cloning
+- GitHub is the sync mechanism between machines. Keep the project OUTSIDE OneDrive (git corruption risk)
 
 ---
 
 ## Data Update Instructions
 
 Run `print_stale_sources()` from `src/download_log.py` to identify sources needing refresh.
-Full attempt and success dates for each source are recorded in `data/raw/download_log.csv`.
+Attempt and success dates for each source are recorded in `data/raw/download_log.csv`.
+
+For each source, the pipeline derives the data "as-of" date from the data or filename — not hardcoded. The only manual inputs required on update are flagged per-source below under **MANUAL UPDATE**.
 
 ---
 
@@ -61,461 +63,223 @@ Full attempt and success dates for each source are recorded in `data/raw/downloa
 
 Within each category, sources are ordered by number of indicators used in the framework.
 
----
-
 ### Category 1: PDF extraction (most manual)
-
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
 | PEFA | PEFA | Per-country 4–7yr |
 | IMF_FSAP | IMF FSAP / BCP / IOSCO / IAIS | Per-country 5–10yr |
 | ICNL | ICNL Civic Freedom Monitor | Irregular |
 
----
-
-### Category 2: Email form download
-
+### Category 2: Email/form download
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
-| VDEM | V-Dem Full+Others | Annual (March) |
+| VDEM | V-Dem Full+Others | Annual |
 
----
-
-### Category 3: Web scrape
-
+### Category 3: Web scrape (not yet built)
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
 | FATF | FATF Compliance Ratings | Per-country ~10yr |
 | IPU_PARLINE | IPU Parline | Continuous |
 | WTO_TFA | WTO TFA Implementation | Continuous |
-| IMF_SPI_SDDS | IMF SDDS Subscriptions | Continuous |
+| IMF_SDDS | IMF SDDS Subscriptions | Continuous |
 | CPJ | Committee to Protect Journalists | Continuous |
 
----
+### Category 4: Manual download
+| Source ID | Source Name | Built? |
+|-----------|-------------|--------|
+| IDEA_PARTIP | IDEA Global State of Democracy | ✅ |
+| PEW_GRI | Pew GRI / SHI | ✅ |
+| IMF_FISCAL_RULES | IMF Fiscal Rules Database | ✅ |
+| CLIMATE_LAWS | LSE Grantham / Climate Policy Radar | Downloaded, pipeline pending |
+| ODIN | Open Data Inventory | Downloaded, pipeline pending |
+| IRENA_POLICY | IRENA Renewable Energy Policies | Downloaded, pipeline pending |
+| OECD_TFI | OECD Trade Facilitation Indicators | Manual — pending |
+| IMF_AREAER | IMF AREAER | Manual — pending |
+| RSF_WPFI | RSF World Press Freedom Index | Optional cross-check only |
 
-### Category 4: Manual Excel / CSV download — annual or biennial
+### Category 5: Manual irregular (not built; most superseded — see framework_decisions.md)
+| Source ID | Source Name | Status |
+|-----------|-------------|--------|
+| UNCTAD_NTM | UNCTAD NTM Database | Pending |
+| RTI_RATING | RTI Rating | Pending |
+| TI_POLFINANCE | TI Political Finance Database | Pending |
+| IDEA_EMB | IDEA EMB Database | Pending |
+| GLOBAL_DATA_BAROMETER | Global Data Barometer | Pending |
+| REINHART_ROGOFF | Reinhart-Rogoff Exchange Rate | Pending, low priority |
+| DINCER_CB | Dincer-Eichengreen CB Transparency | Deprioritized (stale) |
+| LINZER_STATON | Linzer-Staton Judicial Independence | Deprioritized (stale) |
 
-| Source ID | Source Name | Frequency |
-|-----------|-------------|-----------|
-| OECD_TFI | OECD Trade Facilitation Indicators | Biennial |
-| IRENA_POLICY | IRENA Renewable Energy Policies | Continuous |
-| ODIN | Open Data Inventory | Biennial |
-| IMF_FISCAL_RULES | IMF Fiscal Rules Database | Irregular (~2-3yr) |
-| IMF_AREAER | IMF AREAER | Annual |
-| IDEA_PARTIP | IDEA Global State of Democracy | Annual |
-| CLIMATE_LAWS | LSE Grantham / Climate Policy Radar | Continuous |
-| PEW_GRI | Pew GRI / SHI | Annual |
-| RSF_WPFI | RSF World Press Freedom Index | Annual (optional cross-check only) |
+Note: POLITY5 and NELDA were previously listed here but are now sourced via the QoG pipeline — see Category 6 and framework_decisions.md.
 
----
-
-### Category 5: Manual Excel / CSV download — irregular
-
-| Source ID | Source Name | Frequency |
-|-----------|-------------|-----------|
-| POLITY5 | Polity5 | Irregular |
-| NELDA | NELDA | Irregular |
-| UNCTAD_NTM | UNCTAD NTM Database | Irregular |
-| RTI_RATING | RTI Rating | Irregular |
-| TI_POLFINANCE | TI Political Finance Database | Irregular |
-| IDEA_EMB | IDEA EMB Database | Irregular |
-| GLOBAL_DATA_BAROMETER | Global Data Barometer | Irregular |
-| DINCER_CB | Dincer-Eichengreen CB Transparency | Irregular |
-| REINHART_ROGOFF | Reinhart-Rogoff Exchange Rate | Irregular |
-| LINZER_STATON | Linzer-Staton Judicial Independence | Irregular |
-
----
-
-### Category 6: Automated — API or direct download (least manual)
-
-| Source ID | Source Name | Frequency | Status |
-|-----------|-------------|-----------|--------|
-| WB_WDI | World Bank WDI | Annual | Active |
-| FSI | Fragile States Index | Annual | Active |
-| WGI | World Bank WGI | Annual | Active |
-| TI_CPI | TI Corruption Perceptions Index | Annual | Active |
-| IMF_SPI | WB Statistical Performance Indicators | Annual | Active |
-| UCDP | Uppsala Conflict Data Program | Annual | Active |
-| FRASER_REG | Fraser EFW — Regulation | Annual | Active |
-| FRASER_LEGAL | Fraser EFW — Legal System | Annual | Active |
-| QOG | QoG Standard TS (11 sources) | Annual | Active |
-| POWELL_THYNE | Powell-Thyne Coup Database | Continuous | Active |
-| UNODC_HOMICIDE | UNODC Homicide Statistics | Annual | Active |
-| IRENA_CAPACITY | IRENA Renewables Capacity Statistics | Annual | Active |
-| IMF_IMAPP | IMF iMaPP | Annual | Active |
-| YALE_EPI | Yale EPI | Biennial | Active |
-| WB_CARBON | World Bank Carbon Pricing Dashboard | Annual | Active |
-| DPI | Database of Political Institutions | Annual | Active |
-| CIVICUS | CIVICUS Monitor | Annual | Active |
-| ACLED | ACLED | Continuous | Pending Research tier |
-| BASEL_AML | Basel AML Index | Annual | Pending Expert Edition access |
-| WJP | WJP Rule of Law Index | Annual | Active |
-| FH_FIW | Freedom House FIW | Annual | Active |
+### Category 6: Automated — API or direct download
+| Source ID | Source Name | Status |
+|-----------|-------------|--------|
+| WB_WDI | World Bank WDI | Active |
+| FSI | Fragile States Index | Active |
+| WGI | World Bank WGI | Active |
+| TI_CPI | TI Corruption Perceptions Index | Active |
+| IMF_SPI | WB Statistical Performance Indicators | Active |
+| UCDP | Uppsala Conflict Data Program | Active |
+| FRASER_REG / FRASER_LEGAL | Fraser EFW | Active |
+| QOG | QoG Standard TS (13 sources incl. POLITY5, NELDA) | Active |
+| POWELL_THYNE | Powell-Thyne Coup Database | Active |
+| UNODC_HOMICIDE | UNODC Homicide Statistics | Active |
+| IRENA_CAPACITY | IRENA Renewables Capacity | Active |
+| IMF_IMAPP | IMF iMaPP | Active |
+| YALE_EPI | Yale EPI | Active |
+| WB_CARBON | World Bank Carbon Pricing | Active (dashboard: existence/price/coverage/revenue) |
+| DPI | Database of Political Institutions | Active |
+| CIVICUS | CIVICUS Monitor | Active |
+| WJP | WJP Rule of Law Index | Active |
+| FH_FIW | Freedom House FIW | Active |
+| ACLED | ACLED | Pending Research tier |
+| BASEL_AML | Basel AML Index | Pending Expert Edition |
 
 ---
 
 ## Per-Source Instructions
 
-Actions the user must take, or may need to take, for each source.
-Sources with no manual steps are omitted from this section.
-
----
+Only sources requiring manual action are listed. Automated sources need no action unless the pipeline fails (fallback notes in source technical notes).
 
 ### VDEM — V-Dem Full+Others
-**Every year (March):**
+**On each update:**
 1. Go to: https://www.v-dem.net/data/the-v-dem-dataset/
-2. Click "Download Country-Year: V-Dem Full+Others" (latest version)
-3. Fill in the form — email required, select CSV format
-4. Save the file to your Downloads folder
-5. Update `VDEM_VERSION` in `notebooks/exploration/03_vdem_pipeline.ipynb` (e.g. `"17"` for v17)
-6. Re-run the notebook
+2. Download "Country-Year: V-Dem Full+Others" (latest version), CSV, email required
+3. Save to Downloads folder
+4. **MANUAL UPDATE:** set `VDEM_VERSION` in `notebooks/exploration/03_vdem_pipeline.ipynb` to the new version number (e.g. the next integer)
+5. Re-run the notebook
 
----
-
-### FH_FIW — Freedom House Freedom in the World
-**Normally:** No action required — fully automated.
-
-**If pipeline fails to find a file:**
-1. Email datarequest@freedomhouse.org with subject "FIW Data Request"
-2. Place the received Excel file in `data/raw/`
-3. Update the pipeline notebook `06_fh_fiw_pipeline.ipynb` to load from the local file instead
-
----
-
-### FSI — Fragile States Index
-**Normally:** No action required — fully automated.
-
-**If pipeline fails:**
-1. Go to: https://fragilestatesindex.org/excel/
-2. Download the latest year's Excel file
-3. Place in `data/raw/` and load manually in `notebooks/exploration/07_fsi_pipeline.ipynb`
-
----
-
-### TI_CPI — Transparency International Corruption Perceptions Index
-**Normally:** No action required — fully automated via Our World in Data.
-
-**If pipeline fails:**
-1. Go to: https://ourworldindata.org/grapher/ti-corruption-perception-index
-2. Click "Download" then CSV
-3. Place file in `data/raw/` and update pipeline to load locally
-
----
-
-### UCDP — Uppsala Conflict Data Program
-**Normally:** No action required — fully automated.
-
-**If pipeline fails:**
-1. Go to: https://ucdp.uu.se/downloads/
-2. Download "UCDP Country-Year Dataset on Organized Violence" — CSV ZIP
-3. Place ZIP in `data/raw/` and load manually in `notebooks/exploration/12_ucdp_pipeline.ipynb`
-
----
-
-### FRASER_REG / FRASER_LEGAL — Fraser Institute Economic Freedom of the World
-**Normally:** No action required — fully automated.
-
-**If pipeline fails:**
-1. Go to: https://www.fraserinstitute.org/economic-freedom/dataset
-2. Click "Download XLSX" on the latest annual report page
-3. Place file in `data/raw/` and update pipeline to load locally
-
----
-
-### QOG — Quality of Government Standard Time-Series
-**Normally:** No action required — fully automated.
-
-**If pipeline fails:**
-1. Go to: https://www.gu.se/en/quality-government/qog-data/data-downloads/standard-dataset
-2. Download "Time-series: Download CSV" for the latest version
-3. Place file in `data/raw/` and update pipeline to load locally
-
-**Sources covered:** KOF_TRADE (proxy), PTS, OBS, ND_GAIN, BCI, HANSON_SIGMAN, CCP, PEI, GPI, WB_INFORMAL, ROMELLI_CBI
-
----
-
-### POWELL_THYNE — Powell-Thyne Coup Database
-**Normally:** No action required — fully automated.
-
-**If pipeline fails:**
-1. Go to: http://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt
-2. Save the file to `data/raw/`
-3. Update pipeline to load locally
-
----
-
-### UNODC_HOMICIDE — UNODC Homicide Statistics
-**Normally:** No action required — fully automated via Our World in Data.
-
-**If pipeline fails:**
-1. Go to: https://ourworldindata.org/homicides
-2. Click "Download" then CSV
-3. Place file in `data/raw/` and update pipeline to load locally
-
----
-
-### IRENA_CAPACITY — IRENA Renewables Capacity Statistics
-**Normally:** No action required — fully automated via Our World in Data.
-
-**If pipeline fails:**
-1. Go to: https://ourworldindata.org/renewable-energy
-2. Find "Share of electricity from renewables" chart
-3. Click "Download" then CSV
-4. Place file in `data/raw/` and update pipeline to load locally
-
----
-
-### IMF_IMAPP — IMF Integrated Macroprudential Policy Database
-**Normally:** No action required — fully automated.
-
-**If pipeline fails:**
-1. Go to: https://www.elibrary-areaer.imf.org/Macroprudential/Pages/iMaPPDatabase.aspx
-2. Download the latest ZIP file
-3. Place ZIP in `data/raw/` and update pipeline to load locally
-
----
-
-### YALE_EPI — Yale Environmental Performance Index
-**Normally:** No action required — fully automated.
-
-**If pipeline fails:**
-1. Go to: https://epi.yale.edu/epi-downloads
-2. Download the latest edition results CSV
-3. Place file in `data/raw/` and update pipeline to load locally
-
----
-
-### WB_CARBON — World Bank Carbon Pricing Dashboard
-**Normally:** No action required — fully automated via Our World in Data.
-
-**If pipeline fails:**
-1. Go to: https://ourworldindata.org/grapher/carbon-tax-instruments
-2. Click "Download" then CSV
-3. Place file in `data/raw/` and update pipeline to load locally
-
----
-
-### DPI — Database of Political Institutions
-**Normally:** No action required — fully automated via IDB CKAN API.
-
-**If pipeline fails:**
-1. Go to: https://data.iadb.org/dataset/the-database-of-political-institutions-dpi-2023
+### IDEA_PARTIP — IDEA Global State of Democracy
+**On each update:**
+1. Go to: https://www.idea.int/democracytracker/gsod-indices
 2. Download the CSV version
-3. Place file in `data/raw/` and update pipeline to load locally
+3. Save to Downloads folder (replacing any older copy)
+4. Re-run `notebooks/exploration/23_idea_partip_pipeline.ipynb` — version is auto-detected from the filename; no manual edit needed
 
----
-
-### CIVICUS — CIVICUS Monitor
-**Normally:** No action required — fully automated via CIVICUS REST API.
-
-**If pipeline fails:**
-1. Go to: https://monitor.civicus.org
-2. Navigate to Data Centre and download ratings data
-3. Place in `data/raw/` and update pipeline to load locally
-
----
-
-### ACLED — Armed Conflict Location and Event Data
-**Status:** Pending Research tier approval — pipeline not yet active.
-
-**Once Research access is approved:**
-1. Log in to acleddata.com and confirm API access is enabled
-2. Run `notebooks/exploration/11_acled_pipeline.ipynb`
-
----
-
-### BASEL_AML — Basel AML Index
-**Status:** Pending Expert Edition access — requires institutional affiliation.
-
-**If access obtained:**
-1. Log in to index.baselgovernance.org
-2. Download CSV via Expert Edition portal
-3. Build automated pipeline in `notebooks/exploration/`
-
----
+### PEW_GRI — Pew Global Restrictions on Religion
+**On each update:**
+1. Log in (free account) at pewresearch.org and find the Global Restrictions on Religion dataset
+2. Download the ZIP
+3. Save to Downloads folder (replacing any older copy)
+4. Re-run `notebooks/exploration/24_pew_gri_pipeline.ipynb` — ZIP and CSV auto-detected; no manual edit needed
 
 ### IMF_FISCAL_RULES — IMF Fiscal Rules Database
-**Every ~2-3 years (irregular):**
+**On each update:**
 1. Go to: https://www.imf.org/en/topics/fiscal-policies/fiscal-rules-dataset
 2. Download the Excel dataset
-3. Place in `data/raw/` and run pipeline notebook
+3. Save to Downloads folder (replacing any older copy)
+4. Re-run `notebooks/exploration/25_imf_fiscal_rules_pipeline.ipynb` — file auto-detected by glob; columns selected by name. If the IMF restructures the sheet and a column section is renamed, the name-based selector will raise a clear error identifying the missing fragment — update the `col_spec` fragments in that case (this is the only manual intervention, and only on a template change)
 
----
-
-### IMF_AREAER — IMF Annual Report on Exchange Arrangements
-**Every year:**
-1. Go to: https://www.elibrary-areaer.imf.org/
-2. Navigate to Indices tab for FARI and ACI index data
-3. Download and place in `data/raw/` and run pipeline notebook
-
----
+### CLIMATE_LAWS — LSE Grantham / Climate Policy Radar
+**On each update:**
+1. Go to: https://climate-laws.org and complete the data download request form (free)
+2. Download the CSV (delivered via link)
+3. Save to Downloads folder (replacing any older copy)
+4. Pipeline pending build
 
 ### ODIN — Open Data Inventory
-**Every 2 years:**
+**On each update:**
 1. Go to: https://odin.opendatawatch.com/data
-2. Click "Download complete data for all available countries, years, and indicators"
-3. Place in `data/raw/` and run pipeline notebook
+2. Download complete data (delivered as a ZIP of per-year Excel files)
+3. Save to Downloads folder (replacing any older copy)
+4. Pipeline pending build
 
----
+### IRENA_POLICY — IRENA Renewable Energy Policies
+**On each update:**
+1. Go to: https://www.irena.org/Data/Downloads/Tools
+2. Download the Renewable Energy Policy stats tool (.xlsb)
+3. Save to Downloads folder (replacing any older copy)
+4. Pipeline pending build (requires `pyxlsb` engine)
 
-### CLIMATE_LAWS — LSE Grantham Climate Laws Database
-**Continuous updates:**
-1. Go to: https://climate-laws.org
-2. Download the latest dataset (now managed by Climate Policy Radar)
-3. Place in `data/raw/` and run pipeline notebook
+### WB_CARBON — World Bank Carbon Pricing Dashboard
+**Normally:** No action required — fully automated (auto-detects latest month-stamped xlsx).
+**MANUAL UPDATE only when:** (a) a new SOVEREIGN country adopts carbon pricing — add it to the national-name→ISO3 dict in `20_wb_carbon_pipeline.ipynb` (the pipeline prints unmapped jurisdictions to catch this); (b) EU/EEA ETS membership changes — update the EU27+ member list in the same cell.
+**If the dashboard download fails** (rate-limited or moved): wait and re-run; if the URL pattern changed, find the current xlsx at https://carbonpricingdashboard.worldbank.org and update the base path.
 
----
+### OECD_TFI — OECD Trade Facilitation Indicators
+Manual only. JS-rendered simulator at https://sim.oecd.org/default.ashx?ds=TFI — no API. Export per income/region group. Alternatively email tad.contact@oecd.org for the full dataset. Pipeline pending.
 
-*Per-source instructions for remaining sources will be added as each pipeline is built.*
+### IMF_AREAER — IMF Annual Report on Exchange Arrangements
+Manual. https://www.elibrary-areaer.imf.org/ — Indices tab for FARI/ACI index data. Pipeline pending.
+
+### ACLED — Armed Conflict Location and Event Data
+Pending Research tier approval. Once approved, run `11_acled_pipeline.ipynb`. Credentials already in `.env`.
+
+### BASEL_AML — Basel AML Index
+Pending Expert Edition access (institutional affiliation). Alternative: FATF scraper (Category 3).
 
 ---
 
 ## Source Technical Notes
 
----
+(Automated-source fallback procedures and API details. Coverage figures are data facts as of the as-of date above.)
 
-### VDEM — V-Dem Full+Others
-- URL: https://www.v-dem.net/data/the-v-dem-dataset/
-- Pipeline handles both ZIP and direct CSV download formats
-- Variables: 64 indicators across all framework concepts
-- Coverage: 1990–2025, ~181 countries, annual
+### VDEM
+Pipeline handles ZIP and direct CSV. 64 indicators. **MANUAL UPDATE:** `VDEM_VERSION`.
 
----
+### WGI
+`wbgapi`, db=3. 6 components. Latest year auto-derived from API.
 
-### WGI — World Bank Worldwide Governance Indicators
-- Access: `wbgapi`, db=3
-- Coverage: 1996–present; annual from 2003, biennial 1996–2002
-- Indicators: 6 components
+### WB_WDI
+`wbgapi`, db=2. 34 indicators, fetched one at a time (API timeout avoidance). Subsumes WHO GHO, UNESCO UIS, WB WBL (2.0 codes), WB LPI, WB HCI (HCI+), WIPO, ILO_SOCIAL, UNDP HDI, and WB tariffs.
 
----
+### WJP
+Auto-detects latest year by URL pattern, falls back to prior years. 8 factors + sub-factor 6.5.
 
-### WB_WDI — World Bank World Development Indicators
-- Access: `wbgapi`, db=2
-- Indicators: 34 total
-- Sources subsumed: WHO GHO, UNESCO UIS, WB WBL, WB LPI, WB HCI, WIPO, ILO_SOCIAL, UNDP_HDI
+### FH_FIW
+Auto-detects via recent year/month URL candidates. Sub-components A, D, E, G. Requires BROWSER_HEADERS.
 
----
+### FSI
+Scrapes download page for all Excel links. C1, C2, C3, P2. Requires BROWSER_HEADERS.
 
-### WJP — World Justice Project Rule of Law Index
-- Auto-detection: tries current year, falls back to prior years
-- Sub-indicator 6.5 retained for Property Rights concept
-- Coverage: 2012–present (no 2017), 142–143 countries
+### TI_CPI
+Via OWID CSV. (TI direct files password-protected.)
 
----
+### IMF_SPI
+`wbgapi`, db=2. Overall + 5 pillars.
 
-### FH_FIW — Freedom House Freedom in the World
-- Auto-detection: constructs candidate URLs from recent year/month combinations
-- Sub-components: A, D, E, G plus sub-questions
-- Coverage: 2013–present, 195 countries
+### UCDP
+Auto-detects version codes from current year backwards. Bulk ZIP (API now needs token).
 
----
+### FRASER
+Scrapes annual report page for XLSX URL. Areas 2, 4, 5. Requires BROWSER_HEADERS.
 
-### FSI — Fragile States Index
-- Auto-detection: scrapes page for all Excel links
-- Requires BROWSER_HEADERS from config.py
-- Indicators: C1, C2, C3, P2
-- Coverage: 2006–present, ~179 countries
+### QOG
+URL pattern `qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`, auto-detected. Covers KOF_TRADE (dr_eg proxy), PTS, OBS, ND_GAIN, BCI, HANSON_SIGMAN, CCP, PEI, GPI, WB_INFORMAL, ROMELLI_CBI, POLITY5, NELDA. See framework_decisions.md for KOF mismatch and CCP gap.
 
----
+### POWELL_THYNE
+Direct TXT. Version embedded in data, auto-detected.
 
-### TI_CPI — Transparency International Corruption Perceptions Index
-- Source: Our World in Data
-- Coverage: 2012–present, 182 countries
+### UNODC_HOMICIDE
+Via OWID CSV.
 
----
+### IRENA_CAPACITY
+Via OWID CSV. Share of electricity from renewables (%) as proxy for capacity.
 
-### IMF_SPI — World Bank Statistical Performance Indicators
-- Access: `wbgapi`, db=2
-- Coverage: 2004–present, 221 countries
+### IMF_IMAPP
+URL pattern `elibrary-areaer.imf.org/Macroprudential/Documents/iMaPP_database-{YYYY}-{MM}-{DD}.zip`, latest auto-detected by date iteration (timeout ≥20s; IMF server is slow). Measures cumulative toolkit BREADTH (count of distinct instruments ever activated, total + 4 categories), not direction or in-force. See framework_decisions.md.
 
----
+### YALE_EPI
+Scrapes all pages of epi.yale.edu/epi-downloads; all editions stacked; years parsed from filenames.
 
-### UCDP — Uppsala Conflict Data Program
-- Auto-detection: tries version codes from current year backwards
-- Coverage: 1989–present, 199 countries, annual
+### WB_CARBON
+WB Carbon Pricing Dashboard month-stamped xlsx (`data_{MM}_{YYYY}.xlsx`), latest auto-detected by month iteration with retry/backoff (server rate-limits). Gen Info sheet is the spine; Price/Revenue joined via Unique ID / Instrument name. Measures: existence, price (US$/tCO2e, panel), revenue (US$m, panel), jurisdictional coverage % (current snapshot). National-only via explicit ISO3 dict (fail-safe; unmapped excluded). EU ETS expanded to members for price/coverage/existence but NOT revenue. Absence = inferred non-existence. ~71 countries (carbon pricing concentrated). **MANUAL UPDATE:** the national-name→ISO3 dictionary (if a new sovereign adopts carbon pricing — an in-pipeline diagnostic lists unmapped jurisdictions) and the EU27+ member list (if EU/EEA ETS membership changes).
 
----
+### DPI
+IDB CKAN API: `data.iadb.org/api/3/action/package_show?id=the-database-of-political-institutions-dpi-{year}`. Latest auto-detected by iterating years backwards.
 
-### FRASER_REG / FRASER_LEGAL — Fraser Institute Economic Freedom of the World
-- Auto-detection: scrapes annual report page to find XLSX URL
-- Indicators: Area 2 (Legal System), Area 4 (Trade Freedom), Area 5 (Regulation)
-- Coverage: 1990–2023, 165 countries
+### CIVICUS
+REST API `monitor.civicus.org/api/countries/`. Latest rating per year retained. API returns recent years only.
 
----
+### IDEA_PARTIP
+Manual CSV. Auto-detects latest `gsod_indices_v{N}.csv` in Downloads by version number.
 
-### QOG — Quality of Government Standard Time-Series
-- URL pattern: `https://www.qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`
-- Sources covered: KOF_TRADE (dr_eg proxy), PTS, OBS, ND_GAIN, BCI, HANSON_SIGMAN, CCP, PEI, GPI, WB_INFORMAL, ROMELLI_CBI
-- See docs/framework_decisions.md for details
+### PEW_GRI
+Manual ZIP. Auto-detects `Global-Restrictions-on-Religion*.zip`, extracts CSV. Headline GRI + SHI only.
+
+### IMF_FISCAL_RULES
+Manual Excel. Auto-detects `*Fiscal Rules*.xlsx`. Robust NAME-BASED column selection from the 4-row nested header (composite keys: parent rows forward-filled, leaf row un-filled; substring match; fails loudly on rename). Presence + quality (legal basis 1-5, enforcement, compliance, monitoring, correction). **MANUAL UPDATE only if IMF renames a header section** — selector will raise a clear error.
 
 ---
 
-### POWELL_THYNE — Powell-Thyne Coup Database
-- URL: `http://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt`
-- Version embedded in data — auto-detected
-- Coverage: 1950–present, 204 countries
-
----
-
-### UNODC_HOMICIDE — UNODC Homicide Statistics
-- Source: Our World in Data
-- Coverage: 1990–2024, 208 countries
-
----
-
-### IRENA_CAPACITY — IRENA Renewables Capacity Statistics
-- Source: Our World in Data
-- Note: using share of electricity from renewables (%) as proxy for raw capacity (MW)
-- Coverage: 1990–present, 226 countries
-
----
-
-### IMF_IMAPP — IMF Integrated Macroprudential Policy Database
-- URL pattern: `https://www.elibrary-areaer.imf.org/Macroprudential/Documents/iMaPP_database-{YYYY}-{MM}-{DD}.zip`
-- Auto-detection: iterates dates backwards from today
-- Coverage: 1990–2024, 135 countries
-
----
-
-### YALE_EPI — Yale Environmental Performance Index
-- Auto-detection: scrapes all pages of epi.yale.edu/epi-downloads
-- All available editions stacked automatically; years parsed from filenames
-- Coverage: ~180 countries, biennial
-
----
-
-### WB_CARBON — World Bank Carbon Pricing Dashboard
-- Source: Our World in Data (original: World Carbon Pricing Database, Dolphin & Merkle)
-- Coverage: 1989–present, 201 countries, annual
-
----
-
-### DPI — Database of Political Institutions
-- Access: IDB CKAN API — `data.iadb.org/api/3/action/package_show?id=the-database-of-political-institutions-dpi-{year}`
-- Auto-detects latest version by iterating years backwards
-- 31 variables: government composition, fragmentation, checks/balances, electoral system
-- Coverage: 1975–2023, 182 countries
-
----
-
-### CIVICUS — CIVICUS Monitor
-- Access: REST API — `monitor.civicus.org/api/countries/`
-- No registration required
-- Returns all countries with full ratings history; latest rating per year retained
-- 5-point categorical rating: Open/Narrowed/Obstructed/Repressed/Closed
-- Note: API only returns data from 2022 — historical data pre-2022 not accessible via API
-- Coverage: 199 countries, 2022–present, annual
-
----
-
-### HERITAGE_TR / HERITAGE_PR — Deprioritized — see docs/framework_decisions.md
-
-### RSF_WPFI — Optional manual cross-check only — media freedom covered by V-Dem
-
-### ACLED — Pending Research tier access as of June 2026
-
-### BASEL_AML — Pending Expert Edition access as of June 2026
-
----
-
-*Technical notes for remaining sources will be added as each pipeline is built.*
+*Technical notes for not-yet-built sources will be added as each pipeline is built.*

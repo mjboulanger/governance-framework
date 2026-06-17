@@ -1,6 +1,8 @@
 # Framework Decisions Log
 
 **Status:** Temporary working document. Delete when master PDF is regenerated.
+**As-of date (last manually updated):** 2026-06-17
+**⚠️ MANUAL SNAPSHOT:** This document is a point-in-time snapshot maintained by hand. It does NOT auto-update. Coverage ranges, vintages, source counts, and "as-of" dates below were accurate as of the date above and must be refreshed manually when pipelines are re-run or sources change.
 **Purpose:** Captures decisions made during pipeline build phase that diverge from or update the master PDF.
 
 ---
@@ -8,7 +10,7 @@
 ## Source Access Decisions
 
 ### Sources Subsumed by WDI Pipeline
-The following sources were originally listed as standalone pipelines in the master PDF but are fully covered by the WB WDI pipeline via `wbgapi` (db=2). No standalone pipelines were built for these.
+Originally listed as standalone pipelines in the master PDF but fully covered by the WB WDI pipeline via `wbgapi` (db=2). No standalone pipelines built.
 
 | Source | Indicators Covered | WDI Codes |
 |--------|-------------------|-----------|
@@ -22,16 +24,14 @@ The following sources were originally listed as standalone pipelines in the mast
 | UNDP HDI | Life expectancy, GNI per capita PPP | SP.DYN.LE00.IN, NY.GNP.PCAP.PP.CD |
 | WB TARIFFS | Tariff rate applied, simple mean and weighted mean | TM.TAX.MRCH.SM.AR.ZS, TM.TAX.MRCH.WM.AR.ZS |
 
-**Note on WB WBL:** Old WBL 1.0 indicator codes (SG.LAW.INDX series) archived by World Bank in 2024. New WBL 2.0 codes used instead.
-
-**Note on WB HCI:** Standard HCI (HD.HCI.OVRL) not available via API. HCI+ (HD_HCIP_OVRL_TO) used as substitute.
-
-**Note on WB TARIFFS:** Was missing from original pipeline — added June 2026. Both simple mean and weighted mean retained.
+**WB WBL note:** Old WBL 1.0 codes (SG.LAW.INDX series) archived by World Bank in 2024. New WBL 2.0 codes used.
+**WB HCI note:** Standard HCI (HD.HCI.OVRL) not available via API. HCI+ (HD_HCIP_OVRL_TO) used as substitute.
+**WB TARIFFS note:** Was missing from original WDI pipeline — added. Both simple and weighted mean retained.
 
 ---
 
 ### Sources Subsumed by QoG Pipeline
-The following sources are available via the QoG Standard Time-Series dataset. One pipeline (`14_qog_pipeline.ipynb`) covers all of them.
+Available via the QoG Standard Time-Series dataset. One pipeline (`14_qog_pipeline.ipynb`) covers all of them.
 
 | Source | QoG Variable(s) | Notes |
 |--------|----------------|-------|
@@ -43,17 +43,17 @@ The following sources are available via the QoG Standard Time-Series dataset. On
 | HANSON_SIGMAN | lld_capacity | Double-counting caveat: incorporates V-Dem and other sources |
 | CCP | ccp_syst, ccp_market, ccp_civil, ccp_infoacc, ccp_equal | Gap: judicial independence sub-dimensions not in QoG CCP subset |
 | PEI | pei_peii_1 | Per-election cadence; high missingness expected |
-| GPI | gpi_gpi | Optional cross-check; deprioritized per framework decisions |
-| WB_INFORMAL | ied_mimic, ied_dge | Informal economy size % GDP; coverage 1990-2020 |
-| ROMELLI_CBI | cbie_index, cbie_policy, cbie_lending | Coverage: 1923-2023, 155 countries |
-| POLITY5 | p_polity2, p_durable | Supplementary. Coverage: 1946-2020. Polity project not updated since ~2018 — QoG version as current as source |
-| NELDA | nelda_fme, nelda_mbbe, nelda_mtop, nelda_noe, nelda_noea, nelda_noel, nelda_oa, nelda_rpae, nelda_vcdbe, nelda_noee | Per-election cadence, ~2000-2020. Latest release is 2020 |
+| GPI | gpi_gpi | Optional cross-check; deprioritized |
+| WB_INFORMAL | ied_mimic, ied_dge | Informal economy size % GDP |
+| ROMELLI_CBI | cbie_index, cbie_policy, cbie_lending | Central bank independence |
+| POLITY5 | p_polity2, p_durable | Supplementary. Polity project not updated since latest release — QoG version as current as source |
+| NELDA | nelda_fme, nelda_mbbe, nelda_mtop, nelda_noe, nelda_noea, nelda_noel, nelda_oa, nelda_rpae, nelda_vcdbe, nelda_noee | Per-election cadence. NELDA latest release is the current ceiling — QoG version as current as source |
 
-**QoG version:** Jan 2026. Updated annually, direct CSV download, no registration required. URL pattern: `https://www.qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`.
+**QoG version:** Jan vintage. Updated annually, direct CSV, no registration. URL pattern: `qogdata.pol.gu.se/data/qog_std_ts_jan{YY}.csv`.
 
-**⚠️ KOF_TRADE mismatch:** Master PDF specifies KOF Trade Globalization subindex. QoG only has `dr_eg` (KOF Economic Globalisation — combines trade and financial). Decision: use `dr_eg` as proxy, flag at metric pass. Fraser Area 4 retained as additional trade openness source.
+**⚠️ KOF_TRADE mismatch:** Master PDF specifies KOF Trade Globalization subindex. QoG only has `dr_eg` (KOF Economic Globalisation — trade + financial combined). Decision: use `dr_eg` as proxy, flag at metric pass. Fraser Area 4 retained as additional trade openness source.
 
-**CCP gap:** QoG includes only 18 CCP variables. Judicial independence and separation of powers sub-dimensions not clearly captured. Mitigation: V-Dem judicial indicators cover these dimensions with better quality.
+**CCP gap:** QoG includes only a subset of CCP variables. Judicial independence / separation of powers sub-dimensions not clearly captured. Mitigation: V-Dem judicial indicators cover these with better quality.
 
 ---
 
@@ -61,16 +61,15 @@ The following sources are available via the QoG Standard Time-Series dataset. On
 
 | Source | Decision | Rationale |
 |--------|----------|-----------|
-| RSF WPFI | Optional manual cross-check only | Media freedom covered by V-Dem. RSF 2022+ methodology break. |
+| RSF WPFI | Optional manual cross-check only | Media freedom covered by V-Dem. RSF methodology break reduces comparability. |
 | GPI | Optional cross-check (in QoG as gpi_gpi) | Covered by UCDP + FSI + WGI PV + V-Dem. In QoG at no marginal cost. |
 | Heritage TR | Deprioritized | Fraser Area 4 supersedes. |
 | Heritage PR | Deprioritized | Fraser Area 2 + WJP + V-Dem supersede. |
-| DINCER_CB | Deprioritized | Stale (latest data 2019). Romelli CBI in QoG (2023) covers same concept with more recent data. |
-| LINZER_STATON | Deprioritized | Stale (latest update 2015, covers to 2015). IDEA GSoD explicitly notes it has been discontinued. V-Dem has v2juhcind, v2juncind, v2jucomp, v2jupack, v2jupurge — current to 2025 and purpose-built for judicial independence. V-Dem fully supersedes. |
+| DINCER_CB | Deprioritized | Stale (data ends mid-2010s). Romelli CBI in QoG covers same concept, more recent. |
+| LINZER_STATON | Deprioritized | Stale and discontinued per IDEA. V-Dem judicial indicators (v2juhcind, v2juncind, v2jucomp, v2jupack, v2jupurge) current and purpose-built. V-Dem fully supersedes. |
 
-**On Fraser vs Heritage:** Fraser is academically preferred — peer-reviewed methodology, transparent weights, chain-linked series. Heritage is a policy advocacy product. Where they overlap, Fraser is used.
-
-**On Fraser Area 4 (Trade Freedom):** Master PDF dropped it due to overlap with Heritage. Since Heritage TR was deprioritized, Fraser Area 4 is retained as primary trade openness index alongside KOF.
+**Fraser vs Heritage:** Fraser academically preferred — peer-reviewed, transparent weights, chain-linked. Heritage is policy-advocacy. Where they overlap, Fraser used.
+**Fraser Area 4 (Trade Freedom):** Master PDF dropped it for Heritage overlap. Since Heritage TR deprioritized, Fraser Area 4 retained as primary trade openness index alongside KOF.
 
 ---
 
@@ -78,21 +77,25 @@ The following sources are available via the QoG Standard Time-Series dataset. On
 
 | Source | Constraint | Status |
 |--------|-----------|--------|
-| ACLED | Requires Research tier API access | Pending approval — email sent June 2026 |
-| BASEL_AML | Expert Edition requires institutional affiliation — personal email not eligible | Deferred |
-| UCDP API | Token required since Feb 2026 | Using bulk ZIP download instead |
-| WHO GHO API | OData API deprecated end-2025 | Subsumed by WDI |
+| ACLED | Requires Research tier API access | Pending approval |
+| BASEL_AML | Expert Edition requires institutional affiliation — personal email ineligible | Deferred |
+| UCDP API | Token required since early in the year | Using bulk ZIP download instead |
+| WHO GHO API | OData API deprecated | Subsumed by WDI |
 | TI CPI | Direct Excel files password-protected | Using OWID instead |
-| FSI | 2024 and 2025 editions not yet on download page as of June 2026 | Data currency gap |
-| OECD_TFI | JS-rendered simulator only — no API, not in OECD SDMX system | Manual Category 4 |
+| FSI | Latest editions not yet on download page | Data currency gap |
+| OECD_TFI | JS-rendered simulator only — no API, not in OECD SDMX system (exhaustively verified) | Manual Category 4 |
 | IMF Fiscal Rules | DataMapper blocked, no direct Excel URL | Manual Category 4 |
 | IMF AREAER | Portal-based, no direct download | Manual Category 4 |
-| UNCTAD_NTM | Bulk download API returns 403; TRAINS portal is JS-rendered | Manual Category 4 |
-| RTI_RATING | JS-rendered wpdatatables table; AJAX endpoint requires auth token | Manual Category 4 |
-| REINHART_ROGOFF | No stable direct download URL found; data only to 2016 | Manual Category 4 — low priority |
-| CIVICUS pre-2022 | CIVICUS API only returns data from 2022; pre-2022 not accessible | Historical gap — accepted |
+| UNCTAD_NTM | Bulk download API returns 403; TRAINS portal JS-rendered | Manual Category 4 |
+| RTI_RATING | JS-rendered wpdatatables; AJAX endpoint needs auth token | Manual Category 4 |
+| REINHART_ROGOFF | No stable direct URL; data ends mid-2010s | Manual Category 4 — low priority |
+| CLIMATE_LAWS | Registration form required (free) | Manual Category 4 — obtained |
+| PEW_GRI | Free account required | Manual Category 4 — obtained |
+| IRENA_POLICY | .xlsb binary, no API | Manual Category 4 — obtained |
+| CIVICUS pre-window | CIVICUS API only returns recent years; earlier data not accessible via API | Historical gap — accepted |
+| EPI | Only two most recent editions downloadable; no full archive | Cross-sectional limitation — accepted |
 
-**Basel AML note:** Expert Edition free for institutional users. Personal email not eligible. Alternative: FATF scraper (Category 3).
+**Basel AML:** Expert Edition free for institutional users; personal email ineligible. Alternative: FATF scraper (Category 3).
 
 ---
 
@@ -100,100 +103,123 @@ The following sources are available via the QoG Standard Time-Series dataset. On
 
 | Source | Original Category | Actual Access |
 |--------|------------------|---------------|
-| FSI | Category 4 manual | Automated scrape |
-| Fraser EFW | Category 4 manual | Automated scrape |
-| UCDP | Category 4 manual | Automated bulk ZIP |
-| TI CPI | Category 4 manual | Automated via OWID |
-| WJP | Category 4 manual | Automated URL detection |
-| FH FIW | Category 4 manual | Automated URL detection |
-| KOF_TRADE | Category 4 manual | Via QoG |
-| PTS | Category 4 manual | Via QoG |
-| OBS | Category 4 manual | Via QoG |
-| ND_GAIN | Category 4 manual | Via QoG |
-| BCI | Category 5 irregular | Via QoG |
-| HANSON_SIGMAN | Category 5 irregular | Via QoG |
-| CCP | Category 5 irregular | Via QoG |
-| PEI | Category 5 irregular | Via QoG |
-| GPI | Category 4 manual | Via QoG |
-| WB_INFORMAL | Category 5 irregular | Via QoG |
-| ROMELLI_CBI | Category 5 irregular | Via QoG |
-| POLITY5 | Category 5 irregular | Via QoG |
-| NELDA | Category 5 irregular | Via QoG |
-| POWELL_THYNE | Category 4 manual | Automated direct TXT |
-| UNODC_HOMICIDE | Category 4 manual | Automated via OWID |
-| IRENA_CAPACITY | Category 4 manual | Automated via OWID |
-| IMF_IMAPP | Category 4 manual | Automated ZIP with date auto-detection |
-| YALE_EPI | Category 4 manual | Automated scrape of downloads pages |
-| WB_CARBON | Category 4 manual | Automated via OWID |
-| DPI | Category 4 manual | Automated via IDB CKAN API |
-| CIVICUS | Category 4 manual | Automated via REST API |
+| FSI | Cat 4 manual | Automated scrape |
+| Fraser EFW | Cat 4 manual | Automated scrape |
+| UCDP | Cat 4 manual | Automated bulk ZIP |
+| TI CPI | Cat 4 manual | Automated via OWID |
+| WJP | Cat 4 manual | Automated URL detection |
+| FH FIW | Cat 4 manual | Automated URL detection |
+| KOF_TRADE, PTS, OBS, ND_GAIN, GPI | Cat 4 manual | Via QoG |
+| BCI, HANSON_SIGMAN, CCP, PEI, WB_INFORMAL, ROMELLI_CBI, POLITY5, NELDA | Cat 5 irregular | Via QoG |
+| POWELL_THYNE | Cat 4 manual | Automated direct TXT |
+| UNODC_HOMICIDE | Cat 4 manual | Automated via OWID |
+| IRENA_CAPACITY | Cat 4 manual | Automated via OWID |
+| IMF_IMAPP | Cat 4 manual | Automated ZIP, date auto-detection |
+| YALE_EPI | Cat 4 manual | Automated scrape of downloads pages |
+| WB_CARBON | Cat 4 manual | Automated via WB dashboard xlsx (existence/price/coverage/revenue) |
+| DPI | Cat 4 manual | Automated via IDB CKAN API |
+| CIVICUS | Cat 4 manual | Automated via REST API |
 
 ---
 
 ## Variable-Level Decisions
 
-### V-Dem "factionalism" variable (Concept 1)
-No V-Dem variable with "faction" or "fract" in the name exists in V-Dem v16. Master PDF's "factionalism" label was conceptual, not a specific variable code. Factionalism dimension covered by FSI C2 (Factionalized Elites). No addition to VDEM_VARS needed.
+### Extraction grain verified against master PDF
+A cross-check of extraction grain against the master PDF text confirmed:
+- **FH FIW** — sub-category level (A, D, E, G; F reserved for Rule of Law) is CORRECT per master PDF ("disciplined extraction of just the sub-component"). Not a gap.
+- **WJP** — individual factor level (Factors 2-8) is CORRECT per master PDF (factors mapped to specific concepts). Not a gap.
+- **IMF SPI** — overall + 5 pillars (infrastructure, sources, products, services, use) is CORRECT per master PDF ("comprehensive: data infrastructure, sources, products, services, use"). Not a gap.
+- **WB Carbon** — GAP RESOLVED. Master PDF specifies "carbon pricing existence AND design." Rebuilt from the WB Carbon Pricing Dashboard (replacing the OWID binary) to capture existence + price + jurisdictional coverage + revenue. See the dedicated WB Carbon methodology section below.
 
-### FSI indicator naming discrepancy
-Master PDF incorrectly labels C2 as "P1" and C3 as "S1". Pipeline correctly uses C2 and C3.
+### V-Dem "factionalism" variable
+No V-Dem variable named "faction"/"fract" exists. Master PDF label was conceptual. Factionalism covered by FSI C2 (Factionalized Elites). No VDEM_VARS change needed.
+
+### FSI indicator naming
+Master PDF mislabels C2 as "P1" and C3 as "S1". Pipeline correctly uses C2, C3.
 
 ### Fraser Area 2 — property sub-components
-Master PDF specifies "property sub-components only" for Property rights. We pull full Area 2 aggregate. Metric-level pass decision — select property-specific sub-components at that stage.
-
-### EPI cross-sectional limitation
-Yale EPI only makes 2022 and 2024 editions available for download. Pipeline stacks both editions on 8 consistent sub-indices. 2024-only sub-indices (MKP, MPE, MHP) are NaN for 2022 rows. Methodology differs between editions — limited comparability.
+Master PDF specifies property sub-components only. Pipeline pulls full Area 2 aggregate. Metric-pass decision to select property-specific components.
 
 ### IRENA proxy
-Master PDF calls for IRENA Renewables Capacity Statistics (MW). Using share of electricity from renewables (%) as proxy — more interpretable cross-country, normalises for country size.
+Master PDF calls for IRENA Renewables Capacity (MW). Using share of electricity from renewables (%) as proxy — more interpretable cross-country, normalises for country size.
 
-### WB TARIFFS gap resolved
-Was missing from original WDI pipeline. Added June 2026: TM.TAX.MRCH.SM.AR.ZS and TM.TAX.MRCH.WM.AR.ZS.
+### EPI cross-sectional limitation
+Yale EPI makes only the two most recent editions downloadable. Pipeline stacks both on 8 consistent sub-indices; newer-edition-only sub-indices (MKP, MPE, MHP) are NaN for the earlier edition. Methodology differs between editions — limited comparability.
 
-### Polity5 and NELDA staleness
-Both have latest data at 2020 in QoG. This reflects the source datasets themselves — Polity project not updated since ~2018, NELDA latest release is 2020. QoG version is as current as the direct source. Both added to QoG pipeline at no marginal cost.
+### IMF Fiscal Rules — quality not just presence
+Initial extraction captured only binary presence of the four rule types (a shortcut). Reworked to extract presence AND quality dimensions per rule type (ER/RR/BBR/DR): legal basis (ordinal 1-5: political commitment → coalition → statutory → treaty → constitutional, per IMF codebook), formal enforcement, compliance; plus independent monitoring body, correction mechanism, well-defined triggers. Derived: count of rule types, max/mean legal basis, any enforcement. Column selection is robust NAME-BASED (composite keys from forward-filled parent header rows + un-filled leaf row, substring matching that fails loudly on rename) — replaced fragile position-based extraction.
+
+### iMaPP — breadth not churn, and not in-force
+Initial extraction captured tightening/loosening action counts + net + LTV_average. Reworked per analytical decision that the framework cares about regulatory framework *development*, not policy churn or direction. iMaPP records change events (+1/-1), not stock, so a reliable "currently in force" measure is NOT derivable (loosening ≠ removal; stable rules emit no events). Decision tree:
+- **Rejected** tightening/loosening counts — measure churn/activity, not quality.
+- **Rejected** "currently in force" via cumulative net-sign — misclassifies actively-managed instruments (loosening offsets); false precision.
+- **Rejected** "recent window" activity — rewards churn; stable good rules drop out; converges to ever-engaged at long windows anyway.
+- **Adopted** cumulative ENGAGEMENT BREADTH: count of distinct instruments (16; "Other"/OT excluded as heterogeneous) a country has ever taken action on, up to each year, total + by category (borrower-based: LTV/DSTI/LoanR/LCG; capital-based: CCB/Conservation/Capital/LVR/SIFI; liquidity-funding: Liquidity/LTD/LFX/LFC; provision-reserve-tax: LLP/RR/Tax).
+- **Dropped** LTV_average — measures policy stance/stringency, not quality; its only quality-relevant content (presence) is already in the breadth count.
+- Honest limitation: breadth is a proxy for framework development, NOT instruments-in-force and NOT a quality assessment. RR is noisy (IMF warns it mixes monetary + macroprudential). True quality assessment deferred to FSAP.
+- Validation: China (16/16) and Korea (15) top the latest-year ranking — consistent with known comprehensive macroprudential users. Pakistan high (15) illustrates breadth ≠ quality.
+
+### Upgrade path noted
+- iMaPP "in-force" precision would require parsing the orange-tab text records for introduction/removal language — deferred unless metric pass needs current-stock.
 
 ---
+
+### WB Carbon — national-only, with intensive/extensive EU split
+Rebuilt from the World Bank Carbon Pricing Dashboard (month-stamped xlsx, auto-detected) to replace the prior OWID binary existence flag, per the master PDF's "existence AND design" requirement. Measures: existence flag, carbon price (US$/tCO2e, panel), revenue (US$m, panel), jurisdictional emissions coverage % (current snapshot).
+
+Key methodological decisions:
+- **National-only scope.** Scores sovereign-level governance. Subnational schemes (US states, Canadian provinces, Chinese pilots, Mexican states, Japanese cities) are excluded. Classification is fail-safe: an explicit national-name→ISO3 dictionary; any jurisdiction not resolving to a sovereign is excluded automatically (new subnational schemes auto-exclude; a new NATIONAL entrant requires a one-line dict addition — a flagged MANUAL UPDATE, with an in-pipeline diagnostic listing unmapped jurisdictions).
+- **EU ETS handled by measure type (intensive vs extensive).** The EU ETS ("EU27+" = EU27 + Iceland, Liechtenstein, Norway) is expanded to all member states for INTENSIVE measures (price, coverage, existence — these apply identically to each member) but NOT for revenue (an EXTENSIVE total; fanning the single bloc figure to ~30 members would overstate ~30×). Revenue therefore counts only each country's own national-scheme revenue; EU members without a separate national scheme have no revenue value. Understates EU members' true carbon revenue but never overstates.
+- **Within-country coverage = MAX across instruments** (the dashboard warns coverage figures are gross and overlap; max is conservative vs summing).
+- **Mixed time basis:** price and revenue are full panels; jurisdictional coverage is a CURRENT SNAPSHOT (the only form the dashboard provides), broadcast across years with a `wb_carbon_coverage_is_snapshot` flag.
+- **Skeleton = union** of all country-years with any carbon information (existence, coverage, price, or revenue), so no scheme/coverage country is silently dropped for lacking price/revenue. Countries with a scheme but no price/revenue series get a single current-year row (current year derived from the data).
+- **Absence = INFERRED, not verified, non-existence.** A country absent from the panel may genuinely lack carbon pricing, OR have an out-of-scope instrument (dashboard tracks taxes/ETSs only), a subnational-only scheme (filtered out), an under-development scheme (existence requires Implemented), or be subject to reporting lag. At the metric pass, absent countries may be scored "no national carbon price" but should carry an inferred-absence flag. The WB dashboard is the most authoritative global tracker, so absence is decent evidence against a major national tax/ETS, but not definitive.
+- **Revenue/GDP** to be computed downstream at the metric pass using WDI GDP, as an economic-materiality check (note: revenue understates free-allocation ETSs).
+- **⚠️ Coverage:** ~71 countries — materially below the ~150 target, but this reflects the genuine concentration of carbon pricing, not a data defect. Flagged, not corrected.
 
 ## Pipelines Built
 
 | Notebook | Source | Output File | Indicators | Coverage |
 |----------|--------|-------------|------------|----------|
-| 03_vdem | V-Dem | vdem_filtered.csv | 64 | 1990–2025, 181 countries |
-| 04_wgi | WB WGI | wgi_clean.csv | 6 | 1996–2024, 215 countries |
-| 05_wjp | WJP | wjp_clean.csv | 8 | 2012–2025, 143 countries |
-| 06_fh_fiw | FH FIW | fh_fiw_clean.csv | 4 sub-components | 2013–2025, 195 countries |
-| 07_fsi | FSI | fsi_clean.csv | 4 | 2006–2023, 179 countries |
-| 08_ti_cpi | TI CPI | ti_cpi_clean.csv | 1 | 2012–2024, 182 countries |
-| 09_wdi | WB WDI (34 indicators) | wdi_clean.csv | 34 | 1990–2025, 266 economies |
-| 10_imf_spi | IMF SPI | spi_clean.csv | 6 | 2004–2024, 221 countries |
+| 03_vdem | V-Dem | vdem_filtered.csv | 64 | full series, ~181 countries |
+| 04_wgi | WB WGI | wgi_clean.csv | 6 | from mid-1990s, 215 countries |
+| 05_wjp | WJP | wjp_clean.csv | 8 factors + 6.5 | from early 2010s, 143 countries |
+| 06_fh_fiw | FH FIW | fh_fiw_clean.csv | 4 sub-components | from early 2010s, 195 countries |
+| 07_fsi | FSI | fsi_clean.csv | 4 | from mid-2000s, 179 countries |
+| 08_ti_cpi | TI CPI | ti_cpi_clean.csv | 1 | from early 2010s, 182 countries |
+| 09_wdi | WB WDI (34 indicators) | wdi_clean.csv | 34 | full series, 266 economies |
+| 10_imf_spi | IMF SPI | spi_clean.csv | 6 | from mid-2000s, 221 countries |
 | 11_acled | ACLED | — | — | Pending Research tier |
-| 12_ucdp | UCDP | ucdp_clean.csv | 16 | 1990–2024, 199 countries |
-| 13_fraser | Fraser EFW | fraser_clean.csv | 3 areas | 1990–2023, 165 countries |
-| 14_qog | QoG Standard TS (13 sources) | qog_clean.csv | 36 | 1990–2025, 200 countries |
-| 15_powell_thyne | Powell-Thyne | powell_thyne_clean.csv | 4 | 1990–2025, 204 countries |
-| 16_unodc | UNODC Homicide | unodc_clean.csv | 1 | 1990–2024, 208 countries |
-| 17_irena | IRENA | irena_clean.csv | 1 | 1990–2025, 226 countries |
-| 18_imapp | IMF iMaPP | imapp_clean.csv | 4 | 1990–2024, 135 countries |
-| 19_epi | Yale EPI | epi_clean.csv | 11 | 2022, 2024; 180 countries |
-| 20_wb_carbon | WB Carbon | wb_carbon_clean.csv | 1 | 1990–2025, 201 countries |
-| 21_dpi | DPI | dpi_clean.csv | 31 | 1990–2023, 182 countries |
-| 22_civicus | CIVICUS | civicus_clean.csv | 2 | 2022–2025, 199 countries |
+| 12_ucdp | UCDP | ucdp_clean.csv | 16 | full series, 199 countries |
+| 13_fraser | Fraser EFW | fraser_clean.csv | 3 areas | full series, 165 countries |
+| 14_qog | QoG Standard TS (13 sources) | qog_clean.csv | 36 | full series, 200 countries |
+| 15_powell_thyne | Powell-Thyne | powell_thyne_clean.csv | 4 | full series, 204 countries |
+| 16_unodc | UNODC Homicide | unodc_clean.csv | 1 | full series, 208 countries |
+| 17_irena | IRENA | irena_clean.csv | 1 | full series, 226 countries |
+| 18_imapp | IMF iMaPP | imapp_clean.csv | 5 (breadth total + 4 category) | full series, 135 countries |
+| 19_epi | Yale EPI | epi_clean.csv | 11 | two most recent editions, 180 countries |
+| 20_wb_carbon | WB Carbon | wb_carbon_clean.csv | 4 (existence, price, coverage, revenue) | price/revenue panels + coverage snapshot, 71 countries |
+| 21_dpi | DPI | dpi_clean.csv | 31 | full series, 182 countries |
+| 22_civicus | CIVICUS | civicus_clean.csv | 2 | recent years only, 199 countries |
+| 23_idea_partip | IDEA GSoD | idea_gsod_clean.csv | 13 | full series, 174 countries |
+| 24_pew_gri | Pew GRI | pew_gri_clean.csv | 2 | from mid-2000s, 198 countries |
+| 25_imf_fiscal_rules | IMF Fiscal Rules | imf_fiscal_rules_clean.csv | 28 (presence + quality) | full series, 123 countries |
 
 ---
 
 ## Outstanding Decisions
 
-- KOF_TRADE: build separate KOF pipeline for trade sub-index vs accept dr_eg proxy — decision pending
-- ACLED: complete pipeline once Research tier approved
+- KOF_TRADE: separate KOF pipeline for trade sub-index vs accept dr_eg proxy — pending
+- ACLED: complete once Research tier approved
 - BASEL_AML: complete once Expert Edition access obtained
-- Concept 25 (Government transparency): reconsider before finalizing — significant indicator overlap
+- Concept 25 (Government transparency): reconsider before finalizing — indicator overlap
 - SOE Governance (Concept 10): deferred to v2
-- EPI sub-components: specific policy/institutional sub-components to select at metric pass
-- IDEA EMB Database: evaluate at metric pass
-- Category 3 web scrapes not yet built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
-- Category 4 manual pipelines not yet built: OECD_TFI, IMF_FISCAL_RULES, IMF_AREAER, CLIMATE_LAWS, ODIN, IRENA_POLICY, IDEA_PARTIP, PEW_GRI, RTI_RATING, TI_POLFINANCE, GLOBAL_DATA_BAROMETER, UNCTAD_NTM, REINHART_ROGOFF
-- Category 1 PDF extraction not yet built: PEFA, IMF_FSAP, ICNL
+- EPI sub-components: select policy/institutional sub-components at metric pass
+- iMaPP in-force precision: parse text records if current-stock needed (deferred)
+- WGI standard errors: optional enhancement for ranking confidence — not a master-PDF gap, user discretion
+- Category 3 web scrapes not built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
+- Category 4 manual not built: OECD_TFI, IMF_AREAER, ODIN, IRENA_POLICY, UNCTAD_NTM, RTI_RATING, TI_POLFINANCE, GLOBAL_DATA_BAROMETER, REINHART_ROGOFF, CLIMATE_LAWS (downloaded, pipeline pending)
+- Category 1 PDF extraction not built: PEFA, IMF_FSAP (macroprudential + financial-sector quality assessment), ICNL
 
 ---
 
