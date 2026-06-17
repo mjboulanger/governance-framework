@@ -216,6 +216,15 @@ Of the 58 questions, ~43 are binary (Yes/No), but "Yes" is NOT uniformly "better
 - Wave-updated cross-section (questions revised 2012/2016/2018/2020/2022; 2023 update refreshed 25 countries). The export carries no data-year column, so `data_as_of_date` is the retrieval date with a note that the true vintage is IDEA's latest update round.
 - Coverage: 180 countries (177 scored).
 
+### Concept 25 reconsideration + GDB decision (revisited)
+The master PDF flagged Concept 25 (Government transparency and openness) for reconsideration due to heavy indicator overlap — only the IDEA Political Finance Database and the Global Data Barometer (GDB) are unique to it; its other sources (Open Budget Survey, RTI Rating, WJP Factor 3, V-Dem transparency indicators) are primary in other concepts (PFM, Media Freedom, Legal Quality).
+
+**Decision (this pass): KEEP Concept 25 as a standalone concept.** "Government transparency and openness" is a coherent, investor-legible governance dimension; the overlap is tracked under the framework's repetition rule. Architectural argument for absorption (it is thematically rather than functionally defined) noted but not adopted. Still flagged to revisit with the full framework view before finalising.
+
+**Measurement state (honest):** Concept 25's legal-framework legs are well-measured (RTI Rating, Open Budget Survey, IDEA Political Finance [built], V-Dem disclosure indicators). Its practice/sector legs are under-measured and remain v1 gaps: procurement transparency (no adequate cross-country source), lobbying transparency (very thin globally), de facto vs de jure disclosure, and open data (thin sources). These are candidates for the planned PDF-extraction / qualitative work, or accepted as v1 limitations.
+
+**GDB (Global Data Barometer): DEPRIORITIZED — not built.** Although the master PDF lists GDB as the supplementary open-data source for Concept 25 (successor to the defunct Open Data Barometer), on review it is thin (~43-109 countries, edition-unstable, not a panel) and duplicates ODIN's open-data coverage (ODIN is already in the framework, primary in Statistical Infrastructure / cross-referenced in C25). Crucially, GDB does NOT fill Concept 25's actual measurement gaps (procurement, lobbying, de facto practice). Its marginal contribution over ODIN is too small to justify a pipeline. This is a deliberate departure from the master PDF's "supplementary, build it" treatment, documented here; the open-data leg of C25 is served (adequately if not ideally) by ODIN.
+
 ## Pipelines Built
 
 | Notebook | Source | Output File | Indicators | Coverage |
@@ -261,7 +270,7 @@ Of the 58 questions, ~43 are binary (Yes/No), but "Yes" is NOT uniformly "better
 - iMaPP in-force precision: parse text records if current-stock needed (deferred)
 - WGI standard errors: optional enhancement for ranking confidence — not a master-PDF gap, user discretion
 - Category 3 web scrapes not built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
-- Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM, RTI_RATING, GLOBAL_DATA_BAROMETER, REINHART_ROGOFF (ODIN, CLIMATE_LAWS, TI_POLFINANCE now built — TI_POLFINANCE turned out automatable via IDEA export; IRENA_POLICY deprioritized)
+- Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM, RTI_RATING, REINHART_ROGOFF (ODIN, CLIMATE_LAWS, TI_POLFINANCE built; IRENA_POLICY and GLOBAL_DATA_BAROMETER deprioritized). NOTE: RTI_RATING is a designated PRIMARY tier-1 source (Concept 25 FOI/RTI leg + Media Freedom C23) — highest-value unbuilt source; warrants a real access attempt next.
 - Category 1 PDF extraction not built: PEFA, IMF_FSAP (macroprudential + financial-sector quality assessment), ICNL
 
 ---
