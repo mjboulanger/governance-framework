@@ -89,7 +89,7 @@ Available via the QoG Standard Time-Series dataset. One pipeline (`14_qog_pipeli
 | IMF AREAER | Portal WAF-blocked + JS-gated (confirmed) | BUILT (FARI, manual export, notebook 32) |
 | UNCTAD_NTM | Bulk download API returns 403; TRAINS portal JS-rendered | Manual Category 4 |
 | RTI_RATING | Scores table is in page HTML (earlier auth-gated verdict WRONG) | BUILT (automated read_html, notebook 30) |
-| REINHART_ROGOFF | Academic download; de facto FX regime | NEXT — PRIMARY tier-1 (complements AREAER), not low-priority |
+| REINHART_ROGOFF | Academic download; de facto FX regime; data ends ~2019 | DEMOTED to supplementary — superseded as current-state primary by AREAER de-facto ER classification (deferred to PDF batch) |
 | CLIMATE_LAWS | Registration form required (free) | BUILT (national-only cumulative stock) |
 | PEW_GRI | Free account required | Manual Category 4 — obtained |
 | IRENA_POLICY | No clean policy dataset exists | DEPRIORITIZED (see deprioritized table) |
@@ -246,7 +246,7 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 **Resolution — three complementary sources for one framework row:**
 1. **IMF AREAER FARI (BUILT, manual).** The Financial Account Restrictiveness Index (capital-account restrictiveness, de jure, 0-1 higher=more restrictive) is exported by hand from the portal's Indices tab. Built notebook 32. fari_aggregate + fari_fdi_aggregate are the PRIMARY scored fields; inflow/outflow splits retained as supplementary. 194 countries, 1999-2024 (2024 partial per source). This is the IMF-NATIVE authoritative measure. MANUAL SNAPSHOT — refreshed by re-exporting each cycle. Direction validated (Hong Kong 0.02 / Singapore 0.05 open; Bangladesh 0.77 closed). The FDI sub-index is a genuine advantage over derivative indices (which collapse to a single number and cannot isolate FDI).
 2. **Chinn-Ito KAOPEN (BUILT, automated — notebook 31).** The most-cited academic capital-account-openness index, derived from the SAME AREAER source data, freely downloadable (web.pdx.edu/~ito, year-stamped file, URL parsed dynamically — no hardcoded year). 182 countries (181 valid-ISO3 + ANT dead-code retained; Serbia/Timor present in source but unscored → dropped; ZAR→COD remap), 1970-2023. `kaopen` (raw PCA, higher = MORE open — **OPPOSITE sign to FARI**) primary; `kaopen_norm` (0-1) supplementary. NOT more authoritative than AREAER — it is a derivative; used as the automatable broad-time-series complement / cross-check. Fragile personal-page URL flagged (fallback in instructions_data_maintenance.md). ⚠ **Version non-stable:** each release recomputes the PCA over the whole sample → full-replace, never append. Needs `xlrd` engine for the legacy .xls.
-3. **Reinhart-Rogoff (NEXT).** De facto exchange-rate-regime classification (PRIMARY tier-1, complements AREAER's de jure focus, ~190 countries). Clean academic download. Covers the exchange-rate-regime dimension that FARI/KAOPEN (capital-account) do not.
+3. **Exchange-rate-regime dimension (de facto) — sourced from AREAER's own classification; DEFERRED to PDF batch.** The IMF AREAER publishes a *de facto* exchange-rate-arrangement classification (annual, current to April 2025, ~195 jurisdictions) — the IMF-native current-state primary for the ER-regime dimension that FARI/KAOPEN (capital-account) do not cover. Acquisition: programmatic fetch is WAF-blocked (manual PDF download required — confirmed 403), and the published table (IMF Annual Report 2025 Appendix II.9, page 20) is a **borderless 2-D matrix** of country-name lists (monetary-framework rows × ER-arrangement columns); pdfplumber default `extract_tables` finds no grid → a coordinate-binning parse, not a clean read. **Deferred to the planned Category-1 PDF-extraction batch** (no easy PDF pilot exists in this framework; PDF capability is built deliberately as infra). **Reinhart-Rogoff demoted to supplementary**: data ends ~2019 (≈7-yr stale, worst in the stressed-EM cases where regime classification matters most); retained only as an independent, parallel-market-aware cross-check / historical layer, not the primary.
 
 **ACI (AREAER Change Index)** was also downloaded (companion file) but NOT built into the score: it measures policy *changes* (tightening/easing actions, a direction-of-travel signal), a different construct from FARI's *level* of restrictiveness. Deferred as optional supplementary (on hand if a policy-trajectory dimension is later added).
 
@@ -320,7 +320,8 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 | RTI Rating (CLD) | ✅ | Automated (read_html) | rti_rating_clean.csv (196 countries — broadest) |
 | IMF AREAER (FARI) | ✅ | Manual (portal WAF-blocked) | areaer_fari_clean.csv (194 countries, 1999-2024) |
 | Chinn-Ito (KAOPEN) | ✅ | Automated scrape | chinn_ito_clean.csv (182 countries, 1970-2023); capital-account derivative/cross-check of AREAER FARI; ⚠ version non-stable → full-replace |
-| Reinhart-Rogoff | ⏳ | Manual/academic | de facto FX regime; PRIMARY tier-1, complements AREAER |
+| IMF AREAER (de facto ER) | ⏸ | Manual PDF + matrix extract | ER-regime primary; ~195 juris, current to Apr-2025; deferred to Cat-1 PDF batch (borderless matrix, Appendix II.9 p20) |
+| Reinhart-Rogoff | ⏸ | Manual/academic | DEMOTED to optional supplementary cross-check (data ends ~2019); not a primary |
 | OECD TFI | 🔒 | JS simulator, no API (verified) | trade administration; email-to-OECD route prepared, unsent |
 | UNCTAD NTM | 🔒 | Bulk API 403; TRAINS JS-gated | sole source for non-tariff barriers — real gap if unbuilt |
 | ACLED | ⏸ | Research-tier API | pending approval |
@@ -334,7 +335,7 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 | Linzer-Staton | ❌ | — | stale/discontinued; V-Dem judicial indicators supersede |
 | SOE governance (Concept) | ⏸ | — | deferred to v2 (thinnest concept) |
 
-**Category 1 PDF-extraction sources (not started):** PEFA, IMF FSAP, ICNL, plus multi-source infrastructure (IMF Article IVs + WB CCDRs, political-economy/institutional focus); IRENA renewable-targets to be added here.
+**Category 1 PDF-extraction sources (not started):** PEFA, IMF FSAP, ICNL, plus multi-source infrastructure (IMF Article IVs + WB CCDRs, political-economy/institutional focus); IRENA renewable-targets to be added here; IMF AREAER de-facto ER classification (Appendix II.9 — borderless matrix) to be added here.
 **Category 3 web scrapes (not started):** FATF, IPU PARLINE, WTO TFA, IMF SDDS, CPJ.
 
 
@@ -351,8 +352,8 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 - iMaPP in-force precision: parse text records if current-stock needed (deferred)
 - WGI standard errors: optional enhancement for ranking confidence — not a master-PDF gap, user discretion
 - Category 3 web scrapes not built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
-- Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM, REINHART_ROGOFF (ODIN, CLIMATE_LAWS, TI_POLFINANCE, RTI_RATING built; IRENA_POLICY and GLOBAL_DATA_BAROMETER deprioritized). RTI_RATING turned out automatable (HTML table parse) despite the earlier auth-gated-AJAX verdict — primary tier-1, 196 countries, now built.
-- Category 1 PDF extraction not built: PEFA, IMF_FSAP (macroprudential + financial-sector quality assessment), ICNL
+- Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM (ODIN, CLIMATE_LAWS, TI_POLFINANCE, RTI_RATING built; IRENA_POLICY and GLOBAL_DATA_BAROMETER deprioritized). RTI_RATING turned out automatable (HTML table parse) despite the earlier auth-gated-AJAX verdict — primary tier-1, 196 countries, now built.
+- Category 1 PDF extraction not built: PEFA, IMF_FSAP (macroprudential + financial-sector quality assessment), ICNL, IMF AREAER de-facto ER classification (borderless matrix; ER-regime primary — manual PDF + coordinate parse)
 
 ---
 
