@@ -225,6 +225,17 @@ The master PDF flagged Concept 25 (Government transparency and openness) for rec
 
 **GDB (Global Data Barometer): DEPRIORITIZED — not built.** Although the master PDF lists GDB as the supplementary open-data source for Concept 25 (successor to the defunct Open Data Barometer), on review it is thin (~43-109 countries, edition-unstable, not a panel) and duplicates ODIN's open-data coverage (ODIN is already in the framework, primary in Statistical Infrastructure / cross-referenced in C25). Crucially, GDB does NOT fill Concept 25's actual measurement gaps (procurement, lobbying, de facto practice). Its marginal contribution over ODIN is too small to justify a pipeline. This is a deliberate departure from the master PDF's "supplementary, build it" treatment, documented here; the open-data leg of C25 is served (adequately if not ideally) by ODIN.
 
+### RTI Rating — automated HTML parse, no-law floor methodology
+Source: Global Right to Information Rating (Centre for Law and Democracy / Access Info Europe). PRIMARY tier-1 source for Government transparency (Concept 25, FOI/RTI leg) AND Media Freedom (Concept 23). Earlier parked as "auth-gated AJAX" — that was wrong: the full scores table is in the country-data page HTML and parses cleanly with pandas.read_html. Automated, no auth.
+
+**What it measures:** strength of the legal framework for the right to information — rti_total (0-150) plus 7 category sub-scores (Right of Access, Scope, Requesting Procedure, Exceptions & Refusals, Appeals, Sanctions & Protections, Promotional Measures). DE JURE only; does NOT measure implementation (CLD's parallel implementation project is rti-evaluation.org — separately assessed).
+
+**Aggregation:** we use CLD's OWN published Total (a weighted sum of 61 indicators where categories carry different point maxima — Scope/Appeals/Exceptions/Requesting each up to 30, Promotional 16, Sanctions 8, Right of Access 6). We do NOT compute our own combination; inheriting the authoritative weighting is the low-assumption choice. The 7 sub-scores are retained so the metric pass could re-weight (e.g. emphasising enforcement/oversight) if ever justified — a deliberate departure that would need explicit reasoning.
+
+**No-law countries (a documented SCORING CHOICE):** 142 countries have an RTI law (real scores, has_rti_law=1). 54 countries with NO RTI law (taken from the deficit-list file's flag column, URL extracted dynamically from the page) are assigned a floored rti_total = (minimum observed total − 1 SD of the rated distribution), clamped ≥ 0 (currently = 9.3), with NaN sub-scores and has_rti_law=0. Rationale: "no law" is genuinely worse than the weakest law on a DE JURE dimension (a weak law still creates a right, an oversight body, an appeals mechanism; no law provides none), so it belongs below the floor — but a flat 0 overstated the gap and asserted a precise measured value where there is none. Min-minus-1SD places no-law countries below all laws by a statistically meaningful, data-derived margin. This is an assigned floor, NOT a measured value; the has_rti_law flag keeps it identifiable and the choice revisable at the metric pass.
+
+**Other:** ISO3 via pycountry + manual fixes; cross-section (historical time series deferred — RTI scores are sticky step-functions, low marginal value for a v1 cross-sectional framework; logged as a deferred enhancement). Coverage: 196 countries — the strongest in the framework.
+
 ## Pipelines Built
 
 | Notebook | Source | Output File | Indicators | Coverage |
@@ -255,6 +266,7 @@ The master PDF flagged Concept 25 (Government transparency and openness) for rec
 | 26_climate_laws | Climate Laws (LSE/CPR) | climate_laws_clean.csv | 2 (cumulative stock + new flow) | full series, 199 countries |
 | 27_odin | ODIN (Open Data Watch) | odin_clean.csv | 3 (coverage, openness, overall) | biennial editions, 200 countries |
 | 29_polfinance | IDEA Political Finance DB | polfinance_clean.csv | 1 score + n_answered | cross-section, 180 countries (177 scored) |
+| 30_rti_rating | RTI Rating (CLD/Access Info) | rti_rating_clean.csv | total + 7 sub-scores + has_rti_law | cross-section, 196 countries (142 rated + 54 no-law) |
 
 ---
 
@@ -267,10 +279,11 @@ The master PDF flagged Concept 25 (Government transparency and openness) for rec
 - SOE Governance (Concept 10): deferred to v2
 - EPI sub-components: select policy/institutional sub-components at metric pass
 - IRENA renewable-energy TARGETS (national ambition signal, e.g. % renewable by year): a genuinely additive policy measure, but only available embedded in IRENA reports/NDC analysis — DEFERRED to the planned Category 1 PDF-extraction infrastructure, not a clean download
+- RTI Rating HISTORICAL time series / transparency TRAJECTORY (is a country's RTI framework improving or backsliding): deferred — RTI scores are sticky step-functions so annual history adds little for a v1 cross-section, but a trajectory/direction-of-travel dimension (applicable to several de jure sources) could use it later
 - iMaPP in-force precision: parse text records if current-stock needed (deferred)
 - WGI standard errors: optional enhancement for ranking confidence — not a master-PDF gap, user discretion
 - Category 3 web scrapes not built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
-- Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM, RTI_RATING, REINHART_ROGOFF (ODIN, CLIMATE_LAWS, TI_POLFINANCE built; IRENA_POLICY and GLOBAL_DATA_BAROMETER deprioritized). NOTE: RTI_RATING is a designated PRIMARY tier-1 source (Concept 25 FOI/RTI leg + Media Freedom C23) — highest-value unbuilt source; warrants a real access attempt next.
+- Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM, REINHART_ROGOFF (ODIN, CLIMATE_LAWS, TI_POLFINANCE, RTI_RATING built; IRENA_POLICY and GLOBAL_DATA_BAROMETER deprioritized). RTI_RATING turned out automatable (HTML table parse) despite the earlier auth-gated-AJAX verdict — primary tier-1, 196 countries, now built.
 - Category 1 PDF extraction not built: PEFA, IMF_FSAP (macroprudential + financial-sector quality assessment), ICNL
 
 ---

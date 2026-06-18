@@ -198,6 +198,12 @@ No clean downloadable renewable-policy dataset exists. The IRENA "Stats Tool" .x
 **MANUAL UPDATE only when:** IDEA revises its question set (last revised 2022). The pipeline scores a hand-curated list of 20 directionally-defensible binary questions (see `29_polfinance_pipeline.ipynb` INCLUDED_QUESTIONS and the rationale in framework_decisions.md). If IDEA renumbers or changes questions, revisit that inclusion list — the pipeline asserts each included question resolves to exactly one column and will raise loudly if the schema shifts.
 **Scope reminder:** de jure regulation only (rules on paper, not enforcement/compliance/actual money).
 
+### RTI_RATING — Global RTI Rating (CLD / Access Info Europe)
+**Normally:** No action required — fully automated. The pipeline parses the full scores table directly from rti-rating.org/country-data via pandas.read_html, and fetches the no-law deficit list from a URL it extracts dynamically from the page (so the date in that filename never needs hand-editing).
+**MANUAL UPDATE only when:** a new country appears that pycountry can't map — the pipeline prints any unmapped country names; add them to the MANUAL_ISO3 dict in 30_rti_rating_pipeline.ipynb. (Applies to both the rated table and the deficit list.)
+**Scope reminder:** de jure legal-framework strength only (not implementation). No-law countries are floored at min−1SD (clamped ≥0) with has_rti_law=0 — a documented scoring choice, see framework_decisions.md.
+**If read_html finds 0 tables or the wrong shape:** the page structure changed — inspect rti-rating.org/country-data and adjust the parse.
+
 ### OECD_TFI — OECD Trade Facilitation Indicators
 Manual only. JS-rendered simulator at https://sim.oecd.org/default.ashx?ds=TFI — no API. Export per income/region group. Alternatively email tad.contact@oecd.org for the full dataset. Pipeline pending.
 
@@ -292,5 +298,8 @@ Manual ZIP from odin.opendatawatch.com/data. Globs *data*.zip and validates by c
 
 ### TI_POLFINANCE
 Automated .xlsx export from International IDEA Political Finance Database (themeId=302). Score = equal-weighted mean of 20 directionally-defensible binary questions (Yes=1/No=0/Sometimes=0.5; No data/NA=NaN). Reliability floor: <10 of 20 answered -> NaN (kept), 0 answered -> dropped. Binary questions auto-detected by answer-set membership; the 20 included selected by explicit (category, question#) list encoding a directionality judgment. Wave-updated cross-section; no data-year in export (data_as_of = retrieval date). 180 countries (177 scored).
+
+### RTI_RATING
+Automated. pandas.read_html on rti-rating.org/country-data extracts the 142-country scores table (7 categories + total + law year). Deficit-list xlsx (no-law countries) URL regex-extracted from the page HTML (no hardcoded date). rti_total = CLD's own published weighted sum (NOT recomputed). No-law countries: floored rti_total = min(observed)−1SD clamped ≥0, NaN sub-scores, has_rti_law=0. ISO3 via pycountry + MANUAL_ISO3 dict. Needs pycountry installed. 196 countries.
 
 *Technical notes for not-yet-built sources will be added as each pipeline is built.*
