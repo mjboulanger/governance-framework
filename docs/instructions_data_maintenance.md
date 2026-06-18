@@ -66,9 +66,9 @@ Within each category, sources are ordered by number of indicators used in the fr
 ### Category 1: PDF extraction (most manual)
 | Source ID | Source Name | Frequency |
 |-----------|-------------|-----------|
-| PEFA | PEFA | Per-country 4–7yr |
 | IMF_FSAP | IMF FSAP / BCP / IOSCO / IAIS | Per-country 5–10yr |
-| ICNL | ICNL Civic Freedom Monitor | Irregular |
+
+_(PEFA moved to Category 4 — structured "Scores Downloads" CSV, not PDF. ICNL dropped from the batch — HTML country notes, supplementary `tier3_web`, no pipeline.)_
 
 ### Category 2: Email/form download
 | Source ID | Source Name | Frequency |
@@ -95,6 +95,7 @@ Within each category, sources are ordered by number of indicators used in the fr
 | IRENA_POLICY | IRENA Renewable Energy Policies | Downloaded, pipeline pending |
 | OECD_TFI | OECD Trade Facilitation Indicators | Manual — pending |
 | IMF_AREAER | IMF AREAER | Manual — pending |
+| PEFA | PEFA (Scores Downloads CSV) | ✅ |
 | RSF_WPFI | RSF World Press Freedom Index | Optional cross-check only |
 
 ### Category 5: Manual irregular (not built; most superseded — see framework_decisions.md)
@@ -224,6 +225,18 @@ No clean downloadable renewable-policy dataset exists. The IRENA "Stats Tool" .x
 **Scope reminder:** de jure legal-framework strength only (not implementation). No-law countries are floored at min−1SD (clamped ≥0) with has_rti_law=0 — a documented scoring choice, see framework_decisions.md.
 **If read_html finds 0 tables or the wrong shape:** the page structure changed — inspect rti-rating.org/country-data and adjust the parse.
 
+### PEFA — Public Expenditure and Financial Accountability (PFM)
+**Manual download of a STRUCTURED file (not PDF).** PEFA's "Scores Downloads" page exports A–D indicator/dimension scores as a CSV — no parsing needed.
+**To refresh (MANUAL UPDATE, each cycle):**
+1. Go to https://www.pefa.org/assessments/batch-downloads ("Scores Downloads").
+2. Set **Framework = 2016**, **Type = National**, **Status = Final**. (Framework is single-select; to also pull 2011 for a future backfill, download it as a separate file — the pipeline ingests every `assessments_*.csv` in Downloads.)
+3. Click **Download** — it saves as `assessments_<unixtime>.csv` in Downloads.
+4. **Clear any old `assessments_*.csv` from Downloads first** — the pipeline globs ALL of them and concatenates (dedup-to-latest mitigates, but cleanliness is safer).
+5. Run `33_pefa_pipeline.ipynb` — auto-detects the file(s), snapshots to `data/raw/pefa_assessments_raw.csv`, filters to framework + national, dedups to latest per country, maps A–D→numeric, writes `pefa_clean.csv`.
+**MANUAL UPDATE — framework version:** the single knob is `PEFA_FRAMEWORK` (Cell 2), currently `"2016"`. Change only to adopt a new national framework version as the core — a deliberate SCOPE choice that cannot be auto-derived.
+**MANUAL UPDATE — ISO3:** if the notebook prints unmapped country names, add them to the `OVERRIDES` dict (Cell 4).
+**Scope/caveats:** core = 2016 framework, national, latest per country (~85 countries, 2017–2026). Subnational entities ("Country - Subentity") auto-excluded. 2011 backfill deferred (stale — see framework_decisions.md). `data_as_of` auto-derived from max assessment year (no hardcode).
+
 ### OECD_TFI — OECD Trade Facilitation Indicators
 Manual only. JS-rendered simulator at https://sim.oecd.org/default.ashx?ds=TFI — no API. Export per income/region group. Alternatively email tad.contact@oecd.org for the full dataset. Pipeline pending.
 
@@ -327,5 +340,8 @@ Automated. Scrapes web.pdx.edu/~ito for the newest `kaopen_YYYY.xls`; year parse
 
 ### RTI_RATING
 Automated. pandas.read_html on rti-rating.org/country-data extracts the 142-country scores table (7 categories + total + law year). Deficit-list xlsx (no-law countries) URL regex-extracted from the page HTML (no hardcoded date). rti_total = CLD's own published weighted sum (NOT recomputed). No-law countries: floored rti_total = min(observed)−1SD clamped ≥0, NaN sub-scores, has_rti_law=0. ISO3 via pycountry + MANUAL_ISO3 dict. Needs pycountry installed. 196 countries.
+
+### PEFA
+Manual download of a structured CSV from the "Scores Downloads" page (NOT PDF — reclassified out of the Category-1 PDF batch). Globs every `assessments_*.csv` in Downloads, concatenates + dedups, snapshots full raw (all frameworks) to RAW_DIR, then filters to `PEFA_FRAMEWORK` (="2016") + national, dedups latest per country (85). Wide→long melt of PI-XX (indicator) and PI-XX.Y (dimension) columns; A–D→numeric (7pt indicator: D=1…A=4, `+`→.5; 4pt dimension); `*` stripped + quality_flag; NU/NR/blank→missing/dropped. ISO3 via pycountry + OVERRIDES. Subnational ("Country - Subentity") excluded. 2011 deferred (stale). `data_as_of` = max assessment_year (derived).
 
 *Technical notes for not-yet-built sources will be added as each pipeline is built.*

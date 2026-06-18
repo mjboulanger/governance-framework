@@ -322,6 +322,7 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 | Chinn-Ito (KAOPEN) | ✅ | Automated scrape | chinn_ito_clean.csv (182 countries, 1970-2023); capital-account derivative/cross-check of AREAER FARI; ⚠ version non-stable → full-replace |
 | IMF AREAER (de facto ER) | ⏸ | Manual PDF + matrix extract | ER-regime primary; ~195 juris, current to Apr-2025; deferred to Cat-1 PDF batch (borderless matrix, Appendix II.9 p20) |
 | Reinhart-Rogoff | ⏸ | Manual/academic | DEMOTED to optional supplementary cross-check (data ends ~2019); not a primary |
+| PEFA | ✅ | Manual download (structured CSV) | pefa_clean.csv — Scores Downloads (NOT PDF); 2016/national/latest-per-country (85 ctry, 31 ind, 2017–2026); 2011 deferred (stale) |
 | OECD TFI | 🔒 | JS simulator, no API (verified) | trade administration; email-to-OECD route prepared, unsent |
 | UNCTAD NTM | 🔒 | Bulk API 403; TRAINS JS-gated | sole source for non-tariff barriers — real gap if unbuilt |
 | ACLED | ⏸ | Research-tier API | pending approval |
@@ -335,7 +336,7 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 | Linzer-Staton | ❌ | — | stale/discontinued; V-Dem judicial indicators supersede |
 | SOE governance (Concept) | ⏸ | — | deferred to v2 (thinnest concept) |
 
-**Category 1 PDF-extraction sources (not started):** PEFA, IMF FSAP, ICNL, plus multi-source infrastructure (IMF Article IVs + WB CCDRs, political-economy/institutional focus); IRENA renewable-targets to be added here; IMF AREAER de-facto ER classification (Appendix II.9 — borderless matrix) to be added here.
+**Category 1 PDF-extraction sources (not started):** IMF FSAP, plus multi-source infrastructure (IMF Article IVs + WB CCDRs, political-economy/institutional focus); IMF AREAER de-facto ER classification (Appendix II.9 — borderless matrix) to be added here. _(PEFA removed — it exposes a structured "Scores Downloads" CSV and is BUILT as a manual-download pipeline, `33_pefa_pipeline`, not PDF. ICNL removed — HTML country notes, not PDF; registered as supplementary `tier3_web`, redundant-for-scoring with the automated CIVICUS Monitor.)_
 **Category 3 web scrapes (not started):** FATF, IPU PARLINE, WTO TFA, IMF SDDS, CPJ.
 
 
@@ -353,7 +354,7 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 - WGI standard errors: optional enhancement for ranking confidence — not a master-PDF gap, user discretion
 - Category 3 web scrapes not built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
 - Category 4 manual not built: OECD_TFI, IMF_AREAER, UNCTAD_NTM (ODIN, CLIMATE_LAWS, TI_POLFINANCE, RTI_RATING built; IRENA_POLICY and GLOBAL_DATA_BAROMETER deprioritized). RTI_RATING turned out automatable (HTML table parse) despite the earlier auth-gated-AJAX verdict — primary tier-1, 196 countries, now built.
-- Category 1 PDF extraction not built: PEFA, IMF_FSAP (macroprudential + financial-sector quality assessment), ICNL, IMF AREAER de-facto ER classification (borderless matrix; ER-regime primary — manual PDF + coordinate parse)
+- Category 1 PDF extraction not built: IMF_FSAP (macroprudential + financial-sector quality assessment), IMF AREAER de-facto ER classification (borderless matrix; ER-regime primary — manual PDF + coordinate parse). _(PEFA reclassified → structured manual-download pipeline, BUILT. ICNL → supplementary `tier3_web`, not a PDF build.)_
 
 ---
 
