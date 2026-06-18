@@ -245,7 +245,7 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 
 **Resolution — three complementary sources for one framework row:**
 1. **IMF AREAER FARI (BUILT, manual).** The Financial Account Restrictiveness Index (capital-account restrictiveness, de jure, 0-1 higher=more restrictive) is exported by hand from the portal's Indices tab. Built notebook 32. fari_aggregate + fari_fdi_aggregate are the PRIMARY scored fields; inflow/outflow splits retained as supplementary. 194 countries, 1999-2024 (2024 partial per source). This is the IMF-NATIVE authoritative measure. MANUAL SNAPSHOT — refreshed by re-exporting each cycle. Direction validated (Hong Kong 0.02 / Singapore 0.05 open; Bangladesh 0.77 closed). The FDI sub-index is a genuine advantage over derivative indices (which collapse to a single number and cannot isolate FDI).
-2. **Chinn-Ito KAOPEN (NEXT, automated).** The most-cited academic capital-account-openness index, derived from the SAME AREAER source data, freely downloadable (web.pdx.edu/~ito, year-stamped file, URL parsed dynamically). ~181 countries, 1970-2023. NOT more authoritative than AREAER — it is a derivative; used as the automatable broad-time-series complement / cross-check. Fragile personal-page URL flagged.
+2. **Chinn-Ito KAOPEN (BUILT, automated — notebook 31).** The most-cited academic capital-account-openness index, derived from the SAME AREAER source data, freely downloadable (web.pdx.edu/~ito, year-stamped file, URL parsed dynamically — no hardcoded year). 182 countries (181 valid-ISO3 + ANT dead-code retained; Serbia/Timor present in source but unscored → dropped; ZAR→COD remap), 1970-2023. `kaopen` (raw PCA, higher = MORE open — **OPPOSITE sign to FARI**) primary; `kaopen_norm` (0-1) supplementary. NOT more authoritative than AREAER — it is a derivative; used as the automatable broad-time-series complement / cross-check. Fragile personal-page URL flagged (fallback in instructions_data_maintenance.md). ⚠ **Version non-stable:** each release recomputes the PCA over the whole sample → full-replace, never append. Needs `xlrd` engine for the legacy .xls.
 3. **Reinhart-Rogoff (NEXT).** De facto exchange-rate-regime classification (PRIMARY tier-1, complements AREAER's de jure focus, ~190 countries). Clean academic download. Covers the exchange-rate-regime dimension that FARI/KAOPEN (capital-account) do not.
 
 **ACI (AREAER Change Index)** was also downloaded (companion file) but NOT built into the score: it measures policy *changes* (tightening/easing actions, a direction-of-travel signal), a different construct from FARI's *level* of restrictiveness. Deferred as optional supplementary (on hand if a policy-trajectory dimension is later added).
@@ -281,6 +281,7 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 | 27_odin | ODIN (Open Data Watch) | odin_clean.csv | 3 (coverage, openness, overall) | biennial editions, 200 countries |
 | 29_polfinance | IDEA Political Finance DB | polfinance_clean.csv | 1 score + n_answered | cross-section, 180 countries (177 scored) |
 | 30_rti_rating | RTI Rating (CLD/Access Info) | rti_rating_clean.csv | total + 7 sub-scores + has_rti_law | cross-section, 196 countries (142 rated + 54 no-law) |
+| 31_chinn_ito | Chinn-Ito (KAOPEN) | chinn_ito_clean.csv | 2 (kaopen raw + kaopen_norm 0-1) | 1970-2023 panel, 182 countries (181 ISO3 + ANT) |
 | 32_areaer_fari | IMF AREAER (FARI) | areaer_fari_clean.csv | 6 (aggregate + FDI aggregate + 4 inflow/outflow splits) | 1999-2024 panel, 194 countries |
 
 ---
@@ -318,7 +319,7 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 | IDEA Political Finance | ✅ | Automated (.xlsx export) | polfinance_clean.csv (de jure only) |
 | RTI Rating (CLD) | ✅ | Automated (read_html) | rti_rating_clean.csv (196 countries — broadest) |
 | IMF AREAER (FARI) | ✅ | Manual (portal WAF-blocked) | areaer_fari_clean.csv (194 countries, 1999-2024) |
-| Chinn-Ito (KAOPEN) | ⏳ | Automated | capital-account derivative of AREAER; complement/cross-check |
+| Chinn-Ito (KAOPEN) | ✅ | Automated scrape | chinn_ito_clean.csv (182 countries, 1970-2023); capital-account derivative/cross-check of AREAER FARI; ⚠ version non-stable → full-replace |
 | Reinhart-Rogoff | ⏳ | Manual/academic | de facto FX regime; PRIMARY tier-1, complements AREAER |
 | OECD TFI | 🔒 | JS simulator, no API (verified) | trade administration; email-to-OECD route prepared, unsent |
 | UNCTAD NTM | 🔒 | Bulk API 403; TRAINS JS-gated | sole source for non-tariff barriers — real gap if unbuilt |

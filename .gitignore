@@ -22,6 +22,8 @@ desktop.ini
 # Large raw data files
 data/raw/*.csv
 data/raw/*.zip
+data/raw/*.xls
+data/raw/*.xlsx
 !data/raw/download_log.csv
 
 # Machine-specific environment variables

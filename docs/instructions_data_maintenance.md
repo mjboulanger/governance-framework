@@ -1,6 +1,6 @@
 # Data Maintenance Instructions
 
-**As-of date (last manually updated):** 2026-06-17
+**As-of date (last manually updated):** 2026-06-18
 **⚠️ MANUAL SNAPSHOT:** This document is maintained by hand and does NOT auto-update. Source categories, URLs, version labels, and per-source steps below were accurate as of the date above. When sources change their access methods or a new vintage is released, this document must be updated manually. Any place where a value must be hand-edited on update is flagged inline with **MANUAL UPDATE**.
 
 This document contains instructions for setting up the project on a new machine, and for maintaining and updating data sources.
@@ -132,6 +132,7 @@ Note: POLITY5 and NELDA were previously listed here but are now sourced via the 
 | CIVICUS | CIVICUS Monitor | Active |
 | WJP | WJP Rule of Law Index | Active |
 | FH_FIW | Freedom House FIW | Active |
+| CHINN_ITO | Chinn-Ito Index (KAOPEN) | Active (scrape → year-stamped .xls; needs xlrd) |
 | ACLED | ACLED | Pending Research tier |
 | BASEL_AML | Basel AML Index | Pending Expert Edition |
 
@@ -209,6 +210,13 @@ No clean downloadable renewable-policy dataset exists. The IRENA "Stats Tool" .x
 **MANUAL UPDATE — ISO3:** if the pipeline prints any unmapped country names, add them to the MANUAL_ISO3 dict in the notebook (IMF uses quirky names; note it uses a CURLY apostrophe in "Côte d'Ivoire").
 **If the portal hangs on a large export:** narrow to FARI-only / annual, or export in year-chunks; the pipeline tolerates a single combined file.
 **Caveats:** latest year (currently 2024) is PARTIAL per source footnote. Values are 0-1, higher = MORE restrictive. Complemented by Chinn-Ito (automated) and Reinhart-Rogoff (de facto regime).
+
+### CHINN_ITO — Chinn-Ito Index (KAOPEN), capital-account openness
+**Normally:** No action required — fully automated. `31_chinn_ito_pipeline.ipynb` scrapes the faculty page (web.pdx.edu/~ito/Chinn-Ito_website.htm) for the newest `kaopen_YYYY.xls`, parses the year from the link (no hardcoded year), downloads to `data/raw/`, and reads it with the `xlrd` engine.
+**Dependency:** needs `xlrd` in the env (legacy `.xls`; openpyxl cannot read it). Install via `conda install -c conda-forge xlrd`. **MANUAL UPDATE:** ensure `xlrd` is listed in `environment.yml` so a fresh clone picks it up.
+**MANUAL UPDATE — fragile URL fallback:** if discovery raises "No kaopen_YYYY.xls link found", the personal faculty page was restructured or moved. Fallback: (1) find the current Chinn-Ito page/file (search "Chinn-Ito index"); (2) if the page URL moved, update `PAGE_URL` in the notebook; (3) if the file-naming pattern changed, update the `kaopen_(\d{4})\.xls` regex; (4) last resort — download `kaopen_<latest>.xls` by hand into `data/raw/` and skip the discovery + download cells.
+**MANUAL UPDATE — legacy ISO3:** if the "Non-standard ISO3 remaining" print shows anything besides `['ANT']`, add a mapping to the `LEGACY_ISO3` dict in the notebook (an old code → its current ISO3) and re-run.
+**Caveats:** `kaopen` higher = MORE open — **OPPOSITE sign to AREAER FARI** (invert one before any cross-check). Version non-stable: each release recomputes the PCA over the whole sample, so the pipeline FULL-REPLACES on every run (never append). Data-year Y = AREAER report (Y+1) = end-of-Y status.
 
 ### RTI_RATING — Global RTI Rating (CLD / Access Info Europe)
 **Normally:** No action required — fully automated. The pipeline parses the full scores table directly from rti-rating.org/country-data via pandas.read_html, and fetches the no-law deficit list from a URL it extracts dynamically from the page (so the date in that filename never needs hand-editing).
@@ -313,6 +321,9 @@ Automated .xlsx export from International IDEA Political Finance Database (theme
 
 ### IMF_AREAER
 Manual export (portal WAF-blocked). FARI Index Report xlsx: metadata rows 0-1, header row 2, six FARI index variants stacked (Aggregate/Inflow/Outflow x overall/FDI), years as wide columns (1999-2024 dates), footnote rows interleaved (filtered by valid Index Name). Reshape wide->long->pivot to one column per index. fari_aggregate + fari_fdi_aggregate primary. IFS-code file; ISO3 via name + MANUAL_ISO3 (needs pycountry). 194 countries.
+
+### CHINN_ITO
+Automated. Scrapes web.pdx.edu/~ito for the newest `kaopen_YYYY.xls`; year parsed from the link (no hardcode); downloaded to `data/raw/` and read with `xlrd`. Source ships ISO3 (`ccode`) + IMF–WB numeric (`cn`); long panel `cn|ccode|country_name|year|kaopen|ka_open`. Standardize: drop `cn`, rename `ccode`→country_code / `ka_open`→kaopen_norm; `ZAR`→`COD` remap; drop empty (NaN) country-years (removes unscored Serbia/Timor placeholders); `ANT` (Netherlands Antilles, dead code) retained, flagged. `kaopen` (raw PCA, higher = more open — OPPOSITE sign to FARI) primary; `kaopen_norm` (0–1) supplementary. 181 valid-ISO3 + ANT = 182, 1970–2023. Version non-stable → full-replace each run. Needs `xlrd`.
 
 ### RTI_RATING
 Automated. pandas.read_html on rti-rating.org/country-data extracts the 142-country scores table (7 categories + total + law year). Deficit-list xlsx (no-law countries) URL regex-extracted from the page HTML (no hardcoded date). rti_total = CLD's own published weighted sum (NOT recomputed). No-law countries: floored rti_total = min(observed)−1SD clamped ≥0, NaN sub-scores, has_rti_law=0. ISO3 via pycountry + MANUAL_ISO3 dict. Needs pycountry installed. 196 countries.
