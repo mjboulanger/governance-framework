@@ -198,6 +198,18 @@ No clean downloadable renewable-policy dataset exists. The IRENA "Stats Tool" .x
 **MANUAL UPDATE only when:** IDEA revises its question set (last revised 2022). The pipeline scores a hand-curated list of 20 directionally-defensible binary questions (see `29_polfinance_pipeline.ipynb` INCLUDED_QUESTIONS and the rationale in framework_decisions.md). If IDEA renumbers or changes questions, revisit that inclusion list — the pipeline asserts each included question resolves to exactly one column and will raise loudly if the schema shifts.
 **Scope reminder:** de jure regulation only (rules on paper, not enforcement/compliance/actual money).
 
+### IMF_AREAER — FARI capital-account restrictiveness (MANUAL)
+**MANUAL SNAPSHOT — does not auto-update.** The portal (elibrary-areaer.imf.org) is WAF-blocked to programmatic access and JS-gated, so the data MUST be exported by hand.
+**To refresh (MANUAL UPDATE, each cycle):**
+1. Go to https://www.elibrary-areaer.imf.org/ → **Indices** tab.
+2. Select **FARI Aggregate** and the **FARI - FDI** family (Aggregate + Inflow + Outflow for each), **all countries**, **annual** frequency, full year range.
+3. Download to your Downloads folder (it saves as `FARIReportByCountry_<date>.xlsx`).
+4. (Optional) Also export the ACI report if a policy-trajectory dimension is ever added — currently NOT used.
+5. Run notebook 32_areaer_fari_pipeline.ipynb — it auto-detects the latest `FARIReportByCountry*.xlsx` in Downloads (prefix match, ignores the date suffix), drops footnote rows, reshapes wide→long, maps to ISO3.
+**MANUAL UPDATE — ISO3:** if the pipeline prints any unmapped country names, add them to the MANUAL_ISO3 dict in the notebook (IMF uses quirky names; note it uses a CURLY apostrophe in "Côte d'Ivoire").
+**If the portal hangs on a large export:** narrow to FARI-only / annual, or export in year-chunks; the pipeline tolerates a single combined file.
+**Caveats:** latest year (currently 2024) is PARTIAL per source footnote. Values are 0-1, higher = MORE restrictive. Complemented by Chinn-Ito (automated) and Reinhart-Rogoff (de facto regime).
+
 ### RTI_RATING — Global RTI Rating (CLD / Access Info Europe)
 **Normally:** No action required — fully automated. The pipeline parses the full scores table directly from rti-rating.org/country-data via pandas.read_html, and fetches the no-law deficit list from a URL it extracts dynamically from the page (so the date in that filename never needs hand-editing).
 **MANUAL UPDATE only when:** a new country appears that pycountry can't map — the pipeline prints any unmapped country names; add them to the MANUAL_ISO3 dict in 30_rti_rating_pipeline.ipynb. (Applies to both the rated table and the deficit list.)
@@ -298,6 +310,9 @@ Manual ZIP from odin.opendatawatch.com/data. Globs *data*.zip and validates by c
 
 ### TI_POLFINANCE
 Automated .xlsx export from International IDEA Political Finance Database (themeId=302). Score = equal-weighted mean of 20 directionally-defensible binary questions (Yes=1/No=0/Sometimes=0.5; No data/NA=NaN). Reliability floor: <10 of 20 answered -> NaN (kept), 0 answered -> dropped. Binary questions auto-detected by answer-set membership; the 20 included selected by explicit (category, question#) list encoding a directionality judgment. Wave-updated cross-section; no data-year in export (data_as_of = retrieval date). 180 countries (177 scored).
+
+### IMF_AREAER
+Manual export (portal WAF-blocked). FARI Index Report xlsx: metadata rows 0-1, header row 2, six FARI index variants stacked (Aggregate/Inflow/Outflow x overall/FDI), years as wide columns (1999-2024 dates), footnote rows interleaved (filtered by valid Index Name). Reshape wide->long->pivot to one column per index. fari_aggregate + fari_fdi_aggregate primary. IFS-code file; ISO3 via name + MANUAL_ISO3 (needs pycountry). 194 countries.
 
 ### RTI_RATING
 Automated. pandas.read_html on rti-rating.org/country-data extracts the 142-country scores table (7 categories + total + law year). Deficit-list xlsx (no-law countries) URL regex-extracted from the page HTML (no hardcoded date). rti_total = CLD's own published weighted sum (NOT recomputed). No-law countries: floored rti_total = min(observed)−1SD clamped ≥0, NaN sub-scores, has_rti_law=0. ISO3 via pycountry + MANUAL_ISO3 dict. Needs pycountry installed. 196 countries.

@@ -86,10 +86,10 @@ Available via the QoG Standard Time-Series dataset. One pipeline (`14_qog_pipeli
 | FSI | Latest editions not yet on download page | Data currency gap |
 | OECD_TFI | JS-rendered simulator only — no API, not in OECD SDMX system (exhaustively verified) | Manual Category 4 |
 | IMF Fiscal Rules | DataMapper blocked, no direct Excel URL | Manual Category 4 |
-| IMF AREAER | Portal-based, no direct download | Manual Category 4 |
+| IMF AREAER | Portal WAF-blocked + JS-gated (confirmed) | BUILT (FARI, manual export, notebook 32) |
 | UNCTAD_NTM | Bulk download API returns 403; TRAINS portal JS-rendered | Manual Category 4 |
-| RTI_RATING | JS-rendered wpdatatables; AJAX endpoint needs auth token | Manual Category 4 |
-| REINHART_ROGOFF | No stable direct URL; data ends mid-2010s | Manual Category 4 — low priority |
+| RTI_RATING | Scores table is in page HTML (earlier auth-gated verdict WRONG) | BUILT (automated read_html, notebook 30) |
+| REINHART_ROGOFF | Academic download; de facto FX regime | NEXT — PRIMARY tier-1 (complements AREAER), not low-priority |
 | CLIMATE_LAWS | Registration form required (free) | BUILT (national-only cumulative stock) |
 | PEW_GRI | Free account required | Manual Category 4 — obtained |
 | IRENA_POLICY | No clean policy dataset exists | DEPRIORITIZED (see deprioritized table) |
@@ -238,6 +238,18 @@ Source: Global Right to Information Rating (Centre for Law and Democracy / Acces
 
 **Other:** ISO3 via pycountry + manual fixes; cross-section (historical time series deferred — RTI scores are sticky step-functions, low marginal value for a v1 cross-sectional framework; logged as a deferred enhancement). Coverage: 196 countries — the strongest in the framework.
 
+### IMF AREAER — capital-account dimension resolved (manual FARI + automated derivatives)
+The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and de facto"; universal IMF members) covers two dimensions — capital-account restrictiveness and exchange-rate-regime classification. Access resolution:
+
+**Portal CONFIRMED blocked.** elibrary-areaer.imf.org Data Query and Indices pages return "The requested URL was rejected" (F5/ASM web-application-firewall block) and are JS-gated. Genuinely not automatable programmatically. The original "portal-based, no direct download" assessment was correct.
+
+**Resolution — three complementary sources for one framework row:**
+1. **IMF AREAER FARI (BUILT, manual).** The Financial Account Restrictiveness Index (capital-account restrictiveness, de jure, 0-1 higher=more restrictive) is exported by hand from the portal's Indices tab. Built notebook 32. fari_aggregate + fari_fdi_aggregate are the PRIMARY scored fields; inflow/outflow splits retained as supplementary. 194 countries, 1999-2024 (2024 partial per source). This is the IMF-NATIVE authoritative measure. MANUAL SNAPSHOT — refreshed by re-exporting each cycle. Direction validated (Hong Kong 0.02 / Singapore 0.05 open; Bangladesh 0.77 closed). The FDI sub-index is a genuine advantage over derivative indices (which collapse to a single number and cannot isolate FDI).
+2. **Chinn-Ito KAOPEN (NEXT, automated).** The most-cited academic capital-account-openness index, derived from the SAME AREAER source data, freely downloadable (web.pdx.edu/~ito, year-stamped file, URL parsed dynamically). ~181 countries, 1970-2023. NOT more authoritative than AREAER — it is a derivative; used as the automatable broad-time-series complement / cross-check. Fragile personal-page URL flagged.
+3. **Reinhart-Rogoff (NEXT).** De facto exchange-rate-regime classification (PRIMARY tier-1, complements AREAER's de jure focus, ~190 countries). Clean academic download. Covers the exchange-rate-regime dimension that FARI/KAOPEN (capital-account) do not.
+
+**ACI (AREAER Change Index)** was also downloaded (companion file) but NOT built into the score: it measures policy *changes* (tightening/easing actions, a direction-of-travel signal), a different construct from FARI's *level* of restrictiveness. Deferred as optional supplementary (on hand if a policy-trajectory dimension is later added).
+
 ## Pipelines Built
 
 | Notebook | Source | Output File | Indicators | Coverage |
@@ -269,8 +281,61 @@ Source: Global Right to Information Rating (Centre for Law and Democracy / Acces
 | 27_odin | ODIN (Open Data Watch) | odin_clean.csv | 3 (coverage, openness, overall) | biennial editions, 200 countries |
 | 29_polfinance | IDEA Political Finance DB | polfinance_clean.csv | 1 score + n_answered | cross-section, 180 countries (177 scored) |
 | 30_rti_rating | RTI Rating (CLD/Access Info) | rti_rating_clean.csv | total + 7 sub-scores + has_rti_law | cross-section, 196 countries (142 rated + 54 no-law) |
+| 32_areaer_fari | IMF AREAER (FARI) | areaer_fari_clean.csv | 6 (aggregate + FDI aggregate + 4 inflow/outflow splits) | 1999-2024 panel, 194 countries |
 
 ---
+
+## Consolidated Build Status (by source)
+
+**As-of: 2026-06-18. MANUAL SNAPSHOT — does not auto-update.** Single at-a-glance view of every source's status. Authoritative structured records remain `download_log` (currency/filenames) and `source_registry.csv` (access methods). Legend: ✅ Built · ⏳ Next/in-progress · ⏸ Deferred (access pending or v2) · ❌ Deprioritized · 🔒 Blocked-not-built.
+
+| Source | Status | Access | Output / Note |
+|--------|--------|--------|---------------|
+| V-Dem | ✅ | Automated | vdem_filtered.csv |
+| WB WGI | ✅ | Automated | wgi_clean.csv |
+| WJP | ✅ | Automated (URL detect) | wjp_clean.csv |
+| FH FIW | ✅ | Automated (URL detect) | fh_fiw_clean.csv |
+| FSI | ✅ | Automated scrape | fsi_clean.csv (currency gap: latest editions not posted) |
+| TI CPI | ✅ | Automated (via OWID) | ti_cpi_clean.csv (direct files password-protected) |
+| WB WDI (34 ind.) | ✅ | Automated | wdi_clean.csv |
+| IMF SPI | ✅ | Automated | spi_clean.csv |
+| UCDP | ✅ | Automated bulk ZIP | ucdp_clean.csv (API token avoided via ZIP) |
+| Fraser EFW | ✅ | Automated scrape | fraser_clean.csv |
+| QoG Standard TS (13 sub-sources) | ✅ | Automated | qog_clean.csv (subsumes Polity5, NELDA, Romelli CBI, Hanson-Sigman, BCI, CCP, WB Informal, PEI, GPI, OBS, ND_GAIN, KOF_TRADE, PTS) |
+| Powell-Thyne | ✅ | Automated direct TXT | powell_thyne_clean.csv |
+| UNODC Homicide | ✅ | Automated | unodc_clean.csv |
+| IRENA (capacity) | ✅ | Automated | irena_clean.csv |
+| IMF iMaPP | ✅ | Automated | imapp_clean.csv |
+| Yale EPI | ✅ | Automated | epi_clean.csv (two latest editions only) |
+| WB Carbon | ✅ | Automated | wb_carbon_clean.csv (71 countries, thin) |
+| DPI | ✅ | Automated | dpi_clean.csv |
+| CIVICUS | ✅ | Automated | civicus_clean.csv (recent years only) |
+| IDEA GSoD | ✅ | Automated | idea_gsod_clean.csv |
+| Pew GRI | ✅ | Manual (free account) | pew_gri_clean.csv |
+| IMF Fiscal Rules | ✅ | Manual (DataMapper blocked) | imf_fiscal_rules_clean.csv |
+| Climate Laws (LSE/CPR) | ✅ | Manual (free registration) | climate_laws_clean.csv (national-only) |
+| ODIN (Open Data Watch) | ✅ | Manual ZIP | odin_clean.csv |
+| IDEA Political Finance | ✅ | Automated (.xlsx export) | polfinance_clean.csv (de jure only) |
+| RTI Rating (CLD) | ✅ | Automated (read_html) | rti_rating_clean.csv (196 countries — broadest) |
+| IMF AREAER (FARI) | ✅ | Manual (portal WAF-blocked) | areaer_fari_clean.csv (194 countries, 1999-2024) |
+| Chinn-Ito (KAOPEN) | ⏳ | Automated | capital-account derivative of AREAER; complement/cross-check |
+| Reinhart-Rogoff | ⏳ | Manual/academic | de facto FX regime; PRIMARY tier-1, complements AREAER |
+| OECD TFI | 🔒 | JS simulator, no API (verified) | trade administration; email-to-OECD route prepared, unsent |
+| UNCTAD NTM | 🔒 | Bulk API 403; TRAINS JS-gated | sole source for non-tariff barriers — real gap if unbuilt |
+| ACLED | ⏸ | Research-tier API | pending approval |
+| Basel AML | ⏸ | Institutional affiliation required | personal email ineligible; FATF scrape as alt |
+| Global Data Barometer | ❌ | (accessible) | thin (~43-109, unstable), duplicates ODIN, doesn't fill C25 gaps |
+| IRENA Policy | ❌ | (no clean dataset exists) | renewable policy is report-based; Climate Laws covers |
+| rti-evaluation.org | ❌ | (bespoke per-country reports) | de facto RTI implementation; too thin/heterogeneous |
+| RSF WPFI | ❌ | — | media freedom covered by V-Dem; methodology break |
+| Heritage TR / PR | ❌ | — | Fraser Area 4 / Area 2+WJP+V-Dem supersede |
+| Dincer-Eichengreen CB | ❌ | — | stale; Romelli CBI (in QoG) supersedes |
+| Linzer-Staton | ❌ | — | stale/discontinued; V-Dem judicial indicators supersede |
+| SOE governance (Concept) | ⏸ | — | deferred to v2 (thinnest concept) |
+
+**Category 1 PDF-extraction sources (not started):** PEFA, IMF FSAP, ICNL, plus multi-source infrastructure (IMF Article IVs + WB CCDRs, political-economy/institutional focus); IRENA renewable-targets to be added here.
+**Category 3 web scrapes (not started):** FATF, IPU PARLINE, WTO TFA, IMF SDDS, CPJ.
+
 
 ## Outstanding Decisions
 
