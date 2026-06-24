@@ -28,3 +28,6 @@ data/raw/*.xlsx
 
 # Machine-specific environment variables
 .env
+
+.virtual_documents/
+notebooks/**/Untitled*.ipynb

@@ -40,7 +40,14 @@ This document contains instructions for setting up the project on a new machine,
 6. Register the Jupyter kernel:
    `python -m ipykernel install --user --name governance-framework --display-name "governance-framework"`
 
-7. Launch JupyterLab: `jupyter lab`
+7. **Windows only — set `SSL_CERT_FILE`** so Python uses the certifi CA bundle instead of the Windows certificate store. A malformed entry in the Windows store breaks Python's bulk cert load under OpenSSL 3.x (`ssl.SSLError: [ASN1: NOT_ENOUGH_DATA]`), which blocks JupyterLab and all HTTPS calls. Set it permanently:
+   ```powershell
+   python -c "import certifi; print(certifi.where())"
+   setx SSL_CERT_FILE "<paste-the-path-printed-above>"
+   ```
+   Close and reopen the Anaconda Prompt (setx only affects new windows). Verify: `python -c "import ssl; ssl.create_default_context(); print('SSL OK')"` should print `SSL OK`. (Not needed on Mac.)
+
+8. Launch JupyterLab: `jupyter lab`
 
 ### Notes
 - The `.env` file is machine-specific and not tracked by git — each machine needs its own

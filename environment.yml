@@ -15,7 +15,6 @@ dependencies:
   - requests
   - pyyaml
   - xlrd
-  - pip
   - pip:
       - wbgapi
       - pandas-datareader

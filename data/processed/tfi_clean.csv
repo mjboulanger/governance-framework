@@ -1,0 +1,492 @@
+iso3,country_name_source,year,tfi_avg
+AGO,Angola,2017,0.738
+AGO,Angola,2019,0.814
+AGO,Angola,2022,0.919
+ALB,Albania,2017,1.153
+ALB,Albania,2019,1.364
+ALB,Albania,2022,1.426
+ARE,United Arab Emirates,2017,1.291
+ARE,United Arab Emirates,2019,1.344
+ARE,United Arab Emirates,2022,1.482
+ARG,Argentina,2017,1.314
+ARG,Argentina,2019,1.477
+ARG,Argentina,2022,1.543
+ARM,Armenia,2017,0.999
+ARM,Armenia,2019,1.382
+ARM,Armenia,2022,1.441
+ATG,Antigua and Barbuda,2017,0.695
+ATG,Antigua and Barbuda,2019,0.765
+ATG,Antigua and Barbuda,2022,0.765
+AUS,Australia,2017,1.727
+AUS,Australia,2019,1.79
+AUS,Australia,2022,1.839
+AUT,Austria,2017,1.69
+AUT,Austria,2019,1.741
+AUT,Austria,2022,1.786
+AZE,Azerbaijan,2017,1.119
+AZE,Azerbaijan,2019,1.208
+AZE,Azerbaijan,2022,1.299
+BDI,Burundi,2017,0.49
+BDI,Burundi,2019,0.471
+BDI,Burundi,2022,0.53
+BEL,Belgium,2017,1.672
+BEL,Belgium,2019,1.718
+BEL,Belgium,2022,1.799
+BEN,Benin,2017,0.587
+BEN,Benin,2019,0.685
+BEN,Benin,2022,0.99
+BFA,Burkina Faso,2017,0.549
+BFA,Burkina Faso,2019,0.627
+BFA,Burkina Faso,2022,0.642
+BGD,Bangladesh,2017,0.783
+BGD,Bangladesh,2019,0.951
+BGD,Bangladesh,2022,1.056
+BGR,Bulgaria,2017,1.491
+BGR,Bulgaria,2019,1.61
+BGR,Bulgaria,2022,1.693
+BHR,Bahrain,2017,1.013
+BHR,Bahrain,2019,1.062
+BHR,Bahrain,2022,1.283
+BHS,Bahamas,2017,0.728
+BHS,Bahamas,2019,0.712
+BHS,Bahamas,2022,0.719
+BIH,Bosnia and Herzegovina,2017,1.048
+BIH,Bosnia and Herzegovina,2019,1.198
+BIH,Bosnia and Herzegovina,2022,1.243
+BLR,Belarus,2017,0.563
+BLR,Belarus,2019,0.694
+BLR,Belarus,2022,0.694
+BLZ,Belize,2017,0.4
+BLZ,Belize,2019,0.518
+BLZ,Belize,2022,0.538
+BOL,Bolivia,2017,0.724
+BOL,Bolivia,2019,0.852
+BOL,Bolivia,2022,0.918
+BRA,Brazil,2017,1.237
+BRA,Brazil,2019,1.507
+BRA,Brazil,2022,1.575
+BRB,Barbados,2017,0.57
+BRB,Barbados,2019,0.656
+BRB,Barbados,2022,0.735
+BRN,Brunei Darussalam,2017,1.109
+BRN,Brunei Darussalam,2019,1.348
+BRN,Brunei Darussalam,2022,1.376
+BTN,Bhutan,2017,0.55
+BTN,Bhutan,2019,0.588
+BTN,Bhutan,2022,0.655
+BWA,Botswana,2017,1.072
+BWA,Botswana,2019,1.174
+BWA,Botswana,2022,1.175
+CAF,Central African Republic,2017,0.317
+CAF,Central African Republic,2019,0.504
+CAF,Central African Republic,2022,0.627
+CAN,Canada,2017,1.696
+CAN,Canada,2019,1.754
+CAN,Canada,2022,1.795
+CHE,Switzerland,2017,1.574
+CHE,Switzerland,2019,1.738
+CHE,Switzerland,2022,1.801
+CHL,Chile,2017,1.441
+CHL,Chile,2019,1.549
+CHL,Chile,2022,1.617
+CHN,China,2017,1.348
+CHN,China,2019,1.543
+CHN,China,2022,1.606
+CIV,Côte d'Ivoire,2017,0.699
+CIV,Côte d'Ivoire,2019,0.762
+CIV,Côte d'Ivoire,2022,0.81
+CMR,Cameroon,2017,0.924
+CMR,Cameroon,2019,0.988
+CMR,Cameroon,2022,1.015
+COD,DRC,2017,0.365
+COD,DRC,2019,0.526
+COD,DRC,2022,0.595
+COG,Congo,2017,0.785
+COG,Congo,2019,0.797
+COG,Congo,2022,0.85
+COL,Colombia,2017,1.413
+COL,Colombia,2019,1.528
+COL,Colombia,2022,1.638
+COM,Comoros,2017,0.257
+COM,Comoros,2019,0.385
+COM,Comoros,2022,0.439
+CRI,Costa Rica,2017,1.373
+CRI,Costa Rica,2019,1.547
+CRI,Costa Rica,2022,1.625
+CUB,Cuba,2017,0.694
+CUB,Cuba,2019,1.014
+CUB,Cuba,2022,1.087
+CYP,Cyprus,2017,1.592
+CYP,Cyprus,2019,1.739
+CYP,Cyprus,2022,1.786
+CZE,Czechia,2017,1.519
+CZE,Czechia,2019,1.578
+CZE,Czechia,2022,1.708
+DEU,Germany,2017,1.698
+DEU,Germany,2019,1.757
+DEU,Germany,2022,1.775
+DJI,Djibouti,2017,0.375
+DJI,Djibouti,2019,0.353
+DJI,Djibouti,2022,0.378
+DMA,Dominica,2017,0.781
+DMA,Dominica,2019,0.817
+DMA,Dominica,2022,0.946
+DNK,Denmark,2017,1.735
+DNK,Denmark,2019,1.747
+DNK,Denmark,2022,1.819
+DOM,Dominican Republic,2017,1.1
+DOM,Dominican Republic,2019,1.257
+DOM,Dominican Republic,2022,1.361
+DZA,Algeria,2017,0.792
+DZA,Algeria,2019,0.827
+DZA,Algeria,2022,0.915
+ECU,Ecuador,2017,1.084
+ECU,Ecuador,2019,1.185
+ECU,Ecuador,2022,1.217
+EGY,Egypt,2017,1.088
+EGY,Egypt,2019,1.18
+EGY,Egypt,2022,1.2
+ESP,Spain,2017,1.708
+ESP,Spain,2019,1.765
+ESP,Spain,2022,1.809
+EST,Estonia,2017,1.736
+EST,Estonia,2019,1.782
+EST,Estonia,2022,1.817
+ETH,Ethiopia,2017,0.703
+ETH,Ethiopia,2019,0.736
+ETH,Ethiopia,2022,0.783
+FIN,Finland,2017,1.735
+FIN,Finland,2019,1.801
+FIN,Finland,2022,1.829
+FJI,Fiji,2017,1.036
+FJI,Fiji,2019,1.082
+FJI,Fiji,2022,1.091
+FRA,France,2017,1.748
+FRA,France,2019,1.768
+FRA,France,2022,1.805
+FSM,Micronesia,2017,0.348
+FSM,Micronesia,2019,0.458
+FSM,Micronesia,2022,0.458
+GAB,Gabon,2017,0.458
+GAB,Gabon,2019,0.521
+GAB,Gabon,2022,0.583
+GBR,United Kingdom,2017,1.726
+GBR,United Kingdom,2019,1.806
+GBR,United Kingdom,2022,1.822
+GEO,Georgia,2017,1.47
+GEO,Georgia,2019,1.547
+GEO,Georgia,2022,1.609
+GHA,Ghana,2017,0.862
+GHA,Ghana,2019,0.907
+GHA,Ghana,2022,0.935
+GMB,Gambia,2017,0.513
+GMB,Gambia,2019,0.687
+GMB,Gambia,2022,0.769
+GRC,Greece,2017,1.463
+GRC,Greece,2019,1.525
+GRC,Greece,2022,1.674
+GTM,Guatemala,2017,1.097
+GTM,Guatemala,2019,1.208
+GTM,Guatemala,2022,1.312
+HKG,"Hong Kong, China",2017,1.725
+HKG,"Hong Kong, China",2019,1.876
+HKG,"Hong Kong, China",2022,1.879
+HND,Honduras,2017,0.759
+HND,Honduras,2019,0.95
+HND,Honduras,2022,1.075
+HRV,Croatia,2017,1.553
+HRV,Croatia,2019,1.733
+HRV,Croatia,2022,1.793
+HUN,Hungary,2017,1.435
+HUN,Hungary,2019,1.472
+HUN,Hungary,2022,1.624
+IDN,Indonesia,2017,1.117
+IDN,Indonesia,2019,1.349
+IDN,Indonesia,2022,1.418
+IND,India,2017,1.18
+IND,India,2019,1.524
+IND,India,2022,1.552
+IRL,Ireland,2017,1.731
+IRL,Ireland,2019,1.767
+IRL,Ireland,2022,1.792
+ISL,Iceland,2019,1.564
+ISL,Iceland,2022,1.663
+ISR,Israel,2017,1.43
+ISR,Israel,2019,1.523
+ISR,Israel,2022,1.596
+ITA,Italy,2017,1.614
+ITA,Italy,2019,1.659
+ITA,Italy,2022,1.723
+JAM,Jamaica,2017,0.711
+JAM,Jamaica,2019,0.832
+JAM,Jamaica,2022,0.894
+JOR,Jordan,2017,0.848
+JOR,Jordan,2019,0.958
+JOR,Jordan,2022,1.011
+JPN,Japan,2017,1.719
+JPN,Japan,2019,1.806
+JPN,Japan,2022,1.857
+KAZ,Kazakhstan,2017,0.962
+KAZ,Kazakhstan,2019,1.112
+KAZ,Kazakhstan,2022,1.278
+KEN,Kenya,2017,1.16
+KEN,Kenya,2019,1.269
+KEN,Kenya,2022,1.336
+KGZ,Kyrgyzstan,2017,0.901
+KGZ,Kyrgyzstan,2019,0.975
+KGZ,Kyrgyzstan,2022,1.05
+KHM,Cambodia,2017,0.916
+KHM,Cambodia,2019,1.132
+KHM,Cambodia,2022,1.239
+KIR,Kiribati,2017,0.349
+KIR,Kiribati,2019,0.422
+KIR,Kiribati,2022,0.462
+KOR,Korea,2017,1.804
+KOR,Korea,2019,1.871
+KOR,Korea,2022,1.879
+KWT,Kuwait,2017,0.742
+KWT,Kuwait,2019,0.912
+KWT,Kuwait,2022,1.011
+LAO,Lao PDR,2017,0.695
+LAO,Lao PDR,2019,0.891
+LAO,Lao PDR,2022,0.91
+LBN,Lebanon,2017,0.823
+LBN,Lebanon,2019,0.883
+LBN,Lebanon,2022,0.924
+LBR,Liberia,2017,0.46
+LBR,Liberia,2019,0.534
+LBR,Liberia,2022,0.686
+LKA,Sri Lanka,2017,0.901
+LKA,Sri Lanka,2019,1.042
+LKA,Sri Lanka,2022,1.07
+LSO,Lesotho,2017,0.704
+LSO,Lesotho,2019,0.77
+LSO,Lesotho,2022,0.839
+LTU,Lithuania,2017,1.685
+LTU,Lithuania,2019,1.72
+LTU,Lithuania,2022,1.769
+LUX,Luxembourg,2017,1.744
+LUX,Luxembourg,2019,1.799
+LUX,Luxembourg,2022,1.824
+LVA,Latvia,2017,1.593
+LVA,Latvia,2019,1.664
+LVA,Latvia,2022,1.727
+MAR,Morocco,2017,1.408
+MAR,Morocco,2019,1.541
+MAR,Morocco,2022,1.586
+MDA,Moldova,2017,0.937
+MDA,Moldova,2019,1.035
+MDA,Moldova,2022,1.111
+MDG,Madagascar,2017,0.867
+MDG,Madagascar,2019,0.961
+MDG,Madagascar,2022,1.004
+MDV,Maldives,2017,0.698
+MDV,Maldives,2019,0.824
+MDV,Maldives,2022,0.922
+MEX,Mexico,2017,1.486
+MEX,Mexico,2019,1.549
+MEX,Mexico,2022,1.658
+MKD,North Macedonia,2017,1.095
+MKD,North Macedonia,2019,1.196
+MKD,North Macedonia,2022,1.386
+MLI,Mali,2017,0.559
+MLI,Mali,2019,0.722
+MLI,Mali,2022,0.919
+MLT,Malta,2017,1.59
+MLT,Malta,2019,1.628
+MLT,Malta,2022,1.69
+MMR,Myanmar,2017,0.535
+MMR,Myanmar,2019,1.017
+MMR,Myanmar,2022,1.086
+MNE,Montenegro,2017,1.154
+MNE,Montenegro,2019,1.307
+MNE,Montenegro,2022,1.347
+MNG,Mongolia,2017,1.135
+MNG,Mongolia,2019,1.171
+MNG,Mongolia,2022,1.185
+MOZ,Mozambique,2017,0.547
+MOZ,Mozambique,2019,0.775
+MOZ,Mozambique,2022,0.9
+MUS,Mauritius,2017,1.563
+MUS,Mauritius,2019,1.608
+MUS,Mauritius,2022,1.657
+MWI,Malawi,2017,0.591
+MWI,Malawi,2019,0.748
+MWI,Malawi,2022,0.895
+MYS,Malaysia,2017,1.249
+MYS,Malaysia,2019,1.418
+MYS,Malaysia,2022,1.555
+NAM,Namibia,2017,0.661
+NAM,Namibia,2019,0.878
+NAM,Namibia,2022,0.964
+NER,Niger,2017,0.342
+NER,Niger,2019,0.561
+NER,Niger,2022,0.717
+NGA,Nigeria,2017,0.824
+NGA,Nigeria,2019,0.893
+NGA,Nigeria,2022,0.93
+NIC,Nicaragua,2017,1.207
+NIC,Nicaragua,2019,1.285
+NIC,Nicaragua,2022,1.318
+NLD,Netherlands,2017,1.848
+NLD,Netherlands,2019,1.861
+NLD,Netherlands,2022,1.874
+NOR,Norway,2017,1.781
+NOR,Norway,2019,1.823
+NOR,Norway,2022,1.858
+NPL,Nepal,2017,0.641
+NPL,Nepal,2019,0.666
+NPL,Nepal,2022,0.701
+NZL,New Zealand,2017,1.727
+NZL,New Zealand,2019,1.773
+NZL,New Zealand,2022,1.81
+OMN,Oman,2017,0.967
+OMN,Oman,2019,1.616
+OMN,Oman,2022,1.712
+PAK,Pakistan,2017,1.166
+PAK,Pakistan,2019,1.346
+PAK,Pakistan,2022,1.353
+PAN,Panama,2017,1.288
+PAN,Panama,2019,1.417
+PAN,Panama,2022,1.559
+PER,Peru,2017,1.389
+PER,Peru,2019,1.472
+PER,Peru,2022,1.568
+PHL,Philippines,2017,1.028
+PHL,Philippines,2019,1.229
+PHL,Philippines,2022,1.366
+PLW,Palau,2017,0.442
+PLW,Palau,2019,0.475
+PLW,Palau,2022,0.552
+PNG,Papua New Guinea,2017,0.779
+PNG,Papua New Guinea,2019,0.923
+PNG,Papua New Guinea,2022,1.084
+POL,Poland,2017,1.642
+POL,Poland,2019,1.776
+POL,Poland,2022,1.798
+PRT,Portugal,2017,1.676
+PRT,Portugal,2019,1.773
+PRT,Portugal,2022,1.833
+PRY,Paraguay,2017,0.9
+PRY,Paraguay,2019,1.109
+PRY,Paraguay,2022,1.213
+QAT,Qatar,2017,0.901
+QAT,Qatar,2019,1.29
+QAT,Qatar,2022,1.425
+ROU,Romania,2017,1.405
+ROU,Romania,2019,1.529
+ROU,Romania,2022,1.622
+RUS,Russia,2017,1.246
+RUS,Russia,2019,1.689
+RUS,Russia,2022,1.689
+RWA,Rwanda,2017,0.812
+RWA,Rwanda,2019,0.896
+RWA,Rwanda,2022,1.005
+SAU,Saudi Arabia,2017,1.185
+SAU,Saudi Arabia,2019,1.344
+SAU,Saudi Arabia,2022,1.374
+SDN,Sudan,2017,0.376
+SDN,Sudan,2019,0.5
+SDN,Sudan,2022,0.542
+SEN,Senegal,2017,1.145
+SEN,Senegal,2019,1.175
+SEN,Senegal,2022,1.208
+SGP,Singapore,2017,1.748
+SGP,Singapore,2019,1.808
+SGP,Singapore,2022,1.849
+SLB,Solomon Islands,2017,0.369
+SLB,Solomon Islands,2019,0.507
+SLB,Solomon Islands,2022,0.632
+SLE,Sierra Leone,2017,0.49
+SLE,Sierra Leone,2019,0.526
+SLE,Sierra Leone,2022,0.526
+SLV,El Salvador,2017,1.278
+SLV,El Salvador,2019,1.371
+SLV,El Salvador,2022,1.413
+SRB,Serbia,2017,1.241
+SRB,Serbia,2019,1.305
+SRB,Serbia,2022,1.353
+SUR,Suriname,2017,0.327
+SUR,Suriname,2019,0.399
+SUR,Suriname,2022,0.461
+SVK,Slovak Republic,2017,1.578
+SVK,Slovak Republic,2019,1.641
+SVK,Slovak Republic,2022,1.687
+SVN,Slovenia,2017,1.66
+SVN,Slovenia,2019,1.735
+SVN,Slovenia,2022,1.773
+SWE,Sweden,2017,1.758
+SWE,Sweden,2019,1.829
+SWE,Sweden,2022,1.845
+SWZ,Eswatini,2017,0.666
+SWZ,Eswatini,2019,0.734
+SWZ,Eswatini,2022,0.849
+TCD,Chad,2017,0.312
+TCD,Chad,2019,0.355
+TCD,Chad,2022,0.429
+TGO,Togo,2017,0.654
+TGO,Togo,2019,0.73
+TGO,Togo,2022,0.819
+THA,Thailand,2017,1.348
+THA,Thailand,2019,1.439
+THA,Thailand,2022,1.511
+TJK,Tajikistan,2017,0.67
+TJK,Tajikistan,2019,0.908
+TJK,Tajikistan,2022,1.043
+TON,Tonga,2017,0.781
+TON,Tonga,2019,0.796
+TON,Tonga,2022,0.814
+TTO,Trinidad and Tobago,2017,0.988
+TTO,Trinidad and Tobago,2019,1.096
+TTO,Trinidad and Tobago,2022,1.136
+TUN,Tunisia,2017,1.075
+TUN,Tunisia,2019,1.229
+TUN,Tunisia,2022,1.255
+TUR,Türkiye,2017,1.453
+TUR,Türkiye,2019,1.558
+TUR,Türkiye,2022,1.633
+TWN,Chinese Taipei,2017,1.559
+TWN,Chinese Taipei,2019,1.595
+TWN,Chinese Taipei,2022,1.608
+TZA,Tanzania,2017,0.883
+TZA,Tanzania,2019,0.911
+TZA,Tanzania,2022,0.96
+UGA,Uganda,2017,0.839
+UGA,Uganda,2019,0.94
+UGA,Uganda,2022,0.951
+UKR,Ukraine,2017,0.997
+UKR,Ukraine,2019,1.048
+UKR,Ukraine,2022,1.075
+URY,Uruguay,2017,1.352
+URY,Uruguay,2019,1.441
+URY,Uruguay,2022,1.542
+USA,United States,2017,1.778
+USA,United States,2019,1.827
+USA,United States,2022,1.845
+UZB,Uzbekistan,2017,0.599
+UZB,Uzbekistan,2019,0.713
+UZB,Uzbekistan,2022,0.854
+VEN,Venezuela,2017,0.681
+VEN,Venezuela,2019,0.714
+VEN,Venezuela,2022,0.714
+VNM,Viet Nam,2017,1.257
+VNM,Viet Nam,2019,1.393
+VNM,Viet Nam,2022,1.474
+VUT,Vanuatu,2017,0.782
+VUT,Vanuatu,2019,0.975
+VUT,Vanuatu,2022,1.234
+WSM,Samoa,2017,0.642
+WSM,Samoa,2019,0.862
+WSM,Samoa,2022,0.874
+YEM,Yemen,2017,0.238
+YEM,Yemen,2019,0.241
+YEM,Yemen,2022,0.308
+ZAF,South Africa,2017,1.435
+ZAF,South Africa,2019,1.548
+ZAF,South Africa,2022,1.625
+ZMB,Zambia,2017,0.771
+ZMB,Zambia,2019,0.825
+ZMB,Zambia,2022,0.848
+ZWE,Zimbabwe,2017,0.81
+ZWE,Zimbabwe,2019,0.877
+ZWE,Zimbabwe,2022,0.908

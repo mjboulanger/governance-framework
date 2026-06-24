@@ -130,6 +130,7 @@ Items identified as v1 measurement gaps or quality limitations, to be addressed 
 - PFM coverage expansion — depends on PEFA assessment frequency increasing; IMF FTE coverage expansion if it occurs.
 - Statistical infrastructure data integrity / manipulation measurement — currently a documented gap with no standardised cross-country source.
 - B-READY rollout tracking — currently ~50 countries, targeting 180. When expanded, strengthens measurement for procedural regulatory quality, trade governance, property rights operational efficiency.
+- OECD TFI sub-indicator (A–K) breakdown — v1 uses the composite average (sufficient given admin triangulation with LPI + WTO TFA). Expanding to the 11 sub-indicators is a possible enhancement IF metric-pass introduces per-area weighting (e.g. isolating "transparency of trade rules"); blocked on acquisition (CYC = one sub-metric per download; publication-PDF annex the likely route). Not a to-do.
 - Bureaucratic feature measurement for non-OECD-non-BTI countries — currently QoG Expert Survey is borderline; could commission expanded coverage.
 - Education quality measurement — PISA/PIRLS/TIMSS fails coverage; better universal learning-outcome measurement would strengthen service delivery scoring.
 - IMF Article IV systematic extraction — major operational investment benefiting Macroeconomic framework, PFM, SOE governance, and other concepts.
@@ -385,7 +386,7 @@ The following sections cover all concepts in framework order. Each section provi
 | Source | Decision | Rationale / notes |
 |--------|----------|-------------------|
 | World Bank Logistics Performance Index (LPI) | Primary tier 1 | Direct measure of trade administration quality. 139 countries (2023 ed.). 5-year update gap historically; current cadence uncertain. |
-| OECD Trade Facilitation Indicators (TFI) | Primary tier 1 | 11 indicators covering administration. 163 countries. Updated every 2-3 years. *(Access: JS simulator, no API; manual route prepared — see status table.)* |
+| OECD Trade Facilitation Indicators (TFI) | Primary tier 1 | **Built** (`34_tfi_pipeline`, `tfi_clean.csv`) — **composite average** (0–2), 164 countries, 2017/2019/2022. The composite is sufficient for the concept: administration is triangulated with LPI + WTO TFA, and TFI enters the concept as a blended admin signal under the admin weighting (the OECD composite already encodes the A–K weighting). The **11 sub-indicators (A–K)** are a possible future enhancement, not built — CYC exports only one sub-metric at a time (50+ downloads); would require the publication-PDF annex. Manual download from Compare Your Country (Overview table). |
 | WTO Trade Facilitation Agreement (TFA) implementation tracking | Primary tier 1 | Country commitments and implementation status. All WTO members. Continuously updated. |
 | KOF Globalisation Index — Trade Globalization subindex | Primary tier 1 | De jure and de facto openness measures. ~200 countries. Lower ideological framing than Heritage/Fraser. Annual. |
 | World Bank tariff data (WITS / WDI) | Primary tier 1 | Simple and trade-weighted average tariffs. Universal coverage, annual. |
@@ -401,7 +402,7 @@ The following sections cover all concepts in framework order. Each section provi
 | WGI Regulatory Quality | Dropped — precision | Too broad for trade specifically; in Regulatory Quality concept. |
 | PRS ICRG / EIU Country Risk | Dropped — precision/cost | Bundled in broader risk products. |
 
-**State of measurement:** strong measurement on both administration and openness dimensions. The weighting toward administration is operationalised through metric selection (LPI/TFI heavier than tariff data and openness indices).
+**State of measurement:** strong measurement on both administration and openness dimensions. The weighting toward administration is operationalised through metric selection (LPI/TFI heavier than tariff data and openness indices). TFI is built at the **composite-average** level (sufficient given admin triangulation with LPI + WTO TFA); A–K sub-indicator breakdown is a possible future enhancement, not a v1 requirement.
 
 ---
 
