@@ -87,7 +87,7 @@ Available via the QoG Standard Time-Series dataset. One pipeline (`14_qog_pipeli
 | OECD_TFI | JS simulator/CYC, no API, not in OECD SDMX (exhaustively verified). Composite average downloadable from Compare Your Country (Overview table). Sub-indicators A–K only one-at-a-time (50+ downloads) — not feasible manually. | BUILT (composite, manual download). A–K = future enhancement, not a to-do. |
 | IMF Fiscal Rules | DataMapper blocked, no direct Excel URL | Manual Category 4 |
 | IMF AREAER | Portal WAF-blocked + JS-gated (confirmed) | BUILT (FARI, manual export, notebook 32) |
-| UNCTAD_NTM | Bulk download API returns 403; TRAINS portal JS-rendered | Manual Category 4 |
+| UNCTAD_NTM | WITS bulk download AVAILABLE (wits.worldbank.org NTM Data Download, direct CSV) — no API/JS block. BUT data is stale: latest cross-country vintage is staggered 2012-2017 (9-14 yr old), ~76 countries (frequency/coverage-ratio level). | DROPPED — currency. NTBs = accepted v1 gap. |
 | RTI_RATING | Scores table is in page HTML (earlier auth-gated verdict WRONG) | BUILT (automated read_html, notebook 30) |
 | REINHART_ROGOFF | Academic download; de facto FX regime; data ends ~2019 | DEMOTED to supplementary — superseded as current-state primary by AREAER de-facto ER classification (deferred to PDF batch) |
 | CLIMATE_LAWS | Registration form required (free) | BUILT (national-only cumulative stock) |
@@ -323,8 +323,8 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 | IMF AREAER (de facto ER) | ⏸ | Manual PDF + matrix extract | ER-regime primary; ~195 juris, current to Apr-2025; deferred to Cat-1 PDF batch (borderless matrix, Appendix II.9 p20) |
 | Reinhart-Rogoff | ⏸ | Manual/academic | DEMOTED to optional supplementary cross-check (data ends ~2019); not a primary |
 | PEFA | ✅ | Manual download (structured CSV) | pefa_clean.csv — Scores Downloads (NOT PDF); 2016/national/latest-per-country (85 ctry, 31 ind, 2017–2026); 2011 deferred (stale) |
-| OECD TFI | ✅ | Manual download (CYC Overview table) | tfi_clean.csv — **composite average** (0–2), 164 countries, 2017/2019/2022. Sufficient: admin triangulated w/ LPI + WTO TFA. A–K sub-indicators = future enhancement (CYC one-at-a-time; PDF-annex route), NOT a to-do. TAD email moot. |
-| UNCTAD NTM | 🔒 | Bulk API 403; TRAINS JS-gated | sole source for non-tariff barriers — real gap if unbuilt |
+| OECD TFI | ✅ | Manual download (CYC Overview table) | tfi_clean.csv — **composite average** (0–2), 164 countries, 2017/2019/2022. Sufficient: admin triangulation real (LPI built in wdi_clean + TFI; WTO TFA designed but not yet built). A–K sub-indicators = future enhancement (CYC one-at-a-time; PDF-annex route), NOT a to-do. TAD email moot. |
+| UNCTAD NTM | ❌ | WITS bulk CSV available, but data stale | DROPPED — currency. Latest cross-country vintage 2012-2017 (staggered, 9-14 yr old), ~76 countries. Too stale/thin for a primary even at low weight. NTBs = accepted v1 gap. WITS route works if UNCTAD ever refreshes. |
 | ACLED | ⏸ | Research-tier API | pending approval |
 | Basel AML | ⏸ | Institutional affiliation required | personal email ineligible; FATF scrape as alt |
 | Global Data Barometer | ❌ | (accessible) | thin (~43-109, unstable), duplicates ODIN, doesn't fill C25 gaps |
@@ -353,7 +353,7 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 - iMaPP in-force precision: parse text records if current-stock needed (deferred)
 - WGI standard errors: optional enhancement for ranking confidence — not a master-PDF gap, user discretion
 - Category 3 web scrapes not built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
-- Category 4 manual not built: IMF_AREAER (de facto ER), UNCTAD_NTM (ODIN, CLIMATE_LAWS, TI_POLFINANCE, RTI_RATING, OECD_TFI built; IRENA_POLICY and GLOBAL_DATA_BAROMETER deprioritized). RTI_RATING turned out automatable (HTML table parse) despite the earlier auth-gated-AJAX verdict — primary tier-1, 196 countries, now built. OECD_TFI built at composite level via Compare Your Country manual download (A–K sub-indicators = future enhancement, not a to-do).
+- Category 4 manual not built: IMF_AREAER (de facto ER) (ODIN, CLIMATE_LAWS, TI_POLFINANCE, RTI_RATING, OECD_TFI built; IRENA_POLICY and GLOBAL_DATA_BAROMETER deprioritized; UNCTAD_NTM dropped — currency). RTI_RATING turned out automatable (HTML table parse) despite the earlier auth-gated-AJAX verdict — primary tier-1, 196 countries, now built. OECD_TFI built at composite level via Compare Your Country manual download (A–K sub-indicators = future enhancement, not a to-do). UNCTAD_NTM: WITS bulk CSV is accessible but latest cross-country data is 2012-2017 (~76 countries) — too stale; dropped, NTBs accepted as a v1 gap.
 - Category 1 PDF extraction not built: IMF_FSAP (macroprudential + financial-sector quality assessment), IMF AREAER de-facto ER classification (borderless matrix; ER-regime primary — manual PDF + coordinate parse). _(PEFA reclassified → structured manual-download pipeline, BUILT. ICNL → supplementary `tier3_web`, not a PDF build.)_
 
 ---
