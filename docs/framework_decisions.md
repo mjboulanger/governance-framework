@@ -253,6 +253,21 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 
 **ACI (AREAER Change Index)** was also downloaded (companion file) but NOT built into the score: it measures policy *changes* (tightening/easing actions, a direction-of-travel signal), a different construct from FARI's *level* of restrictiveness. Deferred as optional supplementary (on hand if a policy-trajectory dimension is later added).
 
+## Source Registry Architecture (build-truth model)
+
+`data/processed/source_registry.csv` is the **authoritative, build-time record** of each source's access method, approach, and notes. It is written by two mechanisms, and the model matters:
+
+- **`02_source_registry.ipynb` cells 1–2 (the seed list)** = *decision-time intent*. Hardcoded dicts from the original source-decision pass, with first-guess access methods (`bulk_download`, `api`). ~48 of ~68 entries are deliberately stale relative to the CSV — builds revealed the real access path (e.g. many sources turned out subsumed in bundle pipelines → `via_qog`/`via_wdi`, or gated → `manual_download`).
+- **Per-pipeline updates + `02` cells 4–41** = *build-time truth*. Each built source's correct row is written by its own pipeline's registry cell (e.g. nb 35 for FATF) and/or a targeted `.loc` patch cell in `02`. These are authoritative.
+
+**The CSV is the source of truth; the seed is historical intent. They are expected to diverge.** Do **not** rely on re-running `02` end-to-end to "refresh" build-status — it does not re-derive anything; cells 4–41 are a static correction layer.
+
+**Clobber guard (fixed):** `02` cell 3 previously did an unconditional `to_csv`, overwriting the whole CSV from the seed and wiping pipeline-written corrections (this happened live once — FATF reverted `manual_download` → `tier2_structured`). Cell 3 is now a **non-destructive merge**: existing CSV rows are preserved untouched; only seed rows for genuinely-absent `source_id`s are added. First-ever run still writes the full seed.
+
+### Potential improvement (NOT a task; not required for production)
+
+Cells 4–41 each rewrite the whole CSV via targeted `.loc` patches. They touch only their own named source (cannot clobber other rows), so this is **not a blocker and not a running task item** — the catastrophic failure mode (cell 3's all-rows overwrite) is already fixed. The residual edge case: if a source's access method changes *after* its correction cell was written, and that cell isn't updated, re-running it would re-apply the stale value — bounded to one row, visible in git, trivially recoverable. **Verdict: does not block production.** The clean-architecture alternative (fold all corrections back into the seed, delete cells 4–41) is a larger refactor pursued only if `02` is ever wanted as a single-pass regenerator — optional, low value under the build-truth model.
+
 ## Pipelines Built
 
 | Notebook | Source | Output File | Indicators | Coverage |
