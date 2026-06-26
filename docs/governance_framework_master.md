@@ -262,8 +262,8 @@ The following sections cover all concepts in framework order. Each section provi
 |--------|----------|-------------------|
 | World Bank WDI sector indicators | Primary tier 1 | Curated indicators on education enrollment/completion, health outcomes, infrastructure access. Use specific indicators, not composites. Universal coverage, API access. |
 | WHO Global Health Observatory | Primary tier 1 | Health-specific direct outputs: immunisation, mortality, workforce density. Universal coverage, API. |
-| UNESCO Institute for Statistics (UIS) | Primary tier 1 | Education-specific direct outputs: enrolment, completion, expenditure, teacher-pupil ratios. Universal coverage. |
-| UNDP HDI sub-indicators (life expectancy, schooling years — not composite) | Primary tier 1 | Direct outcome indicators. Use sub-indicators, not composite HDI. |
+| UNESCO Institute for Statistics (UIS) | Primary tier 1 — **subsumed by WDI** | The v1 indicators (education expenditure %GDP/govt, pupil-teacher ratios) are delivered via WDI series (`SE.XPD.*`, `SE.*.ENRL.TC.ZS`). UNESCO's native database holds deeper learning-outcome data WDI lacks — a possible future enhancement, not a v1 gap. |
+| UNDP HDI sub-indicators (life expectancy, schooling years — not composite) | Primary tier 1 — **subsumed by WDI** | Life expectancy (`SP.DYN.LE00.IN`) and GNI per capita PPP (`NY.GNP.PCAP.PP.CD`) are core WDI series. Use sub-indicators, not composite HDI. No standalone build needed. |
 | World Bank Human Capital Index | Primary tier 2 | Synthetic measure: survival, schooling, learning, adult survival. ~170 countries. Useful as composite cross-check. |
 | FSI Public Services (P2) | Primary tier 2 | Direct composite of basic service provision. 179 countries. |
 | WGI Government Effectiveness | Dropped — precision | Too broad — measures overall governance not service outputs specifically. Primary in GE+AQ concept; using here too broad. |
@@ -272,7 +272,7 @@ The following sections cover all concepts in framework order. Each section provi
 | PISA, PIRLS, TIMSS | Dropped — coverage | Quality measurement but mostly OECD + self-selecting participants. Real gap on education quality dimension. |
 | Mo Ibrahim IIAG Human Development | Dropped — coverage | 54 African countries only. |
 
-**State of measurement:** strong on coverage of services delivered. Weaker on quality dimensions (especially education learning quality where universal-coverage assessment fails). Triangulation across WHO, UNESCO, WDI, and FSI provides robust signal.
+**State of measurement (build-verified):** build-complete via WDI + HCI + FSI. The three sector sources originally listed separately — WHO GHO, UNESCO UIS, UNDP HDI sub-indicators — are all **subsumed by WDI** (their v1 indicators are WDI series; WHO GHO's own OData API is deprecated). So no standalone WHO/UNESCO/UNDP pipelines are needed for v1. Strong on coverage of services delivered; weaker on quality dimensions (esp. education learning quality, where universal-coverage assessment fails — UNESCO's deeper learning data is a possible future enhancement).
 
 ---
 
@@ -286,7 +286,7 @@ The following sections cover all concepts in framework order. Each section provi
 |--------|----------|-------------------|
 | WGI Regulatory Quality | Primary tier 1 | Direct concept match. Universal coverage (~215). The aggregate is literally about regulatory quality. |
 | WJP Rule of Law Index — Regulatory Enforcement (Factor 6) | Primary tier 1 | Direct fit for procedural and enforcement quality. 142 countries (borderline). |
-| Heritage Business Freedom | Primary tier 2 | Direct fit for regulatory environment as experienced by firms. Ideological framing acknowledged but moderate for this dimension. |
+| Heritage Business Freedom | ~~Primary tier 2~~ → **superseded by Fraser Regulation** | Same dimension as Fraser Regulation (both tier-2, regulatory environment as firms experience it). House overlap rule prefers Fraser (peer-reviewed, transparent weights) over Heritage (advocacy framing) — as already applied to Heritage Trade and Heritage Property. Tier-1 (WGI + WJP F6) already covers the concept; a second overlapping tier-2 adds no marginal value. Not built. |
 | Fraser Regulation area | Primary tier 2 | Similar to Heritage Business Freedom. Same framing caveats. |
 | World Bank B-READY | Track for future | Direct fit but ~50 countries currently. Targeting 180. Future enhancement item. |
 | OECD iREG (Indicators of Regulatory Policy and Governance) | Dropped — coverage | ~40 OECD + partners. Strong for procedural quality but fails threshold. |

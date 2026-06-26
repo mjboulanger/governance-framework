@@ -253,19 +253,6 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 
 **ACI (AREAER Change Index)** was also downloaded (companion file) but NOT built into the score: it measures policy *changes* (tightening/easing actions, a direction-of-travel signal), a different construct from FARI's *level* of restrictiveness. Deferred as optional supplementary (on hand if a policy-trajectory dimension is later added).
 
-## Source Registry Architecture (build-truth model)
-
-`data/processed/source_registry.csv` is the **authoritative, build-time record** of each source's access method, approach, and notes. It is written by two mechanisms, and the model matters:
-
-- **`02_source_registry.ipynb` cells 1–2 (the seed list)** = *decision-time intent*. Hardcoded dicts from the original source-decision pass, with first-guess access methods (`bulk_download`, `api`). ~48 of ~68 entries are deliberately stale relative to the CSV — builds revealed the real access path (e.g. many sources turned out subsumed in bundle pipelines → `via_qog`/`via_wdi`, or gated → `manual_download`).
-- **Per-pipeline updates + `02` cells 4–41** = *build-time truth*. Each built source's correct row is written by its own pipeline's registry cell (e.g. nb 35 for FATF) and/or a targeted `.loc` patch cell in `02`. These are authoritative.
-
-**The CSV is the source of truth; the seed is historical intent. They are expected to diverge.** Do **not** rely on re-running `02` end-to-end to "refresh" build-status — it does not re-derive anything; cells 4–41 are a static correction layer.
-
-**Clobber guard (fixed):** `02` cell 3 previously did an unconditional `to_csv`, overwriting the whole CSV from the seed and wiping pipeline-written corrections (this happened live once — FATF reverted `manual_download` → `tier2_structured`). Cell 3 is now a **non-destructive merge**: existing CSV rows are preserved untouched; only seed rows for genuinely-absent `source_id`s are added. First-ever run still writes the full seed.
-
-**Known lower-priority follow-up:** cells 4–41 each still rewrite the whole CSV via targeted `.loc` patches. They only touch their own named source (cannot clobber other rows), but each re-applies its hardcoded value on run, so a value that goes stale *after* its correction cell was written would need that cell updated. Not currently failing; left as-is by decision (the clean-architecture alternative — folding all corrections back into the seed and deleting cells 4–41 — is a larger refactor not justified under the build-truth model).
-
 ## Pipelines Built
 
 | Notebook | Source | Output File | Indicators | Coverage |
@@ -369,8 +356,8 @@ _Verified 2026-06-24. Reconciles each concept's primary sources against actual p
 | **2 · Political stability & regime durability** | **✅ Built:** WGI Pol. Stability *(wgi)* · V-Dem regime data *(vdem)* · Powell-Thyne coups *(powell_thyne)* · UCDP *(ucdp)* · GPI *(QoG)* · WJP F5 *(wjp)*<br>**🟡 Outstanding:** ACLED `[parked: research-API approval pending]`<br>**⚪ Closed:** — |
 | **3 · Statistical & informational infrastructure** | **✅ Built:** WB SPI *(spi_clean)* · ODIN *(odin_clean)*<br>**🟡 Outstanding:** IMF SDDS (tier-2) `[classified scrape, unprobed]`<br>**⚪ Closed:** — |
 | **4 · Government effectiveness & admin quality** | **✅ Built:** WGI Govt Effectiveness *(wgi)* · V-Dem v2clrspct *(vdem)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |
-| **5 · Service delivery & public goods** | **✅ Built:** WDI sector indicators *(WDI)* · WB Human Capital Index *(WDI)* · FSI Public Services *(fsi p2)*<br>**🟡 Outstanding:** WHO GHO `[unexamined — likely WDI-redundant, confirm]` · UNESCO UIS `[unexamined — likely WDI-redundant, confirm]` · UNDP HDI sub-indicators `[unexamined — life expectancy in WDI; schooling partial]`<br>**⚪ Closed:** — |
-| **6 · Regulatory quality** | **✅ Built:** WGI Regulatory Quality *(wgi)* · WJP F6 Reg. Enforcement *(wjp)* · Fraser Regulation area *(fraser)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** Heritage Business Freedom *(likely superseded by Fraser Regulation (overlap rule) — not explicitly recorded; confirm)* |
+| **5 · Service delivery & public goods** | **✅ Built:** WDI sector indicators *(WDI)* · WB Human Capital Index *(WDI)* · FSI Public Services *(fsi p2)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** WHO GHO *(subsumed by WDI — physicians/nurses/beds/UHC all WDI series; GHO OData API deprecated)* · UNESCO UIS *(subsumed by WDI — expenditure + pupil-teacher series are WDI codes; deeper UIS learning data = future enhancement, not v1 gap)* · UNDP HDI sub-indicators *(subsumed by WDI — life expectancy + GNI are core WDI series; use sub-indicators not composite)* |
+| **6 · Regulatory quality** | **✅ Built:** WGI Regulatory Quality *(wgi)* · WJP F6 Reg. Enforcement *(wjp)* · Fraser Regulation area *(fraser)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** Heritage Business Freedom *(superseded by Fraser Regulation — same dimension, both tier-2; house overlap rule prefers Fraser (peer-reviewed, transparent weights) over Heritage (advocacy framing), as already applied to Heritage Trade & Property)* |
 | **7 · Public financial management (PFM)** | **✅ Built:** PEFA *(pefa_clean)* · Open Budget Survey *(QoG obs)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |
 | **8 · Macroeconomic policy framework quality** | **✅ Built:** Romelli CBI *(QoG)* · IMF Fiscal Rules *(imf_fiscal_rules)* · AREAER FARI *(areaer_fari)* · Chinn-Ito KAOPEN *(chinn_ito)* · IMF iMaPP *(imapp)*<br>**🟡 Outstanding:** AREAER de-facto ER `[parked: probed — borderless PDF matrix; deferred to PDF batch]`<br>**⚪ Closed:** — |
 | **9 · Financial-sector regulatory & supervisory quality** | **✅ Built:** FATF Mutual Evaluations *(fatf_clean)* — AML/CFT, 199 countries<br>**🟡 Outstanding:** IMF/WB FSAP `[classified PDF-batch — but 'PDF-only' assumed, never probed]` · Basel AML Index `[parked: requires institutional affiliation]` · Basel Core Principles (BCP) `[unexamined — no access investigation]` · IOSCO Principles `[unexamined — no access investigation]` · IAIS Insurance Core Principles `[unexamined — no access investigation]`<br>**⚪ Closed:** — |
