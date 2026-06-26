@@ -1,6 +1,6 @@
 # Data Maintenance Instructions
 
-**As-of date (last manually updated):** 2026-06-18
+**As-of date (last manually updated):** 2026-06-26
 **⚠️ MANUAL SNAPSHOT:** This document is maintained by hand and does NOT auto-update. Source categories, URLs, version labels, and per-source steps below were accurate as of the date above. When sources change their access methods or a new vintage is released, this document must be updated manually. Any place where a value must be hand-edited on update is flagged inline with **MANUAL UPDATE**.
 
 This document contains instructions for setting up the project on a new machine, and for maintaining and updating data sources.
@@ -100,8 +100,9 @@ _(PEFA moved to Category 4 — structured "Scores Downloads" CSV, not PDF. ICNL 
 | CLIMATE_LAWS | LSE Grantham / Climate Policy Radar | Downloaded, pipeline pending |
 | ODIN | Open Data Inventory | Downloaded, pipeline pending |
 | IRENA_POLICY | IRENA Renewable Energy Policies | Downloaded, pipeline pending |
-| OECD_TFI | OECD Trade Facilitation Indicators | Manual — pending |
-| IMF_AREAER | IMF AREAER | Manual — pending |
+| OECD_TFI | OECD Trade Facilitation Indicators | ✅ (nb 34) |
+| IMF_AREAER | IMF AREAER | ✅ FARI built (nb 32); de-facto ER classification pending (PDF batch) |
+| FATF | FATF Mutual Evaluation Ratings (AML/CFT) | ✅ (nb 35; Cloudflare-gated browser download) |
 | PEFA | PEFA (Scores Downloads CSV) | ✅ |
 | RSF_WPFI | RSF World Press Freedom Index | Optional cross-check only |
 
@@ -245,10 +246,19 @@ No clean downloadable renewable-policy dataset exists. The IRENA "Stats Tool" .x
 **Scope/caveats:** core = 2016 framework, national, latest per country (~85 countries, 2017–2026). Subnational entities ("Country - Subentity") auto-excluded. 2011 backfill deferred (stale — see framework_decisions.md). `data_as_of` auto-derived from max assessment year (no hardcode).
 
 ### OECD_TFI — OECD Trade Facilitation Indicators
-Manual only. JS-rendered simulator at https://sim.oecd.org/default.ashx?ds=TFI — no API. Export per income/region group. Alternatively email tad.contact@oecd.org for the full dataset. Pipeline pending.
+Manual export. Compare Your Country tool (https://www.compareyourcountry.org/trade-facilitation) — robots-blocked, no API/batch. Overview → Change view (table) → download selection gives the composite-average export (`exportedData.xlsx`, ~164 countries, years 2017/2019/2022) to Downloads. Re-run `notebooks/exploration/34_tfi_pipeline.ipynb` — auto-detects `exportedData*.xlsx` by glob, derives latest year + download date from the sheet. Composite level only (A–K sub-indicators not exported; future enhancement).
+
+### FATF — Mutual Evaluation Ratings (AML/CFT, Concept 9) (MANUAL — Cloudflare-gated)
+The fatf-gafi.org site is behind Cloudflare's anti-bot challenge, so the files **cannot** be fetched by `curl`/`requests`/the pipeline — they must be downloaded by a real browser. A scripted download returns a ~5 KB "Just a moment..." HTML stub instead of the file.
+1. In a browser, go to: https://www.fatf-gafi.org/en/publications/Mutualevaluations/Assessment-ratings.html
+2. Download **both** Excel files (the "Download" button under each): *Consolidated assessment ratings under the 2022 Methodology – Excel* and *...under the 2013 Methodology – Excel*.
+3. Leave both in `~/Downloads` with default names (`consolidated-assessment-ratings-2022-methodology.xlsx`, `consolidated-assessment-ratings-2013-methodology.xlsx`). Verify they are real spreadsheets, not ~5 KB HTML stubs: `ls -la ~/Downloads/consolidated-assessment-ratings-*.xlsx` (2013 ~150 KB, 2022 ~16 KB; a few-KB file means Cloudflare blocked it — retry in the browser).
+4. Re-run `notebooks/exploration/35_fatf_pipeline.ipynb` — both files auto-detected by glob, methodology round parsed from each filename, as-of date derived from the latest report date in the data. **No manual notebook edit needed**, even when a new methodology round appears (a future `*-2030-methodology.xlsx` is picked up automatically).
+
+*Dependency: requires `pycountry` (in `environment.yml`). Only an in-sheet layout change (banner rows / column order) would need a code update — the positional column-mapping would raise a clear error in that case.*
 
 ### IMF_AREAER — IMF Annual Report on Exchange Arrangements
-Manual. https://www.elibrary-areaer.imf.org/ — Indices tab for FARI/ACI index data. Pipeline pending.
+Manual. https://www.elibrary-areaer.imf.org/ — Indices tab for FARI index data. **FARI (capital-account restrictiveness) is BUILT** — export FARI Indices by hand to Downloads, re-run `notebooks/exploration/32_areaer_fari_pipeline.ipynb` (auto-detects latest `FARIReportByCountry*.xlsx`). The **de-facto exchange-rate-regime classification** (separate from FARI) is NOT built — borderless matrix in the AREAER appendix PDF, deferred to the PDF-extraction batch.
 
 ### ACLED — Armed Conflict Location and Event Data
 Pending Research tier approval. Once approved, run `11_acled_pipeline.ipynb`. Credentials already in `.env`.

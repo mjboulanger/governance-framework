@@ -15,6 +15,7 @@ dependencies:
   - requests
   - pyyaml
   - xlrd
+  - pycountry=24.6.1
   - pip:
       - wbgapi
       - pandas-datareader
