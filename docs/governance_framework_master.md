@@ -25,7 +25,7 @@ The framework organises governance into **5 categories** containing **26 unique 
 | **1. Political foundations** | Political settlement | V-Dem power-distribution indicators; FSI Factionalized Elites (P1); FSI Group Grievance (S1); DPI party fragmentation; Powell-Thyne coups | (none selected as supplementary tier) |
 | | Political stability and regime durability | WGI Political Stability; V-Dem regime duration; Powell-Thyne coups; UCDP and/or ACLED; GPI; WJP Factor 5 | Polity Durable (cross-check); GTD (currency caveat); MMP; ICRG/EIU (optional paid) |
 | **2. State capacity** | State capacity | V-Dem state authority indicators; FSI Security Apparatus (C1) | WB Informal Economy Database; ILO social security coverage; Hanson-Sigman state capacity |
-| | Statistical and informational infrastructure* | World Bank SPI; Open Data Inventory | IMF SDDS subscriptions |
+| | Statistical and informational infrastructure* | World Bank SPI; Open Data Inventory | IMF SDDS subscriptions *(dropped v1 — redundant with SPI/ODIN)* |
 | | Government effectiveness and admin quality | WGI Government Effectiveness; V-Dem Rigorous and Impartial Public Admin (v2clrspct) | WJP Regulatory Enforcement (borderline); QoG Expert Survey impartiality/Weberianism (borderline) |
 | | Service delivery and provision of public goods | WB WDI sector indicators; WHO GHO; UNESCO UIS; UNDP HDI sub-indicators; WB Human Capital Index; FSI Public Services (P2) | (none — concept measured directly from sector-specific sources) |
 | | Regulatory quality* | WGI Regulatory Quality; WJP Regulatory Enforcement (Factor 6) | Heritage Business Freedom; Fraser Regulation area (with framing caveats) |
@@ -220,13 +220,13 @@ The following sections cover all concepts in framework order. Each section provi
 |--------|----------|-------------------|
 | World Bank Statistical Performance Indicators (SPI) | Primary tier 1 | Comprehensive: data infrastructure, sources, products, services, use. 174 countries, annual, World Bank API. |
 | Open Data Inventory (ODIN, Open Data Watch) | Primary tier 1 | Best-in-class for accessibility/openness sub-dimension. 195 countries, biennial. Methodologically distinct from SPI. |
-| IMF Data Standards subscriptions (SDDS / SDDS Plus / eGDDS) | Primary tier 2 | De jure standards compliance signal. Universal but tiered (SDDS Plus for advanced, SDDS for middle, eGDDS for lower-income). |
+| IMF Data Standards subscriptions (SDDS / SDDS Plus / eGDDS) | Primary tier 2 — **Dropped (v1)** | De jure standards-compliance signal (4-level ordinal: SDDS Plus / SDDS / e-GDDS / non-participating). Dropped on construct redundancy: SPI (continuous statistical capacity, likely already incorporating dissemination-standard adherence) and ODIN (continuous coverage+openness, independently audited) measure the same dissemination/transparency facet with more resolution; SDDS is coarse and partly self-reported, and where it discriminates (frontier/low-income floor) SPI already discriminates continuously. Not access, not licence (IMF data freely usable). Re-entry: cheap public DSBB source if a distinct de jure commitment signal is later wanted. |
 | V-Dem media corruption / transparent laws indicators | Dropped — precision | Variables initially considered (v2mecorrpt, v2cltrnslw) don't directly measure statistical infrastructure. Stretches that wouldn't pass precision-of-fit. Dropped. |
 | PARIS21 reports and assessments | Dropped — currency/structure | Qualitative country reports; not standardised cross-country dataset. Useful for deep dives only. |
 | WGI Government Effectiveness | Dropped — precision | Too broad. Aggregates content captured elsewhere. |
 | Academic data manipulation work (Martinez, Wallace, others) | Dropped — currency/structure | Specific country cases rather than standardised cross-country index. Real gap; added to future enhancements. |
 
-**State of measurement:** good for production and accessibility (SPI, ODIN, SDDS). Data integrity / manipulation resistance is a documented measurement gap with no honest universal-coverage solution. Best practice: score the concept on production and accessibility, note integrity dimension as a known limitation rather than force a loose proxy.
+**State of measurement:** good for production and accessibility (SPI, ODIN; IMF SDDS dropped v1 as redundant). Data integrity / manipulation resistance is a documented measurement gap with no honest universal-coverage solution. Best practice: score the concept on production and accessibility, note integrity dimension as a known limitation rather than force a loose proxy.
 
 ---
 
