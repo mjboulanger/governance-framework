@@ -1,0 +1,51 @@
+iso3,country,iso2,cpj_imprisoned,cpj_murdered_total,cpj_murdered_confirmed,cpj_murders_unsolved
+AFG,Afghanistan,AF,1,1,1,1
+ARE,United Arab Emirates,,1,0,0,0
+AZE,Azerbaijan,AZ,24,0,0,0
+BEN,Benin,BJ,1,0,0,0
+BFA,Burkina Faso,BF,2,0,0,0
+BGD,Bangladesh,BD,5,2,2,2
+BHR,Bahrain,BH,4,0,0,0
+BLR,Belarus,BY,21,0,0,0
+CHN,China,CN,50,0,0,0
+CMR,Cameroon,CM,4,2,2,2
+COD,Democratic Republic of the Congo,CD,0,1,1,1
+COL,Colombia,CO,0,1,1,1
+CUB,Cuba,CU,2,0,0,0
+DZA,Algeria,DZ,6,0,0,0
+EGY,Egypt,EG,18,0,0,0
+ERI,Eritrea,ER,16,0,0,0
+ETH,Ethiopia,ET,5,0,0,0
+GEO,Georgia,GE,1,0,0,0
+GTM,Guatemala,GT,1,0,0,0
+HND,Honduras,HN,0,2,2,2
+HTI,Haiti,HT,0,3,3,3
+IDN,Indonesia,ID,0,1,1,0
+IND,India,IN,4,3,3,3
+IRN,Iran,IR,11,1,1,1
+IRQ,Iraq,IQ,3,2,2,2
+ISR,Israel and the Occupied Palestinian Territory,IL,34,32,32,32
+KHM,Cambodia,KH,6,1,1,0
+LBN,Lebanon,LB,0,7,7,7
+LSO,Lesotho,LS,0,1,1,1
+MEX,Mexico,MX,0,1,1,1
+MLI,Mali,ML,1,0,0,0
+MMR,Myanmar,MM,18,3,3,3
+MOZ,Mozambique,MZ,0,1,1,0
+NER,Niger,NE,4,0,0,0
+NIC,Nicaragua,NI,1,0,0,0
+PAK,Pakistan,PK,0,4,4,4
+PER,Peru,PE,0,1,1,1
+PHL,Philippines,PH,1,3,2,3
+RUS,Russia,RU,30,1,1,1
+RWA,Rwanda,RW,4,0,0,0
+SAU,Saudi Arabia,SA,8,1,1,1
+SDN,Sudan,SD,1,2,2,2
+SOM,Somalia,SO,1,0,0,0
+SYR,Syria,SY,2,2,2,1
+TJK,Tajikistan,TJ,9,0,0,0
+TUN,Tunisia,TN,3,0,0,0
+TUR,Turkey,TR,6,0,0,0
+UKR,Ukraine,UA,0,1,1,1
+VNM,Vietnam,VN,16,0,0,0
+YEM,Yemen,YE,0,20,20,20

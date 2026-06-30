@@ -706,7 +706,7 @@ The following sections cover all concepts in framework order. Each section provi
 |--------|----------|-------------------|
 | Reporters Without Borders (RSF) — World Press Freedom Index | Primary tier 1 | Standard cross-country press freedom measure. 180 countries, annual. Pluralism, independence, environment/self-censorship, legislative framework, transparency, safety, plus quantitative abuses indicator. |
 | V-Dem media indicators (v2x_freexp_altinf, v2mecenefm, v2meharjrn, v2mecorrpt, v2meslfcen, v2merange, v2mebias, v2mecrit) | Primary tier 1 | Multiple direct precise measures. ~180 countries, annual. |
-| Committee to Protect Journalists (CPJ) — journalist safety data | Primary tier 1 | Direct outcome measure for journalist safety dimension. Universal (CPJ tracks all reported cases). Continuous. |
+| Committee to Protect Journalists (CPJ) — journalist safety data | Primary tier 1 — **Built** (`cpj_clean.csv`, nb 36) | AUTOMATED via CPJ public REST API. Three per-country measures: journalists imprisoned (live census snapshot), journalists murdered (3-yr rolling window, motive=Murder, derived from CURRENT_YEAR), and unsolved/Complete-Impunity murders (same window). 50 countries with ≥1 incident; all other framework countries are true zeros (tail-severity signal capturing two distinct repression modes — detention vs lethal violence). ISO2 from API, ISO3 via pycountry. Israel/OPT lumped under ISR by CPJ (flag for metric pass). Impunity is slow-moving / ~collinear with murdered over a short window. |
 | Freedom House Freedom in the World — Civil Liberties sub-category D | Primary tier 2 | Disciplined extraction. Repetition with Civil Liberties tracked. |
 | Centre for Law and Democracy / Access Info Europe — RTI Rating | Primary tier 2 | RTI legislation quality. 138 countries (borderline coverage). Also used in Government Transparency. **Built** (automated, 196 countries incl. no-law). |
 | UNESCO Journalist Killings Observatory | Supplementary | Overlaps CPJ; adds prosecution dimension. |
@@ -719,7 +719,7 @@ The following sections cover all concepts in framework order. Each section provi
 | BTI Media | Dropped — coverage | Transformation countries. |
 | EIU Democracy Index Civil Liberties | Dropped — cost | Tier 4 paid. |
 
-**State of measurement:** strong. Multiple methodologically distinct primary sources (RSF expert+quantitative, V-Dem expert coding, CPJ outcome data) provide robust triangulation. Main gap: internet/digital media freedom universal-coverage measurement and media ownership concentration cross-country measurement. Future enhancements.
+**State of measurement (build-verified):** strong, build-complete. Methodologically distinct primary sources triangulate: V-Dem (expert-coded latent press-freedom climate), FH-FIW CL-D (analyst-coded), RTI Rating (de jure legal framework), and CPJ (objective verified event-counts of journalist imprisonment/murder/impunity). CPJ's construct is largely unique — the expert/legal indices do not produce hard counts of jailed/killed journalists — so it adds distinct measurement rather than redundancy. Main gap: internet/digital media freedom universal-coverage measurement and media ownership concentration cross-country measurement. Future enhancements.
 
 ---
 
