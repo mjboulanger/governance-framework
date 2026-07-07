@@ -1,6 +1,6 @@
 # Data Maintenance Instructions
 
-**As-of date (last manually updated):** 2026-06-26
+**As-of date (last manually updated):** 2026-07-02
 **⚠️ MANUAL SNAPSHOT:** This document is maintained by hand and does NOT auto-update. Source categories, URLs, version labels, and per-source steps below were accurate as of the date above. When sources change their access methods or a new vintage is released, this document must be updated manually. Any place where a value must be hand-edited on update is flagged inline with **MANUAL UPDATE**.
 
 This document contains instructions for setting up the project on a new machine, and for maintaining and updating data sources.
@@ -101,7 +101,8 @@ _(PEFA moved to Category 4 — structured "Scores Downloads" CSV, not PDF. ICNL 
 | ODIN | Open Data Inventory | Downloaded, pipeline pending |
 | IRENA_POLICY | IRENA Renewable Energy Policies | Downloaded, pipeline pending |
 | OECD_TFI | OECD Trade Facilitation Indicators | ✅ (nb 34) |
-| IMF_AREAER | IMF AREAER | ✅ FARI built (nb 32); de-facto ER classification pending (PDF batch) |
+| IMF_AREAER | IMF AREAER (FARI capital-account) | ✅ FARI built (nb 32) |
+| IMF_AREAER_ERREGIME | IMF AREAER de-facto ER regime | ✅ (nb 37; hand-transcribed, checksum-validated) |
 | FATF | FATF Mutual Evaluation Ratings (AML/CFT) | ✅ (nb 35; Cloudflare-gated browser download) |
 | PEFA | PEFA (Scores Downloads CSV) | ✅ |
 | RSF_WPFI | RSF World Press Freedom Index | Optional cross-check only |
@@ -257,8 +258,18 @@ The fatf-gafi.org site is behind Cloudflare's anti-bot challenge, so the files *
 
 *Dependency: requires `pycountry` (in `environment.yml`). Only an in-sheet layout change (banner rows / column order) would need a code update — the positional column-mapping would raise a clear error in that case.*
 
-### IMF_AREAER — IMF Annual Report on Exchange Arrangements
-Manual. https://www.elibrary-areaer.imf.org/ — Indices tab for FARI index data. **FARI (capital-account restrictiveness) is BUILT** — export FARI Indices by hand to Downloads, re-run `notebooks/exploration/32_areaer_fari_pipeline.ipynb` (auto-detects latest `FARIReportByCountry*.xlsx`). The **de-facto exchange-rate-regime classification** (separate from FARI) is NOT built — borderless matrix in the AREAER appendix PDF, deferred to the PDF-extraction batch.
+### IMF_AREAER_ERREGIME — AREAER de-facto exchange-rate regime (MANUAL TRANSCRIPTION)
+**MANUAL SNAPSHOT — does not auto-update.** AREAER Online is paywalled and the published classification (IMF *Annual Report* Appendix II.9) is a **borderless 2-D matrix** with no reliable automated extraction, so the source is maintained as a **hand-transcribed CSV**: `data/raw/areaer_defacto_regime.csv`.
+**Annual refresh = edit the source CSV only — NO code changes.** The pipeline derives everything (including the `data_as_of` vintage) from that CSV; nothing is hardcoded in `37_areaer_defacto_er_pipeline.ipynb`.
+**To refresh (MANUAL UPDATE, annual, ~30 min):**
+1. Get the latest IMF *Annual Report* appendices PDF (free/public) and open **Appendix II.9** ("De Facto Classification of Exchange Rate Arrangements, as of <date>").
+2. Most jurisdictions don't change year-to-year; the matrix flags reclassified ones with a `(month/year)` marker. **Update only those rows** in the CSV — change `areaer_arrangement` (and `areaer_mpf`/`areaer_anchor_currency` if the column moved), set `areaer_reclassified` to the new `YYYY-MM`, and clear stale reclassification markers.
+3. **Set `areaer_as_of` on every row** to the new matrix "as-of" date (e.g. `2026-04-30`). This one value is how the pipeline learns the vintage — do NOT put a date in code.
+4. **Validate against the PDF's own checksums** (this is what makes hand-transcription safe): each arrangement row AND each monetary-policy-framework column states its country count in the PDF — confirm your per-arrangement and per-column totals still match after editing (both axes sum to the jurisdiction total).
+5. Re-run `notebooks/exploration/37_areaer_defacto_er_pipeline.ipynb` end-to-end → `data/processed/areaer_er_clean.csv` + updated `download_log`; then re-run the `IMF_AREAER_ERREGIME` cell at the end of `02_source_registry.ipynb` (coverage is derived from the clean CSV).
+**MANUAL UPDATE — ISO3 (`ISO3_OVERRIDES`, Cell 2):** add a mapping ONLY if a new oddly-named jurisdiction appears — Cell 5 prints any name that neither `pycountry` (exact) nor the override map resolves. No fuzzy matching by design (data contains fuzzy-dangerous pairs: Niger/Nigeria, the three Guineas, Congo/DR Congo, Sudan/South Sudan).
+**MANUAL UPDATE — IMF taxonomy (`ARRANGEMENT_ORDINAL`/`ARRANGEMENT_GROUP` in Cell 2; `VALID_MPF`/`VALID_ANCHOR` in Cell 6):** these encode the IMF's fixed 10-category arrangement + 4-way monetary-framework vocabulary; they change ONLY if the IMF revises its taxonomy (rare). A new/renamed value trips the Cell-4 vocabulary guard or the Cell-6 domain guard, which names the offender — update the relevant constant then.
+**Caveats:** cross-section snapshot (NO `year`; vintage = `areaer_as_of`). `areaer_regime_ordinal` (1–10, most-fixed→most-flexible) follows IMF matrix row order; **`other_managed` (8) is a RESIDUAL, not a true flexibility rank** — prefer `areaer_regime_group` for scoring, or handle other_managed separately (metric-pass flag). Supersedes Reinhart-Rogoff as the current-state ER-regime primary.
 
 ### ACLED — Armed Conflict Location and Event Data
 Pending Research tier approval. Once approved, run `11_acled_pipeline.ipynb`. Credentials already in `.env`.
@@ -351,6 +362,9 @@ Automated .xlsx export from International IDEA Political Finance Database (theme
 
 ### IMF_AREAER
 Manual export (portal WAF-blocked). FARI Index Report xlsx: metadata rows 0-1, header row 2, six FARI index variants stacked (Aggregate/Inflow/Outflow x overall/FDI), years as wide columns (1999-2024 dates), footnote rows interleaved (filtered by valid Index Name). Reshape wide->long->pivot to one column per index. fari_aggregate + fari_fdi_aggregate primary. IFS-code file; ISO3 via name + MANUAL_ISO3 (needs pycountry). 194 countries.
+
+### IMF_AREAER_ERREGIME
+Hand-transcribed from the AREAER de-facto classification borderless matrix (IMF *Annual Report* Appendix II.9); AREAER Online paywalled, `extract_tables` finds no grid. Source CSV `data/raw/areaer_defacto_regime.csv` (195 juris), validated at transcription against the PDF's per-arrangement (row) AND per-monetary-framework (column) country-count checksums (both axes sum to 195). Pipeline encodes `areaer_regime_ordinal` (1–10 flexibility, matrix order; other_managed=8 residual) + `areaer_regime_group` (IMF 4-way) via fixed Cell-2 lookups; `areaer_mpf` (incl. inflation-targeting flag) + `areaer_anchor_currency` carried from source; `areaer_reclassified` (YYYY-MM regime-change recency). Cross-section snapshot, NO year; `data_as_of` = `areaer_as_of` (derived from CSV). ISO3 via pycountry EXACT + `ISO3_OVERRIDES` (no fuzzy). Distinct from IMF_AREAER (FARI capital-account). Supersedes Reinhart-Rogoff. 195 jurisdictions, as-of 2025-04-30.
 
 ### CHINN_ITO
 Automated. Scrapes web.pdx.edu/~ito for the newest `kaopen_YYYY.xls`; year parsed from the link (no hardcode); downloaded to `data/raw/` and read with `xlrd`. Source ships ISO3 (`ccode`) + IMF–WB numeric (`cn`); long panel `cn|ccode|country_name|year|kaopen|ka_open`. Standardize: drop `cn`, rename `ccode`→country_code / `ka_open`→kaopen_norm; `ZAR`→`COD` remap; drop empty (NaN) country-years (removes unscored Serbia/Timor placeholders); `ANT` (Netherlands Antilles, dead code) retained, flagged. `kaopen` (raw PCA, higher = more open — OPPOSITE sign to FARI) primary; `kaopen_norm` (0–1) supplementary. 181 valid-ISO3 + ANT = 182, 1970–2023. Version non-stable → full-replace each run. Needs `xlrd`.

@@ -1,0 +1,196 @@
+country_code,areaer_arrangement,areaer_regime_ordinal,areaer_regime_group,areaer_mpf,areaer_anchor_currency,areaer_reclassified,areaer_as_of
+ECU,No separate legal tender,1,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+SLV,No separate legal tender,1,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+MHL,No separate legal tender,1,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+FSM,No separate legal tender,1,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+PLW,No separate legal tender,1,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+PAN,No separate legal tender,1,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+TLS,No separate legal tender,1,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+AND,No separate legal tender,1,hard_peg,exchange_rate_anchor,eur,,2025-04-30
+XKX,No separate legal tender,1,hard_peg,exchange_rate_anchor,eur,,2025-04-30
+SMR,No separate legal tender,1,hard_peg,exchange_rate_anchor,eur,,2025-04-30
+MNE,No separate legal tender,1,hard_peg,exchange_rate_anchor,eur,,2025-04-30
+KIR,No separate legal tender,1,hard_peg,exchange_rate_anchor,other,,2025-04-30
+LIE,No separate legal tender,1,hard_peg,exchange_rate_anchor,other,,2025-04-30
+NRU,No separate legal tender,1,hard_peg,exchange_rate_anchor,other,,2025-04-30
+TUV,No separate legal tender,1,hard_peg,exchange_rate_anchor,other,,2025-04-30
+DJI,Currency board,2,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+HKG,Currency board,2,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+ATG,Currency board,2,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+DMA,Currency board,2,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+GRD,Currency board,2,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+KNA,Currency board,2,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+LCA,Currency board,2,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+VCT,Currency board,2,hard_peg,exchange_rate_anchor,usd,,2025-04-30
+BIH,Currency board,2,hard_peg,exchange_rate_anchor,eur,,2025-04-30
+BGR,Currency board,2,hard_peg,exchange_rate_anchor,eur,,2025-04-30
+BRN,Currency board,2,hard_peg,exchange_rate_anchor,other,,2025-04-30
+MAC,Currency board,2,hard_peg,exchange_rate_anchor,other,,2025-04-30
+ABW,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+BHS,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+BHR,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+BRB,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+BLZ,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+CUW,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+ERI,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+IRQ,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+JOR,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+OMN,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+QAT,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+SAU,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+TKM,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+ARE,Conventional peg,3,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+CPV,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+COM,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+DNK,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+STP,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+CMR,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+CAF,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+TCD,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+COG,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+GNQ,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+GAB,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+BEN,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+BFA,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+CIV,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+GNB,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+MLI,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+NER,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+SEN,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+TGO,Conventional peg,3,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+FJI,Conventional peg,3,soft_peg,exchange_rate_anchor,composite,,2025-04-30
+LBY,Conventional peg,3,soft_peg,exchange_rate_anchor,composite,,2025-04-30
+WSM,Conventional peg,3,soft_peg,exchange_rate_anchor,composite,,2025-04-30
+SLB,Conventional peg,3,soft_peg,exchange_rate_anchor,composite,2024-08,2025-04-30
+BTN,Conventional peg,3,soft_peg,exchange_rate_anchor,other,,2025-04-30
+SWZ,Conventional peg,3,soft_peg,exchange_rate_anchor,other,,2025-04-30
+LSO,Conventional peg,3,soft_peg,exchange_rate_anchor,other,,2025-04-30
+NAM,Conventional peg,3,soft_peg,exchange_rate_anchor,other,,2025-04-30
+NPL,Conventional peg,3,soft_peg,exchange_rate_anchor,other,,2025-04-30
+GUY,Stabilized arrangement,4,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+LBN,Stabilized arrangement,4,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+MDV,Stabilized arrangement,4,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+NIC,Stabilized arrangement,4,soft_peg,exchange_rate_anchor,usd,2024-01,2025-04-30
+TTO,Stabilized arrangement,4,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+MKD,Stabilized arrangement,4,soft_peg,exchange_rate_anchor,eur,,2025-04-30
+DZA,Stabilized arrangement,4,soft_peg,monetary_aggregate_target,,,2025-04-30
+AGO,Stabilized arrangement,4,soft_peg,monetary_aggregate_target,,2024-10,2025-04-30
+BOL,Stabilized arrangement,4,soft_peg,monetary_aggregate_target,,,2025-04-30
+GIN,Stabilized arrangement,4,soft_peg,monetary_aggregate_target,,,2025-04-30
+MMR,Stabilized arrangement,4,soft_peg,monetary_aggregate_target,,,2025-04-30
+SLE,Stabilized arrangement,4,soft_peg,monetary_aggregate_target,,2023-11,2025-04-30
+TJK,Stabilized arrangement,4,soft_peg,monetary_aggregate_target,,,2025-04-30
+ARM,Stabilized arrangement,4,soft_peg,inflation_targeting,,,2025-04-30
+IND,Stabilized arrangement,4,soft_peg,inflation_targeting,,,2025-04-30
+KEN,Stabilized arrangement,4,soft_peg,inflation_targeting,,2024-08,2025-04-30
+ROU,Stabilized arrangement,4,soft_peg,inflation_targeting,,,2025-04-30
+SRB,Stabilized arrangement,4,soft_peg,inflation_targeting,,,2025-04-30
+AZE,Stabilized arrangement,4,soft_peg,inflation_targeting,,,2025-04-30
+HTI,Stabilized arrangement,4,soft_peg,inflation_targeting,,2024-01,2025-04-30
+MWI,Stabilized arrangement,4,soft_peg,other,,2023-11,2025-04-30
+MRT,Stabilized arrangement,4,soft_peg,other,,2024-02,2025-04-30
+MOZ,Stabilized arrangement,4,soft_peg,other,,,2025-04-30
+PAK,Stabilized arrangement,4,soft_peg,other,,2024-04,2025-04-30
+SDN,Stabilized arrangement,4,soft_peg,other,,,2025-04-30
+HND,Crawling peg,5,soft_peg,exchange_rate_anchor,usd,2024-09,2025-04-30
+BWA,Crawling peg,5,soft_peg,exchange_rate_anchor,composite,,2025-04-30
+ARG,Crawling peg,5,soft_peg,inflation_targeting,,2023-12,2025-04-30
+KHM,Crawl-like arrangement,6,soft_peg,exchange_rate_anchor,usd,,2025-04-30
+UKR,Crawl-like arrangement,6,soft_peg,exchange_rate_anchor,usd,2024-04,2025-04-30
+SGP,Crawl-like arrangement,6,soft_peg,exchange_rate_anchor,composite,,2025-04-30
+AFG,Crawl-like arrangement,6,soft_peg,monetary_aggregate_target,,,2025-04-30
+BGD,Crawl-like arrangement,6,soft_peg,monetary_aggregate_target,,2024-05,2025-04-30
+BDI,Crawl-like arrangement,6,soft_peg,monetary_aggregate_target,,,2025-04-30
+CHN,Crawl-like arrangement,6,soft_peg,monetary_aggregate_target,,,2025-04-30
+COD,Crawl-like arrangement,6,soft_peg,monetary_aggregate_target,,2023-11,2025-04-30
+PNG,Crawl-like arrangement,6,soft_peg,monetary_aggregate_target,,,2025-04-30
+TZA,Crawl-like arrangement,6,soft_peg,monetary_aggregate_target,,,2025-04-30
+GMB,Crawl-like arrangement,6,soft_peg,monetary_aggregate_target,,,2025-04-30
+RWA,Crawl-like arrangement,6,soft_peg,monetary_aggregate_target,,,2025-04-30
+ALB,Crawl-like arrangement,6,soft_peg,inflation_targeting,,2024-01,2025-04-30
+CRI,Crawl-like arrangement,6,soft_peg,inflation_targeting,,2024-06,2025-04-30
+DOM,Crawl-like arrangement,6,soft_peg,inflation_targeting,,,2025-04-30
+GTM,Crawl-like arrangement,6,soft_peg,inflation_targeting,,,2025-04-30
+JAM,Crawl-like arrangement,6,soft_peg,inflation_targeting,,2024-03,2025-04-30
+MNG,Crawl-like arrangement,6,soft_peg,inflation_targeting,,,2025-04-30
+PRY,Crawl-like arrangement,6,soft_peg,inflation_targeting,,2024-01,2025-04-30
+TUR,Crawl-like arrangement,6,soft_peg,other,,,2025-04-30
+UZB,Crawl-like arrangement,6,soft_peg,other,,,2025-04-30
+EGY,Crawl-like arrangement,6,soft_peg,other,,,2025-04-30
+LAO,Crawl-like arrangement,6,soft_peg,other,,,2025-04-30
+TUN,Crawl-like arrangement,6,soft_peg,other,,,2025-04-30
+VNM,Crawl-like arrangement,6,soft_peg,other,,2024-10,2025-04-30
+MAR,Pegged within horizontal bands,7,soft_peg,other,,,2025-04-30
+KWT,Other managed arrangement,8,other_managed,exchange_rate_anchor,usd,,2025-04-30
+TON,Other managed arrangement,8,other_managed,exchange_rate_anchor,composite,,2025-04-30
+VUT,Other managed arrangement,8,other_managed,exchange_rate_anchor,composite,,2025-04-30
+ETH,Other managed arrangement,8,other_managed,monetary_aggregate_target,,2024-07,2025-04-30
+GHA,Other managed arrangement,8,other_managed,monetary_aggregate_target,,,2025-04-30
+KGZ,Other managed arrangement,8,other_managed,monetary_aggregate_target,,2024-03,2025-04-30
+LKA,Other managed arrangement,8,other_managed,inflation_targeting,,,2025-04-30
+IRN,Other managed arrangement,8,other_managed,other,,,2025-04-30
+SYR,Other managed arrangement,8,other_managed,other,,,2025-04-30
+ZWE,Other managed arrangement,8,other_managed,other,,,2025-04-30
+SSD,Other managed arrangement,8,other_managed,other,,,2025-04-30
+VEN,Other managed arrangement,8,other_managed,other,,,2025-04-30
+BLR,Floating,9,floating,monetary_aggregate_target,,,2025-04-30
+LBR,Floating,9,floating,monetary_aggregate_target,,,2025-04-30
+MDG,Floating,9,floating,monetary_aggregate_target,,,2025-04-30
+NGA,Floating,9,floating,monetary_aggregate_target,,,2025-04-30
+SYC,Floating,9,floating,monetary_aggregate_target,,,2025-04-30
+SUR,Floating,9,floating,monetary_aggregate_target,,,2025-04-30
+YEM,Floating,9,floating,monetary_aggregate_target,,,2025-04-30
+BRA,Floating,9,floating,inflation_targeting,,,2025-04-30
+COL,Floating,9,floating,inflation_targeting,,,2025-04-30
+CZE,Floating,9,floating,inflation_targeting,,,2025-04-30
+GEO,Floating,9,floating,inflation_targeting,,,2025-04-30
+HUN,Floating,9,floating,inflation_targeting,,,2025-04-30
+ISL,Floating,9,floating,inflation_targeting,,,2025-04-30
+IDN,Floating,9,floating,inflation_targeting,,,2025-04-30
+ISR,Floating,9,floating,inflation_targeting,,,2025-04-30
+KAZ,Floating,9,floating,inflation_targeting,,,2025-04-30
+KOR,Floating,9,floating,inflation_targeting,,,2025-04-30
+MUS,Floating,9,floating,inflation_targeting,,2024-08,2025-04-30
+MDA,Floating,9,floating,inflation_targeting,,,2025-04-30
+NZL,Floating,9,floating,inflation_targeting,,,2025-04-30
+PER,Floating,9,floating,inflation_targeting,,,2025-04-30
+PHL,Floating,9,floating,inflation_targeting,,,2025-04-30
+ZAF,Floating,9,floating,inflation_targeting,,,2025-04-30
+THA,Floating,9,floating,inflation_targeting,,,2025-04-30
+UGA,Floating,9,floating,inflation_targeting,,,2025-04-30
+URY,Floating,9,floating,inflation_targeting,,,2025-04-30
+MYS,Floating,9,floating,other,,,2025-04-30
+CHE,Floating,9,floating,other,,,2025-04-30
+ZMB,Floating,9,floating,other,,,2025-04-30
+AUS,Free floating,10,floating,inflation_targeting,,,2025-04-30
+CAN,Free floating,10,floating,inflation_targeting,,,2025-04-30
+CHL,Free floating,10,floating,inflation_targeting,,,2025-04-30
+JPN,Free floating,10,floating,inflation_targeting,,,2025-04-30
+MEX,Free floating,10,floating,inflation_targeting,,,2025-04-30
+NOR,Free floating,10,floating,inflation_targeting,,,2025-04-30
+POL,Free floating,10,floating,inflation_targeting,,,2025-04-30
+RUS,Free floating,10,floating,inflation_targeting,,,2025-04-30
+SWE,Free floating,10,floating,inflation_targeting,,2024-01,2025-04-30
+GBR,Free floating,10,floating,inflation_targeting,,,2025-04-30
+SOM,Free floating,10,floating,other,,,2025-04-30
+USA,Free floating,10,floating,other,,,2025-04-30
+AUT,Free floating,10,floating,other,,,2025-04-30
+BEL,Free floating,10,floating,other,,,2025-04-30
+HRV,Free floating,10,floating,other,,,2025-04-30
+CYP,Free floating,10,floating,other,,,2025-04-30
+EST,Free floating,10,floating,other,,,2025-04-30
+FIN,Free floating,10,floating,other,,,2025-04-30
+FRA,Free floating,10,floating,other,,,2025-04-30
+DEU,Free floating,10,floating,other,,,2025-04-30
+GRC,Free floating,10,floating,other,,,2025-04-30
+IRL,Free floating,10,floating,other,,,2025-04-30
+ITA,Free floating,10,floating,other,,,2025-04-30
+LVA,Free floating,10,floating,other,,,2025-04-30
+LTU,Free floating,10,floating,other,,,2025-04-30
+LUX,Free floating,10,floating,other,,,2025-04-30
+MLT,Free floating,10,floating,other,,,2025-04-30
+NLD,Free floating,10,floating,other,,,2025-04-30
+PRT,Free floating,10,floating,other,,,2025-04-30
+SVK,Free floating,10,floating,other,,,2025-04-30
+SVN,Free floating,10,floating,other,,,2025-04-30
+ESP,Free floating,10,floating,other,,,2025-04-30

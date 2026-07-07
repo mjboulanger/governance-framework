@@ -1,0 +1,196 @@
+country_name,areaer_arrangement,areaer_mpf,areaer_anchor_currency,areaer_reclassified,areaer_as_of
+Ecuador,No separate legal tender,exchange_rate_anchor,usd,,2025-04-30
+El Salvador,No separate legal tender,exchange_rate_anchor,usd,,2025-04-30
+Marshall Islands,No separate legal tender,exchange_rate_anchor,usd,,2025-04-30
+Micronesia,No separate legal tender,exchange_rate_anchor,usd,,2025-04-30
+Palau,No separate legal tender,exchange_rate_anchor,usd,,2025-04-30
+Panama,No separate legal tender,exchange_rate_anchor,usd,,2025-04-30
+Timor-Leste,No separate legal tender,exchange_rate_anchor,usd,,2025-04-30
+Andorra,No separate legal tender,exchange_rate_anchor,eur,,2025-04-30
+Kosovo,No separate legal tender,exchange_rate_anchor,eur,,2025-04-30
+San Marino,No separate legal tender,exchange_rate_anchor,eur,,2025-04-30
+Montenegro,No separate legal tender,exchange_rate_anchor,eur,,2025-04-30
+Kiribati,No separate legal tender,exchange_rate_anchor,other,,2025-04-30
+Liechtenstein,No separate legal tender,exchange_rate_anchor,other,,2025-04-30
+Nauru,No separate legal tender,exchange_rate_anchor,other,,2025-04-30
+Tuvalu,No separate legal tender,exchange_rate_anchor,other,,2025-04-30
+Djibouti,Currency board,exchange_rate_anchor,usd,,2025-04-30
+Hong Kong SAR,Currency board,exchange_rate_anchor,usd,,2025-04-30
+Antigua and Barbuda,Currency board,exchange_rate_anchor,usd,,2025-04-30
+Dominica,Currency board,exchange_rate_anchor,usd,,2025-04-30
+Grenada,Currency board,exchange_rate_anchor,usd,,2025-04-30
+St. Kitts and Nevis,Currency board,exchange_rate_anchor,usd,,2025-04-30
+St. Lucia,Currency board,exchange_rate_anchor,usd,,2025-04-30
+St. Vincent and the Grenadines,Currency board,exchange_rate_anchor,usd,,2025-04-30
+Bosnia and Herzegovina,Currency board,exchange_rate_anchor,eur,,2025-04-30
+Bulgaria,Currency board,exchange_rate_anchor,eur,,2025-04-30
+Brunei Darussalam,Currency board,exchange_rate_anchor,other,,2025-04-30
+Macao SAR,Currency board,exchange_rate_anchor,other,,2025-04-30
+Aruba,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+The Bahamas,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Bahrain,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Barbados,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Belize,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Curacao and Sint Maarten,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Eritrea,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Iraq,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Jordan,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Oman,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Qatar,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Saudi Arabia,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Turkmenistan,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+United Arab Emirates,Conventional peg,exchange_rate_anchor,usd,,2025-04-30
+Cabo Verde,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Comoros,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Denmark,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Sao Tome and Principe,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Cameroon,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Central African Republic,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Chad,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Republic of Congo,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Equatorial Guinea,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Gabon,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Benin,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Burkina Faso,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Cote d'Ivoire,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Guinea-Bissau,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Mali,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Niger,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Senegal,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Togo,Conventional peg,exchange_rate_anchor,eur,,2025-04-30
+Fiji,Conventional peg,exchange_rate_anchor,composite,,2025-04-30
+Libya,Conventional peg,exchange_rate_anchor,composite,,2025-04-30
+Samoa,Conventional peg,exchange_rate_anchor,composite,,2025-04-30
+Solomon Islands,Conventional peg,exchange_rate_anchor,composite,2024-08,2025-04-30
+Bhutan,Conventional peg,exchange_rate_anchor,other,,2025-04-30
+Eswatini,Conventional peg,exchange_rate_anchor,other,,2025-04-30
+Lesotho,Conventional peg,exchange_rate_anchor,other,,2025-04-30
+Namibia,Conventional peg,exchange_rate_anchor,other,,2025-04-30
+Nepal,Conventional peg,exchange_rate_anchor,other,,2025-04-30
+Guyana,Stabilized arrangement,exchange_rate_anchor,usd,,2025-04-30
+Lebanon,Stabilized arrangement,exchange_rate_anchor,usd,,2025-04-30
+Maldives,Stabilized arrangement,exchange_rate_anchor,usd,,2025-04-30
+Nicaragua,Stabilized arrangement,exchange_rate_anchor,usd,2024-01,2025-04-30
+Trinidad and Tobago,Stabilized arrangement,exchange_rate_anchor,usd,,2025-04-30
+North Macedonia,Stabilized arrangement,exchange_rate_anchor,eur,,2025-04-30
+Algeria,Stabilized arrangement,monetary_aggregate_target,,,2025-04-30
+Angola,Stabilized arrangement,monetary_aggregate_target,,2024-10,2025-04-30
+Bolivia,Stabilized arrangement,monetary_aggregate_target,,,2025-04-30
+Guinea,Stabilized arrangement,monetary_aggregate_target,,,2025-04-30
+Myanmar,Stabilized arrangement,monetary_aggregate_target,,,2025-04-30
+Sierra Leone,Stabilized arrangement,monetary_aggregate_target,,2023-11,2025-04-30
+Tajikistan,Stabilized arrangement,monetary_aggregate_target,,,2025-04-30
+Armenia,Stabilized arrangement,inflation_targeting,,,2025-04-30
+India,Stabilized arrangement,inflation_targeting,,,2025-04-30
+Kenya,Stabilized arrangement,inflation_targeting,,2024-08,2025-04-30
+Romania,Stabilized arrangement,inflation_targeting,,,2025-04-30
+Serbia,Stabilized arrangement,inflation_targeting,,,2025-04-30
+Azerbaijan,Stabilized arrangement,inflation_targeting,,,2025-04-30
+Haiti,Stabilized arrangement,inflation_targeting,,2024-01,2025-04-30
+Malawi,Stabilized arrangement,other,,2023-11,2025-04-30
+Mauritania,Stabilized arrangement,other,,2024-02,2025-04-30
+Mozambique,Stabilized arrangement,other,,,2025-04-30
+Pakistan,Stabilized arrangement,other,,2024-04,2025-04-30
+Sudan,Stabilized arrangement,other,,,2025-04-30
+Honduras,Crawling peg,exchange_rate_anchor,usd,2024-09,2025-04-30
+Botswana,Crawling peg,exchange_rate_anchor,composite,,2025-04-30
+Argentina,Crawling peg,inflation_targeting,,2023-12,2025-04-30
+Cambodia,Crawl-like arrangement,exchange_rate_anchor,usd,,2025-04-30
+Ukraine,Crawl-like arrangement,exchange_rate_anchor,usd,2024-04,2025-04-30
+Singapore,Crawl-like arrangement,exchange_rate_anchor,composite,,2025-04-30
+Afghanistan,Crawl-like arrangement,monetary_aggregate_target,,,2025-04-30
+Bangladesh,Crawl-like arrangement,monetary_aggregate_target,,2024-05,2025-04-30
+Burundi,Crawl-like arrangement,monetary_aggregate_target,,,2025-04-30
+China,Crawl-like arrangement,monetary_aggregate_target,,,2025-04-30
+Democratic Republic of the Congo,Crawl-like arrangement,monetary_aggregate_target,,2023-11,2025-04-30
+Papua New Guinea,Crawl-like arrangement,monetary_aggregate_target,,,2025-04-30
+Tanzania,Crawl-like arrangement,monetary_aggregate_target,,,2025-04-30
+The Gambia,Crawl-like arrangement,monetary_aggregate_target,,,2025-04-30
+Rwanda,Crawl-like arrangement,monetary_aggregate_target,,,2025-04-30
+Albania,Crawl-like arrangement,inflation_targeting,,2024-01,2025-04-30
+Costa Rica,Crawl-like arrangement,inflation_targeting,,2024-06,2025-04-30
+Dominican Republic,Crawl-like arrangement,inflation_targeting,,,2025-04-30
+Guatemala,Crawl-like arrangement,inflation_targeting,,,2025-04-30
+Jamaica,Crawl-like arrangement,inflation_targeting,,2024-03,2025-04-30
+Mongolia,Crawl-like arrangement,inflation_targeting,,,2025-04-30
+Paraguay,Crawl-like arrangement,inflation_targeting,,2024-01,2025-04-30
+Turkiye,Crawl-like arrangement,other,,,2025-04-30
+Uzbekistan,Crawl-like arrangement,other,,,2025-04-30
+Egypt,Crawl-like arrangement,other,,,2025-04-30
+Lao P.D.R.,Crawl-like arrangement,other,,,2025-04-30
+Tunisia,Crawl-like arrangement,other,,,2025-04-30
+Vietnam,Crawl-like arrangement,other,,2024-10,2025-04-30
+Morocco,Pegged within horizontal bands,other,,,2025-04-30
+Kuwait,Other managed arrangement,exchange_rate_anchor,usd,,2025-04-30
+Tonga,Other managed arrangement,exchange_rate_anchor,composite,,2025-04-30
+Vanuatu,Other managed arrangement,exchange_rate_anchor,composite,,2025-04-30
+Ethiopia,Other managed arrangement,monetary_aggregate_target,,2024-07,2025-04-30
+Ghana,Other managed arrangement,monetary_aggregate_target,,,2025-04-30
+Kyrgyz Republic,Other managed arrangement,monetary_aggregate_target,,2024-03,2025-04-30
+Sri Lanka,Other managed arrangement,inflation_targeting,,,2025-04-30
+Iran,Other managed arrangement,other,,,2025-04-30
+Syria,Other managed arrangement,other,,,2025-04-30
+Zimbabwe,Other managed arrangement,other,,,2025-04-30
+South Sudan,Other managed arrangement,other,,,2025-04-30
+Venezuela,Other managed arrangement,other,,,2025-04-30
+Belarus,Floating,monetary_aggregate_target,,,2025-04-30
+Liberia,Floating,monetary_aggregate_target,,,2025-04-30
+Madagascar,Floating,monetary_aggregate_target,,,2025-04-30
+Nigeria,Floating,monetary_aggregate_target,,,2025-04-30
+Seychelles,Floating,monetary_aggregate_target,,,2025-04-30
+Suriname,Floating,monetary_aggregate_target,,,2025-04-30
+Yemen,Floating,monetary_aggregate_target,,,2025-04-30
+Brazil,Floating,inflation_targeting,,,2025-04-30
+Colombia,Floating,inflation_targeting,,,2025-04-30
+Czech Republic,Floating,inflation_targeting,,,2025-04-30
+Georgia,Floating,inflation_targeting,,,2025-04-30
+Hungary,Floating,inflation_targeting,,,2025-04-30
+Iceland,Floating,inflation_targeting,,,2025-04-30
+Indonesia,Floating,inflation_targeting,,,2025-04-30
+Israel,Floating,inflation_targeting,,,2025-04-30
+Kazakhstan,Floating,inflation_targeting,,,2025-04-30
+Korea,Floating,inflation_targeting,,,2025-04-30
+Mauritius,Floating,inflation_targeting,,2024-08,2025-04-30
+Moldova,Floating,inflation_targeting,,,2025-04-30
+New Zealand,Floating,inflation_targeting,,,2025-04-30
+Peru,Floating,inflation_targeting,,,2025-04-30
+Philippines,Floating,inflation_targeting,,,2025-04-30
+South Africa,Floating,inflation_targeting,,,2025-04-30
+Thailand,Floating,inflation_targeting,,,2025-04-30
+Uganda,Floating,inflation_targeting,,,2025-04-30
+Uruguay,Floating,inflation_targeting,,,2025-04-30
+Malaysia,Floating,other,,,2025-04-30
+Switzerland,Floating,other,,,2025-04-30
+Zambia,Floating,other,,,2025-04-30
+Australia,Free floating,inflation_targeting,,,2025-04-30
+Canada,Free floating,inflation_targeting,,,2025-04-30
+Chile,Free floating,inflation_targeting,,,2025-04-30
+Japan,Free floating,inflation_targeting,,,2025-04-30
+Mexico,Free floating,inflation_targeting,,,2025-04-30
+Norway,Free floating,inflation_targeting,,,2025-04-30
+Poland,Free floating,inflation_targeting,,,2025-04-30
+Russia,Free floating,inflation_targeting,,,2025-04-30
+Sweden,Free floating,inflation_targeting,,2024-01,2025-04-30
+United Kingdom,Free floating,inflation_targeting,,,2025-04-30
+Somalia,Free floating,other,,,2025-04-30
+United States,Free floating,other,,,2025-04-30
+Austria,Free floating,other,,,2025-04-30
+Belgium,Free floating,other,,,2025-04-30
+Croatia,Free floating,other,,,2025-04-30
+Cyprus,Free floating,other,,,2025-04-30
+Estonia,Free floating,other,,,2025-04-30
+Finland,Free floating,other,,,2025-04-30
+France,Free floating,other,,,2025-04-30
+Germany,Free floating,other,,,2025-04-30
+Greece,Free floating,other,,,2025-04-30
+Ireland,Free floating,other,,,2025-04-30
+Italy,Free floating,other,,,2025-04-30
+Latvia,Free floating,other,,,2025-04-30
+Lithuania,Free floating,other,,,2025-04-30
+Luxembourg,Free floating,other,,,2025-04-30
+Malta,Free floating,other,,,2025-04-30
+The Netherlands,Free floating,other,,,2025-04-30
+Portugal,Free floating,other,,,2025-04-30
+Slovak Republic,Free floating,other,,,2025-04-30
+Slovenia,Free floating,other,,,2025-04-30
+Spain,Free floating,other,,,2025-04-30
