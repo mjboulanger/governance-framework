@@ -4,6 +4,7 @@
 **As-of date (last manually updated):** 2026-07-09
 **⚠️ MANUAL SNAPSHOT:** This document is a point-in-time snapshot maintained by hand. It does NOT auto-update. Coverage ranges, vintages, source counts, and "as-of" dates below were accurate as of the date above and must be refreshed manually when pipelines are re-run or sources change.
 **Purpose:** Captures decisions made during pipeline build phase that diverge from or update the master PDF.
+**Metric-pass methodology** (scoring, normalization, aggregation, weighting, reliability, momentum, metric inclusion) lives in `docs/metric_methodology.md`; this log retains source-level and build decisions.
 
 ---
 

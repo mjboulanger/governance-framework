@@ -62,7 +62,7 @@ The framework organises governance into **5 categories** containing **26 unique 
 
 The framework operates at two structured levels. **Categories** (5 thematic groupings) provide the top-level reporting and communication structure. **Concepts** (26 unique, 30 instances) sit within categories and represent the substantive dimensions of governance that are scored. Within Accountability, concepts are further organised into horizontal accountability (government checks on government) and vertical accountability (government accountability to non-state actors).
 
-Below the concept level, **sources** (datasets and measurement projects) are selected for each concept based on coverage, precision, signal quality, and accessibility. **Metrics** (specific indicators within sources) are selected at the metric-level pass that follows source-level decisions.
+Below the concept level, **sources** (datasets and measurement projects) are selected for each concept based on coverage, precision, signal quality, and accessibility. **Metrics** (specific indicators within sources) are selected at the metric-level pass that follows source-level decisions. **The metric-pass scoring methodology — inclusion, normalization, aggregation, weighting, reliability, and momentum — is documented in `docs/metric_methodology.md`.**
 
 ### Guiding design principles
 
