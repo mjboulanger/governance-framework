@@ -1,6 +1,6 @@
 # Data Maintenance Instructions
 
-**As-of date (last manually updated):** 2026-07-02
+**As-of date (last manually updated):** 2026-07-09
 **⚠️ MANUAL SNAPSHOT:** This document is maintained by hand and does NOT auto-update. Source categories, URLs, version labels, and per-source steps below were accurate as of the date above. When sources change their access methods or a new vintage is released, this document must be updated manually. Any place where a value must be hand-edited on update is flagged inline with **MANUAL UPDATE**.
 
 This document contains instructions for setting up the project on a new machine, and for maintaining and updating data sources.
@@ -143,6 +143,7 @@ Note: POLITY5 and NELDA were previously listed here but are now sourced via the 
 | WJP | WJP Rule of Law Index | Active |
 | FH_FIW | Freedom House FIW | Active |
 | CHINN_ITO | Chinn-Ito Index (KAOPEN) | Active (scrape → year-stamped .xls; needs xlrd) |
+| WB_BRSS | World Bank Bank Regulation & Supervision Survey | Active (catalog auto-discover; FROZEN wave — manual 6th-wave check) |
 | ACLED | ACLED | Pending Research tier |
 | BASEL_AML | Basel AML Index | Pending Expert Edition |
 
@@ -271,6 +272,29 @@ The fatf-gafi.org site is behind Cloudflare's anti-bot challenge, so the files *
 **MANUAL UPDATE — IMF taxonomy (`ARRANGEMENT_ORDINAL`/`ARRANGEMENT_GROUP` in Cell 2; `VALID_MPF`/`VALID_ANCHOR` in Cell 6):** these encode the IMF's fixed 10-category arrangement + 4-way monetary-framework vocabulary; they change ONLY if the IMF revises its taxonomy (rare). A new/renamed value trips the Cell-4 vocabulary guard or the Cell-6 domain guard, which names the offender — update the relevant constant then.
 **Caveats:** cross-section snapshot (NO `year`; vintage = `areaer_as_of`). `areaer_regime_ordinal` (1–10, most-fixed→most-flexible) follows IMF matrix row order; **`other_managed` (8) is a RESIDUAL, not a true flexibility rank** — prefer `areaer_regime_group` for scoring, or handle other_managed separately (metric-pass flag). Supersedes Reinhart-Rogoff as the current-state ER-regime primary.
 
+### WB_BRSS — World Bank Bank Regulation & Supervision Survey (Concept 9, banking — SUPPLEMENTARY)
+**Mostly automated; ONE recurring manual trigger.** Cell 4 auto-discovers and downloads the latest BRSS
+`.xlsx` from the permanent WB Data Catalog page (dataset `0038632`), caching to `data/raw/`. The reference
+year (2016) is derived from the question codes at runtime — nothing hardcoded.
+**⚠️ MANUAL-MAINTENANCE CONSTANT — `BRSS_CATALOG_URL` (Cell 2):** the permanent catalog URL. Stable by
+design (a dataset id, NOT a version-pinned file link — which is exactly what rots). Update ONLY if the World
+Bank restructures its data catalog.
+**MANUAL UPDATE — check for a 6th wave (the real recurring task):** BRSS is a FROZEN, IRREGULAR survey
+(waves 2001 / 2003 / 2007 / 2011 / 2019 — no fixed cadence). It will NOT auto-refresh with new data on any
+schedule; periodically check the catalog page for a 6th wave. If one is posted:
+1. Cell 4's auto-discover picks up the new `.xlsx` automatically (no code edit needed to fetch it).
+2. **RE-VALIDATE `INCLUDED_QUESTIONS` (Cell 3)** against the new questionnaire — a new wave may renumber or
+   reword questions. Cell 5 auto-derives the year suffix per code and **FAILS LOUDLY**, listing any base code
+   that no longer resolves, so a schema shift cannot silently produce wrong output — but the *directional*
+   meaning of any changed question must be re-checked by hand.
+3. Re-run `notebooks/exploration/38_wb_brss_pipeline.ipynb` end-to-end → `data/processed/wb_brss_clean.csv`
+   + updated `download_log`; then re-run the `WB_BRSS` cell in `02_source_registry.ipynb`.
+**MANUAL UPDATE — reliability threshold (`RELIABILITY_MIN_COVERAGE`, Cell 6, = 0.70):** a scoring/scope
+constant, NOT a per-update edit; change only to revisit the reliable-vs-flagged cutoff (see framework_decisions.md).
+**Caveats:** DE JURE regulatory-stringency (rules on paper), NOT supervisory effectiveness — advanced
+economies mid-pack is correct. Cross-section snapshot (NO `year`). Bespoke construct-aligned score (NOT the
+published BCL indices). CC-BY-4.0. 161 jurisdictions (155 reliable).
+
 ### ACLED — Armed Conflict Location and Event Data
 Pending Research tier approval. Once approved, run `11_acled_pipeline.ipynb`. Credentials already in `.env`.
 
@@ -374,5 +398,8 @@ Automated. pandas.read_html on rti-rating.org/country-data extracts the 142-coun
 
 ### PEFA
 Manual download of a structured CSV from the "Scores Downloads" page (NOT PDF — reclassified out of the Category-1 PDF batch). Globs every `assessments_*.csv` in Downloads, concatenates + dedups, snapshots full raw (all frameworks) to RAW_DIR, then filters to `PEFA_FRAMEWORK` (="2016") + national, dedups latest per country (85). Wide→long melt of PI-XX (indicator) and PI-XX.Y (dimension) columns; A–D→numeric (7pt indicator: D=1…A=4, `+`→.5; 4pt dimension); `*` stripped + quality_flag; NU/NR/blank→missing/dropped. ISO3 via pycountry + OVERRIDES. Subnational ("Country - Subentity") excluded. 2011 deferred (stale). `data_as_of` = max assessment_year (derived).
+
+### WB_BRSS
+Automated fetch (Cell 4 auto-discovers the latest `.xlsx` from WB Data Catalog dataset `0038632`; no version-pinned URL). Workbook = raw survey responses across 15 topic sheets in TRANSPOSED layout (questions as rows, countries as columns), no pre-computed indices; Cell 5 resolves each base code to its latest `<code>_<YYYY>` variant (year auto-derived; fails loudly on any unresolved code) and transposes to a country×question frame (161 juris). Bespoke construct-aligned scoring (Cell 6, NOT the published BCL indices): 9 sub-constructs, 56 scored items (67 underlying codes; 2 blocks — Tier-1-deductions fraction, borrower-based-caps "any"), 5 reverse-coded; Activity Restrictions excluded; provisioning/macropru trimmed of prescriptive items penalizing IFRS-9. Equal-weight within construct; overall `brss_regstringency` weights 5 governance constructs 2× (power / independence / private-monitoring / resolution / macropru). NO coverage penalty (mean of ANSWERED items); `brss_reliable` = coverage ≥ 0.70 (155/161). ISO3 in-file (+ Curaçao override). Output: cross-section, `country_code`-keyed, NO `year`/`country_name`; 13 cols. Scratch extracts `brss_act.txt` / `brss_ctx.txt` are build-time only, NOT runtime inputs. CC-BY-4.0.
 
 *Technical notes for not-yet-built sources will be added as each pipeline is built.*

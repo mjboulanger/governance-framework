@@ -1,7 +1,7 @@
 # Framework Decisions Log
 
 **Status:** Temporary working document. Delete when master PDF is regenerated.
-**As-of date (last manually updated):** 2026-06-17
+**As-of date (last manually updated):** 2026-07-09
 **⚠️ MANUAL SNAPSHOT:** This document is a point-in-time snapshot maintained by hand. It does NOT auto-update. Coverage ranges, vintages, source counts, and "as-of" dates below were accurate as of the date above and must be refreshed manually when pipelines are re-run or sources change.
 **Purpose:** Captures decisions made during pipeline build phase that diverge from or update the master PDF.
 
@@ -253,6 +253,60 @@ The master PDF's AREAER row (PRIMARY tier-1: "exchange rate regime de jure and d
 
 **ACI (AREAER Change Index)** was also downloaded (companion file) but NOT built into the score: it measures policy *changes* (tightening/easing actions, a direction-of-travel signal), a different construct from FARI's *level* of restrictiveness. Deferred as optional supplementary (on hand if a policy-trajectory dimension is later added).
 
+### WB BRSS — bespoke construct-aligned banking-supervision stringency (Barth-Caprio-Levine)
+Source: World Bank **Bank Regulation and Supervision Survey (BRSS)** — the Barth-Caprio-Levine survey the
+master lists as Concept 9's supplementary banking source, now BUILT (nb 38, `wb_brss_clean.csv`). 5th wave
+(fielded 2017, released 2019; **reference year 2016**, derived from the question codes — not hardcoded).
+SUPPLEMENTARY tier. Fills the banking-regulation *de jure* leg that FATF (AML/CFT) does not cover. CC-BY-4.0.
+Auto-discovers the latest `.xlsx` from the permanent WB catalog page (dataset `0038632`); the single flagged
+constant is `BRSS_CATALOG_URL` (Cell 2).
+
+**What it measures — and what it does NOT:** a **de jure regulatory-STRINGENCY** score (rules on paper), NOT
+supervisory effectiveness/implementation. Advanced economies scoring mid-pack is CORRECT and expected (top of
+the reliable ranking: Nigeria, Qatar, Slovenia); validated against Anginer et al. (2019), whose
+high-income/developing directional pattern this reproduces with zero construct inversions. FSAP's BCP
+assessment (effectiveness) and IOSCO/IAIS (securities/insurance) remain the un-built complements.
+
+**Method — bespoke construct-aligned select-and-score (explicitly NOT the published BCL indices;** the
+2019-wave question-to-index mappings are not cleanly available). The workbook is raw survey responses across
+15 topic sheets in transposed layout (questions as rows, countries as columns), no pre-computed indices.
+Curated comparable, high-coverage (≥80% per-item) directional questions → **9 sub-constructs, 56 scored
+items** (67 underlying question codes; two are multi-question blocks scored as one — a 9-item
+Tier-1-deductions *fraction* and a 4-item borrower-based-caps *any*). Each item Yes/No→1/0 or numeric
+min-max normalized, sign applied, averaged (over ANSWERED items) into the sub-construct.
+- **Sub-constructs (9):** supervisory power · supervisory independence · capital stringency · private
+  monitoring · resolution regime · provisioning · liquidity/concentration · macroprudential · supervisory capacity.
+- **Reverse-coded (5):** `Q12_3` (deposit-takers outside prudential supervision), `Q12_12`/`Q12_13`
+  (personal/agency liability → weaker independence protection), `Q9_5`/`Q9_6` (lax income recognition /
+  immediate upgrade). Verified against parent question text.
+- **Activity Restrictions DROPPED** — contested directionality (more restriction ≠ better; literature split).
+- **Provisioning & macroprudential TRIMMED** of prescriptive-rule items that penalize IFRS-9 / expected-loss /
+  principle-based regimes (dropped `Q9_9`, `Q9_12`, `Q12_26`) — avoids de-jure "stringency inflation" that
+  would mis-rank principle-based supervisors as weak.
+
+**Aggregation (a documented departure from equal-weight):** equal-weight WITHIN each construct; the overall
+`brss_regstringency` headline is a **weighted** mean of the 9 constructs — **5 weighted 2× (supervisory power,
+independence, private monitoring, resolution, macroprudential); 4 weighted 1× (capital stringency,
+provisioning, liquidity, capacity).** The 2× set is the supervisory-*governance*
+dimensions (powers, independence, market discipline, resolution, systemic oversight); the 1× set is the
+technical-calibration dimensions — reflecting the framework's tiering principle (centrality to the
+concept, not just data quality). Weights renormalize over PRESENT constructs so missing data doesn't zero
+the headline.
+- **NO coverage penalty:** scores are the mean of ANSWERED items (missing ≠ weak); coverage is emitted
+  separately as a flag rather than deflating the score.
+- **Reliability:** `brss_reliable = per-country coverage ≥ 70%` (`RELIABILITY_MIN_COVERAGE`, a flagged
+  methodology constant in the gap between the sparse ≤60% tail and the ≥85% mass; revisit post-v1).
+  **161 jurisdictions scored, 155 reliable**; 6 flagged out (Comoros, DRC, Eswatini, Euro Area, Montserrat,
+  Turks & Caicos). Score still emitted for all; exclusion is downstream.
+
+**Output:** cross-section, `country_code`-keyed, NO `year`, NO `country_name` (house convention; re-attached
+at merge). 13 cols = country_code + 9 sub-scores + `brss_regstringency` + `brss_coverage` + `brss_reliable`.
+
+**Update = MANUAL check for a 6th wave** (frozen, irregular survey: 2001/03/07/11/19, no cadence — will NOT
+auto-refresh). If a 6th wave posts, the catalog auto-discover picks up the new `.xlsx` automatically, but
+`INCLUDED_QUESTIONS` must be re-validated (renumbering/rewording) — Cell 5 auto-derives the year suffix and
+**fails loudly** listing any code that no longer resolves. See instructions_data_maintenance.md.
+
 ## Source Registry Architecture (build-truth model)
 
 `data/processed/source_registry.csv` is the **authoritative, build-time record** of each source's access method, approach, and notes. It is written by two mechanisms, and the model matters:
@@ -302,12 +356,13 @@ Cells 4–41 each rewrite the whole CSV via targeted `.loc` patches. They touch 
 | 31_chinn_ito | Chinn-Ito (KAOPEN) | chinn_ito_clean.csv | 2 (kaopen raw + kaopen_norm 0-1) | 1970-2023 panel, 182 countries (181 ISO3 + ANT) |
 | 32_areaer_fari | IMF AREAER (FARI) | areaer_fari_clean.csv | 6 (aggregate + FDI aggregate + 4 inflow/outflow splits) | 1999-2024 panel, 194 countries |
 | 37_areaer_defacto_er | IMF AREAER (de facto ER regime) | areaer_er_clean.csv | 6 (arrangement + flexibility ordinal 1–10 + IMF group + MPF/IT-flag + anchor + reclassified) | cross-section snapshot, 195 jurisdictions (as-of 2025-04-30) |
+| 38_wb_brss | WB BRSS (Barth-Caprio-Levine) | wb_brss_clean.csv | 9 sub-construct scores + weighted headline + coverage + reliable flag | cross-section, 161 juris (2019 wave, ref yr 2016); 155 reliable |
 
 ---
 
 ## Consolidated Build Status (by source)
 
-**As-of: 2026-06-18. MANUAL SNAPSHOT — does not auto-update.** Single at-a-glance view of every source's status. Authoritative structured records remain `download_log` (currency/filenames) and `source_registry.csv` (access methods). Legend: ✅ Built · ⏳ Next/in-progress · ⏸ Deferred (access pending or v2) · ❌ Deprioritized · 🔒 Blocked-not-built.
+**As-of: 2026-07-09. MANUAL SNAPSHOT — does not auto-update.** Single at-a-glance view of every source's status. Authoritative structured records remain `download_log` (currency/filenames) and `source_registry.csv` (access methods). Legend: ✅ Built · ⏳ Next/in-progress · ⏸ Deferred (access pending or v2) · ❌ Deprioritized · 🔒 Blocked-not-built.
 
 | Source | Status | Access | Output / Note |
 |--------|--------|--------|---------------|
@@ -340,6 +395,7 @@ Cells 4–41 each rewrite the whole CSV via targeted `.loc` patches. They touch 
 | IMF AREAER (FARI) | ✅ | Manual (portal WAF-blocked) | areaer_fari_clean.csv (194 countries, 1999-2024) |
 | Chinn-Ito (KAOPEN) | ✅ | Automated scrape | chinn_ito_clean.csv (182 countries, 1970-2023); capital-account derivative/cross-check of AREAER FARI; ⚠ version non-stable → full-replace |
 | IMF AREAER (de facto ER) | ✅ | Manual transcription (checksum-validated) | areaer_er_clean.csv — ER-regime primary; 195 juris, as-of 2025-04-30; BUILT nb 37 (borderless matrix hand-transcribed; row + column checksums pass) |
+| WB BRSS (Barth-Caprio-Levine) | ✅ | Automated (WB catalog auto-discover) | wb_brss_clean.csv — Concept 9 banking-reg *de jure* leg, SUPPLEMENTARY; bespoke construct-aligned stringency (NOT published BCL indices); 161 juris (155 reliable), 2019 wave; BUILT nb 38 |
 | Reinhart-Rogoff | ⏸ | Manual/academic | DEMOTED to optional supplementary cross-check (data ends ~2019); not a primary |
 | PEFA | ✅ | Manual download (structured CSV) | pefa_clean.csv — Scores Downloads (NOT PDF); 2016/national/latest-per-country (85 ctry, 31 ind, 2017–2026); 2011 deferred (stale) |
 | OECD TFI | ✅ | Manual download (CYC Overview table) | tfi_clean.csv — **composite average** (0–2), 164 countries, 2017/2019/2022. Sufficient: admin triangulation real (LPI built in wdi_clean + TFI; WTO TFA designed but not yet built). A–K sub-indicators = future enhancement (CYC one-at-a-time; PDF-annex route), NOT a to-do. TAD email moot. |
@@ -356,7 +412,7 @@ Cells 4–41 each rewrite the whole CSV via targeted `.loc` patches. They touch 
 | SOE governance (Concept) | ⏸ | — | deferred to v2 (thinnest concept) |
 
 **Category 1 PDF-extraction sources (not started):** IMF FSAP, plus multi-source infrastructure (IMF Article IVs + WB CCDRs, political-economy/institutional focus). _(IMF AREAER de-facto ER removed — now BUILT via checksum-validated manual transcription, `37_areaer_defacto_er_pipeline`, not a PDF parse. PEFA removed — structured "Scores Downloads" CSV, BUILT as manual-download `33_pefa_pipeline`. ICNL removed — HTML country notes, supplementary `tier3_web`.)_
-**Category 3 web scrapes (not started):** FATF, IPU PARLINE, WTO TFA, IMF SDDS, CPJ.
+**Category 3 web scrapes:** IPU PARLINE, WTO TFA, IMF SDDS (not started). _(FATF built nb 35; CPJ built nb 36 — both were listed here in error.)_
 
 
 ## Build-Status by Concept (verified audit)
@@ -376,7 +432,7 @@ _Verified 2026-06-24. Reconciles each concept's primary sources against actual p
 | **6 · Regulatory quality** | **✅ Built:** WGI Regulatory Quality *(wgi)* · WJP F6 Reg. Enforcement *(wjp)* · Fraser Regulation area *(fraser)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** Heritage Business Freedom *(superseded by Fraser Regulation — same dimension, both tier-2; house overlap rule prefers Fraser (peer-reviewed, transparent weights) over Heritage (advocacy framing), as already applied to Heritage Trade & Property)* |
 | **7 · Public financial management (PFM)** | **✅ Built:** PEFA *(pefa_clean)* · Open Budget Survey *(QoG obs)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |
 | **8 · Macroeconomic policy framework quality** | **✅ Built:** Romelli CBI *(QoG)* · IMF Fiscal Rules *(imf_fiscal_rules)* · AREAER FARI *(areaer_fari)* · Chinn-Ito KAOPEN *(chinn_ito)* · IMF iMaPP *(imapp)* · AREAER de-facto ER *(areaer_er, nb 37)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |
-| **9 · Financial-sector regulatory & supervisory quality** | **✅ Built:** FATF Mutual Evaluations *(fatf_clean)* — AML/CFT, 199 countries<br>**🟡 Outstanding:** IMF/WB FSAP `[verified PDF-only (scouted) — narrative FSSA/FSA/DAR reports, no structured cross-country dataset; voluntary/irregular publication; PDF-extraction batch]` · BCP / IOSCO / IAIS `[NOT separate sources — they are the banking/securities/insurance Detailed Assessment Reports embedded WITHIN FSAP; collapse into the FSAP PDF-batch]` · Basel AML Index `[parked: requires institutional affiliation; largely synthesises FATF (now built) — partly redundant]`<br>**⚪ Closed:** — |
+| **9 · Financial-sector regulatory & supervisory quality** | **✅ Built:** FATF Mutual Evaluations *(fatf_clean)* — AML/CFT, 199 countries · WB BRSS *(wb_brss, nb 38)* — banking-regulation *de jure* stringency, SUPPLEMENTARY, 161 juris (155 reliable)<br>**🟡 Outstanding:** IMF/WB FSAP `[verified PDF-only (scouted) — narrative FSSA/FSA/DAR reports, no structured cross-country dataset; voluntary/irregular publication; PDF-extraction batch — banking *de jure* reg leg now partly filled by WB BRSS (nb 38); FSAP residual marginal value = securities (IOSCO) + insurance (IAIS) + supervisory *effectiveness*]` · BCP / IOSCO / IAIS `[NOT separate sources — they are the banking/securities/insurance Detailed Assessment Reports embedded WITHIN FSAP; collapse into the FSAP PDF-batch]` · Basel AML Index `[parked: requires institutional affiliation; largely synthesises FATF (now built) — partly redundant]`<br>**⚪ Closed:** — |
 | **10 · State-owned enterprise governance** | **✅ Built:** —<br>**🟡 Outstanding:** — entire concept DEFERRED TO v2 (thinnest concept; out of v1 scope)<br>**⚪ Closed:** — |
 | **11 · Trade governance** | **✅ Built:** WB LPI *(WDI)* · OECD TFI *(tfi_clean)* · WB tariffs *(WDI)* · Fraser Trade *(fraser)*<br>**🟡 Outstanding:** WTO TFA `[parked: probed — per-member-only export; deferred to scrape]`<br>**⚪ Closed:** KOF Trade *(proxied via QoG kof_economic_globalisation (combined trade+financial, not pure trade subindex))* · Heritage Trade Freedom *(superseded by Fraser Trade)* · UNCTAD NTM *(dropped — currency (2012-2017, ~76 ctry))* |
 | **12 · Environmental & climate governance** | **✅ Built:** Yale EPI *(epi_clean)* · Climate Laws *(climate_laws)* · ND-GAIN *(QoG)* · IRENA capacity *(irena)* · WB Carbon *(wb_carbon)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |
@@ -394,7 +450,7 @@ _Verified 2026-06-24. Reconciles each concept's primary sources against actual p
 | **24 · Civil society space & vitality** | **✅ Built:** V-Dem CSO v2cseeorgs… *(vdem)* · CIVICUS *(civicus)* · FH-FIW CL-E Associational *(fh)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |
 | **25 · Government transparency & openness** | **✅ Built:** V-Dem v2cltrnslw/v2dlconslt *(vdem)* · WJP F3 Open Govt *(wjp)* · RTI Rating *(rti_rating)* · Open Budget Survey *(QoG obs)* · IDEA Political Finance *(polfinance)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |
 
-**Headline:** ~11 concepts fully built; most of the rest are tier-1-complete with gaps only in 3rd/supplementary legs. **Concept 9 (financial-sector regulatory quality) remains the thinnest concept**, but its most accessible primary — FATF Mutual Evaluations — is now built (199 countries; the `classified scrape` verdict proved wrong, like TFI/NTM). Remaining Concept 9 sources are FSAP (PDF-batch, unprobed), Basel AML (affiliation-blocked), and BCP/IOSCO/IAIS (unexamined). Other genuine tier-1 build gaps are narrow: ACLED (C2), WTO TFA (C11), IPU Parline (C19), IDEA EMB (C20), CPJ (C23). Remaining `classified/unprobed` scout targets (FSAP, IMF SDDS, IPU Parline, CPJ) are next — prior "hard" verdicts on TFI/NTM/FATF all proved wrong on inspection.
+**Headline:** ~11 concepts fully built; most of the rest are tier-1-complete with gaps only in 3rd/supplementary legs. **Concept 9 (financial-sector regulatory quality) remains among the thinnest concepts** (AML/CFT via FATF and banking-regulation *de jure* via WB BRSS, nb 38, now built; securities, insurance and supervisory *effectiveness* await FSAP), but its most accessible primary — FATF Mutual Evaluations — is now built (199 countries; the `classified scrape` verdict proved wrong, like TFI/NTM). Remaining Concept 9 sources are FSAP (PDF-batch, unprobed), Basel AML (affiliation-blocked), and BCP/IOSCO/IAIS (unexamined). Other genuine tier-1 build gaps are narrow: ACLED (C2), WTO TFA (C11), IPU Parline (C19), IDEA EMB (C20), CPJ (C23). Remaining `classified/unprobed` scout targets (FSAP, IMF SDDS, IPU Parline, CPJ) are next — prior "hard" verdicts on TFI/NTM/FATF all proved wrong on inspection.
 
 
 ## Outstanding Decisions
@@ -411,8 +467,9 @@ _Verified 2026-06-24. Reconciles each concept's primary sources against actual p
 - IRENA renewable-energy TARGETS (national ambition signal, e.g. % renewable by year): a genuinely additive policy measure, but only available embedded in IRENA reports/NDC analysis — DEFERRED to the planned Category 1 PDF-extraction infrastructure, not a clean download
 - RTI Rating HISTORICAL time series / transparency TRAJECTORY (is a country's RTI framework improving or backsliding): deferred — RTI scores are sticky step-functions so annual history adds little for a v1 cross-section, but a trajectory/direction-of-travel dimension (applicable to several de jure sources) could use it later
 - iMaPP in-force precision: parse text records if current-stock needed (deferred)
+- BRSS reliability threshold (0.70 coverage): revisit post-v1 (low priority) — sits between the ≤60% sparse tail and ≥85% mass; a metric-pass sensitivity check could confirm
 - WGI standard errors: optional enhancement for ranking confidence — not a master-PDF gap, user discretion
-- Category 3 web scrapes not built: FATF, IPU_PARLINE, WTO_TFA, IMF_SDDS, CPJ
+- Category 3 web scrapes not built: IPU_PARLINE, WTO_TFA, IMF_SDDS (FATF built nb 35; CPJ built nb 36)
 - Category 4 manual not built: none outstanding (ODIN, CLIMATE_LAWS, TI_POLFINANCE, RTI_RATING, OECD_TFI, IMF_AREAER de-facto ER [nb 37, checksum-validated transcription] built; IRENA_POLICY and GLOBAL_DATA_BAROMETER deprioritized; UNCTAD_NTM dropped — currency). RTI_RATING turned out automatable (HTML table parse) despite the earlier auth-gated-AJAX verdict — primary tier-1, 196 countries, now built. OECD_TFI built at composite level via Compare Your Country manual download (A–K sub-indicators = future enhancement, not a to-do). UNCTAD_NTM: WITS bulk CSV is accessible but latest cross-country data is 2012-2017 (~76 countries) — too stale; dropped, NTBs accepted as a v1 gap.
 - Category 1 PDF extraction not built: IMF_FSAP (macroprudential + financial-sector quality assessment). _(IMF AREAER de-facto ER removed — now BUILT via checksum-validated manual transcription, nb 37, not a PDF/coordinate parse. PEFA reclassified → structured manual-download pipeline, BUILT. ICNL → supplementary `tier3_web`.)_
 
