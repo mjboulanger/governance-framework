@@ -1,6 +1,6 @@
 # Metric Methodology
 
-**As-of (last manually updated):** 2026-07-09
+**As-of (last manually updated):** 2026-07-10
 **⚠️ MANUAL SNAPSHOT:** maintained by hand; does not auto-update. This is the canonical home for the **metric-pass (scoring) methodology**. Source-level build decisions live in `framework_decisions.md`; framework architecture and per-concept source rosters live in `governance_framework_master.md`.
 
 **Status legend:**
@@ -39,15 +39,15 @@ The pipeline **normalizes and aggregates on the full available panel** (every ye
 
 A **single framework-level composite** (one number per country) is **optional and explicitly caveated, not the headline** — a single number hides the profile that drives investment decisions (strong property rights + weak political stability ≠ "average"). Primary deliverable = concept + category scores.
 
-## 2. Country spine (D2) [rule LOCKED; list SPEC PENDING]
+## 2. Country spine (D2) [LOCKED — revised 2026-07-10]
 
-**Rule [LOCKED]:** ISO3 list of countries with **population > 2M**, excluding **effectively closed regimes**. Coverage is always measured against this spine.
+**Rule [LOCKED, revised 2026-07-10]:** the spine includes **ALL economies with WDI population data** (`SP.POP.TOTL`), excluding only the closed regimes **PRK, ERI, TKM**. **No population floor.** Non-sovereign territories are included and flagged (`is_territory`) so downstream views can filter to sovereigns. Coverage is always measured against this spine. *Revision log: the original rule (pop > 2M, ratified 2026-07-09) was deliberately revised on Step-0 evidence — the 2M line cut through investable sovereigns (Latvia, Estonia, Guyana, Suriname, Brunei, Iceland), and with reliability flags carrying thin coverage (option A) the floor bought nothing.*
 
 **Thin-coverage countries [LOCKED — option A]:** genuine countries meeting the pop/closed-regime rule are **included even when source coverage is thin**, carrying a low-reliability flag (§8) rather than being silently dropped. We exclude only on the pop/closed-regime rule, not on under-measurement.
 
-**The list itself [SPEC PENDING]:** produced by the Step-0 harmonization pass from a canonical population source + an explicit closed-regime exclusion list, then reviewed. Target ~150–160. Held in `country_spine.csv` once approved.
+**The list [LOCKED]:** `data/processed/country_spine.csv` — **213 economies, 21 territories flagged** (built by nb 39; population vintage 2025; integrity-checked: unique ISO3, valid tokens, no closed regimes, positive population). Regenerate only on a WDI population refresh, a closed-regime-list change, or a resolver extension.
 
-**Harmonization requirement [evidence, Step-0 audit]:** country keys are not uniformly ISO3 — 7 files are name/id-keyed (FH, FSI, CIVICUS, Pew, DPI by name; UCDP by numeric id; IRENA by non-ISO3 code); several files carry regional/income **aggregates** (WDI ~265 tokens incl. Arab World, Euro area, EU, Fragile States); and at least one file is **suspected to use COW/Gleditsch-Ward** 3-letter codes rather than ISO3 (Powell-Thyne — to verify, not asserted). All sources must be canonicalized to ISO3, aggregates stripped, and defunct/historical entities dropped before the country×indicator matrix is built.
+**Harmonization [DONE — `src/country_harmonization.py`]:** all country-key resolution lives in the module's `add_iso3()` (code-first, name-fallback; loud failure on undetectable keys). Contents: code overrides — the **Powell-Thyne COW/GW suspicion was confirmed** (25 divergent codes) and its live-country mappings verified against the file's own names (CDI→CIV, TAZ→TZA, SRI→LKA, CAM→KHM, BFO→BFA, RUM→ROU, BOS→BIH, DRC→COD, DRV→VNM, GFR→DEU, AAB→ATG) plus legacy codes (KOS/ROM/PSG); name overrides (DPI abbreviations incl. FRG/Germany→DEU, PRC→CHN, UAE→ARE); a parenthetical-strip retry (fixes UCDP's “Russia (Soviet Union)” pattern); and explicit drop-lists (defunct states, quasi-states, WDI/OWID/UN aggregates). As of 2026-07-10 every unresolved token across all 34 files is a verified legitimate exclusion — zero live countries lost. Metric-pass notebooks MUST import this module; never resolve country keys ad hoc.
 
 ## 3. Directionality (D3) [LOCKED]
 
@@ -137,5 +137,7 @@ Resolved during Step-1 metric selection, concept-by-concept. Authoritative per-s
 - **Cross-cutting** — WGI standard errors (optional ranking-confidence enhancement); WDI WBL/HCI/social-protection sparse recent coverage (investigate at harmonization); SPI-overall sparser than pillar-1 (flag); GTD/BCI currency verification.
 
 ## Changelog
+
+**2026-07-10** — Step-0 harmonization + spine COMPLETE (nb 39, `src/country_harmonization.py`, `country_spine.csv`). D2 revised: population floor removed (“include everything”); spine = 213 economies, 21 territories flagged. Powell-Thyne COW/GW coding confirmed and mapped; UCDP/DPI live-country name misses fixed (Russia, Germany, China, UAE recovered). Per-metric current-coverage table generated (459 metrics; 60 under 60% flagged for Step-1 inclusion review). Next: lock D4–D7 + inclusion/momentum parameters at Step 0.5 against this evidence.
 
 **2026-07-09** — Document created. Seeds the metric-pass methodology from the Step-0 design decisions: architecture (D1), spine (D2), directionality (D3), inclusion principle, and the D4–D7 + momentum specifications at their current lock status. Follows the Step-0 harmonization/coverage audit.
