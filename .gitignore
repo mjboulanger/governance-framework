@@ -31,3 +31,5 @@ data/raw/*.xlsx
 
 .virtual_documents/
 notebooks/**/Untitled*.ipynb
+
+data/processed/_*.txt
