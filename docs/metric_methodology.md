@@ -53,7 +53,7 @@ A **single framework-level composite** (one number per country) is **optional an
 
 All indicators are normalized so **higher = better governance**. Every indicator carries an explicit `direction` and a one-line `direction_evidence` note verified **against the source codebook, not memory**. A **sign-sanity validation pass** (Step 4) checks, pre-aggregation, that known-good countries score high on each indicator. Rationale for extra care: a sign error is silent — plausible all the way to the output — so it gets its own checkpoint, not just a column.
 
-## 4. Metric inclusion / usability [principle LOCKED; parameters SPEC PENDING]
+## 4. Metric inclusion / usability [LOCKED — 2026-07-10]
 
 **Principle [LOCKED]:** a metric's inclusion is judged by **current cross-sectional coverage on the spine** — the share of spine countries with a *recent-enough latest value* — **judged against the source's own cadence**. **History depth is a separate, non-gating attribute:** a metric with broad recent coverage but no long panel is fully includable; a metric with a long panel but stale/thin recent coverage may fail.
 
@@ -61,7 +61,14 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 
 **Cadence-relative recency [LOCKED principle]:** "recent enough" is relative to the source's cadence, not the calendar. **Annual** sources: a recency window applies (a country's latest value must fall within it). **Irregular/snapshot** sources (PEI per-election, PEFA latest-assessment, FATF/BRSS single-wave): **"latest available" counts as current** provided the source itself has not been superseded.
 
-**Parameters [SPEC PENDING — at harmonization]:** the recency window for annual sources (candidate ~3–4 yr), the inclusion threshold (what current-coverage % gates a metric in), and the precise snapshot-staleness test. Step-0 reports, per metric, the **distribution of per-country latest-years** (not just the file's max year) and current-coverage under a couple of window choices, so these are set on evidence.
+**Parameters [LOCKED — 2026-07-10, on Step-0 coverage evidence]:**
+
+- **Recency window (annual sources):** a country's latest observation must fall within **4 years** of the source's most recent year (`latest ≥ file_max_year − 4`). Evidence: the `median_latest_yr` distribution across the 255 annual metrics is sharply bimodal — 239 cluster at 2023–2026, a near-empty valley at 2021–22, then a dead tail of 6 at ≤2020; a 4-yr window cuts cleanly through the valley (window choice is low-sensitivity in the 3–5 range).
+- **Cadence-relative rule (snapshot/irregular sources):** latest-available value counts as current, provided the source has not been superseded (unchanged principle above).
+- **Denominator = sovereign core (192):** current-coverage is measured against the 192 sovereigns (spine of 213 minus 21 flagged territories), **not** the full spine — so strong sources are not penalized for microstate/territory gaps. Evidence: on the 213 denominator, WJP (covers 143 sovereigns) read 67%; on 192 it reads 74%, its true current-coverage.
+- **Inclusion threshold = ≥60% current-coverage of sovereigns.** Metrics ≥60% are included; metrics **<60% are flagged for individual review at Step 1, never auto-dropped**. Result: **246 of 255 annual metrics** clear the bar. Confirmed rescues: WJP factors 74.0%, Romelli CBI 78.6%, WDI tariffs 84.9%. Correctly flagged (dead tail, 0% current): Polity5 (ended 2018), Hanson-Sigman (2015), WB informal-economy (2020), WDI pupil-teacher-ratio (2017).
+- **Two ways to fail, reviewed differently:** a **recency failure** (live but lagging — e.g. UNODC homicide, broad but publishes with a multi-year lag) is kept with a cadence-appropriate window or a staleness flag; a **breadth failure** (current but narrow — e.g. IMF fiscal rules, 122 countries) is kept-and-flagged where it is the sole source for its concept. Only metrics that fail **and** are redundant (e.g. Polity5, superseded live by V-Dem) are retired — each an explicit per-metric decision at Step 1, with full history preserved in the evidentiary layer (§1).
+- **Evidence artifact:** `data/processed/metric_coverage.csv` (built by nb 39) carries `curcov_pct_w4` (vs 213), `curcov_sov_pct_w4` (vs 192 — the inclusion measure), `cadence`, `median_latest_yr`, and `hist_depth_avg_yrs` per metric.
 
 ## 5. Normalization (D4) [SPEC PENDING]
 
@@ -137,6 +144,8 @@ Resolved during Step-1 metric selection, concept-by-concept. Authoritative per-s
 - **Cross-cutting** — WGI standard errors (optional ranking-confidence enhancement); WDI WBL/HCI/social-protection sparse recent coverage (investigate at harmonization); SPI-overall sparser than pillar-1 (flag); GTD/BCI currency verification.
 
 ## Changelog
+
+**2026-07-10 (Step 0.5)** — Metric inclusion rule LOCKED (§4): recency window 4 yr for annual sources; cadence-relative for snapshot/irregular; denominator = 192 sovereigns; threshold ≥60% current-coverage; sub-threshold flagged for Step-1 review, never auto-dropped. 246/255 annual metrics clear. Evidence: `metric_coverage.csv`.
 
 **2026-07-10** — Step-0 harmonization + spine COMPLETE (nb 39, `src/country_harmonization.py`, `country_spine.csv`). D2 revised: population floor removed (“include everything”); spine = 213 economies, 21 territories flagged. Powell-Thyne COW/GW coding confirmed and mapped; UCDP/DPI live-country name misses fixed (Russia, Germany, China, UAE recovered). Per-metric current-coverage table generated (459 metrics; 60 under 60% flagged for Step-1 inclusion review). Next: lock D4–D7 + inclusion/momentum parameters at Step 0.5 against this evidence.
 
