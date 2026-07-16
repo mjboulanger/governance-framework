@@ -98,11 +98,19 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 
 **Open sub-decisions:** how ordinal annotations map to numeric weights; whether across-category weighting is relevance-based or equal (lean: concept→category by relevance; category→framework with caution — see §1, single composite optional/caveated).
 
-## 8. Reliability & coverage (D7) [principle LOCKED; threshold SPEC PENDING]
+## 8. Reliability & coverage (D7) [LOCKED — 2026-07-10]
 
 **Principle [LOCKED]:** every score (concept and category) carries a **coverage/confidence flag**. A minimum coverage is required to emit a score. **No imputation in v1** — gaps flagged, not filled. One framework-wide convention **subsumes the per-source flags already built** (`brss_reliable`, RTI `has_rti_law`, the BRSS 0.70 threshold) rather than ad-hoc per source.
 
-**Threshold [SPEC PENDING]:** the min-coverage cutoff is read off the coverage distribution **after harmonization** (the Step-0 histogram shows a workable core/tail break near the ≥20-source knee, but the cutoff can't finalize until the 7 name/id-keyed files are folded in and aggregates stripped).
+**Thresholds [LOCKED — 2026-07-10, on Step-0 per-country coverage evidence]:**
+
+- **No per-country score floor — evidence-forced.** The per-country metric-count distribution (`data/processed/country_coverage.csv`, nb 39) is cleanly bimodal along the sovereign/territory line: **every sovereign carries 84–385 metrics** (median ~358, 25th pctile 333), while the entire thin tail (<84 metrics) is **exclusively non-sovereign territories** (Northern Marianas 3 … Greenland 20). So no sovereign needs coverage-based suppression, and a blanket country-level gate is unnecessary. Ultra-thin territories simply fail to populate most concepts naturally (no present indicators) and score the few they can.
+- **Reliability operates per-concept-score, not per-country — evidence-forced rationale.** Coverage is concept-specific (a petro-state may be rich on macro/financial metrics, thin on civil-society), so a country-wide flag would mislabel. The flag is therefore attached to each **concept score**, computed against that concept's own included-indicator set.
+- **Minimum to emit a concept score:** **≥1 present indicator** (after tier-weighting) for that concept. Below that the concept score is null (not zero), not reported.
+- **Low-confidence flag [DEFAULT — NOT evidence-forced; revisit at Step 4]:** a concept score is flagged low-confidence when **fewer than 50% of that concept's included indicators are present** for the country. The 50% line is a **reasonable default, not read off the data** — unlike the inclusion window (which the bimodal `median_latest_yr` distribution pinned precisely), per-concept coverage does not exist until concepts are assembled at Step 1, so there is no natural break to calibrate against yet. The **mechanism** (per-concept, present-indicator ratio) is locked; the **50% cutoff is provisional** and is to be revisited at Step 4 against real per-concept coverage and score face-validity.
+- **Territories:** scored where data allows; always carry `is_territory` + the coverage flag; **never suppressed** (consistent with the “include everything” spine, §2). Note the flag is coverage-based, not status-based — well-covered territories (e.g. one reaches 258 metrics) are not penalized for status.
+- **Subsumes existing per-source flags:** `brss_reliable`, RTI `has_rti_law`, and the BRSS 0.70 coverage cutoff fold into this one convention rather than being applied ad hoc.
+- **Evidence artifact:** `data/processed/country_coverage.csv` (per-country present-metric counts, `is_territory` flagged).
 
 ## 9. Momentum (parallel output) [structure LOCKED; params SPEC PENDING]
 
@@ -144,6 +152,8 @@ Resolved during Step-1 metric selection, concept-by-concept. Authoritative per-s
 - **Cross-cutting** — WGI standard errors (optional ranking-confidence enhancement); WDI WBL/HCI/social-protection sparse recent coverage (investigate at harmonization); SPI-overall sparser than pillar-1 (flag); GTD/BCI currency verification.
 
 ## Changelog
+
+**2026-07-10 (Step 0.5)** — D7 reliability/coverage LOCKED (§8): no per-country floor (every sovereign has ≥84 metrics; thin tail is exclusively territories); reliability flag operates per-concept-score; min-to-score ≥1 present indicator; low-confidence flag at <50% of a concept's included indicators present — marked DEFAULT, not evidence-forced, revisit at Step 4. Evidence: `country_coverage.csv`.
 
 **2026-07-10 (Step 0.5)** — Metric inclusion rule LOCKED (§4): recency window 4 yr for annual sources; cadence-relative for snapshot/irregular; denominator = 192 sovereigns; threshold ≥60% current-coverage; sub-threshold flagged for Step-1 review, never auto-dropped. 246/255 annual metrics clear. Evidence: `metric_coverage.csv`.
 
