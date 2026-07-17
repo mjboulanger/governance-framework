@@ -1,6 +1,6 @@
 # Governance Framework — Master Document
 
-*Framework architecture, principles, source-level measurement decisions for 26 concepts, future enhancements, and outstanding work.*
+*Framework architecture, principles, source-level measurement decisions for 25 concepts, future enhancements, and outstanding work.*
 
 > **Document status.** This is the editable Markdown master, reconstructed from the May 2026 PDF and updated to reflect design-level decisions taken since. **As-of: 2026-07-09. MANUAL SNAPSHOT — does not auto-update.** Pipeline build status, data currency, and code are tracked separately in `docs/framework_decisions.md`, `data/processed/source_registry.csv`, and the download log. A dated changelog of substantive changes since the May version appears at the end of this document.
 
@@ -18,9 +18,9 @@ The framework draws on academic measurement projects (V-Dem, Polity, Quality of 
 
 ## Framework structure and primary measurement sources
 
-The framework organises governance into **5 categories** containing **26 unique concepts** (30 total instances after multi-placement of 4 concepts). The table below summarises categorisation alongside the primary and secondary measurement sources selected for each concept at the source-level pass. Detailed source-by-source rationale (including sources considered but excluded) appears in the per-concept sections.
+The framework organises governance into **5 categories** containing **25 unique concepts** (29 total instances after multi-placement of 4 concepts). The table below summarises categorisation alongside the primary and secondary measurement sources selected for each concept at the source-level pass. Detailed source-by-source rationale (including sources considered but excluded) appears in the per-concept sections.
 
-> **Note on concept count.** The May version described 25 unique concepts (29 instances). Concept 11 (State control over the economy / Trade governance numbering) and subsequent refinements bring the working inventory to 26 concepts; SOE governance remains deferred to v2. Concept numbering in the per-concept sections below follows the current working order.
+> **Note on concept count.** The working inventory is **25 unique concepts (29 instances)**. An earlier note recorded a revision to 26 (Concept 11 trade/state-control refinement); that count was not reconciled against the offsetting **Government Effectiveness + Public Administration Quality merge** (see consolidations), which removed one — netting 25, not 26. Verified 2026-07-17 (25 per-concept sections; 25 unique summary-table rows; 4 multi-placed → 29 instances). Concept numbering in the per-concept sections follows the current working order; Concept 10 (SOE governance and state control over the economy) is deferred to v2.
 
 | Category | Concept | Primary sources | Secondary / supplementary |
 |----------|---------|-----------------|---------------------------|
@@ -54,7 +54,7 @@ The framework organises governance into **5 categories** containing **26 unique 
 | | Trade governance | WB Logistics Performance Index; OECD Trade Facilitation Indicators; WTO TFA implementation *(dropped — licence)*; KOF Globalisation Index Trade subindex; WB WITS tariff data; Heritage Trade Freedom | WTO Trade Policy Reviews (Tier 3); WTO RTA database |
 | | Environmental and climate governance | Yale EPI policy/institutional sub-components; LSE Grantham Climate Laws Database; ND-GAIN governance and readiness; IRENA Renewables Capacity Statistics; WB Carbon Pricing Dashboard | IEA energy data and Policies Database (free portions); BNEF Climatescope; WEF Energy Transition Index. *(IRENA Renewable Energy Policies Database deprioritized — see changelog)* |
 
-\* *Concept appears in more than one category. Inventory: 26 unique concepts, 30 instances. WGI Voice and Accountability serves as Accountability category roll-up cross-check; WGI Rule of Law as Rule of Law category cross-check.*
+\* *Concept appears in more than one category. Inventory: 25 unique concepts, 29 instances. WGI Voice and Accountability serves as Accountability category roll-up cross-check; WGI Rule of Law as Rule of Law category cross-check.*
 
 ---
 
@@ -62,7 +62,7 @@ The framework organises governance into **5 categories** containing **26 unique 
 
 ### Architecture
 
-The framework operates at two structured levels. **Categories** (5 thematic groupings) provide the top-level reporting and communication structure. **Concepts** (26 unique, 30 instances) sit within categories and represent the substantive dimensions of governance that are scored. Within Accountability, concepts are further organised into horizontal accountability (government checks on government) and vertical accountability (government accountability to non-state actors).
+The framework operates at two structured levels. **Categories** (5 thematic groupings) provide the top-level reporting and communication structure. **Concepts** (25 unique, 29 instances) sit within categories and represent the substantive dimensions of governance that are scored. Within Accountability, concepts are further organised into horizontal accountability (government checks on government) and vertical accountability (government accountability to non-state actors).
 
 Below the concept level, **sources** (datasets and measurement projects) are selected for each concept based on coverage, precision, signal quality, and accessibility. **Metrics** (specific indicators within sources) are selected at the metric-level pass that follows source-level decisions. **The metric-pass scoring methodology — inclusion, normalization, aggregation, weighting, reliability, and momentum — is documented in `docs/metric_methodology.md`.**
 
@@ -119,7 +119,7 @@ Items remaining for v1 framework completion, in approximate order of dependency:
 - **Track record / predictability / payment culture composite design.** Originally deferred. Multiple sourcing options exist: sovereign rating action histories, fiscal-rule compliance rates, IMF program completion records, CDS spreads, EMBI sub-components. Decision needed on whether to handle as distributed content across existing concepts or as a standalone composite dimension.
 - **Equality incorporation design.** Left as open question when equality was removed as standalone concept. Options: disaggregated scoring of existing indicators by group, equality-specific indicators within relevant concepts, or other approach.
 - **Process/outcome classification of metrics.** Original framework principle (process = within state apparatus; outcome = touches non-state actors) is established but hasn't been applied concept-by-concept. Address at metric-pass stage.
-- **Weighting scheme using economic relevance annotations.** Per-concept economic relevance annotations (Very strong / Strong / Moderate / Thin) exist for concepts 1–9 and need completion for Trade governance and Environmental and climate governance. Weighting at category and framework levels uses these annotations.
+- **Weighting scheme using economic relevance annotations.** The four-level relevance scale (Very strong / Strong / Moderate / Thin) is defined as a design device, but **systematic per-concept annotation was never completed** — verified 2026-07-17 (no per-concept annotations in the working doc or the source PDF; only an ad hoc note on Concept 21). An earlier claim that annotations “exist for concepts 1–9” was aspirational. The full annotation is **outstanding**, to be done concept-by-concept at Step-1 metric selection using `docs/economic_relevance_worksheet.md`, and is the gating input to D6 (category/framework weighting).
 - **Concept 25 (Government transparency and openness) reconsideration.** Significant indicator overlap with other concepts (only the IDEA Political Finance Database and Global Data Barometer are unique to it). **Decision (revisited 2026-06-18): KEEP as own concept.** "Government transparency and openness" is a coherent, investor-legible dimension; overlap tracked under the repetition rule. The Global Data Barometer is deprioritized as its open-data source (thin, edition-unstable, duplicates ODIN). Still flagged to revisit with the full framework view before finalising. See changelog and `framework_decisions.md`.
 
 ### Future enhancements (post-v1)
@@ -372,10 +372,11 @@ The following sections cover all concepts in framework order. Each section provi
 
 ---
 
-### Concept 10: State-owned enterprise governance — DEFERRED TO V2
+### Concept 10: State-owned enterprise governance and state control over the economy — DEFERRED TO V2
 
 **Category:** Economic and fiscal governance
 **Status:** deferred to v2 framework. The thinnest concept for cross-country governance-precise measurement in the inventory. The best-fit sources fail coverage threshold; broad-coverage alternatives fail precision.
+**Scope (broadened 2026-07-17):** this concept spans both **SOE governance quality** (how well the state governs the enterprises it owns — board independence, hard budget constraints, transparency, competitive neutrality) and the **degree of state control over the economy** (state economic footprint, ownership share, price/market intervention). State control over the economy was considered as a standalone concept in v1 and dropped for lack of adequate cross-country metrics; it is folded here rather than lost. Both dimensions are deferred to v2, so the merge has no v1 scoring effect. **Open v2 design question:** whether to split these into two separate concepts or keep them merged — to be decided at v2 scoping. **Directionality: TBD** (resolved with all concepts at the D3 sign-sanity pass).
 **Decision rationale:** best dedicated measurement (OECD SOE Guidelines reviews, OECD Corporate Governance Factbook, iSOEF) covers ~50 countries — fails the coverage threshold. PEFA Pillar 3 captures fiscal-risk-from-SOE content where assessments exist (~150 countries, timing variable). IMF Article IV staff reports have rich SOE content annually but require Tier 3 extraction. Cross-country SOE sector size measurement is also weakly developed (IMF GFS Public Corporations data has definitional inconsistencies and coverage gaps; OECD PMR State Control fails coverage).
 **Future enhancement path:** (1) OECD assessment coverage expansion if it occurs; (2) iSOEF expansion; (3) IMF Article IV systematic extraction (also benefits Macro framework, PFM); (4) custom country-by-country research for major SOE economies (China, Russia, Gulf, Vietnam, etc.).
 
@@ -801,6 +802,7 @@ This section records substantive design-level decisions made after the May 2026 
 - **IRENA Renewable Energy Policies Database — DEPRIORITIZED.** No clean downloadable renewable-policy dataset exists; IRENA's policy work is report-based, and the joint IEA/IRENA Policies DB has no clean renewable filter and would duplicate Climate Laws. Renewable deployment covered by IRENA capacity statistics; energy/climate policy by Climate Laws; carbon pricing by WB Carbon.
 - **rti-evaluation.org (de facto RTI implementation) — DEPRIORITIZED.** Bespoke per-country reports, handful of countries, heterogeneous — not a comparable cross-country panel. De facto RTI implementation remains a known v1 gap, partially covered by V-Dem transparency/disclosure practice measures. Flagged as a watch item.
 - **Concept count.** Working inventory updated from 25 to 26 unique concepts (Concept 11 trade/state-control refinement); SOE governance remains deferred to v2.
+- **2026-07-17 — concept-count recount + C10 broadened + relevance-annotation status corrected.** Inventory reconciled to **25 unique / 29 instances** (the 26 count never accounted for the GE+PAQ merge). Concept 10 broadened to **“SOE governance and state control over the economy”** (deferred v2; state-control folded in after being dropped from v1 on measurement grounds; split-vs-merge is an open v2 question). Corrected the false claim that economic-relevance annotations exist for concepts 1–9: verified they were never systematically done; annotation worksheet `economic_relevance_worksheet.md` created as the Step-1 input to D6.
 - **Sources confirmed stale/superseded:** Dincer-Eichengreen CB Transparency (Romelli CBI supersedes), Linzer-Staton (V-Dem judicial indicators supersede).
 - **PEFA — BUILT as a structured pipeline (not PDF); scope locked to 2016/national.** PEFA was slated for the Category-1 PDF-extraction batch, but its "Scores Downloads" facility exports A–D indicator/dimension scores as a CSV — so it is a structured manual-download pipeline (`33_pefa_pipeline`), not PDF parsing. Scope decided on evidence: **core = 2016 framework, national, latest assessment per country (85 countries, median assessment year 2022, all ≤9 yrs old)**. The 2011-framework backfill (35 additional national countries) was **deferred** because its investment-relevant names (Brazil 2009, India 2010, Norway 2008) are 16–18 years stale — current 55% coverage judged better than stale 77%. `assessment_year` is carried as a recency flag; the framework version is a single documented knob (`PEFA_FRAMEWORK`). The 2011 backfill is revisitable — narrowly and flagged — at PFM-concept assembly.
 - **ICNL — dropped from the PDF batch, retained as supplementary.** The Civic Freedom Monitor is HTML qualitative country notes (de jure CSO law, ~50 countries), not PDF and not a scored dataset; redundant-for-scoring with the automated CIVICUS Monitor (de facto, ~197 countries) plus V-Dem civil-society indices. Stays registered as `tier3_web`, supplementary; no pipeline built.
