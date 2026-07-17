@@ -93,7 +93,7 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 
 **Baseline-provenance variables [LOCKED].** Every normalized metric×country×year row carries three metric-level attributes of the reference it was standardized against, for dashboard transparency: **`baseline_n_years`** (distinct years present in the window — 20 for a full annual source, fewer for irregular/snapshot), **`baseline_n_obs`** (total country-year observations pooled into the reference — the sharper reliability signal: a 20-year window over 30 countries is thin despite being "20 years"), and **`baseline_year_span`** (the resolved `[min_year, max_year]`, i.e. the era benchmarked against). These describe the shared per-metric reference (identical down all rows of a metric), not per-country data depth. Required outputs of the scoring pipeline.
 
-## 6. Within-concept aggregation (D5) [principle LOCKED; params SPEC PENDING]
+## 6. Within-concept aggregation (D5) [LOCKED — 2026-07-10]
 
 **Principle [LOCKED]:** concept score = **tier-weighted mean** of its normalized, direction-aligned indicators, with **weights renormalized over present indicators** (missingness doesn't zero a concept — same pattern as BRSS/RTI). Tier reflects directness + centrality (master principle 7).
 
@@ -101,7 +101,11 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 
 **Periodic indicators** are collapsed to their **latest-within-window** value before entering the concept (not "latest calendar year", which would drop a genuinely-current per-election reading).
 
-**Parameters [SPEC PENDING]:** coarse tier-weight values (illustrative 1.0 / 0.5 / 0.25) at Step 0.5.
+**Tier weights [LOCKED — 2026-07-10]:** **P1 = 1.0, P2 = 0.5, Supplementary = 0.** Two scored tiers (primary / secondary) plus a tracked-but-unscored supplementary tier. Supplementary indicators are **retained** — they appear in the evidentiary layer (§1) and are eligible for momentum breadth (§9) where panel-backed — but do **not** enter the level score by default, so weak measures don’t dilute a concept that already has good ones. Equal weight within a tier; weights renormalized over present indicators (missingness handling, already locked). *(Values are DEFAULTS — revisit Step 4 via equal-weight and promotion sensitivity checks.)*
+
+**No automatic promotion of supplementary indicators.** The Sp = 0 default is never auto-overridden by a rule. Instead there is a single **weight-review trigger**: a concept with **fewer than 3 present P1+P2 indicators** (a single- or double-source concept — thin triangulation) is **flagged for qualitative weight review** at Step-1 metric selection. In that review, promoting a supplementary indicator to a scored weight is one option, decided by hand, per concept, at whatever weight the reviewer judges appropriate — there is no formulaic promotion. With only 26 concepts this qualitative pass is tractable; the trigger exists so thin concepts cannot slip past unexamined, not to automate the judgment. *(The <3 threshold is a DEFAULT — revisit Step 4.)* This same thinness condition also drives the §8 reliability flag, so a single-source concept surfaces in both places rather than being caught in one and missed in the other.
+
+**Tier assignments are per-indicator × concept, produced at Step-1 metric selection** (assigning each selected indicator P1/P2/Sp *for that concept* is part of the selection act itself). The **starting prior** is `source_registry.highest_tier` (P1/P2/Sp), but note that field is **source-level** (“highest” tier across all of a source’s uses) — it is refined to the indicator×concept level at Step 1, because a source can be primary for one concept and supplementary for another (e.g. V-Dem is a P1 workhorse for democracy concepts, a supporting measure elsewhere). The registry field is a prior, not the scoring weight.
 
 ## 7. Category & framework weighting (D6) [OPEN]
 
@@ -165,6 +169,8 @@ Resolved during Step-1 metric selection, concept-by-concept. Authoritative per-s
 - **Cross-cutting** — WGI standard errors (optional ranking-confidence enhancement); WDI WBL/HCI/social-protection sparse recent coverage (investigate at harmonization); SPI-overall sparser than pillar-1 (flag); GTD/BCI currency verification.
 
 ## Changelog
+
+**2026-07-10 (Step 0.5)** — D5 within-concept weights LOCKED (§6): P1=1.0 / P2=0.5 / Sp=0 (supplementary tracked, in evidentiary layer + momentum-breadth, not scored by default); no auto-promotion; weight-review trigger = concept with <3 present P1+P2 indicators → qualitative review at Step 1 (cross-linked to §8 reliability flag); per-indicator×concept assignments at Step 1 with source-level `highest_tier` as prior. Values/threshold DEFAULT, revisit Step 4.
 
 **2026-07-10 (Step 0.5)** — D4 normalization LOCKED (§5): method-assignment rule (6 families, DEFAULT thresholds) proposes + flags for review, `method_source` audit tag; fixed-pooled baseline over trailing 20-yr window (levels/history/momentum consistent); ceiling-piled bounded indicators and bimodal indices kept z-score; per-metric REVIEW overrides (~35) deferred to Step 1; baseline-provenance vars (`baseline_n_years`, `baseline_n_obs`, `baseline_year_span`) carried per normalized row. Evidence: `metric_distribution_profile.csv`.
 
