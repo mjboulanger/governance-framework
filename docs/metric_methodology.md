@@ -129,7 +129,7 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 - **Subsumes existing per-source flags:** `brss_reliable`, RTI `has_rti_law`, and the BRSS 0.70 coverage cutoff fold into this one convention rather than being applied ad hoc.
 - **Evidence artifact:** `data/processed/country_coverage.csv` (per-country present-metric counts, `is_territory` flagged).
 
-## 9. Momentum (parallel output) [structure LOCKED; params SPEC PENDING]
+## 9. Momentum (parallel output) [LOCKED — 2026-07-10; dead-band SPEC PENDING]
 
 A **separate, parallel coordinate — never blended into the level score** (blending destroys both signals: a high-stable country must be distinguishable from a low-improving one).
 
@@ -143,7 +143,13 @@ Reported as **two coordinates, not collapsed by default** ("avg +0.3/yr, 4 of 5 
 
 **Normalization dependency [LOCKED]:** momentum is computed on the **fixed-baseline** normalized panel (within-year normalization would read a country as "improving" merely because peers deteriorated — a ranking artifact).
 
-**Parameters [SPEC PENDING — at Step 0.5, needs history-depth evidence]:** window length (lean ~5 yr, **adaptive** — short panels like CIVICUS 2022–25, ODIN, EPI can't support 5 yr and get a low-confidence flag); dead-band threshold for "flat"; minimum-metric count for trustworthy breadth (lean ~3; below that, magnitude-only + breadth flagged low-confidence); whether breadth is tier-weighted (magnitude is).
+**Parameters [LOCKED — 2026-07-10, on panel-depth evidence]:**
+
+- **Window — blended 5yr + 3yr slope.** A metric's magnitude is the **average of its trailing-5-year slope and its trailing-3-year slope**. The 3yr leg captures recent acceleration; the 5yr leg captures sustained trend; averaging gives a signal responsive to recent moves without single-year whipsaw (a country just turning shows in the 3yr before the 5yr, and the blend reads “turning off a stable base”). The two windows overlap on the last 3 years — intended, a mild recency tilt, not problematic double-counting. **Fallback:** if <5 yr of history, use the **3yr slope alone**; if **<3 yr, momentum is null** (not zero). Evidence: of 27 panel sources, 26 have ≥3 yr median history in the recent window and 24 have ≥5 yr — so the 3-obs floor nulls only EPI (2 yr); short panels (CIVICUS, TFI at ~3 yr) get a 3yr-only slope with a low-confidence flag rather than being dropped.
+- **Units.** Slopes are computed on the **fixed-baseline normalized** values (§5), so magnitude is in **normalized SD per year** — comparable across metrics on different raw scales, and consistent with the level scores (same reference).
+- **Breadth min-count.** Net-diffusion breadth is reported only where a concept has **≥3 panel-backed, momentum-capable metrics**; below that, **magnitude-only, breadth null** (with 2 metrics, “share improving − share deteriorating” is near-binary noise). Mirrors the §6 <3-indicator thinness logic.
+- **Dead-band [SPEC PENDING — calibrate at Step 4].** The threshold below which a per-metric slope counts as “flat” (neither improving nor deteriorating, so it doesn't move breadth) is **not set now** — there is no slope distribution to read it off until scores exist. Set at Step 4 from the realized distribution of metric slopes (place the flat-band where trivial drift clusters). Until then, breadth treats any non-zero slope as directional.
+- **Breadth weighting.** Breadth is an **unweighted** share across a concept's momentum-capable metrics (each metric one vote: improving / flat / deteriorating); magnitude is tier-weighted (§6). Rationale: breadth measures *how broad-based* a move is — an equal vote per metric is the honest diffusion signal; tier-weighting it would conflate breadth with magnitude.
 
 ## 10. Deferred / open design questions (register)
 
@@ -169,6 +175,8 @@ Resolved during Step-1 metric selection, concept-by-concept. Authoritative per-s
 - **Cross-cutting** — WGI standard errors (optional ranking-confidence enhancement); WDI WBL/HCI/social-protection sparse recent coverage (investigate at harmonization); SPI-overall sparser than pillar-1 (flag); GTD/BCI currency verification.
 
 ## Changelog
+
+**2026-07-10 (Step 0.5)** — Momentum params LOCKED (§9): magnitude = blended trailing 5yr+3yr slope (3yr-only if <5yr, null if <3yr) on fixed-baseline normalized values (SD/yr); breadth = unweighted net-diffusion, reported only at ≥3 panel-backed metrics; dead-band deferred to Step 4 (no slope distribution yet). Evidence: 26/27 panel sources have ≥3yr history. **Step 0.5 parameter locks COMPLETE** (inclusion, D7, D4, D5, momentum).
 
 **2026-07-10 (Step 0.5)** — D5 within-concept weights LOCKED (§6): P1=1.0 / P2=0.5 / Sp=0 (supplementary tracked, in evidentiary layer + momentum-breadth, not scored by default); no auto-promotion; weight-review trigger = concept with <3 present P1+P2 indicators → qualitative review at Step 1 (cross-linked to §8 reliability flag); per-indicator×concept assignments at Step 1 with source-level `highest_tier` as prior. Values/threshold DEFAULT, revisit Step 4.
 
