@@ -1,6 +1,6 @@
 # Metric Methodology
 
-**As-of (last manually updated):** 2026-07-09
+**As-of (last manually updated):** 2026-07-10
 **⚠️ MANUAL SNAPSHOT:** maintained by hand; does not auto-update. This is the canonical home for the **metric-pass (scoring) methodology**. Source-level build decisions live in `framework_decisions.md`; framework architecture and per-concept source rosters live in `governance_framework_master.md`.
 
 **Status legend:**
@@ -39,21 +39,21 @@ The pipeline **normalizes and aggregates on the full available panel** (every ye
 
 A **single framework-level composite** (one number per country) is **optional and explicitly caveated, not the headline** — a single number hides the profile that drives investment decisions (strong property rights + weak political stability ≠ "average"). Primary deliverable = concept + category scores.
 
-## 2. Country spine (D2) [rule LOCKED; list SPEC PENDING]
+## 2. Country spine (D2) [LOCKED — revised 2026-07-10]
 
-**Rule [LOCKED]:** ISO3 list of countries with **population > 2M**, excluding **effectively closed regimes**. Coverage is always measured against this spine.
+**Rule [LOCKED, revised 2026-07-10]:** the spine includes **ALL economies with WDI population data** (`SP.POP.TOTL`), excluding only the closed regimes **PRK, ERI, TKM**. **No population floor.** Non-sovereign territories are included and flagged (`is_territory`) so downstream views can filter to sovereigns. Coverage is always measured against this spine. *Revision log: the original rule (pop > 2M, ratified 2026-07-09) was deliberately revised on Step-0 evidence — the 2M line cut through investable sovereigns (Latvia, Estonia, Guyana, Suriname, Brunei, Iceland), and with reliability flags carrying thin coverage (option A) the floor bought nothing.*
 
 **Thin-coverage countries [LOCKED — option A]:** genuine countries meeting the pop/closed-regime rule are **included even when source coverage is thin**, carrying a low-reliability flag (§8) rather than being silently dropped. We exclude only on the pop/closed-regime rule, not on under-measurement.
 
-**The list itself [SPEC PENDING]:** produced by the Step-0 harmonization pass from a canonical population source + an explicit closed-regime exclusion list, then reviewed. Target ~150–160. Held in `country_spine.csv` once approved.
+**The list [LOCKED]:** `data/processed/country_spine.csv` — **213 economies, 21 territories flagged** (built by nb 39; population vintage 2025; integrity-checked: unique ISO3, valid tokens, no closed regimes, positive population). Regenerate only on a WDI population refresh, a closed-regime-list change, or a resolver extension.
 
-**Harmonization requirement [evidence, Step-0 audit]:** country keys are not uniformly ISO3 — 7 files are name/id-keyed (FH, FSI, CIVICUS, Pew, DPI by name; UCDP by numeric id; IRENA by non-ISO3 code); several files carry regional/income **aggregates** (WDI ~265 tokens incl. Arab World, Euro area, EU, Fragile States); and at least one file is **suspected to use COW/Gleditsch-Ward** 3-letter codes rather than ISO3 (Powell-Thyne — to verify, not asserted). All sources must be canonicalized to ISO3, aggregates stripped, and defunct/historical entities dropped before the country×indicator matrix is built.
+**Harmonization [DONE — `src/country_harmonization.py`]:** all country-key resolution lives in the module's `add_iso3()` (code-first, name-fallback; loud failure on undetectable keys). Contents: code overrides — the **Powell-Thyne COW/GW suspicion was confirmed** (25 divergent codes) and its live-country mappings verified against the file's own names (CDI→CIV, TAZ→TZA, SRI→LKA, CAM→KHM, BFO→BFA, RUM→ROU, BOS→BIH, DRC→COD, DRV→VNM, GFR→DEU, AAB→ATG) plus legacy codes (KOS/ROM/PSG); name overrides (DPI abbreviations incl. FRG/Germany→DEU, PRC→CHN, UAE→ARE); a parenthetical-strip retry (fixes UCDP's “Russia (Soviet Union)” pattern); and explicit drop-lists (defunct states, quasi-states, WDI/OWID/UN aggregates). As of 2026-07-10 every unresolved token across all 34 files is a verified legitimate exclusion — zero live countries lost. Metric-pass notebooks MUST import this module; never resolve country keys ad hoc.
 
 ## 3. Directionality (D3) [LOCKED]
 
 All indicators are normalized so **higher = better governance**. Every indicator carries an explicit `direction` and a one-line `direction_evidence` note verified **against the source codebook, not memory**. A **sign-sanity validation pass** (Step 4) checks, pre-aggregation, that known-good countries score high on each indicator. Rationale for extra care: a sign error is silent — plausible all the way to the output — so it gets its own checkpoint, not just a column.
 
-## 4. Metric inclusion / usability [principle LOCKED; parameters SPEC PENDING]
+## 4. Metric inclusion / usability [LOCKED — 2026-07-10]
 
 **Principle [LOCKED]:** a metric's inclusion is judged by **current cross-sectional coverage on the spine** — the share of spine countries with a *recent-enough latest value* — **judged against the source's own cadence**. **History depth is a separate, non-gating attribute:** a metric with broad recent coverage but no long panel is fully includable; a metric with a long panel but stale/thin recent coverage may fail.
 
@@ -61,19 +61,39 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 
 **Cadence-relative recency [LOCKED principle]:** "recent enough" is relative to the source's cadence, not the calendar. **Annual** sources: a recency window applies (a country's latest value must fall within it). **Irregular/snapshot** sources (PEI per-election, PEFA latest-assessment, FATF/BRSS single-wave): **"latest available" counts as current** provided the source itself has not been superseded.
 
-**Parameters [SPEC PENDING — at harmonization]:** the recency window for annual sources (candidate ~3–4 yr), the inclusion threshold (what current-coverage % gates a metric in), and the precise snapshot-staleness test. Step-0 reports, per metric, the **distribution of per-country latest-years** (not just the file's max year) and current-coverage under a couple of window choices, so these are set on evidence.
+**Parameters [LOCKED — 2026-07-10, on Step-0 coverage evidence]:**
 
-## 5. Normalization (D4) [SPEC PENDING]
+- **Recency window (annual sources):** a country's latest observation must fall within **4 years** of the source's most recent year (`latest ≥ file_max_year − 4`). Evidence: the `median_latest_yr` distribution across the 255 annual metrics is sharply bimodal — 239 cluster at 2023–2026, a near-empty valley at 2021–22, then a dead tail of 6 at ≤2020; a 4-yr window cuts cleanly through the valley (window choice is low-sensitivity in the 3–5 range).
+- **Cadence-relative rule (snapshot/irregular sources):** latest-available value counts as current, provided the source has not been superseded (unchanged principle above).
+- **Denominator = sovereign core (192):** current-coverage is measured against the 192 sovereigns (spine of 213 minus 21 flagged territories), **not** the full spine — so strong sources are not penalized for microstate/territory gaps. Evidence: on the 213 denominator, WJP (covers 143 sovereigns) read 67%; on 192 it reads 74%, its true current-coverage.
+- **Inclusion threshold = ≥60% current-coverage of sovereigns.** Metrics ≥60% are included; metrics **<60% are flagged for individual review at Step 1, never auto-dropped**. Result: **246 of 255 annual metrics** clear the bar. Confirmed rescues: WJP factors 74.0%, Romelli CBI 78.6%, WDI tariffs 84.9%. Correctly flagged (dead tail, 0% current): Polity5 (ended 2018), Hanson-Sigman (2015), WB informal-economy (2020), WDI pupil-teacher-ratio (2017).
+- **Two ways to fail, reviewed differently:** a **recency failure** (live but lagging — e.g. UNODC homicide, broad but publishes with a multi-year lag) is kept with a cadence-appropriate window or a staleness flag; a **breadth failure** (current but narrow — e.g. IMF fiscal rules, 122 countries) is kept-and-flagged where it is the sole source for its concept. Only metrics that fail **and** are redundant (e.g. Polity5, superseded live by V-Dem) are retired — each an explicit per-metric decision at Step 1, with full history preserved in the evidentiary layer (§1).
+- **Evidence artifact:** `data/processed/metric_coverage.csv` (built by nb 39) carries `curcov_pct_w4` (vs 213), `curcov_sov_pct_w4` (vs 192 — the inclusion measure), `cadence`, `median_latest_yr`, and `hist_depth_avg_yrs` per metric.
+
+## 5. Normalization (D4) [LOCKED — 2026-07-10]
 
 **Requirement [LOCKED]:** sources arrive on incompatible scales (V-Dem interval, WGI ~N(0,1), 0–100 indices, ordinals, zero-inflated long-tailed counts — homicide, coups, journalist killings, conflict deaths). Everything is **re-normalized from raw to one common convention** before aggregation; source-native scaling is ignored.
 
-**Recommended default [SPEC PENDING]:** **z-score with winsorization at ±3 SD** across the scored universe — preserves relative magnitude (gap size is signal for tail-risk), standard in composite-indicator methodology, combines cleanly under weighted averaging. **Skewed/count sources** (homicide, coups, killings, conflict deaths, carbon revenue) flagged for **log-transform-then-z or percentile**, decided per-indicator in the scaffold (z+winsorize distorts on heavy skew).
+**Method-assignment rule [LOCKED — rule proposes, human disposes].** Each metric is assigned a normalization method by a deterministic rule keyed to its distribution (skew, excess kurtosis, zero-fraction, cardinality, a bimodality coefficient, min/max pile), computed on the pooled panel. The rule is a **guide, not an executioner**: it proposes a method and **flags genuinely ambiguous cases** (real multimodality; ceiling/floor piles where the method is not already percentile) for human review. Every metric carries a `method_source` tag — `rule` or `reviewed` — and reviewed rows note the override reason. Families:
 
-**Live alternative:** **percentile rank** — robust and interpretable, but flattens the tails (bad where "how bad is the failing state" is signal). Decided **empirically at Step 4** (build both; keep whichever is more stable/defensible under sensitivity analysis).
+| Family | Trigger | Method |
+|---|---|---|
+| symmetric | \|skew\| < 1, not zero-inflated | **z-score** (winsorize ±3 SD) |
+| right-skew positive | skew ≥ 1, strictly positive | **log → z** |
+| zero-inflated count (magnitude) | zero-fraction ≥ 60% (violence/deaths/events) | **log1p → z** |
+| ordinal | integer, ≤ 6 distinct levels (FATF NC/PC/LC/C, PTS, CCP) | **percentile** |
+| extreme skew | \|skew\| ≥ 3 | **percentile** |
+| binary | 2 distinct values (coup occurred, law exists) | **occurrence** (raw 0/1) |
 
-**Within-year vs fixed-baseline fork [SPEC PENDING — consequential]:** normalizing **within each year** answers "where did this country rank that year"; a **fixed pooled baseline** makes movement reflect real change, not shifting peers. Different time series, different momentum. **Momentum (§9) requires the fixed-baseline panel regardless** — the strongest argument for using fixed-baseline for the level scores too. Resolved at Step 0.5.
+**Thresholds are DEFAULTS, not evidence-forced** (skew 1/3, zero-fraction 0.30/0.60, bimodality coefficient 0.75, ordinal ≤6 levels, pile ≥20%) — they classified 330 metrics with ~35 flagged for review at first pass; revisit at Step 4 against score face-validity. **Ceiling-piled bounded development indicators** (electricity/water/sanitation access, immunization) **stay z-score** (decision 2026-07-10): the pile at ~100% is informative, and z preserves distance-from-universal, which percentile would discard. Genuinely bimodal governance indices (e.g. FH electoral process, Chinn-Ito KAOPEN) **stay z-score** — the two humps are real democratic/autocratic signal, not artifact.
 
-## 6. Within-concept aggregation (D5) [principle LOCKED; params SPEC PENDING]
+**Per-metric assignments deferred to Step-1 metric selection.** The method for a metric only matters if the metric is *included*, and inclusion is decided at Step 1; so the ~35 flagged REVIEW cases are resolved there — each only if the metric survives inclusion — with the rule’s suggestion as the starting hypothesis. Evidence artifact: `data/processed/metric_distribution_profile.csv` (nb 39) — per-metric stats, `family`, `suggested_method`, `flag_reason`, and blank `final_method`/`method_source`/`note` for the review pass.
+
+**Baseline [LOCKED — fixed-pooled, trailing 20-year window].** Normalization references a **fixed pooled baseline**, not a within-year one: the reference distribution (z mean/SD, percentile ranks, log-then-z params) is computed once from **all country-year observations in the most recent 20 years** of the metric’s panel (or full history if shorter), and *every* value — current and historical — is transformed against that fixed reference. This makes movement reflect real change rather than shifting peers, and keeps **levels, history, and momentum mutually consistent** (same reference for all three). Within-year normalization is rejected: it would read a country as "improving" merely because peers deteriorated. Snapshot sources (one wave) are their own reference. **Window length (20 yr) is a DEFAULT** — chosen to keep the reference contemporary (avoid anchoring on the structurally-different early-1990s world) while giving enough observations for stable tail estimation; ≈20 yr ≈ full usable panel for most sources (V-Dem/WGI/WJP/FH), and only bites on the long series (Chinn-Ito, Fraser, UNODC). Revisit at Step 4 by re-scoring at 10/15/20/full and checking ranking stability. *Property, not a bug:* because the window is trailing, each panel extension shifts the reference forward one year and re-computes historical normalized values — intended (the reference stays contemporary), so the normalized panel is reference-date-stamped.
+
+**Baseline-provenance variables [LOCKED].** Every normalized metric×country×year row carries three metric-level attributes of the reference it was standardized against, for dashboard transparency: **`baseline_n_years`** (distinct years present in the window — 20 for a full annual source, fewer for irregular/snapshot), **`baseline_n_obs`** (total country-year observations pooled into the reference — the sharper reliability signal: a 20-year window over 30 countries is thin despite being "20 years"), and **`baseline_year_span`** (the resolved `[min_year, max_year]`, i.e. the era benchmarked against). These describe the shared per-metric reference (identical down all rows of a metric), not per-country data depth. Required outputs of the scoring pipeline.
+
+## 6. Within-concept aggregation (D5) [LOCKED — 2026-07-10]
 
 **Principle [LOCKED]:** concept score = **tier-weighted mean** of its normalized, direction-aligned indicators, with **weights renormalized over present indicators** (missingness doesn't zero a concept — same pattern as BRSS/RTI). Tier reflects directness + centrality (master principle 7).
 
@@ -81,7 +101,11 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 
 **Periodic indicators** are collapsed to their **latest-within-window** value before entering the concept (not "latest calendar year", which would drop a genuinely-current per-election reading).
 
-**Parameters [SPEC PENDING]:** coarse tier-weight values (illustrative 1.0 / 0.5 / 0.25) at Step 0.5.
+**Tier weights [LOCKED — 2026-07-10]:** **P1 = 1.0, P2 = 0.5, Supplementary = 0.** Two scored tiers (primary / secondary) plus a tracked-but-unscored supplementary tier. Supplementary indicators are **retained** — they appear in the evidentiary layer (§1) and are eligible for momentum breadth (§9) where panel-backed — but do **not** enter the level score by default, so weak measures don’t dilute a concept that already has good ones. Equal weight within a tier; weights renormalized over present indicators (missingness handling, already locked). *(Values are DEFAULTS — revisit Step 4 via equal-weight and promotion sensitivity checks.)*
+
+**No automatic promotion of supplementary indicators.** The Sp = 0 default is never auto-overridden by a rule. Instead there is a single **weight-review trigger**: a concept with **fewer than 3 present P1+P2 indicators** (a single- or double-source concept — thin triangulation) is **flagged for qualitative weight review** at Step-1 metric selection. In that review, promoting a supplementary indicator to a scored weight is one option, decided by hand, per concept, at whatever weight the reviewer judges appropriate — there is no formulaic promotion. With only 25 concepts this qualitative pass is tractable; the trigger exists so thin concepts cannot slip past unexamined, not to automate the judgment. *(The <3 threshold is a DEFAULT — revisit Step 4.)* This same thinness condition also drives the §8 reliability flag, so a single-source concept surfaces in both places rather than being caught in one and missed in the other.
+
+**Tier assignments are per-indicator × concept, produced at Step-1 metric selection** (assigning each selected indicator P1/P2/Sp *for that concept* is part of the selection act itself). The **starting prior** is `source_registry.highest_tier` (P1/P2/Sp), but note that field is **source-level** (“highest” tier across all of a source’s uses) — it is refined to the indicator×concept level at Step 1, because a source can be primary for one concept and supplementary for another (e.g. V-Dem is a P1 workhorse for democracy concepts, a supporting measure elsewhere). The registry field is a prior, not the scoring weight.
 
 ## 7. Category & framework weighting (D6) [OPEN]
 
@@ -91,13 +115,21 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 
 **Open sub-decisions:** how ordinal annotations map to numeric weights; whether across-category weighting is relevance-based or equal (lean: concept→category by relevance; category→framework with caution — see §1, single composite optional/caveated).
 
-## 8. Reliability & coverage (D7) [principle LOCKED; threshold SPEC PENDING]
+## 8. Reliability & coverage (D7) [LOCKED — 2026-07-10]
 
 **Principle [LOCKED]:** every score (concept and category) carries a **coverage/confidence flag**. A minimum coverage is required to emit a score. **No imputation in v1** — gaps flagged, not filled. One framework-wide convention **subsumes the per-source flags already built** (`brss_reliable`, RTI `has_rti_law`, the BRSS 0.70 threshold) rather than ad-hoc per source.
 
-**Threshold [SPEC PENDING]:** the min-coverage cutoff is read off the coverage distribution **after harmonization** (the Step-0 histogram shows a workable core/tail break near the ≥20-source knee, but the cutoff can't finalize until the 7 name/id-keyed files are folded in and aggregates stripped).
+**Thresholds [LOCKED — 2026-07-10, on Step-0 per-country coverage evidence]:**
 
-## 9. Momentum (parallel output) [structure LOCKED; params SPEC PENDING]
+- **No per-country score floor — evidence-forced.** The per-country metric-count distribution (`data/processed/country_coverage.csv`, nb 39) is cleanly bimodal along the sovereign/territory line: **every sovereign carries 84–385 metrics** (median ~358, 25th pctile 333), while the entire thin tail (<84 metrics) is **exclusively non-sovereign territories** (Northern Marianas 3 … Greenland 20). So no sovereign needs coverage-based suppression, and a blanket country-level gate is unnecessary. Ultra-thin territories simply fail to populate most concepts naturally (no present indicators) and score the few they can.
+- **Reliability operates per-concept-score, not per-country — evidence-forced rationale.** Coverage is concept-specific (a petro-state may be rich on macro/financial metrics, thin on civil-society), so a country-wide flag would mislabel. The flag is therefore attached to each **concept score**, computed against that concept's own included-indicator set.
+- **Minimum to emit a concept score:** **≥1 present indicator** (after tier-weighting) for that concept. Below that the concept score is null (not zero), not reported.
+- **Low-confidence flag [DEFAULT — NOT evidence-forced; revisit at Step 4]:** a concept score is flagged low-confidence when **fewer than 50% of that concept's included indicators are present** for the country. The 50% line is a **reasonable default, not read off the data** — unlike the inclusion window (which the bimodal `median_latest_yr` distribution pinned precisely), per-concept coverage does not exist until concepts are assembled at Step 1, so there is no natural break to calibrate against yet. The **mechanism** (per-concept, present-indicator ratio) is locked; the **50% cutoff is provisional** and is to be revisited at Step 4 against real per-concept coverage and score face-validity.
+- **Territories:** scored where data allows; always carry `is_territory` + the coverage flag; **never suppressed** (consistent with the “include everything” spine, §2). Note the flag is coverage-based, not status-based — well-covered territories (e.g. one reaches 258 metrics) are not penalized for status.
+- **Subsumes existing per-source flags:** `brss_reliable`, RTI `has_rti_law`, and the BRSS 0.70 coverage cutoff fold into this one convention rather than being applied ad hoc.
+- **Evidence artifact:** `data/processed/country_coverage.csv` (per-country present-metric counts, `is_territory` flagged).
+
+## 9. Momentum (parallel output) [LOCKED — 2026-07-10; dead-band SPEC PENDING]
 
 A **separate, parallel coordinate — never blended into the level score** (blending destroys both signals: a high-stable country must be distinguishable from a low-improving one).
 
@@ -111,7 +143,13 @@ Reported as **two coordinates, not collapsed by default** ("avg +0.3/yr, 4 of 5 
 
 **Normalization dependency [LOCKED]:** momentum is computed on the **fixed-baseline** normalized panel (within-year normalization would read a country as "improving" merely because peers deteriorated — a ranking artifact).
 
-**Parameters [SPEC PENDING — at Step 0.5, needs history-depth evidence]:** window length (lean ~5 yr, **adaptive** — short panels like CIVICUS 2022–25, ODIN, EPI can't support 5 yr and get a low-confidence flag); dead-band threshold for "flat"; minimum-metric count for trustworthy breadth (lean ~3; below that, magnitude-only + breadth flagged low-confidence); whether breadth is tier-weighted (magnitude is).
+**Parameters [LOCKED — 2026-07-10, on panel-depth evidence]:**
+
+- **Window — blended 5yr + 3yr slope.** A metric's magnitude is the **average of its trailing-5-year slope and its trailing-3-year slope**. The 3yr leg captures recent acceleration; the 5yr leg captures sustained trend; averaging gives a signal responsive to recent moves without single-year whipsaw (a country just turning shows in the 3yr before the 5yr, and the blend reads “turning off a stable base”). The two windows overlap on the last 3 years — intended, a mild recency tilt, not problematic double-counting. **Fallback:** if <5 yr of history, use the **3yr slope alone**; if **<3 yr, momentum is null** (not zero). Evidence: of 27 panel sources, 26 have ≥3 yr median history in the recent window and 24 have ≥5 yr — so the 3-obs floor nulls only EPI (2 yr); short panels (CIVICUS, TFI at ~3 yr) get a 3yr-only slope with a low-confidence flag rather than being dropped.
+- **Units.** Slopes are computed on the **fixed-baseline normalized** values (§5), so magnitude is in **normalized SD per year** — comparable across metrics on different raw scales, and consistent with the level scores (same reference).
+- **Breadth min-count.** Net-diffusion breadth is reported only where a concept has **≥3 panel-backed, momentum-capable metrics**; below that, **magnitude-only, breadth null** (with 2 metrics, “share improving − share deteriorating” is near-binary noise). Mirrors the §6 <3-indicator thinness logic.
+- **Dead-band [SPEC PENDING — calibrate at Step 4].** The threshold below which a per-metric slope counts as “flat” (neither improving nor deteriorating, so it doesn't move breadth) is **not set now** — there is no slope distribution to read it off until scores exist. Set at Step 4 from the realized distribution of metric slopes (place the flat-band where trivial drift clusters). Until then, breadth treats any non-zero slope as directional.
+- **Breadth weighting.** Breadth is an **unweighted** share across a concept's momentum-capable metrics (each metric one vote: improving / flat / deteriorating); magnitude is tier-weighted (§6). Rationale: breadth measures *how broad-based* a move is — an equal vote per metric is the honest diffusion signal; tier-weighting it would conflate breadth with magnitude.
 
 ## 10. Deferred / open design questions (register)
 
@@ -137,5 +175,17 @@ Resolved during Step-1 metric selection, concept-by-concept. Authoritative per-s
 - **Cross-cutting** — WGI standard errors (optional ranking-confidence enhancement); WDI WBL/HCI/social-protection sparse recent coverage (investigate at harmonization); SPI-overall sparser than pillar-1 (flag); GTD/BCI currency verification.
 
 ## Changelog
+
+**2026-07-10 (Step 0.5)** — Momentum params LOCKED (§9): magnitude = blended trailing 5yr+3yr slope (3yr-only if <5yr, null if <3yr) on fixed-baseline normalized values (SD/yr); breadth = unweighted net-diffusion, reported only at ≥3 panel-backed metrics; dead-band deferred to Step 4 (no slope distribution yet). Evidence: 26/27 panel sources have ≥3yr history. **Step 0.5 parameter locks COMPLETE** (inclusion, D7, D4, D5, momentum).
+
+**2026-07-10 (Step 0.5)** — D5 within-concept weights LOCKED (§6): P1=1.0 / P2=0.5 / Sp=0 (supplementary tracked, in evidentiary layer + momentum-breadth, not scored by default); no auto-promotion; weight-review trigger = concept with <3 present P1+P2 indicators → qualitative review at Step 1 (cross-linked to §8 reliability flag); per-indicator×concept assignments at Step 1 with source-level `highest_tier` as prior. Values/threshold DEFAULT, revisit Step 4.
+
+**2026-07-10 (Step 0.5)** — D4 normalization LOCKED (§5): method-assignment rule (6 families, DEFAULT thresholds) proposes + flags for review, `method_source` audit tag; fixed-pooled baseline over trailing 20-yr window (levels/history/momentum consistent); ceiling-piled bounded indicators and bimodal indices kept z-score; per-metric REVIEW overrides (~35) deferred to Step 1; baseline-provenance vars (`baseline_n_years`, `baseline_n_obs`, `baseline_year_span`) carried per normalized row. Evidence: `metric_distribution_profile.csv`.
+
+**2026-07-10 (Step 0.5)** — D7 reliability/coverage LOCKED (§8): no per-country floor (every sovereign has ≥84 metrics; thin tail is exclusively territories); reliability flag operates per-concept-score; min-to-score ≥1 present indicator; low-confidence flag at <50% of a concept's included indicators present — marked DEFAULT, not evidence-forced, revisit at Step 4. Evidence: `country_coverage.csv`.
+
+**2026-07-10 (Step 0.5)** — Metric inclusion rule LOCKED (§4): recency window 4 yr for annual sources; cadence-relative for snapshot/irregular; denominator = 192 sovereigns; threshold ≥60% current-coverage; sub-threshold flagged for Step-1 review, never auto-dropped. 246/255 annual metrics clear. Evidence: `metric_coverage.csv`.
+
+**2026-07-10** — Step-0 harmonization + spine COMPLETE (nb 39, `src/country_harmonization.py`, `country_spine.csv`). D2 revised: population floor removed (“include everything”); spine = 213 economies, 21 territories flagged. Powell-Thyne COW/GW coding confirmed and mapped; UCDP/DPI live-country name misses fixed (Russia, Germany, China, UAE recovered). Per-metric current-coverage table generated (459 metrics; 60 under 60% flagged for Step-1 inclusion review). Next: lock D4–D7 + inclusion/momentum parameters at Step 0.5 against this evidence.
 
 **2026-07-09** — Document created. Seeds the metric-pass methodology from the Step-0 design decisions: architecture (D1), spine (D2), directionality (D3), inclusion principle, and the D4–D7 + momentum specifications at their current lock status. Follows the Step-0 harmonization/coverage audit.
