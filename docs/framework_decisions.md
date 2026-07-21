@@ -169,6 +169,12 @@ Initial extraction captured tightening/loosening action counts + net + LTV_avera
 
 ---
 
+### C12 (Environmental & climate governance) — source decisions (2026-07-21)
+Decided in working session. C12 is assessed through a **governance lens** (climate is one angle from which to assess how a country is governed), not a climate-outcomes lens.
+- **ASCOR (TPI/LSE) — ADD.** Investor-led sovereign climate-*policy* assessment (climate legislation, carbon pricing, targets, just transition) — strong governance-lens fit and purpose-built for sovereign-bond investors. Coverage ~85 countries (2025), oriented to sovereign-bond-index (EM/frontier) countries; free/open-source. **Tier (P1 vs P2) to be set at Step-1 metric selection by its developing-country coverage overlap with the spine** (EM/frontier depth is what matters, not headline count). Sourcing pending (scout + build).
+- **ND-GAIN — DROP from C12 scoring** (reverses an earlier "use readiness not governance" note). Under the governance lens, ND-GAIN *readiness* (economic + social) is **fundamentally an adaptive-capacity / development measure** (wealth, infrastructure, education) where governance is at most a weak distal factor — it fails construct validity for governance, not merely on wealth-correlation. ND-GAIN *governance readiness* is WGI-repackaged (double-counts C4/C14/C18). ND-GAIN *vulnerability* is physical exposure, not governance. Vulnerability may be retained only as unscored context, if at all.
+- **EPI — decompose at Step 1:** use policy/governance-relevant sub-components, not pure environmental-outcome sub-components (e.g. air-quality levels driven by geography/industry mix). (See existing EPI cross-sectional note.)
+
 ### WB Carbon — national-only, with intensive/extensive EU split
 Rebuilt from the World Bank Carbon Pricing Dashboard (month-stamped xlsx, auto-detected) to replace the prior OWID binary existence flag, per the master PDF's "existence AND design" requirement. Measures: existence flag, carbon price (US$/tCO2e, panel), revenue (US$m, panel), jurisdictional emissions coverage % (current snapshot).
 
@@ -455,6 +461,13 @@ _Verified 2026-06-24. Reconciles each concept's primary sources against actual p
 
 
 ## Outstanding Decisions
+
+### Metric-selection principle: construct validity (process AND outcomes) [recorded 2026-07-21]
+For the Step-1 metric-selection pass, across all concepts:
+- **Process and outcome indicators are both wanted.** Outcomes often proxy governance *better* than process, because process measures (laws/institutions on paper) frequently do not reflect how a country is actually governed. Do not prefer process over outcomes.
+- **The test is construct validity:** does the indicator signal *governance quality*? Keep governance-signaling outcomes even when they also partly reflect development (e.g. service delivery) — flag the mixed ones, don't exclude them.
+- **Wealth-correlation is NOT an exclusion criterion.** Governance and development are inherently correlated (good governance produces development; development enables governance), so nearly all good governance indicators correlate with wealth. Filtering on wealth-correlation would discard valid signal. Income-loading is handled downstream, once, by the planned wealth-adjustment layer — not by selection filtering.
+- **Bar for exclusion is high and specific:** exclude only where an indicator is *fundamentally* measuring something other than governance (e.g. ND-GAIN readiness = adaptive/development capacity), with governance at most a weak distal cause. When genuinely ambiguous, **include** (possibly flagged / lower-tier) — a noisy governance proxy beats discarded signal, given the absence of clean direct governance measures.
 
 **Licence audit before production (framework-wide).** IPU Parline surfaced a real issue: its data is free but **CC BY-NC-SA (non-commercial)**, conflicting with the framework's commercial/investment purpose — so it was dropped. Other sources may carry similar non-commercial or share-alike terms. A deliberate per-source licence audit (commercial-use permissibility, attribution/share-alike obligations) should run before production. Noted consideration, not yet a scheduled task.
 
