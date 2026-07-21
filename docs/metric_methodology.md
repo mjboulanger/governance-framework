@@ -107,13 +107,24 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 
 **Tier assignments are per-indicator × concept, produced at Step-1 metric selection** (assigning each selected indicator P1/P2/Sp *for that concept* is part of the selection act itself). The **starting prior** is `source_registry.highest_tier` (P1/P2/Sp), but note that field is **source-level** (“highest” tier across all of a source’s uses) — it is refined to the indicator×concept level at Step 1, because a source can be primary for one concept and supplementary for another (e.g. V-Dem is a P1 workhorse for democracy concepts, a supporting measure elsewhere). The registry field is a prior, not the scoring weight.
 
-## 7. Category & framework weighting (D6) [OPEN]
+## 7. Category & framework weighting (D6) [LOCKED — 2026-07-21; Step-1 parameters pending]
 
-**Intended basis [committed in master]:** weighting at category and framework levels uses the per-concept **economic-relevance annotations** (Very strong / Strong / Moderate / Thin).
+**Category → framework: the 5 categories are equal-weighted.** The single framework composite remains optional/caveated (§1).
 
-**Blocker:** annotations exist for concepts 1–9 but are **missing for Concept 11 (Trade) and Concept 12 (Environmental)** — complete before this locks.
+**Concept → category: effective weight = relevance × measurement-quality.** Two orthogonal concept-level weights, multiplied:
 
-**Open sub-decisions:** how ordinal annotations map to numeric weights; whether across-category weighting is relevance-based or equal (lean: concept→category by relevance; category→framework with caution — see §1, single composite optional/caveated).
+- **Relevance [LOCKED — DEFAULT].** Equal within category, except **Concept 11 (Trade) and Concept 12 (Environmental) at 0.5**. Decided directly in working session 2026-07-21. The four-level annotation exercise (Very strong / Strong / Moderate / Thin) was **superseded** — relevance was expressed directly as weights, the two half-weights being the implicit low-relevance judgment; the annotation worksheet is retired. Values are a judgment DEFAULT, not evidence-forced — revisit if evidence or use argues otherwise.
+- **Measurement-quality [mechanism LOCKED; values at Step 1].** A coarse multiplier (**1.0 / 0.75 / 0.5**) down-weighting concepts that are *inherently thinly measured for all countries* (e.g. financial-sector supervisory effectiveness: de jure sources only, no effectiveness measure). Orthogonal to relevance (matters vs measurable) and to the per-country reliability flag (§8). Deliberately coarse and conservative so hard-to-measure but institutionally deep dimensions are nudged, not gutted. Per-concept values set at Step-1 metric selection, when final indicator sets exist. *Compounding caution:* C11/C12 already carry half relevance — their measurement-quality multipliers must be set deliberately at Step 1 so the product does not unintentionally near-zero them.
+
+**Missingness penalty [mechanism LOCKED — 2026-07-21; parameters at Step 1].** Pure renormalization (§6) is too lenient on its own: a country scored from 1 of 4 indicators gets a confident-looking number it did not earn. Absence of measurement can itself be governance signal — but only sometimes. Mechanism:
+
+- **Ordering: renormalize, then penalize.** §6 renormalization computes the concept score from present indicators; the missingness adjustment is then applied on top as a separate sequential step — two composing mechanisms, each auditable, never blended into one operation.
+- **Latest slice only.** The penalty applies to the current-state scoring cross-section only; **historical panel values are never penalized** (a fabricated low back-year would corrupt trajectories and manufacture fake momentum, §9).
+- **Per-source endogeneity tag [set at Step 1]:** missingness is **endogenous** where producing the data requires state capacity or cooperation (PEFA, RTI, statistical-capacity-type sources — absence plausibly reflects weak governance) and **exogenous** where gaps are collection/scope-driven (WJP, Fraser, CBI skipping microstates — absence reflects smallness, not governance).
+- **Penalty regimes:** clear-endogenous → full sliding penalty, flooring at the **lowest actually-scored country's value** on that concept. Ambiguous → **default-to-penalize but capped partial penalty**, well short of the floor — the ambiguous zone is disproportionately small/poor countries, where a full penalty would over-handicap on the weakest justification. Clear-exogenous → **no penalty** (renormalize only).
+- Penalty curve and cap set at Step 1 alongside the endogeneity tags.
+
+**Per-country reliability flag (§8) unchanged:** display-only metadata, never attenuates a score — attenuation would double-count §6 renormalization.
 
 ## 8. Reliability & coverage (D7) [LOCKED — 2026-07-10]
 
@@ -175,6 +186,8 @@ Resolved during Step-1 metric selection, concept-by-concept. Authoritative per-s
 - **Cross-cutting** — WGI standard errors (optional ranking-confidence enhancement); WDI WBL/HCI/social-protection sparse recent coverage (investigate at harmonization); SPI-overall sparser than pillar-1 (flag); GTD/BCI currency verification.
 
 ## Changelog
+
+**2026-07-21** — D6 LOCKED (§7) + missingness-penalty mechanism: categories equal-weighted; concept weight = relevance × measurement-quality (relevance equal with C11/C12 at 0.5, DEFAULT; MQ multiplier 1.0/0.75/0.5, values at Step 1); missingness penalty — latest slice only, renormalize-then-penalize, per-source endogenous/exogenous tags, full / capped-partial / no-penalty regimes (parameters at Step 1); relevance-annotation exercise superseded, worksheet retired; §8 flag stays display-only.
 
 **2026-07-10 (Step 0.5)** — Momentum params LOCKED (§9): magnitude = blended trailing 5yr+3yr slope (3yr-only if <5yr, null if <3yr) on fixed-baseline normalized values (SD/yr); breadth = unweighted net-diffusion, reported only at ≥3 panel-backed metrics; dead-band deferred to Step 4 (no slope distribution yet). Evidence: 26/27 panel sources have ≥3yr history. **Step 0.5 parameter locks COMPLETE** (inclusion, D7, D4, D5, momentum).
 
