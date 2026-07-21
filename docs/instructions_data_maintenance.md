@@ -40,12 +40,29 @@ This document contains instructions for setting up the project on a new machine,
 6. Register the Jupyter kernel:
    `python -m ipykernel install --user --name governance-framework --display-name "governance-framework"`
 
-7. **Windows only — set `SSL_CERT_FILE`** so Python uses the certifi CA bundle instead of the Windows certificate store. A malformed entry in the Windows store breaks Python's bulk cert load under OpenSSL 3.x (`ssl.SSLError: [ASN1: NOT_ENOUGH_DATA]`), which blocks JupyterLab and all HTTPS calls. Set it permanently:
+7. **Windows only — SSL / certificate fix** (`sitecustomize.py`). Under OpenSSL 3.0.21+ Python crashes with `ssl.SSLError: [ASN1: NOT_ENOUGH_DATA]` when loading the Windows cert store, which blocks JupyterLab and all HTTPS calls (full cause in the troubleshooting note under **Notes**). Create a `sitecustomize.py` in the env's site-packages so Python loads CA certs from certifi via the working `cafile=` path:
    ```powershell
    python -c "import certifi; print(certifi.where())"
-   setx SSL_CERT_FILE "<paste-the-path-printed-above>"
+   notepad "$env:CONDA_PREFIX\Lib\site-packages\sitecustomize.py"
    ```
-   Close and reopen the Anaconda Prompt (setx only affects new windows). Verify: `python -c "import ssl; ssl.create_default_context(); print('SSL OK')"` should print `SSL OK`. (Not needed on Mac.)
+   Paste this, save, close:
+   ```python
+   # CPython #151504 workaround: OpenSSL 3.0.21+ breaks Windows-store cert load via cadata=.
+   # Load CA certs from certifi via the working cafile= path instead. Full verification preserved.
+   import ssl as _ssl
+   import certifi as _certifi
+   _orig = _ssl.SSLContext.load_default_certs
+   def _load_default_certs(self, purpose=_ssl.Purpose.SERVER_AUTH):
+       try:
+           self.load_verify_locations(cafile=_certifi.where())
+       except Exception:
+           try: _orig(self, purpose)
+           except Exception: pass
+   _ssl.SSLContext.load_default_certs = _load_default_certs
+   ```
+   Verify: `python -c "import ssl; ssl.create_default_context(); print('SSL OK')"` should print `SSL OK`. Auto-loads every session, survives restarts, no admin needed. Remove the file once CPython/conda ship the upstream fix. (Not needed on Mac unless the same error appears — see Notes.)
+
+   *Prior approach (still relevant for OTHER SSL errors, but does NOT fix this one):* setting `SSL_CERT_FILE` to the certifi path (`setx SSL_CERT_FILE "<certifi-path>"`, new window) points cert-consuming libraries (requests, urllib3) at certifi and resolves cert-source problems there. It does **not** fix the `create_default_context` / JupyterLab crash, because `load_default_certs()` reads the Windows store regardless of `SSL_CERT_FILE`. Keep it as a first thing to try for SSL errors that are *not* the `ASN1: NOT_ENOUGH_DATA` / `create_default_context` failure.
 
 8. Launch JupyterLab: `jupyter lab`
 
@@ -54,6 +71,7 @@ This document contains instructions for setting up the project on a new machine,
 - `data/raw/` is not tracked by git — re-run pipelines to regenerate
 - `data/processed/` is tracked by git and available immediately after cloning
 - GitHub is the sync mechanism between machines. Keep the project OUTSIDE OneDrive (git corruption risk)
+- **SSL `ASN1: NOT_ENOUGH_DATA` troubleshooting (env fix in setup step 7).** Symptom: `jupyter lab` or any HTTPS call crashes with `ssl.SSLError: [ASN1: NOT_ENOUGH_DATA]`, traceback ending in `_load_windows_store_certs` → `load_verify_locations(cadata=certs)` inside `create_default_context()`. **Cause (confirmed):** CPython bug #151504 — OpenSSL 3.0.21+ (CVE-2026-34180 ASN.1 hardening) changed the internal code returned at end-of-cert-buffer; Python's `_ssl` treats that normal end-of-buffer as fatal, breaking the Windows-store load (passed as `cadata=` bytes). **Not** a corrupt certificate and **not** a conda problem. Downgrading OpenSSL does **not** help (both 3.5.x and 3.6.x carry the change). The `cafile=` path is unaffected — only `cadata=` (the Windows-store path) is broken; that is why the step-7 `sitecustomize.py` (forcing `cafile=`) resolves it. **Cross-machine caveat (honest limits):** the underlying bug is cross-platform (any Python built against OpenSSL 3.0.21+), but it manifests through `_load_windows_store_certs`, the **Windows** cert path. macOS/Linux use different default-cert mechanisms, so whether the Mac env hits the *same* crash is **unverified as of 2026-07-21** — it may not, or may fail differently. If the Mac (or any machine) shows the same error, the same `sitecustomize.py` applies (the override is generic), path adjusted to that env's site-packages. If no SSL error appears there, no action needed. First encountered and fixed on the Windows PC, 2026-07-21.
 
 ---
 
