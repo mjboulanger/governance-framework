@@ -496,6 +496,11 @@ _Verified 2026-06-24. Reconciles each concept's primary sources against actual p
 
 ## Outstanding Decisions
 
+### Reference-class distortion in normalization [recorded 2026-07-22]
+Distributional normalization (z, log-z, percentile) scores a country against the reference distribution of **whichever countries happen to be measured**. Where an indicator has **non-random coverage**, that reference class is unrepresentative and the resulting scores are distorted in the direction of the coverage skew. Worked example: ASCOR is advanced-economy-skewed (85 countries, 50 high-income), so a typical EM z-scores about 0.05 lower on a 0-1 scale than it would against a representative reference class - i.e. being *measured* becomes a disadvantage relative to being omitted. **PEFA runs the opposite way** (donor-driven, developing-heavy), so a developing country may score better against PEFA-s reference class than it would globally. Same mechanism, inverted sign.
+
+**Step-1 check, per indicator:** is coverage plausibly representative of the 192-sovereign core? If not, prefer an **absolute / fixed-anchor** scoring where the data admits one (categorical Yes/No data, bounded indices with theoretical anchors) - see metric_methodology.md S5 fixed-anchor family. Where only distributional normalization is possible, record the skew direction as a known limitation of that metric.
+
 ### Metric-selection principle: construct validity (process AND outcomes) [recorded 2026-07-21]
 For the Step-1 metric-selection pass, across all concepts:
 - **Process and outcome indicators are both wanted.** Outcomes often proxy governance *better* than process, because process measures (laws/institutions on paper) frequently do not reflect how a country is actually governed. Do not prefer process over outcomes.
