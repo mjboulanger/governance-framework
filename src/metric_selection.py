@@ -31,7 +31,8 @@ D = [
  dict(m="fraser_regulation",            s="FRASER_REG",     d="+", at=[(6,"P2")]),
  dict(m="fraser_legal_system",          s="FRASER_LEGAL",   d="+", at=[(17,"P2")]),
  dict(m="wdi_hci_plus_overall",         s="WB_HCI",         d="+", at=[(5,"P2")]),
- dict(m="hanson_sigman_state_capacity", s="HANSON_SIGMAN",  d="+", at=[(13,"Sp")]),
+ dict(m="hanson_sigman_state_capacity", s="HANSON_SIGMAN",  d="", at=[],
+      why="RECENCY FAIL: 0.0% current sovereign coverage (series ends 2015); named as a dead tail in metric_methodology S4"),
  dict(m="irena_renewables_share_pct",   s="IRENA_CAPACITY", d="+", at=[(12,"P1")]),
  dict(m="bci_corruption_index",         s="BCI",            d="-", at=[(18,"P2")], note="direction verified: Finland -3.5 low, Guinea-Bissau 78.9 high"),
  dict(m="gpi_peace_index",              s="GPI",            d="-", at=[(2,"P2"),(16,"P2")]),
@@ -62,12 +63,12 @@ D = [
 
  # ---- combined metrics (derived in scoring pipeline) ----
  dict(m="pts_index", s="PTS", d="-", at=[(16,"P1"),(22,"P2")], derive="mean of pts_amnesty, pts_hrw, pts_statedept where present",
-      note="no coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity"),
+      note="coverage 97.9% via State Dept (union of available coders, NOT min). No coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity"),
  dict(m="pts_amnesty",    s="PTS", d="", at=[], why="component of pts_index"),
  dict(m="pts_hrw",        s="PTS", d="", at=[], why="component of pts_index"),
  dict(m="pts_statedept",  s="PTS", d="", at=[], why="component of pts_index"),
- dict(m="wb_informal_economy", s="WB_INFORMAL", d="-", at=[(13,"P2")], derive="mean of dge and mimic estimates",
-      note="methods agree, r=0.969"),
+ dict(m="wb_informal_economy", s="WB_INFORMAL", d="", at=[],
+      why="RECENCY FAIL: both dge and mimic at 0.0% current sovereign coverage (series ends 2020); named as a dead tail in metric_methodology S4"),
  dict(m="wb_informal_economy_dge",   s="WB_INFORMAL", d="", at=[], why="component of wb_informal_economy"),
  dict(m="wb_informal_economy_mimic", s="WB_INFORMAL", d="", at=[], why="component of wb_informal_economy"),
 
@@ -230,3 +231,54 @@ PENDING += [
  "MASTER: C22 row lists phantom 'v2clpriv' alongside real 'v2x_clpriv' - remove",
 ]
 
+
+
+PENDING += [
+ "COVERAGE RULE: derived metrics inherit UNION coverage when mean-of-available, MIN when product/ratio",
+ "SCOUT: QoG Expert Survey (C4) - coverage ~70% clears the locked 60% bar; open question is recency (wave-based, latest round year unknown)",
+ "SCOUT: ILO social security (C13) - audit marks unexamined; C13 now down to 3 metrics from 2 sources",
+]
+
+
+# =====================================================================
+# WJP block (8 factors). Appended 2026-07-23.
+# DIRECTION VERIFIED vs the WGI 6-dim composite (n=143, latest yr 2025):
+# all 8 positive, r = +0.803 to +0.930 - the strongest-correlating block so far.
+# COVERAGE: 142 of 192 sovereigns (74%). Clears the locked 60% bar, and
+# metric_methodology S4 names "WJP factors 74.0%" as a confirmed rescue. But it
+# is the thinnest major source in the framework and its exclusions are NOT random
+# (small states and closed regimes under-represented) - reference-class caveat
+# applies wherever WJP carries significant concept weight.
+# All placements doc-anchored except the C4 call, which the master explicitly
+# deferred here ("Borderline - keep for metric pass ... need to disambiguate").
+# =====================================================================
+_WJP = {
+ "wjp_f2_absence_corruption":     [(18, "P1")],
+ "wjp_f3_open_government":        [(14, "P1"), (25, "P1")],
+ "wjp_f4_fundamental_rights":     [(14, "P1")],
+ "wjp_f5_order_security":         [(16, "P1"), (2, "P2")],
+ "wjp_f6_regulatory_enforcement": [(6, "P1"), (4, "P2")],
+ "wjp_f6_5_no_expropriation":     [(17, "P1")],
+ "wjp_f7_civil_justice":          [(15, "P1")],
+ "wjp_f8_criminal_justice":       [(15, "P1")],
+}
+
+_WNOTE = {
+ "wjp_f6_regulatory_enforcement":
+   "C4 disambiguation resolved: P1 in C6 (tightest construct fit - the factor IS regulatory enforcement), "
+   "P2 in C4 (sub-factors 6.3/6.4 cover administrative-procedure quality). Follows the established WJP "
+   "pattern (F5 = P1 C16 / P2 C2; F3 = P1 both C14 and C25). Only the aggregate is extracted, so a clean "
+   "6.1-6.4 split is not available",
+ "wjp_f6_5_no_expropriation":
+   "sub-component pulled specifically for C17; full Factor 6 stays in C6",
+ "wjp_f3_open_government":
+   "P1 in both C14 and C25 per master; repetition tracked under principle 5",
+}
+
+D += [dict(m=_k, s="WJP", d="+", at=_v, note=_WNOTE.get(_k, ""))
+      for _k, _v in _WJP.items()]
+
+PENDING += [
+ "WJP reference-class: 74% sovereign coverage, non-random exclusions (small states, closed regimes) - "
+ "record as a known limitation for C6/C14/C15/C16/C17/C18/C25",
+]

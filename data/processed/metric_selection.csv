@@ -14,7 +14,7 @@ fraser_trade_freedom,HERITAGE_TR,+,,Fraser Area 4; supersedes Heritage Trade Fre
 fraser_regulation,FRASER_REG,+,,,6,P2,True,
 fraser_legal_system,FRASER_LEGAL,+,,,17,P2,True,
 wdi_hci_plus_overall,WB_HCI,+,,,5,P2,True,
-hanson_sigman_state_capacity,HANSON_SIGMAN,+,,,13,Sp,True,
+hanson_sigman_state_capacity,HANSON_SIGMAN,,,,,,False,RECENCY FAIL: 0.0% current sovereign coverage (series ends 2015); named as a dead tail in metric_methodology S4
 irena_renewables_share_pct,IRENA_CAPACITY,+,,,12,P1,True,
 bci_corruption_index,BCI,-,,"direction verified: Finland -3.5 low, Guinea-Bissau 78.9 high",18,P2,True,
 gpi_peace_index,GPI,-,,,2,P2,True,
@@ -45,12 +45,12 @@ polity5_regime_durability,POLITY5,,,,,,False,RECENCY FAIL: series ends 2018
 kof_economic_globalisation,KOF_TRADE,,,,,,False,source closed; C11 proxy abandoned
 nd_gain_readiness,ND_GAIN,,,,,,False,source dropped 2026-07-22 on construct validity (capacity not governance)
 nd_gain_governance_readiness,ND_GAIN,,,,,,False,source dropped 2026-07-22; WGI-repackaged
-pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present",no coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity,16,P1,True,
-pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present",no coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity,22,P2,True,
+pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present","coverage 97.9% via State Dept (union of available coders, NOT min). No coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity",16,P1,True,
+pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present","coverage 97.9% via State Dept (union of available coders, NOT min). No coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity",22,P2,True,
 pts_amnesty,PTS,,,,,,False,component of pts_index
 pts_hrw,PTS,,,,,,False,component of pts_index
 pts_statedept,PTS,,,,,,False,component of pts_index
-wb_informal_economy,WB_INFORMAL,-,mean of dge and mimic estimates,"methods agree, r=0.969",13,P2,True,
+wb_informal_economy,WB_INFORMAL,,,,,,False,RECENCY FAIL: both dge and mimic at 0.0% current sovereign coverage (series ends 2020); named as a dead tail in metric_methodology S4
 wb_informal_economy_dge,WB_INFORMAL,,,,,,False,component of wb_informal_economy
 wb_informal_economy_mimic,WB_INFORMAL,,,,,,False,component of wb_informal_economy
 fsi_c1_security_apparatus,FSI,-,,,13,P1,True,
@@ -168,3 +168,14 @@ v2csprtcpt,VDEM,+,,,24,P1,True,
 vdem_regime_duration,VDEM,+,"years since v2x_regime last changed, computed from the panel",master specifies regime DURATION via V-Dem's own classification; raw type is not a quality ordering,2,P1,True,
 v2x_regime,VDEM,,,,,,False,regime TYPE is a classification not a quality ordering; input to vdem_regime_duration
 v2x_horacc,VDEM,,,,,,False,"aggregate of components already scored (r=+0.976 with v2xlg_legcon, +0.86 with judicial family) and spans C19/C15 which the framework deliberately separated; category cross-check for Accountability (horizontal)"
+wjp_f2_absence_corruption,WJP,+,,,18,P1,True,
+wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,14,P1,True,
+wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,25,P1,True,
+wjp_f4_fundamental_rights,WJP,+,,,14,P1,True,
+wjp_f5_order_security,WJP,+,,,16,P1,True,
+wjp_f5_order_security,WJP,+,,,2,P2,True,
+wjp_f6_regulatory_enforcement,WJP,+,,"C4 disambiguation resolved: P1 in C6 (tightest construct fit - the factor IS regulatory enforcement), P2 in C4 (sub-factors 6.3/6.4 cover administrative-procedure quality). Follows the established WJP pattern (F5 = P1 C16 / P2 C2; F3 = P1 both C14 and C25). Only the aggregate is extracted, so a clean 6.1-6.4 split is not available",6,P1,True,
+wjp_f6_regulatory_enforcement,WJP,+,,"C4 disambiguation resolved: P1 in C6 (tightest construct fit - the factor IS regulatory enforcement), P2 in C4 (sub-factors 6.3/6.4 cover administrative-procedure quality). Follows the established WJP pattern (F5 = P1 C16 / P2 C2; F3 = P1 both C14 and C25). Only the aggregate is extracted, so a clean 6.1-6.4 split is not available",4,P2,True,
+wjp_f6_5_no_expropriation,WJP,+,,sub-component pulled specifically for C17; full Factor 6 stays in C6,17,P1,True,
+wjp_f7_civil_justice,WJP,+,,,15,P1,True,
+wjp_f8_criminal_justice,WJP,+,,,15,P1,True,
