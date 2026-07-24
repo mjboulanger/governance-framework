@@ -274,3 +274,115 @@ Sanctions & Protections,RTI_RATING,,,,,,False,component of rti_total
 Promotional Measures,RTI_RATING,,,,,,False,component of rti_total
 has_rti_law,RTI_RATING,,,,,,False,"metadata flag (142 law / 54 floored), not a score - feeds the S8 reliability layer so a floored no-law country carries that context rather than reading as measured-and-failed"
 rti_law_year,RTI_RATING,,,,,,False,"metadata - year the FOI law was enacted, not a governance score"
+fatf_effectiveness,FATF,+,"mean of the 11 Immediate Outcome numeric scores (IO1_num..IO11_num), 0-3","DE FACTO AML/CFT effectiveness - rare cross-country effectiveness measure. P1 (overweighted vs compliance): scarcer signal AND better discrimination (SD 0.58). Weakest globally on IO7 (ML prosecution), IO5 (legal-persons transparency), IO11 (TF sanctions) - the enforcement leg",9,P1,True,
+fatf_technical_compliance,FATF,+,"mean of the 40 Recommendation numeric scores (R1_num..R40_num), 0-3","DE JURE framework quality (FATF-standard compliance = laws on the books, not real-world compliance). P2 not P1: de jure discount + near-constant (mean 2.05, SD 0.37) so low discrimination. Corr 0.547 with effectiveness",9,P2,True,
+R1_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R2_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R3_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R4_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R5_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R6_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R7_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R8_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R9_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R10_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R11_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R12_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R13_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R14_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R15_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R16_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R17_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R18_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R19_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R20_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R21_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R22_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R23_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R24_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R25_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R26_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R27_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R28_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R29_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R30_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R31_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R32_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R33_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R34_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R35_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R36_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R37_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R38_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R39_num,FATF,+,,,,,False,component of fatf_technical_compliance
+R40_num,FATF,+,,,,,False,component of fatf_technical_compliance
+IO1_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO2_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO3_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO4_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO5_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO6_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO7_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO8_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO9_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO10_num,FATF,+,,,,,False,component of fatf_effectiveness
+IO11_num,FATF,+,,,,,False,component of fatf_effectiveness
+R1,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R2,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R3,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R4,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R5,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R6,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R7,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R8,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R9,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R10,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R11,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R12,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R13,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R14,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R15,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R16,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R17,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R18,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R19,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R20,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R21,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R22,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R23,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R24,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R25,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R26,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R27,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R28,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R29,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R30,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R31,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R32,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R33,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R34,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R35,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R36,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R37,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R38,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R39,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+R40,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO1,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO2,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO3,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO4,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO5,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO6,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO7,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO8,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO9,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO10,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+IO11,FATF,,,,,,False,raw letter grade; scored via the _num encoding
+iso3,FATF,,,,,,False,"identifier/metadata, not a governance score"
+jurisdiction,FATF,,,,,,False,"identifier/metadata, not a governance score"
+methodology_round,FATF,,,,,,False,"identifier/metadata, not a governance score"
+report_type,FATF,,,,,,False,"identifier/metadata, not a governance score"
+report_date,FATF,,,,,,False,"identifier/metadata, not a governance score"
+assessment_body,FATF,,,,,,False,"identifier/metadata, not a governance score"
+n_upgrades,FATF,,,,,,False,"identifier/metadata, not a governance score"
+n_downgrades,FATF,,,,,,False,"identifier/metadata, not a governance score"

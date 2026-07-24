@@ -558,3 +558,61 @@ D += [
       why="metadata flag (142 law / 54 floored), not a score - feeds the S8 reliability layer so a floored no-law country carries that context rather than reading as measured-and-failed"),
  dict(m="rti_law_year", s="RTI_RATING", d="", at=[], why="metadata - year the FOI law was enacted, not a governance score"),
 ]
+
+
+# =====================================================================
+# FATF block (110 columns -> 2 scored composites). Appended 2026-07-23.
+# FATF Mutual Evaluations: intergovernmental AML/CFT audit, 199 countries, one row per
+# country (newer methodology round wins: 192 on the 2013/4th round, 7 on 2022/5th).
+# Two grading axes, each item 0-3, both at 100% coverage (all 11 IOs and ~40 Recs
+# present for all 199 - no missingness, no penalty):
+#   TECHNICAL COMPLIANCE (40 Recommendations, C/LC/PC/NC) = DE JURE. "Compliance" here
+#     means compliance with the FATF STANDARD (are the required laws on the books),
+#     NOT real-world compliance. Assessors read statutes. Faint de facto bleed (does the
+#     agency exist) but essentially rules-on-paper.
+#   EFFECTIVENESS (11 Immediate Outcomes, HE/SE/ME/LE) = DE FACTO. FATF built the IOs
+#     precisely because countries passed on paper and failed in practice - they measure
+#     whether laundering is actually detected, prosecuted, disrupted. One of the very few
+#     genuine cross-country EFFECTIVENESS measures in the whole framework.
+# THE GAP IS HUGE AND IS THE POINT: technical compliance averages 2.05/3, effectiveness
+# 0.83/3 - nearly everyone has the laws, almost nobody achieves enforcement. Corr between
+# the two axes = 0.547, so they genuinely diverge; the split is not symbolic.
+# OVERWEIGHT EFFECTIVENESS VIA TIER (recorded weighting decision): effectiveness P1,
+# technical compliance P2. Justified twice over - (a) de facto is the scarcer, more
+# decision-relevant signal, (b) technical compliance barely discriminates (SD 0.37 vs
+# 0.58), a near-constant that would not earn P1 regardless of construct.
+# COLLAPSE: 102 R/IO columns = 51 items x (raw grade + numeric 0-3). Score the numeric,
+# drop the raw. Then 51 items -> 2 composites (de jure/de facto), not scored individually
+# (51 metrics in one concept is absurd) and not 1 (would destroy the axis that is FATF's
+# most valuable feature).
+# =====================================================================
+import re as _re
+_F = open('data/processed/fatf_clean.csv').readline().strip().split(',')
+_REC_NUM = [c for c in _F if _re.match(r'^R\d+_num$', c)]
+_IO_NUM  = [c for c in _F if _re.match(r'^IO\d+_num$', c)]
+_REC_RAW = [c for c in _F if _re.match(r'^R\d+$', c)]
+_IO_RAW  = [c for c in _F if _re.match(r'^IO\d+$', c)]
+
+D += [
+ dict(m="fatf_effectiveness", s="FATF", d="+", at=[(9, "P1")],
+      derive="mean of the 11 Immediate Outcome numeric scores (IO1_num..IO11_num), 0-3",
+      note="DE FACTO AML/CFT effectiveness - rare cross-country effectiveness measure. P1 (overweighted vs compliance): scarcer signal AND better discrimination (SD 0.58). Weakest globally on IO7 (ML prosecution), IO5 (legal-persons transparency), IO11 (TF sanctions) - the enforcement leg"),
+ dict(m="fatf_technical_compliance", s="FATF", d="+", at=[(9, "P2")],
+      derive="mean of the 40 Recommendation numeric scores (R1_num..R40_num), 0-3",
+      note="DE JURE framework quality (FATF-standard compliance = laws on the books, not real-world compliance). P2 not P1: de jure discount + near-constant (mean 2.05, SD 0.37) so low discrimination. Corr 0.547 with effectiveness"),
+]
+
+# 40 Rec numerics + 11 IO numerics: components of the two composites
+D += [dict(m=c, s="FATF", d="+", at=[], why="component of fatf_technical_compliance") for c in _REC_NUM]
+D += [dict(m=c, s="FATF", d="+", at=[], why="component of fatf_effectiveness") for c in _IO_NUM]
+# 51 raw letter-grade columns: superseded by the numeric encodings
+D += [dict(m=c, s="FATF", d="", at=[], why="raw letter grade; scored via the _num encoding") for c in (_REC_RAW + _IO_RAW)]
+# identifier / metadata columns
+for c in ["iso3", "jurisdiction", "methodology_round", "report_type", "report_date",
+          "assessment_body", "n_upgrades", "n_downgrades"]:
+    D += [dict(m=c, s="FATF", d="", at=[], why="identifier/metadata, not a governance score")]
+
+PENDING += [
+ "C9 Financial sector: FATF adds AML/CFT (de jure + de facto). With BRSS (banking prudential, de jure, Supplementary) the concept now has effectiveness signal - but SECURITIES and INSURANCE regulation remain uncovered, and supervisory effectiveness beyond AML awaits FSAP (PDF-locked, outstanding). State plainly in C9 output: measures AML/CFT + banking rules, NOT securities/insurance/broad supervisory effectiveness",
+ "C9 TIER DECISION now decidable with both sources in view: FATF Primary (covers the concept's core + the only effectiveness axis), BRSS Supplementary (de jure banking only). Confirm BRSS scoring next",
+]
