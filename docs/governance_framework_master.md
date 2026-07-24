@@ -681,7 +681,7 @@ The following sections cover all concepts in framework order. Each section provi
 | Source | Decision | Rationale / notes |
 |--------|----------|-------------------|
 | Freedom House Freedom in the World — Civil Liberties sub-categories D and G (disciplined extraction) | Primary tier 1 | D (Freedom of Expression and Belief), G (Personal Autonomy and Individual Rights). Direct fit with disciplined extraction. ~210 countries, annual. E reserved for Civil Society Space; F (Rule of Law) overlaps with Rule of Law cluster. |
-| V-Dem civil liberties indicators (v2x_civlib, v2x_clpriv, v2clrelig, v2clpriv, v2cldmovem/w, v2clsocgrp, v2clslavef) | Primary tier 1 | Multiple direct precise measures across civil liberties sub-dimensions. Workhorse. |
+| V-Dem civil liberties indicators (v2x_civlib, v2x_clpriv, v2clrelig, v2cldmovem/w, v2clsocgrp, v2clslavef) | Primary tier 1 | Multiple direct precise measures across civil liberties sub-dimensions. Workhorse. |
 | Pew Government Restrictions Index (GRI) and Social Hostilities Index (SHI) | Primary tier 2 | Religious freedom dimension specifically. ~200 countries, annual. Tier 2 rather than tier 1 because religious freedom is less central to political accountability than political expression/dissent (centrality principle). |
 | Political Terror Scale (PTS) | Primary tier 2 | State violence dimension — state political imprisonment etc. as civil liberties violations. Also primary in Personal Security (repetition tracked, not prohibited). |
 | World Bank Women, Business and the Law | Primary tier 2 | Gender equality dimension. 190 countries, annual. Direct legal protections measurement. High S/N. |

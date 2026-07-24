@@ -163,3 +163,70 @@ def to_rows():
             rows.append(dict(base, concept_id="", tier="", include=False,
                              exclude_reason=e.get("why", "")))
     return rows
+# =====================================================================
+# V-Dem block (66 variables). Appended 2026-07-23.
+# DIRECTION VERIFIED EMPIRICALLY vs the WGI 6-dimension composite (n=176,
+# latest year): 65 of 66 correlate POSITIVELY (+0.338 to +0.871). Only the
+# constructed index v2x_corr is reverse-coded (-0.880).
+# IMPORTANT: V-Dem's individual corruption ITEMS are coded higher = LESS
+# corrupt (v2excrptps +0.871, v2jucorrdc +0.843, v2exembez +0.821,
+# v2lgcrrpt +0.772) - OPPOSITE to the v2x_corr index. Asserting these signs
+# from the codebook would have inverted four of C18's five V-Dem metrics.
+# Concept placements are doc-anchored: every one is named in the master's
+# per-concept source tables.
+# =====================================================================
+_VDEM = {
+ 1:  ["v2pepwrses", "v2pepwrsoc", "v2x_egal", "v2psoppaut"],
+ 4:  ["v2clrspct"],
+ 10: ["v2clstown"],
+ 13: ["v2svstterr", "v2svdomaut"],
+ 14: ["v2cltrnslw", "v2clacjstm", "v2clacjstw", "v2xeg_eqaccess"],
+ 15: ["v2juhcind", "v2juncind", "v2jucomp", "v2jupack", "v2jupurge"],
+ 16: ["v2cltort", "v2clkill", "v2clrgunev"],
+ 17: ["v2clprptym", "v2clprptyw", "v2xcl_prpty"],
+ 18: ["v2x_corr", "v2excrptps", "v2exembez", "v2lgcrrpt", "v2jucorrdc"],
+ 19: ["v2xlg_legcon", "v2lgoppart", "v2lgqstexp", "v2lginvstp", "v2lgotovst"],
+ 20: ["v2x_polyarchy", "v2elfrfair", "v2elirreg", "v2elintim", "v2elvotbuy",
+      "v2elaccept", "v2elembaut", "v2elembcap"],
+ 21: ["v2x_partip", "v2psprlnks", "v2pscohesv", "v2cseeorgs", "v2dlconslt", "v2csreprss"],
+ 22: ["v2x_civlib", "v2x_clpriv", "v2clrelig", "v2cldmovem", "v2cldmovew",
+      "v2clsocgrp", "v2clslavef"],
+ 23: ["v2x_freexp_altinf", "v2mecenefm", "v2meharjrn", "v2mecorrpt",
+      "v2meslfcen", "v2merange", "v2mebias", "v2mecrit"],
+ 24: ["v2cseeorgs", "v2csreprss", "v2cscnsult", "v2csprtcpt"],
+ 25: ["v2cltrnslw", "v2dlconslt"],
+}
+
+_VNOTE = {
+ "v2x_corr":   "REVERSE-CODED (r=-0.880 vs WGI). V-Dem's individual corruption items run the OTHER way - do not infer sign from the family",
+ "v2clstown":  "direction evidence-resolved 2026-07-21: monotonic/linear, no threshold",
+ "v2elembaut": "EMB autonomy - closes the C20 EMB leg; supersedes IDEA EMB Database",
+ "v2elembcap": "EMB capacity - closes the C20 EMB leg; supersedes IDEA EMB Database",
+ "v2cldmovew": "master names the pair as 'v2cldmovem/w'",
+ "v2pscohesv": "weakest V-Dem signal vs WGI (r=+0.338)",
+}
+
+_vplace = {}
+for _cid, _vs in _VDEM.items():
+    for _v in _vs:
+        _vplace.setdefault(_v, []).append((_cid, "P1"))
+
+D += [dict(m=_v, s="VDEM", d=("-" if _v == "v2x_corr" else "+"),
+           at=_ats, note=_VNOTE.get(_v, ""))
+      for _v, _ats in _vplace.items()]
+
+D += [
+ dict(m="vdem_regime_duration", s="VDEM", d="+", at=[(2, "P1")],
+      derive="years since v2x_regime last changed, computed from the panel",
+      note="master specifies regime DURATION via V-Dem's own classification; raw type is not a quality ordering"),
+ dict(m="v2x_regime", s="VDEM", d="", at=[],
+      why="regime TYPE is a classification not a quality ordering; input to vdem_regime_duration"),
+ dict(m="v2x_horacc", s="VDEM", d="", at=[],
+      why="aggregate of components already scored (r=+0.976 with v2xlg_legcon, +0.86 with judicial family) and spans C19/C15 which the framework deliberately separated; category cross-check for Accountability (horizontal)"),
+]
+
+PENDING += [
+ "VDEM: derive vdem_regime_duration (years since v2x_regime change) for C2",
+ "MASTER: C22 row lists phantom 'v2clpriv' alongside real 'v2x_clpriv' - remove",
+]
+
