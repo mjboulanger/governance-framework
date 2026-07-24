@@ -1,0 +1,99 @@
+metric,source_id,direction,derive,note,concept_id,tier,include,exclude_reason
+wgi_political_stability,WGI,+,,,2,P1,True,
+wgi_government_effectiveness,WGI,+,,,4,P1,True,
+wgi_regulatory_quality,WGI,+,,,6,P1,True,
+wgi_control_of_corruption,WGI,,,,,,False,category cross-check (Rule of Law roll-up); aggregator sharing sources with CPI
+wgi_rule_of_law,WGI,,,,,,False,category cross-check (Rule of Law roll-up)
+wgi_voice_accountability,WGI,,,,,,False,category cross-check (Accountability roll-up)
+ti_cpi_score,TI_CPI,+,,,18,P1,True,
+unodc_homicide_rate,UNODC_HOMICIDE,-,,,16,P1,True,
+pei_electoral_integrity_index,PEI,+,,,20,P1,True,
+wdi_lpi_overall,WB_LPI,+,,,11,P1,True,
+tfi_avg,OECD_TFI,+,,,11,P1,True,
+fraser_trade_freedom,HERITAGE_TR,+,,Fraser Area 4; supersedes Heritage Trade Freedom,11,P1,True,
+fraser_regulation,FRASER_REG,+,,,6,P2,True,
+fraser_legal_system,FRASER_LEGAL,+,,,17,P2,True,
+wdi_hci_plus_overall,WB_HCI,+,,,5,P2,True,
+hanson_sigman_state_capacity,HANSON_SIGMAN,+,,,13,Sp,True,
+irena_renewables_share_pct,IRENA_CAPACITY,+,,,12,P1,True,
+bci_corruption_index,BCI,-,,"direction verified: Finland -3.5 low, Guinea-Bissau 78.9 high",18,P2,True,
+gpi_peace_index,GPI,-,,,2,P2,True,
+gpi_peace_index,GPI,-,,,16,P2,True,
+obs_open_budget_index,OBS,+,,,7,P1,True,
+obs_open_budget_index,OBS,+,,,25,P2,True,
+polfin_transparency_integrity,TI_POLFINANCE,+,,master flags possible C18 cross-reference,25,P2,True,
+pew_gov_restrictions_index,PEW_GRI,-,,"direction verified: NZ 0.35 low, China 9.09 high",22,P2,True,
+pew_social_hostilities_index,PEW_GRI,-,,,22,P2,True,
+wbl_legal_framework,WB_WBL,+,,,22,P2,True,
+wbl_supportive_framework,WB_WBL,+,,,22,P2,True,
+wbl_enforcement_perceptions,WB_WBL,+,,,22,P2,True,
+romelli_cbi_index,ROMELLI_CBI,+,,,8,P1,True,
+romelli_cbi_lending,ROMELLI_CBI,,,,,,False,decomposition of romelli_cbi_index
+romelli_cbi_policy,ROMELLI_CBI,,,,,,False,decomposition of romelli_cbi_index
+climate_laws_cumulative,CLIMATE_LAWS,+,,DEMOTED P1->P2: volume not quality; unnormalized cumulative count,12,P2,True,
+new_laws,CLIMATE_LAWS,,,,,,False,annual flow = first difference of stock; momentum is a separate coordinate
+odin_openness,ODIN,+,,ODIN's distinctive leg per master; coverage leg overlaps SPI,3,P1,True,
+odin_overall,ODIN,+,,,25,Sp,True,
+odin_coverage,ODIN,,,,,,False,redundant with SPI (both measure whether data exists)
+civicus_score,CIVICUS,+,,,21,P1,True,
+civicus_score,CIVICUS,+,,,24,P1,True,
+civicus_rating,CIVICUS,,,,,,False,ordinal coarsening of civicus_score
+kaopen_norm,CHINN_ITO,+,,DEMOTED P1->Sp: same construct as FARI from same AREAER source data,8,Sp,True,
+kaopen,CHINN_ITO,,,,,,False,raw scale; kaopen_norm preferred (bounded)
+polity5_score,POLITY5,,,,,,False,"RECENCY FAIL: series ends 2018 (165 ctry), 7 yrs stale vs 4-yr window"
+polity5_regime_durability,POLITY5,,,,,,False,RECENCY FAIL: series ends 2018
+kof_economic_globalisation,KOF_TRADE,,,,,,False,source closed; C11 proxy abandoned
+nd_gain_readiness,ND_GAIN,,,,,,False,source dropped 2026-07-22 on construct validity (capacity not governance)
+nd_gain_governance_readiness,ND_GAIN,,,,,,False,source dropped 2026-07-22; WGI-repackaged
+pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present",no coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity,16,P1,True,
+pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present",no coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity,22,P2,True,
+pts_amnesty,PTS,,,,,,False,component of pts_index
+pts_hrw,PTS,,,,,,False,component of pts_index
+pts_statedept,PTS,,,,,,False,component of pts_index
+wb_informal_economy,WB_INFORMAL,-,mean of dge and mimic estimates,"methods agree, r=0.969",13,P2,True,
+wb_informal_economy_dge,WB_INFORMAL,,,,,,False,component of wb_informal_economy
+wb_informal_economy_mimic,WB_INFORMAL,,,,,,False,component of wb_informal_economy
+fsi_c1_security_apparatus,FSI,-,,,13,P1,True,
+fsi_c2_factionalized_elites,FSI,-,,C1 takes two FSI components - source concentration,1,P1,True,
+fsi_c3_group_grievance,FSI,-,,,1,P1,True,
+fsi_p2_public_services,FSI,-,,,5,P1,True,
+spi_overall,IMF_SPI,+,,,3,P1,True,
+spi_pillar1_data_use,IMF_SPI,,,,,,False,decomposition of spi_overall
+spi_pillar2_data_services,IMF_SPI,,,,,,False,decomposition of spi_overall
+spi_pillar3_data_products,IMF_SPI,,,,,,False,decomposition of spi_overall
+spi_pillar4_data_sources,IMF_SPI,,,,,,False,decomposition of spi_overall
+spi_pillar5_data_infrastructure,IMF_SPI,,,,,,False,decomposition of spi_overall
+imapp_breadth_total,IMF_IMAPP,+,,cumulative-ever ratchet: breadth not quality (docs: Pakistan 15/16). Diluted - C8 is well populated,8,P1,True,
+imapp_breadth_borrower_based,IMF_IMAPP,,,,,,False,decomposition of imapp_breadth_total
+imapp_breadth_capital_based,IMF_IMAPP,,,,,,False,decomposition of imapp_breadth_total
+imapp_breadth_liquidity_funding,IMF_IMAPP,,,,,,False,decomposition of imapp_breadth_total
+imapp_breadth_provision_reserve_tax,IMF_IMAPP,,,,,,False,decomposition of imapp_breadth_total
+fari_aggregate,IMF_AREAER,-,,higher = more restrictive; direction is a D3 item (policy stance vs quality),8,P1,True,
+fari_fdi_aggregate,IMF_AREAER,-,,,8,P1,True,
+fari_fdi_inflow,IMF_AREAER,-,,DELIBERATE partial double-count with fdi_aggregate - user decision to tilt toward inbound access,8,P1,True,
+fari_inflow,IMF_AREAER,,,,,,False,split; aggregates are the doc-mandated scored fields
+fari_outflow,IMF_AREAER,,,,,,False,split; outbound less material to sovereign investor
+fari_fdi_outflow,IMF_AREAER,,,,,,False,split; outbound less material to sovereign investor
+areaer_regime_ordinal,IMF_AREAER_ERREGIME,,,,,,False,regime type is a policy choice not a quality ordering (HK peg vs ARG crawl); ordinal 8 is a residual
+areaer_arrangement,IMF_AREAER_ERREGIME,,,,,,False,categorical label; see areaer_regime_ordinal
+areaer_regime_group,IMF_AREAER_ERREGIME,,,,,,False,regime type not quality
+areaer_mpf,IMF_AREAER_ERREGIME,,,,,,False,PENDING: derive inflation-targeting binary; IT is defensibly better governance where regime type is not
+ccp_civil_rights_provisions,CCP,+,,BLOCKED: recode 96 -> NaN first (23 countries),14,P1,True,
+ccp_information_access,CCP,+,,BLOCKED: recode 96 -> NaN first (6 countries),14,P1,True,
+ccp_equality_provisions,CCP,,,,,,False,no variance: 176/4 split
+ccp_government_system,CCP,,,,,,False,no variance: 188/4 split. C19 loses its only non-VDEM source
+ccp_market_economy_provisions,CCP,,,,,,False,"81/19 binary, de jure constitutional text; too weak as a 2nd indicator for C10"
+cpj_imprisoned,CPJ,-,,"zero-fill to spine; log1p (zero-inflated). Raw count, no denominator - per-capita inverts ranking (China 0.04/m vs Eritrea 4.3/m)",23,P1,True,
+cpj_murders_unsolved,CPJ,-,,impunity signal; zero-fill to spine,23,P2,True,
+cpj_murdered_confirmed,CPJ,,,,,,False,conflict-contaminated (Israel/OPT 32 of 99 total); duplicated by unsolved
+cpj_murdered_total,CPJ,,,,,,False,superseded by cpj_murdered_confirmed
+pt_coup_successful,POWELL_THYNE,-,10-year trailing window count,window length is a Step-4 parameter; 27 successful coups in last 5 yrs,2,P1,True,
+pt_coup_successful,POWELL_THYNE,-,10-year trailing window count,window length is a Step-4 parameter; 27 successful coups in last 5 yrs,1,Sp,True,
+pt_coup_failed,POWELL_THYNE,-,10-year trailing window count,,2,P1,True,
+pt_coup_alleged,POWELL_THYNE,,,,,,False,weaker evidence than realised events
+pt_autocoup,POWELL_THYNE,,,,,,False,too rare to discriminate
+wb_carbon_pricing_exists,WB_CARBON,+,,zero-fill to spine; absence is INFERRED non-existence (docs) - out-of-scope/subnational instruments possible,12,P1,True,
+wb_carbon_price_usd,WB_CARBON,+,,zero-fill to spine,12,P1,True,
+wb_carbon_coverage_pct,WB_CARBON,+,,already a percentage; no denominator needed,12,P2,True,
+wb_carbon_revenue_pct_gdp,WB_CARBON,+,revenue_usd_m * 1e6 / (wdi_gdp_per_capita_usd * wdi_population_total),denominator is CURRENT US$ (NY.GDP.PCAP.CD) - nominal over nominal,12,P2,True,
+wb_carbon_revenue_usd_m,WB_CARBON,,,,,,False,component of wb_carbon_revenue_pct_gdp

@@ -1,0 +1,165 @@
+"""metric_selection - Step-1 metric-level decisions.
+
+One entry per metric. `at` lists the (concept_id, tier) placements; an empty `at`
+means the metric is not scored and `why` records the reason. Direction: '+' higher
+is better, '-' higher is worse. Contested or structural calls are written up in
+framework_decisions.md; notes here are index-level only.
+
+Session 2026-07-23. Sources reviewed: WGI, all 1-3 metric sources, FSI, CPJ,
+POWELL_THYNE, WB_CARBON, IMF_AREAER_ERREGIME, CCP, IMF_IMAPP, IMF_SPI, IMF_AREAER.
+Not yet reviewed: VDEM(66), FATF(102), WDI(31), DPI(28), IMF_FISCAL_RULES(24),
+FH_FIW(18), UCDP(14), IDEA_PARTIP(12), WB_BRSS(11), YALE_EPI(11), NELDA(9),
+RTI_RATING(9), WJP(8), ASCOR(pending coverage-table regen).
+"""
+
+D = [
+ # ---- WGI: 3 scored, 3 reserved as category-level cross-checks ----
+ dict(m="wgi_political_stability",      s="WGI", d="+", at=[(2,"P1")]),
+ dict(m="wgi_government_effectiveness", s="WGI", d="+", at=[(4,"P1")]),
+ dict(m="wgi_regulatory_quality",       s="WGI", d="+", at=[(6,"P1")]),
+ dict(m="wgi_control_of_corruption",    s="WGI", d="",  at=[], why="category cross-check (Rule of Law roll-up); aggregator sharing sources with CPI"),
+ dict(m="wgi_rule_of_law",              s="WGI", d="",  at=[], why="category cross-check (Rule of Law roll-up)"),
+ dict(m="wgi_voice_accountability",     s="WGI", d="",  at=[], why="category cross-check (Accountability roll-up)"),
+
+ # ---- single-metric sources ----
+ dict(m="ti_cpi_score",                 s="TI_CPI",         d="+", at=[(18,"P1")]),
+ dict(m="unodc_homicide_rate",          s="UNODC_HOMICIDE", d="-", at=[(16,"P1")]),
+ dict(m="pei_electoral_integrity_index",s="PEI",            d="+", at=[(20,"P1")]),
+ dict(m="wdi_lpi_overall",              s="WB_LPI",         d="+", at=[(11,"P1")]),
+ dict(m="tfi_avg",                      s="OECD_TFI",       d="+", at=[(11,"P1")]),
+ dict(m="fraser_trade_freedom",         s="HERITAGE_TR",    d="+", at=[(11,"P1")], note="Fraser Area 4; supersedes Heritage Trade Freedom"),
+ dict(m="fraser_regulation",            s="FRASER_REG",     d="+", at=[(6,"P2")]),
+ dict(m="fraser_legal_system",          s="FRASER_LEGAL",   d="+", at=[(17,"P2")]),
+ dict(m="wdi_hci_plus_overall",         s="WB_HCI",         d="+", at=[(5,"P2")]),
+ dict(m="hanson_sigman_state_capacity", s="HANSON_SIGMAN",  d="+", at=[(13,"Sp")]),
+ dict(m="irena_renewables_share_pct",   s="IRENA_CAPACITY", d="+", at=[(12,"P1")]),
+ dict(m="bci_corruption_index",         s="BCI",            d="-", at=[(18,"P2")], note="direction verified: Finland -3.5 low, Guinea-Bissau 78.9 high"),
+ dict(m="gpi_peace_index",              s="GPI",            d="-", at=[(2,"P2"),(16,"P2")]),
+ dict(m="obs_open_budget_index",        s="OBS",            d="+", at=[(7,"P1"),(25,"P2")]),
+ dict(m="polfin_transparency_integrity",s="TI_POLFINANCE",  d="+", at=[(25,"P2")], note="master flags possible C18 cross-reference"),
+ dict(m="pew_gov_restrictions_index",   s="PEW_GRI",        d="-", at=[(22,"P2")], note="direction verified: NZ 0.35 low, China 9.09 high"),
+ dict(m="pew_social_hostilities_index", s="PEW_GRI",        d="-", at=[(22,"P2")]),
+ dict(m="wbl_legal_framework",          s="WB_WBL",         d="+", at=[(22,"P2")]),
+ dict(m="wbl_supportive_framework",     s="WB_WBL",         d="+", at=[(22,"P2")]),
+ dict(m="wbl_enforcement_perceptions",  s="WB_WBL",         d="+", at=[(22,"P2")]),
+ dict(m="romelli_cbi_index",            s="ROMELLI_CBI",    d="+", at=[(8,"P1")]),
+ dict(m="romelli_cbi_lending",          s="ROMELLI_CBI",    d="",  at=[], why="decomposition of romelli_cbi_index"),
+ dict(m="romelli_cbi_policy",           s="ROMELLI_CBI",    d="",  at=[], why="decomposition of romelli_cbi_index"),
+ dict(m="climate_laws_cumulative",      s="CLIMATE_LAWS",   d="+", at=[(12,"P2")], note="DEMOTED P1->P2: volume not quality; unnormalized cumulative count"),
+ dict(m="new_laws",                     s="CLIMATE_LAWS",   d="",  at=[], why="annual flow = first difference of stock; momentum is a separate coordinate"),
+ dict(m="odin_openness",                s="ODIN",           d="+", at=[(3,"P1")], note="ODIN's distinctive leg per master; coverage leg overlaps SPI"),
+ dict(m="odin_overall",                 s="ODIN",           d="+", at=[(25,"Sp")]),
+ dict(m="odin_coverage",                s="ODIN",           d="",  at=[], why="redundant with SPI (both measure whether data exists)"),
+ dict(m="civicus_score",                s="CIVICUS",        d="+", at=[(21,"P1"),(24,"P1")]),
+ dict(m="civicus_rating",               s="CIVICUS",        d="",  at=[], why="ordinal coarsening of civicus_score"),
+ dict(m="kaopen_norm",                  s="CHINN_ITO",      d="+", at=[(8,"Sp")], note="DEMOTED P1->Sp: same construct as FARI from same AREAER source data"),
+ dict(m="kaopen",                       s="CHINN_ITO",      d="",  at=[], why="raw scale; kaopen_norm preferred (bounded)"),
+ dict(m="polity5_score",                s="POLITY5",        d="",  at=[], why="RECENCY FAIL: series ends 2018 (165 ctry), 7 yrs stale vs 4-yr window"),
+ dict(m="polity5_regime_durability",    s="POLITY5",        d="",  at=[], why="RECENCY FAIL: series ends 2018"),
+ dict(m="kof_economic_globalisation",   s="KOF_TRADE",      d="",  at=[], why="source closed; C11 proxy abandoned"),
+ dict(m="nd_gain_readiness",            s="ND_GAIN",        d="",  at=[], why="source dropped 2026-07-22 on construct validity (capacity not governance)"),
+ dict(m="nd_gain_governance_readiness", s="ND_GAIN",        d="",  at=[], why="source dropped 2026-07-22; WGI-repackaged"),
+
+ # ---- combined metrics (derived in scoring pipeline) ----
+ dict(m="pts_index", s="PTS", d="-", at=[(16,"P1"),(22,"P2")], derive="mean of pts_amnesty, pts_hrw, pts_statedept where present",
+      note="no coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity"),
+ dict(m="pts_amnesty",    s="PTS", d="", at=[], why="component of pts_index"),
+ dict(m="pts_hrw",        s="PTS", d="", at=[], why="component of pts_index"),
+ dict(m="pts_statedept",  s="PTS", d="", at=[], why="component of pts_index"),
+ dict(m="wb_informal_economy", s="WB_INFORMAL", d="-", at=[(13,"P2")], derive="mean of dge and mimic estimates",
+      note="methods agree, r=0.969"),
+ dict(m="wb_informal_economy_dge",   s="WB_INFORMAL", d="", at=[], why="component of wb_informal_economy"),
+ dict(m="wb_informal_economy_mimic", s="WB_INFORMAL", d="", at=[], why="component of wb_informal_economy"),
+
+ # ---- FSI ----
+ dict(m="fsi_c1_security_apparatus",   s="FSI", d="-", at=[(13,"P1")]),
+ dict(m="fsi_c2_factionalized_elites", s="FSI", d="-", at=[(1,"P1")], note="C1 takes two FSI components - source concentration"),
+ dict(m="fsi_c3_group_grievance",      s="FSI", d="-", at=[(1,"P1")]),
+ dict(m="fsi_p2_public_services",      s="FSI", d="-", at=[(5,"P1")]),
+
+ # ---- IMF SPI / iMaPP ----
+ dict(m="spi_overall",        s="IMF_SPI",   d="+", at=[(3,"P1")]),
+ dict(m="spi_pillar1_data_use",           s="IMF_SPI", d="", at=[], why="decomposition of spi_overall"),
+ dict(m="spi_pillar2_data_services",      s="IMF_SPI", d="", at=[], why="decomposition of spi_overall"),
+ dict(m="spi_pillar3_data_products",      s="IMF_SPI", d="", at=[], why="decomposition of spi_overall"),
+ dict(m="spi_pillar4_data_sources",       s="IMF_SPI", d="", at=[], why="decomposition of spi_overall"),
+ dict(m="spi_pillar5_data_infrastructure",s="IMF_SPI", d="", at=[], why="decomposition of spi_overall"),
+ dict(m="imapp_breadth_total", s="IMF_IMAPP", d="+", at=[(8,"P1")],
+      note="cumulative-ever ratchet: breadth not quality (docs: Pakistan 15/16). Diluted - C8 is well populated"),
+ dict(m="imapp_breadth_borrower_based",      s="IMF_IMAPP", d="", at=[], why="decomposition of imapp_breadth_total"),
+ dict(m="imapp_breadth_capital_based",       s="IMF_IMAPP", d="", at=[], why="decomposition of imapp_breadth_total"),
+ dict(m="imapp_breadth_liquidity_funding",   s="IMF_IMAPP", d="", at=[], why="decomposition of imapp_breadth_total"),
+ dict(m="imapp_breadth_provision_reserve_tax",s="IMF_IMAPP",d="", at=[], why="decomposition of imapp_breadth_total"),
+
+ # ---- AREAER FARI: inflow at full weight, deliberate partial double-count ----
+ dict(m="fari_aggregate",     s="IMF_AREAER", d="-", at=[(8,"P1")], note="higher = more restrictive; direction is a D3 item (policy stance vs quality)"),
+ dict(m="fari_fdi_aggregate", s="IMF_AREAER", d="-", at=[(8,"P1")]),
+ dict(m="fari_fdi_inflow",    s="IMF_AREAER", d="-", at=[(8,"P1")],
+      note="DELIBERATE partial double-count with fdi_aggregate - user decision to tilt toward inbound access"),
+ dict(m="fari_inflow",     s="IMF_AREAER", d="", at=[], why="split; aggregates are the doc-mandated scored fields"),
+ dict(m="fari_outflow",    s="IMF_AREAER", d="", at=[], why="split; outbound less material to sovereign investor"),
+ dict(m="fari_fdi_outflow",s="IMF_AREAER", d="", at=[], why="split; outbound less material to sovereign investor"),
+
+ # ---- AREAER de-facto ER: regime TYPE is not a quality ordering ----
+ dict(m="areaer_regime_ordinal", s="IMF_AREAER_ERREGIME", d="", at=[], why="regime type is a policy choice not a quality ordering (HK peg vs ARG crawl); ordinal 8 is a residual"),
+ dict(m="areaer_arrangement",    s="IMF_AREAER_ERREGIME", d="", at=[], why="categorical label; see areaer_regime_ordinal"),
+ dict(m="areaer_regime_group",   s="IMF_AREAER_ERREGIME", d="", at=[], why="regime type not quality"),
+ dict(m="areaer_mpf",            s="IMF_AREAER_ERREGIME", d="", at=[], why="PENDING: derive inflation-targeting binary; IT is defensibly better governance where regime type is not"),
+
+ # ---- CCP: 96 is a MISSING sentinel, not data ----
+ dict(m="ccp_civil_rights_provisions", s="CCP", d="+", at=[(14,"P1")], note="BLOCKED: recode 96 -> NaN first (23 countries)"),
+ dict(m="ccp_information_access",      s="CCP", d="+", at=[(14,"P1")], note="BLOCKED: recode 96 -> NaN first (6 countries)"),
+ dict(m="ccp_equality_provisions",     s="CCP", d="",  at=[], why="no variance: 176/4 split"),
+ dict(m="ccp_government_system",       s="CCP", d="",  at=[], why="no variance: 188/4 split. C19 loses its only non-VDEM source"),
+ dict(m="ccp_market_economy_provisions",s="CCP",d="",  at=[], why="81/19 binary, de jure constitutional text; too weak as a 2nd indicator for C10"),
+
+ # ---- CPJ: global census, so absence is verified zero. Zero-fill to spine ----
+ dict(m="cpj_imprisoned",       s="CPJ", d="-", at=[(23,"P1")],
+      note="zero-fill to spine; log1p (zero-inflated). Raw count, no denominator - per-capita inverts ranking (China 0.04/m vs Eritrea 4.3/m)"),
+ dict(m="cpj_murders_unsolved", s="CPJ", d="-", at=[(23,"P2")], note="impunity signal; zero-fill to spine"),
+ dict(m="cpj_murdered_confirmed",s="CPJ",d="",  at=[], why="conflict-contaminated (Israel/OPT 32 of 99 total); duplicated by unsolved"),
+ dict(m="cpj_murdered_total",   s="CPJ", d="",  at=[], why="superseded by cpj_murdered_confirmed"),
+
+ # ---- Powell-Thyne: rare events, needs a trailing window ----
+ dict(m="pt_coup_successful", s="POWELL_THYNE", d="-", at=[(2,"P1"),(1,"Sp")],
+      derive="10-year trailing window count", note="window length is a Step-4 parameter; 27 successful coups in last 5 yrs"),
+ dict(m="pt_coup_failed",     s="POWELL_THYNE", d="-", at=[(2,"P1")], derive="10-year trailing window count"),
+ dict(m="pt_coup_alleged",    s="POWELL_THYNE", d="",  at=[], why="weaker evidence than realised events"),
+ dict(m="pt_autocoup",        s="POWELL_THYNE", d="",  at=[], why="too rare to discriminate"),
+
+ # ---- WB Carbon: absence INFERRED not verified; zero-fill with caveat ----
+ dict(m="wb_carbon_pricing_exists", s="WB_CARBON", d="+", at=[(12,"P1")],
+      note="zero-fill to spine; absence is INFERRED non-existence (docs) - out-of-scope/subnational instruments possible"),
+ dict(m="wb_carbon_price_usd",      s="WB_CARBON", d="+", at=[(12,"P1")], note="zero-fill to spine"),
+ dict(m="wb_carbon_coverage_pct",   s="WB_CARBON", d="+", at=[(12,"P2")], note="already a percentage; no denominator needed"),
+ dict(m="wb_carbon_revenue_pct_gdp",s="WB_CARBON", d="+", at=[(12,"P2")],
+      derive="revenue_usd_m * 1e6 / (wdi_gdp_per_capita_usd * wdi_population_total)",
+      note="denominator is CURRENT US$ (NY.GDP.PCAP.CD) - nominal over nominal"),
+ dict(m="wb_carbon_revenue_usd_m",  s="WB_CARBON", d="", at=[], why="component of wb_carbon_revenue_pct_gdp"),
+]
+
+# Actions required before the affected metrics can be scored.
+PENDING = [
+ "CCP: recode sentinel 96 -> NaN in 14_qog_pipeline (blocks both C14 metrics)",
+ "AREAER: derive inflation-targeting binary from areaer_mpf",
+ "CPJ: zero-fill to spine; verify Israel/OPT combined row vs spine ISO3 split",
+ "POWELL_THYNE: build 10-yr trailing window counts",
+ "WB_CARBON: zero-fill to spine; derive revenue_pct_gdp",
+ "C19 Legislative and constitutional checks: now VDEM-ONLY (Polity recency + CCP no-variance) - measurement gap",
+ "FATF: 102 metrics need collapsing to constructs before C9 review",
+ "PEFA: long format, needs pivot before C7 review",
+ "metric_coverage.csv: regenerate to include ascor_clean.csv",
+]
+
+def to_rows():
+    rows = []
+    for e in D:
+        base = dict(metric=e["m"], source_id=e["s"], direction=e.get("d", ""),
+                    derive=e.get("derive", ""), note=e.get("note", ""))
+        if e["at"]:
+            for cid, tier in e["at"]:
+                rows.append(dict(base, concept_id=cid, tier=tier, include=True, exclude_reason=""))
+        else:
+            rows.append(dict(base, concept_id="", tier="", include=False,
+                             exclude_reason=e.get("why", "")))
+    return rows
