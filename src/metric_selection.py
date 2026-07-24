@@ -466,3 +466,53 @@ D += [dict(m=_k, s="FH_FIW", d="+", at=[],
 PENDING += [
  "C22 Civil liberties now 15 metrics (8 P1 / 7 P2) - most-measured concept in the framework; the P1/P2 split is what keeps FH-D and the WBL/Pew P2 metrics from diluting the V-Dem+FH-G core. Watch at Step 4",
 ]
+
+
+# =====================================================================
+# UCDP block (13 metrics -> 1 scored). Appended 2026-07-23.
+# Uppsala Conflict Data Program: academic gold-standard EVENT-COUNT source for
+# organized violence (state-based, non-state, one-sided), coded from documentation
+# with low/best/high fatality bounds. Only *_best shipped. Different measurement
+# family from every prior block - observed body-counts, not analyst scores - so it
+# adds the fatality leg to C2, which otherwise rests on expert indices + coup events.
+# Pipeline ALREADY zero-filled: every column at 99.5% coverage, absence = true zero
+# (global event census). 43 of 196 countries carry nonzero state-based deaths in 2024.
+# SCORE ONE METRIC: intrastate battle-deaths, per-capita, log1p (zero-inflated), higher=worse.
+# WHY INTRASTATE not combined state-based: interstate war is EXTERNAL AGGRESSION, not
+# internal regime instability - it shows the file's max (68,099, Ukraine) but a country
+# invaded by a neighbour is not exhibiting political-order failure. Scoring interstate in
+# C2 would mark the victim of aggression as unstable, inverting the construct.
+# =====================================================================
+D += [
+ dict(m="ucdp_sb_intrastate_deaths_best", s="UCDP", d="-", at=[(2, "P1")],
+      derive="per-capita (/ wdi_population_total), log1p",
+      note="civil-war/insurgency battle deaths - the observed-fatality leg of C2. Zero-filled census, 41 nonzero of 196 in 2024"),
+
+ # interstate: external aggression, wrong construct for a political-STABILITY concept
+ dict(m="ucdp_sb_interstate_deaths_best", s="UCDP", d="", at=[],
+      why="interstate war = external aggression, not internal regime instability; scoring it in C2 would mark the victim of invasion as unstable (Ukraine is the file max). Inverts the construct"),
+ dict(m="ucdp_sb_interstate_exists", s="UCDP", d="", at=[], why="interstate existence flag - see interstate_deaths"),
+
+ # combined state-based: superseded by the intrastate split
+ dict(m="ucdp_sb_deaths_best", s="UCDP", d="", at=[], why="combined state-based deaths; superseded by the intrastate split (removes interstate contamination)"),
+ dict(m="ucdp_sb_conflict_exists", s="UCDP", d="", at=[], why="binary existence - strictly dominated by the deaths severity measure"),
+ dict(m="ucdp_sb_conflict_count", s="UCDP", d="", at=[], why="dyad count - a fragmentation/territorial-control signal (considered for C13) but a poor severity proxy and partly a coding artifact; deaths preferred for C2"),
+ dict(m="ucdp_sb_intrastate_exists", s="UCDP", d="", at=[], why="existence flag; the deaths measure already encodes existence"),
+
+ # non-state: weak-state signal, not regime instability
+ dict(m="ucdp_ns_deaths_best", s="UCDP", d="", at=[], why="non-state communal violence - a weak-state-control signal, not regime instability; not on-concept for C2"),
+ dict(m="ucdp_ns_conflict_exists", s="UCDP", d="", at=[], why="non-state existence flag"),
+ dict(m="ucdp_ns_conflict_count", s="UCDP", d="", at=[], why="non-state dyad count"),
+
+ # one-sided: overlaps C16, from which the master deliberately excluded UCDP
+ dict(m="ucdp_os_deaths_best", s="UCDP", d="", at=[], why="one-sided violence against civilians overlaps C16 Personal security, from which the master deliberately routed UCDP away to keep conflict data in C2"),
+ dict(m="ucdp_os_violence_exists", s="UCDP", d="", at=[], why="one-sided existence flag - see os_deaths"),
+ dict(m="ucdp_os_govt_killings_best", s="UCDP", d="", at=[], why="government killings of civilians - a distinct state-violence signal, but the master routed UCDP away from C16; left on the table rather than overriding that placement"),
+ dict(m="ucdp_total_orgvio_deaths_best", s="UCDP", d="", at=[], why="rollup summing all three violence types, incl. the interstate/one-sided/non-state content excluded above on construct grounds"),
+]
+
+
+PENDING += [
+ "WEIGHTING (Step 4): metric->concept weighting is UNSET. Working default = equal-weight-within-tier, with tiers (P1>P2>Sp) as coarse weighting - so every tier call this pass IS a weighting decision, and the numeric P1/P2/Sp multipliers are still to be set. Locked already: categories equal; concepts = relevance x measurement-quality (C11 Trade and C12 Environmental at 0.5 relevance; measurement-quality 1.0/0.75/0.5 mechanism locked, per-concept values due at Step 1).",
+ "WEIGHTING (Step 4): decide whether within-tier weighting should be CORRELATION-AWARE. Equal-weight-within-tier treats correlated metrics as independent, so it under-penalizes (a) over-measured concepts (C22 Civil liberties 15, C23 Media 11 - many correlated perception measures) and (b) single-source concentration (C19 Legislative checks 5-of-5 V-Dem coded as 5 independent metrics). Highest-value weighting question in the framework. Derived sub-composites (wdi_health_index, pts_index) already embed ad-hoc anti-concentration weighting that a general rule should subsume.",
+]

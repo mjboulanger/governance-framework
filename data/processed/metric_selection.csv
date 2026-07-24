@@ -249,3 +249,17 @@ fh_g1,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via t
 fh_g2,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
 fh_g3,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
 fh_g4,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
+ucdp_sb_intrastate_deaths_best,UCDP,-,"per-capita (/ wdi_population_total), log1p","civil-war/insurgency battle deaths - the observed-fatality leg of C2. Zero-filled census, 41 nonzero of 196 in 2024",2,P1,True,
+ucdp_sb_interstate_deaths_best,UCDP,,,,,,False,"interstate war = external aggression, not internal regime instability; scoring it in C2 would mark the victim of invasion as unstable (Ukraine is the file max). Inverts the construct"
+ucdp_sb_interstate_exists,UCDP,,,,,,False,interstate existence flag - see interstate_deaths
+ucdp_sb_deaths_best,UCDP,,,,,,False,combined state-based deaths; superseded by the intrastate split (removes interstate contamination)
+ucdp_sb_conflict_exists,UCDP,,,,,,False,binary existence - strictly dominated by the deaths severity measure
+ucdp_sb_conflict_count,UCDP,,,,,,False,dyad count - a fragmentation/territorial-control signal (considered for C13) but a poor severity proxy and partly a coding artifact; deaths preferred for C2
+ucdp_sb_intrastate_exists,UCDP,,,,,,False,existence flag; the deaths measure already encodes existence
+ucdp_ns_deaths_best,UCDP,,,,,,False,"non-state communal violence - a weak-state-control signal, not regime instability; not on-concept for C2"
+ucdp_ns_conflict_exists,UCDP,,,,,,False,non-state existence flag
+ucdp_ns_conflict_count,UCDP,,,,,,False,non-state dyad count
+ucdp_os_deaths_best,UCDP,,,,,,False,"one-sided violence against civilians overlaps C16 Personal security, from which the master deliberately routed UCDP away to keep conflict data in C2"
+ucdp_os_violence_exists,UCDP,,,,,,False,one-sided existence flag - see os_deaths
+ucdp_os_govt_killings_best,UCDP,,,,,,False,"government killings of civilians - a distinct state-violence signal, but the master routed UCDP away from C16; left on the table rather than overriding that placement"
+ucdp_total_orgvio_deaths_best,UCDP,,,,,,False,"rollup summing all three violence types, incl. the interstate/one-sided/non-state content excluded above on construct grounds"
