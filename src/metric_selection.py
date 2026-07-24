@@ -616,3 +616,47 @@ PENDING += [
  "C9 Financial sector: FATF adds AML/CFT (de jure + de facto). With BRSS (banking prudential, de jure, Supplementary) the concept now has effectiveness signal - but SECURITIES and INSURANCE regulation remain uncovered, and supervisory effectiveness beyond AML awaits FSAP (PDF-locked, outstanding). State plainly in C9 output: measures AML/CFT + banking rules, NOT securities/insurance/broad supervisory effectiveness",
  "C9 TIER DECISION now decidable with both sources in view: FATF Primary (covers the concept's core + the only effectiveness axis), BRSS Supplementary (de jure banking only). Confirm BRSS scoring next",
 ]
+
+
+# =====================================================================
+# WB BRSS block (13 columns -> 1 scored). Appended 2026-07-23.
+# World Bank Bank Regulation and Supervision Survey (Barth-Caprio-Levine): survey of
+# national banking regulators, ~160 countries, FROZEN at the 2019 wave / 2016 reference
+# year (no newer wave). The pipeline (nb 38) did NOT take the published BCL indices - it
+# built a bespoke construct-aligned DE JURE regulatory-stringency score across 9
+# sub-constructs, then a weighted overall (brss_regstringency). Cadence = snapshot(no-year),
+# so recency is judged cadence-relative: 76% sovereign coverage clears the bar (an annual
+# source ending 2016 would fail; a snapshot does not).
+# SCORE brss_regstringency (the overall index), drop the 9 sub-constructs: decompose-or-
+# keep-whole - one coherent de jure banking-stringency construct the pipeline already
+# aggregated on a principled basis, and a Supplementary leg should not sprawl to 9 slots.
+# TIER = SUPPLEMENTARY, and the rationale is STALENESS not peripherality (recorded in
+# framework_decisions). Banking prudential regulation is CENTRAL to C9, not peripheral -
+# it is the concept's only non-AML, only-prudential signal. BRSS is Supplementary purely
+# because the 2016 vintage is too stale to drive a 2025 score (Basel III phase-in,
+# resolution reforms post-date it), while remaining useful evidentiary context (bank-rule
+# frameworks are sticky, so 2016 still informs drill-down). If judged current-enough it
+# would be P2, not Sp - the tier turns on staleness alone.
+# DE JURE caveat: rules on paper, not supervisory effectiveness (advanced economies
+# mid-pack is CORRECT, validated vs Anginer et al). Same rules-vs-practice failure mode
+# as RTI and FATF technical compliance.
+# =====================================================================
+D += [
+ dict(m="brss_regstringency", s="WB_BRSS", d="+", at=[(9, "Sp")],
+      note="de jure banking regulatory stringency, 0-1, weighted mean of 9 sub-constructs. Supplementary on STALENESS (2016 vintage) NOT peripherality - it is C9's only prudential-banking signal. Would be P2 if current. Fixed-anchor candidate"),
+]
+_BRSS_SUB = ["supervisory_power", "supervisory_independence", "capital_stringency",
+             "private_monitoring", "resolution_regime", "provisioning",
+             "liquidity_concentration", "macroprudential", "supervisory_capacity"]
+D += [dict(m=c, s="WB_BRSS", d="+", at=[], why="component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)")
+      for c in _BRSS_SUB]
+D += [
+ dict(m="brss_coverage", s="WB_BRSS", d="", at=[], why="metadata - per-country survey-question coverage fraction, not a score"),
+ dict(m="brss_reliable", s="WB_BRSS", d="", at=[],
+      why="metadata reliability flag (coverage >=70%) - GATES whether a country's BRSS score is used (excludes sparse entries), does NOT attenuate the value (score-deflation-by-coverage was rejected as incoherent). Feeds S8"),
+ dict(m="country_code", s="WB_BRSS", d="", at=[], why="identifier"),
+]
+
+PENDING += [
+ "C9 Financial sector COMPLETE: FATF effectiveness (P1, de facto AML/CFT) + FATF technical compliance (P2, de jure AML/CFT) + BRSS stringency (Sp, de jure banking). 3 metrics, clears thin flag. GAPS remain: securities, insurance, non-AML supervisory effectiveness - all await FSAP (PDF-locked). C9 output must state it measures AML/CFT + banking rules, not the full financial-supervision remit",
+]

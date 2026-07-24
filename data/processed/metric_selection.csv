@@ -386,3 +386,16 @@ report_date,FATF,,,,,,False,"identifier/metadata, not a governance score"
 assessment_body,FATF,,,,,,False,"identifier/metadata, not a governance score"
 n_upgrades,FATF,,,,,,False,"identifier/metadata, not a governance score"
 n_downgrades,FATF,,,,,,False,"identifier/metadata, not a governance score"
+brss_regstringency,WB_BRSS,+,,"de jure banking regulatory stringency, 0-1, weighted mean of 9 sub-constructs. Supplementary on STALENESS (2016 vintage) NOT peripherality - it is C9's only prudential-banking signal. Would be P2 if current. Fixed-anchor candidate",9,Sp,True,
+supervisory_power,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
+supervisory_independence,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
+capital_stringency,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
+private_monitoring,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
+resolution_regime,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
+provisioning,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
+liquidity_concentration,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
+macroprudential,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
+supervisory_capacity,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
+brss_coverage,WB_BRSS,,,,,,False,"metadata - per-country survey-question coverage fraction, not a score"
+brss_reliable,WB_BRSS,,,,,,False,"metadata reliability flag (coverage >=70%) - GATES whether a country's BRSS score is used (excludes sparse entries), does NOT attenuate the value (score-deflation-by-coverage was rejected as incoherent). Feeds S8"
+country_code,WB_BRSS,,,,,,False,identifier
