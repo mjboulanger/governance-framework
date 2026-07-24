@@ -282,3 +282,90 @@ PENDING += [
  "WJP reference-class: 74% sovereign coverage, non-random exclusions (small states, closed regimes) - "
  "record as a known limitation for C6/C14/C15/C16/C17/C18/C25",
 ]
+
+
+# =====================================================================
+# WDI block (31 metrics). Appended 2026-07-23.
+# C5 uses FOUR SUB-COMPOSITES, not 22 raw metrics. WDI subsumes four of C5's
+# nominal sources (WHO GHO, UNESCO UIS, UNDP HDI sub-indicators, plus WDI's own
+# sector series), so raw equal-weighting would give HEALTH 9 of 22 slots = 41% of
+# the concept - a weight determined by how many series the World Bank happens to
+# publish, not by importance. Same failure the ASCOR area-level roll-up fixed.
+# Each sub-composite = mean of its z-normalized, direction-aligned components,
+# under the S7 two-level missingness penalty (f>=0.5 no penalty; 0<f<0.5 sliding;
+# f=0 null).
+# ENDOGENEITY TAG: AMBIGUOUS -> capped partial penalty. WDI service-delivery gaps
+# are mixed - a large state not reporting hospital beds is a capacity signal, but
+# a microstate absent from a household-survey series simply was not surveyed.
+# =====================================================================
+_WDI_HEALTH = ["wdi_immunization_dpt", "wdi_immunization_measles", "wdi_life_expectancy",
+               "wdi_uhc_coverage_index", "wdi_hospital_beds_per_1000", "wdi_nurses_per_1000",
+               "wdi_physicians_per_1000", "wdi_maternal_mortality", "wdi_mortality_under5"]
+_WDI_EDU   = ["wdi_primary_completion_rate", "wdi_primary_enrollment_gross",
+              "wdi_secondary_enrollment_gross", "wdi_pupil_teacher_ratio_secondary"]
+_WDI_INFRA = ["wdi_basic_water_access", "wdi_basic_sanitation_access", "wdi_electricity_access"]
+_WDI_SOCP  = ["wdi_safety_net_coverage", "wdi_social_insurance_coverage",
+              "wdi_social_protection_coverage"]
+# components entering NEGATIVE (higher = worse), flipped before averaging
+_WDI_NEG = {"wdi_maternal_mortality", "wdi_mortality_under5", "wdi_pupil_teacher_ratio_secondary"}
+
+D += [
+ dict(m="wdi_health_index", s="WDI", d="+", at=[(5, "P1")],
+      derive="mean of z-normalized " + ", ".join(_WDI_HEALTH) +
+             " (maternal_mortality and mortality_under5 sign-flipped)",
+      note="9 components; equal-weighting these raw would give health 41% of C5"),
+ dict(m="wdi_education_index", s="WDI", d="+", at=[(5, "P1")],
+      derive="mean of z-normalized " + ", ".join(_WDI_EDU) +
+             " (pupil_teacher_ratio_secondary sign-flipped)",
+      note="pupil_teacher_ratio_PRIMARY excluded separately: 0.0% current coverage"),
+ dict(m="wdi_infrastructure_index", s="WDI", d="+", at=[(5, "P1")],
+      derive="mean of z-normalized " + ", ".join(_WDI_INFRA),
+      note="ceiling-piled at ~100%; S5 keeps these on z-score, NOT percentile - the pile is informative and z preserves distance-from-universal"),
+ dict(m="wdi_social_protection_index", s="WDI", d="+", at=[(5, "P1")],
+      derive="mean of z-normalized " + ", ".join(_WDI_SOCP),
+      note="thinnest sub-composite: components at 61-68% coverage, all irregular cadence"),
+
+ # ---- C11 trade ----
+ dict(m="wdi_tariff_rate_simple_mean", s="WDI", d="-", at=[(11, "P1")],
+      note="higher tariffs = less open; direction is a D3 item (policy stance vs governance quality, same question as FARI). 84.9% coverage"),
+ dict(m="wdi_tariff_rate_weighted_mean", s="WDI", d="", at=[],
+      why="same construct as simple mean; trade-weighting is endogenous to trade patterns (prohibitive tariffs suppress the trade that would weight them)"),
+
+ # ---- C17 property / IP ----
+ dict(m="wdi_ip_nonresident_per_gdp", s="WDI", d="+", at=[(17, "P2")],
+      derive="mean of z-normalized (patent_applications_nonresident, trademark_applications_nonresident), each divided by GDP current US$ (wdi_gdp_per_capita_usd * wdi_population_total)",
+      note="partial proxy for the master's WIPO IP row. NONRESIDENT only: foreign firms seeking protection in a jurisdiction is revealed-preference evidence of confidence in that protection; resident filings measure domestic innovation capacity, not governance. GDP-normalized - raw counts are dominated by economy size"),
+ dict(m="wdi_patent_applications_nonresident", s="WDI", d="", at=[], why="component of wdi_ip_nonresident_per_gdp"),
+ dict(m="wdi_trademark_applications_nonresident", s="WDI", d="", at=[], why="component of wdi_ip_nonresident_per_gdp"),
+ dict(m="wdi_patent_applications_resident", s="WDI", d="", at=[],
+      why="measures domestic innovation activity, not IP protection quality; also 57.8% coverage, below the 60% bar"),
+ dict(m="wdi_trademark_applications_resident", s="WDI", d="", at=[],
+      why="measures domestic innovation activity, not IP protection quality"),
+
+ # ---- excluded: inputs, income context, dead tail ----
+ dict(m="wdi_education_expenditure_gdp", s="WDI", d="", at=[],
+      why="INPUT not outcome - C5's scope is explicitly 'what citizens receive from the state'. High spending with poor outcomes is what weak service delivery looks like. Reaches C5 only via the master's UNESCO subsumption, which contradicts the concept's own scope"),
+ dict(m="wdi_education_expenditure_govt", s="WDI", d="", at=[],
+      why="INPUT not outcome - see wdi_education_expenditure_gdp"),
+ dict(m="wdi_gni_per_capita_ppp", s="WDI", d="", at=[],
+      why="income measure, not governance. Named in the master under the UNDP HDI subsumption but fails construct validity outright; also PPP, against the USD-only standing rule"),
+ dict(m="wdi_gdp_per_capita_usd", s="WDI", d="", at=[],
+      why="income context; spine registers role=context, in_scoring=False. Used as a denominator and for the wealth-adjustment layer, never scored"),
+ dict(m="wdi_gdp_per_capita_ppp", s="WDI", d="", at=[],
+      why="income context, and PPP - against the USD-only standing rule"),
+ dict(m="wdi_pupil_teacher_ratio_primary", s="WDI", d="", at=[],
+      why="RECENCY FAIL: 0.0% current sovereign coverage (dead tail ending 2017); named in metric_methodology S4. The SECONDARY series survives at 94.3%"),
+ dict(m="wdi_population_total", s="WDI", d="", at=[],
+      why="identifier/denominator, not a governance metric"),
+]
+
+# health/education/infra/socprot components: excluded individually, they enter via the sub-composites
+D += [dict(m=_c, s="WDI", d=("-" if _c in _WDI_NEG else "+"), at=[],
+           why="component of a C5 sub-composite")
+      for _c in (_WDI_HEALTH + _WDI_EDU + _WDI_INFRA + _WDI_SOCP)]
+
+PENDING += [
+ "BUILD: four C5 sub-composites (health, education, infrastructure, social protection) with the S7 sliding penalty, ambiguous-endogeneity cap",
+ "BUILD: wdi_ip_nonresident_per_gdp (GDP-normalized nonresident patent + trademark filings)",
+ "S7: set the ambiguous-regime penalty CAP (WDI service delivery is the first tagged case)",
+]
