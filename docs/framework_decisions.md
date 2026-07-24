@@ -490,6 +490,15 @@ _Verified 2026-06-24. Reconciles each concept's primary sources against actual p
 
 ## Outstanding Decisions
 
+### Metric-selection principle: decompose-or-keep-whole [recorded 2026-07-23]
+When a source ships a composite AND its components, score ONE level, never both (scoring both double-counts: the components sum into the total). Which level:
+- **Keep the source total** when its parts are facets of ONE construct that stand or fall together and the source aggregated them on a principled/standards basis. The framework adds nothing by re-weighting. Applied: `rti_total` (7 FOI-law categories = one legal-quality construct on the CLD international-standards weighting); `spi_overall`; `imapp_breadth_total`.
+- **Decompose to components and equal-weight them yourself** when the parts are genuinely different sub-dimensions and the source’s internal weighting is arbitrary for the framework’s purpose — scoring the parent would outsource that weighting to the source. Applied: WDI service delivery (four sub-composites, else health = 41% of C5 purely on series count); Yale EPI issue-category level not the parent objectives (r=+0.90 nesting); FH sub-category totals.
+- The two rules are consistent: score at the level where the framework, not the source, controls the sub-dimension weighting — which is the total when the source’s weighting is principled, the components when it is not.
+
+### Metric-selection principle: type is not a quality ordering [recorded 2026-07-23]
+A categorical CLASSIFICATION is not a quality scale and must not be scored directionally — there is no “better” end. A fixed exchange-rate regime is not worse governance than a float (HK peg vs ARG crawl); presidential is not worse than parliamentary; an autocracy’s regime code is not a low score. Excluded on this basis: `v2x_regime` (used instead to DERIVE regime duration, which is a quality signal), `areaer_regime_ordinal`/`areaer_arrangement`/`areaer_regime_group` (score the inflation-targeting flag instead — a rules-based framework IS defensibly better), `ccp_government_system`. Where a type plausibly maps to quality, derive the quality signal from it rather than scoring the type.
+
 ### Limits of the WGI-composite comparison [recorded 2026-07-23]
 Several Step-1 blocks were checked by correlating each candidate metric against a 6-dimension WGI composite. **That comparison is valid for DIRECTION and for wealth-loading comparison. It is NOT a test of whether something is governance, and its magnitude must not drive inclusion or tier.**
 
