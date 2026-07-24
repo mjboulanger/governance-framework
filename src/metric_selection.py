@@ -421,3 +421,48 @@ PENDING += [
  "WEALTH-ADJUSTMENT AUDIT: entry #2 = Yale EPI (all sub-indices track log GDP at least as strongly as WGI; Yale states wealth strongly predicts performance)",
  "EPI REFRESH: 2026 edition is out (177 countries, 47 indicators, 12 issue categories) vs our 2024 (180/58/11) - another methodology break, reinforcing the limited-comparability note",
 ]
+
+
+# =====================================================================
+# FH-FIW block (18 columns -> 4 scored totals). Appended 2026-07-23.
+# Freedom House Freedom in the World: annual expert-coded political-rights and
+# civil-liberties assessment, ~210 countries, near-universal (195 here at 99.5%).
+# SCORE THE 4 SUB-CATEGORY TOTALS, not the 16 numbered indicators: each total IS
+# the equal-weighted sum of its 0-4 indicators (fh_d_expression_belief = d1+d2+d3+d4,
+# range 0-16), so scoring both double-counts. FH weights indicators equally within a
+# sub-category, so the total already equals the equal-weight composite the framework
+# would otherwise build, and keeps the cross-concept placement clean (sub-category D
+# lands in both C22 and C23 at different tiers). Bounded 0-12/0-16 scales -> S5
+# fixed-anchor candidate. All positive direction.
+# SOURCE CAVEAT: FH is majority US-government-funded and has a documented
+# US-foreign-policy-alignment critique - handled structurally (one source among
+# several per concept, never alone), worth stating in output.
+# =====================================================================
+D += [
+ dict(m="fh_a_electoral_process", s="FH_FIW", d="+", at=[(20, "P1")],
+      note="sub-category A: free/fair elections, honest administration, electoral laws"),
+ dict(m="fh_e_associational_rights", s="FH_FIW", d="+", at=[(24, "P1")],
+      note="sub-category E: assembly, civic/NGO freedom, trade unions"),
+ dict(m="fh_g_personal_autonomy", s="FH_FIW", d="+", at=[(22, "P1")],
+      note="sub-category G: movement, property, personal social freedoms, equality of opportunity - fills C22's residual-autonomy scope with an independent method"),
+ dict(m="fh_d_expression_belief", s="FH_FIW", d="+", at=[(23, "P2"), (22, "P2")],
+      note="sub-category D: media, religious, academic freedom + private discussion. P2 in C23 Media freedom (behind V-Dem media + CPJ). P2 (not P1) in C22 Civil liberties deliberately: C22 already holds 7 V-Dem CL metrics + Pew religious-freedom, so D's content largely overlaps - triangulation without diluting the core, which a P1 placement into an already-13-metric concept would do"),
+]
+
+# 16 numbered indicators: excluded, they sum into the 4 totals
+_FH_IND = {
+ "fh_a1":"A electoral: free/fair executive elections", "fh_a2":"A: free/fair legislative elections",
+ "fh_a3":"A: fair electoral laws and framework",
+ "fh_d1":"D: free and independent media", "fh_d2":"D: religious freedom",
+ "fh_d3":"D: academic freedom", "fh_d4":"D: free private discussion",
+ "fh_e1":"E: freedom of assembly", "fh_e2":"E: freedom for civic/NGO groups", "fh_e3":"E: free trade unions",
+ "fh_g1":"G: freedom of movement", "fh_g2":"G: property rights", "fh_g3":"G: personal social freedoms",
+ "fh_g4":"G: equality of opportunity",
+}
+D += [dict(m=_k, s="FH_FIW", d="+", at=[],
+           why="component of a FH sub-category total (" + _v.split(':')[0] + ") - scored via the total")
+      for _k, _v in _FH_IND.items()]
+
+PENDING += [
+ "C22 Civil liberties now 15 metrics (8 P1 / 7 P2) - most-measured concept in the framework; the P1/P2 split is what keeps FH-D and the WBL/Pew P2 metrics from diluting the V-Dem+FH-G core. Watch at Step 4",
+]

@@ -230,3 +230,22 @@ epi_mpe,YALE_EPI,,,,,,False,BDH component (Marine Protection Stringency) - see e
 country_code_epi,YALE_EPI,,,,,,False,"numeric UN country code - identifier, not a metric"
 ascor_climate_governance,ASCOR,+,,"TIER P2 CONFIRMED at Step 1 (was provisional): 85 countries = 44% of the sovereign core, below the 60% bar, so flagged-not-dropped per S4 - retained because it is the only investor-oriented sovereign climate-governance assessment and covers the major EMs. Fixed 0-1 anchor, S5 fixed-anchor family, passed through UNNORMALIZED. Momentum available for only 25 of 85. Full spec: framework_decisions.md 'ASCOR composite specification'",12,P2,True,
 ascor_full_diagnostic,ASCOR,,,,,,False,9-area version retained in the evidentiary layer only - includes the income-conditional areas that make cross-income comparison invalid (see ASCOR spec)
+fh_a_electoral_process,FH_FIW,+,,"sub-category A: free/fair elections, honest administration, electoral laws",20,P1,True,
+fh_e_associational_rights,FH_FIW,+,,"sub-category E: assembly, civic/NGO freedom, trade unions",24,P1,True,
+fh_g_personal_autonomy,FH_FIW,+,,"sub-category G: movement, property, personal social freedoms, equality of opportunity - fills C22's residual-autonomy scope with an independent method",22,P1,True,
+fh_d_expression_belief,FH_FIW,+,,"sub-category D: media, religious, academic freedom + private discussion. P2 in C23 Media freedom (behind V-Dem media + CPJ). P2 (not P1) in C22 Civil liberties deliberately: C22 already holds 7 V-Dem CL metrics + Pew religious-freedom, so D's content largely overlaps - triangulation without diluting the core, which a P1 placement into an already-13-metric concept would do",23,P2,True,
+fh_d_expression_belief,FH_FIW,+,,"sub-category D: media, religious, academic freedom + private discussion. P2 in C23 Media freedom (behind V-Dem media + CPJ). P2 (not P1) in C22 Civil liberties deliberately: C22 already holds 7 V-Dem CL metrics + Pew religious-freedom, so D's content largely overlaps - triangulation without diluting the core, which a P1 placement into an already-13-metric concept would do",22,P2,True,
+fh_a1,FH_FIW,+,,,,,False,component of a FH sub-category total (A electoral) - scored via the total
+fh_a2,FH_FIW,+,,,,,False,component of a FH sub-category total (A) - scored via the total
+fh_a3,FH_FIW,+,,,,,False,component of a FH sub-category total (A) - scored via the total
+fh_d1,FH_FIW,+,,,,,False,component of a FH sub-category total (D) - scored via the total
+fh_d2,FH_FIW,+,,,,,False,component of a FH sub-category total (D) - scored via the total
+fh_d3,FH_FIW,+,,,,,False,component of a FH sub-category total (D) - scored via the total
+fh_d4,FH_FIW,+,,,,,False,component of a FH sub-category total (D) - scored via the total
+fh_e1,FH_FIW,+,,,,,False,component of a FH sub-category total (E) - scored via the total
+fh_e2,FH_FIW,+,,,,,False,component of a FH sub-category total (E) - scored via the total
+fh_e3,FH_FIW,+,,,,,False,component of a FH sub-category total (E) - scored via the total
+fh_g1,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
+fh_g2,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
+fh_g3,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
+fh_g4,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
