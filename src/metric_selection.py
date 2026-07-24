@@ -369,3 +369,55 @@ PENDING += [
  "BUILD: wdi_ip_nonresident_per_gdp (GDP-normalized nonresident patent + trademark filings)",
  "S7: set the ambiguous-regime penalty CAP (WDI service delivery is the first tagged case)",
 ]
+
+
+# =====================================================================
+# EPI + ASCOR block. Appended 2026-07-23.
+# EPI: score the ISSUE-CATEGORY level only. Parent levels (epi_epi, epi_eco,
+# epi_hlt) are excluded because scoring a parent OUTSOURCES THE SUB-DIMENSION
+# WEIGHTING TO YALE (epi_eco is a weighted sum: BDH 25%, Forests 5%, Fisheries 2%)
+# - the framework's method is to equal-weight sub-dimensions itself, as with the
+# ASCOR area roll-up and the WDI sub-composites. Nesting confirmed empirically
+# (epi_epi vs epi_eco r=+0.810; epi_eco vs epi_bdh r=+0.899).
+# WEALTH-ADJUSTMENT AUDIT ENTRY #2 (after ASCOR): every EPI sub-index correlates
+# with log GDP/capita at least as strongly as with the WGI composite
+# (wrs +0.843 vs +0.716; hlt +0.831 vs +0.799). Yale states outright that wealth
+# strongly predicts EPI performance. NOT an exclusion basis - wealth-correlation is
+# expressly not an exclusion criterion - but flagged for the adjustment layer.
+# =====================================================================
+D += [
+ dict(m="epi_agr", s="YALE_EPI", d="+", at=[(12, "P1")],
+      note="Agriculture issue category - sustainable nitrogen management etc. 180 countries, biennial"),
+ dict(m="epi_wrs", s="YALE_EPI", d="+", at=[(12, "P1")],
+      note="Water Resources issue category (wastewater treatment). PLACEMENT FLAG: capital-infrastructure content, arguably closer to C5 service delivery than C12 environmental governance - revisit at Step 4"),
+ dict(m="epi_bdh", s="YALE_EPI", d="+", at=[(12, "P2")],
+      note="Biodiversity & Habitat. P2 not P1 on INTERNAL COMPARABILITY: its marine components are absent for ~27% of countries (mkp 48, mpe 49, mhp 36 of 180 NaN), so Yale renormalizes BDH over a terrestrial-only question set for landlocked countries and a fuller set for coastal ones - the ASCOR non-comparability pattern occurring inside one metric"),
+ dict(m="epi_cch", s="YALE_EPI", d="+", at=[(12, "P2")],
+      note="Climate Change issue category. INCLUDED despite overlapping ASCOR EP.1: different provider, different method (Yale scores continuous emissions-reduction rates and net-zero proximity; ASCOR asks 3 binaries) - triangulation under the repetition rule. CAVEAT: error is CORRELATED not independent - both measure emissions trajectory, confounded by industrial structure, growth rate and energy endowment. Two sources give more precision on a partly-confounded quantity, they do not neutralise the confound"),
+
+ dict(m="epi_epi", s="YALE_EPI", d="", at=[],
+      why="headline composite - master says 'use sub-components selectively, not headline composite'. Scoring it adopts Yale's cross-objective weighting, and it contains epi_hlt (sanitation, drinking water) which is already in wdi_infrastructure_index for C5 - cross-concept leakage"),
+ dict(m="epi_eco", s="YALE_EPI", d="", at=[],
+      why="policy-objective parent of bdh/agr/fsh/wrs (r=+0.899 with bdh). Scoring it outsources sub-dimension weighting to Yale and compounds opaquely with the children"),
+ dict(m="epi_hlt", s="YALE_EPI", d="", at=[],
+      why="policy-objective parent; its content (air quality, sanitation, drinking water, heavy metals, waste) is development/service-delivery outcome and duplicates wdi_infrastructure_index in C5"),
+ dict(m="epi_fsh", s="YALE_EPI", d="", at=[],
+      why="fish stock status inside an EEZ is shaped by distant-water fleets, regional fisheries bodies and ocean conditions - substantially outside national control; measures a shared resource's condition more than one state's governance. Also 39 of 180 structurally absent (landlocked) and scores INVERSELY to governance and wealth (r -0.148 WGI, -0.302 logGDP), so skipping it would advantage landlocked states"),
+ dict(m="epi_mkp", s="YALE_EPI", d="", at=[],
+      why="one of BDH's twelve components; only 3 of the 12 were extracted so BDH cannot be rebuilt independently, and scoring these alongside epi_bdh double-counts. Coverage was NOT the disqualifier (68% of sovereigns, above the bar)"),
+ dict(m="epi_mhp", s="YALE_EPI", d="", at=[], why="BDH component - see epi_mkp"),
+ dict(m="epi_mpe", s="YALE_EPI", d="", at=[], why="BDH component (Marine Protection Stringency) - see epi_mkp"),
+ dict(m="country_code_epi", s="YALE_EPI", d="", at=[], why="numeric UN country code - identifier, not a metric"),
+
+ # ---- ASCOR: spec was committed 2026-07-22 but the metric row was never written ----
+ dict(m="ascor_climate_governance", s="ASCOR", d="+", at=[(12, "P2")],
+      note="TIER P2 CONFIRMED at Step 1 (was provisional): 85 countries = 44% of the sovereign core, below the 60% bar, so flagged-not-dropped per S4 - retained because it is the only investor-oriented sovereign climate-governance assessment and covers the major EMs. Fixed 0-1 anchor, S5 fixed-anchor family, passed through UNNORMALIZED. Momentum available for only 25 of 85. Full spec: framework_decisions.md 'ASCOR composite specification'"),
+ dict(m="ascor_full_diagnostic", s="ASCOR", d="", at=[],
+      why="9-area version retained in the evidentiary layer only - includes the income-conditional areas that make cross-income comparison invalid (see ASCOR spec)"),
+]
+
+PENDING += [
+ "C12 BALANCE: 8 of 11 metrics are climate/energy vs 3 non-climate environmental. Nothing measures the concept's stated core (ministry capacity, EIA processes, enforcement, regulatory capture) - the master already concedes this as a real measurement gap. Address via tier/measurement-quality weighting at Step 4, not by dropping valid sources",
+ "WEALTH-ADJUSTMENT AUDIT: entry #2 = Yale EPI (all sub-indices track log GDP at least as strongly as WGI; Yale states wealth strongly predicts performance)",
+ "EPI REFRESH: 2026 edition is out (177 countries, 47 indicators, 12 issue categories) vs our 2024 (180/58/11) - another methodology break, reinforcing the limited-comparability note",
+]

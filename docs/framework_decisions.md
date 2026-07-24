@@ -490,6 +490,13 @@ _Verified 2026-06-24. Reconciles each concept's primary sources against actual p
 
 ## Outstanding Decisions
 
+### Limits of the WGI-composite comparison [recorded 2026-07-23]
+Several Step-1 blocks were checked by correlating each candidate metric against a 6-dimension WGI composite. **That comparison is valid for DIRECTION and for wealth-loading comparison. It is NOT a test of whether something is governance, and its magnitude must not drive inclusion or tier.**
+
+- **Why it works for direction:** asking which way a variable runs is separable from asking what it measures. This caught a real error - V-Dem’s individual corruption items are coded higher = LESS corrupt while only the `v2x_corr` index is reverse-coded, so asserting the family sign from the codebook would have inverted four of C18’s five V-Dem metrics.
+- **Why magnitude is circular:** if WGI were an adequate measure of governance, this framework would be redundant. Treating WGI agreement as the criterion privileges WGI’s implicit construct over the one the framework specifies, and penalises exactly the dimensions WGI omits. WGI has no environmental component, so a low correlation for an EPI sub-index cannot distinguish “not governance” from “environmental governance WGI does not measure.”
+- **Correction applied:** EPI sub-indices were briefly demoted to P2 on low WGI correlation; that demotion was withdrawn. `epi_agr` and `epi_wrs` restored to P1 per the master. `epi_bdh` remains P2 on an independent basis (internal comparability - marine components absent for ~27% of countries). Tier priors come from the master and are refined on construct and measurement-quality grounds, never on correlation with another index.
+
 ### Reference-class distortion in normalization [recorded 2026-07-22]
 Distributional normalization (z, log-z, percentile) scores a country against the reference distribution of **whichever countries happen to be measured**. Where an indicator has **non-random coverage**, that reference class is unrepresentative and the resulting scores are distorted in the direction of the coverage skew. Worked example: ASCOR is advanced-economy-skewed (85 countries, 50 high-income), so a typical EM z-scores about 0.05 lower on a 0-1 scale than it would against a representative reference class - i.e. being *measured* becomes a disadvantage relative to being omitted. **PEFA runs the opposite way** (donor-driven, developing-heavy), so a developing country may score better against PEFA-s reference class than it would globally. Same mechanism, inverted sign.
 
