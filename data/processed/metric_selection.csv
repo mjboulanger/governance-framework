@@ -263,3 +263,14 @@ ucdp_os_deaths_best,UCDP,,,,,,False,"one-sided violence against civilians overla
 ucdp_os_violence_exists,UCDP,,,,,,False,one-sided existence flag - see os_deaths
 ucdp_os_govt_killings_best,UCDP,,,,,,False,"government killings of civilians - a distinct state-violence signal, but the master routed UCDP away from C16; left on the table rather than overriding that placement"
 ucdp_total_orgvio_deaths_best,UCDP,,,,,,False,"rollup summing all three violence types, incl. the interstate/one-sided/non-state content excluded above on construct grounds"
+rti_total,RTI_RATING,+,,"de jure FOI legal-framework strength, 0-150. P1 in C25 Government transparency (home concept), P2 in C23 Media freedom. Fixed-anchor candidate. DE JURE ONLY - Afghanistan 139/150 illustrates rules-on-paper vs practice",25,P1,True,
+rti_total,RTI_RATING,+,,"de jure FOI legal-framework strength, 0-150. P1 in C25 Government transparency (home concept), P2 in C23 Media freedom. Fixed-anchor candidate. DE JURE ONLY - Afghanistan 139/150 illustrates rules-on-paper vs practice",23,P2,True,
+Right of Access,RTI_RATING,,,,,,False,component of rti_total (one coherent legal-quality construct; scored via the total)
+Scope,RTI_RATING,,,,,,False,component of rti_total
+Requesting Procedure,RTI_RATING,,,,,,False,component of rti_total
+Exceptions & Refusals,RTI_RATING,,,,,,False,component of rti_total
+Appeals,RTI_RATING,,,,,,False,component of rti_total
+Sanctions & Protections,RTI_RATING,,,,,,False,component of rti_total
+Promotional Measures,RTI_RATING,,,,,,False,component of rti_total
+has_rti_law,RTI_RATING,,,,,,False,"metadata flag (142 law / 54 floored), not a score - feeds the S8 reliability layer so a floored no-law country carries that context rather than reading as measured-and-failed"
+rti_law_year,RTI_RATING,,,,,,False,"metadata - year the FOI law was enacted, not a governance score"

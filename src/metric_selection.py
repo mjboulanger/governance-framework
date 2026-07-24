@@ -516,3 +516,45 @@ PENDING += [
  "WEIGHTING (Step 4): metric->concept weighting is UNSET. Working default = equal-weight-within-tier, with tiers (P1>P2>Sp) as coarse weighting - so every tier call this pass IS a weighting decision, and the numeric P1/P2/Sp multipliers are still to be set. Locked already: categories equal; concepts = relevance x measurement-quality (C11 Trade and C12 Environmental at 0.5 relevance; measurement-quality 1.0/0.75/0.5 mechanism locked, per-concept values due at Step 1).",
  "WEIGHTING (Step 4): decide whether within-tier weighting should be CORRELATION-AWARE. Equal-weight-within-tier treats correlated metrics as independent, so it under-penalizes (a) over-measured concepts (C22 Civil liberties 15, C23 Media 11 - many correlated perception measures) and (b) single-source concentration (C19 Legislative checks 5-of-5 V-Dem coded as 5 independent metrics). Highest-value weighting question in the framework. Derived sub-composites (wdi_health_index, pts_index) already embed ad-hoc anti-concentration weighting that a general rule should subsume.",
 ]
+
+
+# =====================================================================
+# RTI Rating block (11 columns -> 1 scored). Appended 2026-07-23.
+# Global Right to Information Rating (Centre for Law and Democracy + Access Info
+# Europe): scores the DE JURE strength of a country's FOI legal framework against
+# 61 indicators -> rti_total (0-150) + 7 category sub-scores. 196 countries: 142 with
+# an RTI law get real scores, 54 with NO law are floored (deficit-list flag) - a
+# documented scoring choice that is construct-correct: no FOI law is the worst possible
+# framework, not missing data. Cross-sectional (history deferred - RTI is a sticky
+# step-function).
+# SCORE rti_total, drop the 7 sub-scores. This is the OPPOSITE of the WDI decomposition,
+# deliberately: RTI's 7 categories are facets of ONE coherent legal-quality construct
+# that stand or fall together (a well-drafted FOI law is well-drafted throughout), and
+# CLD's aggregation reflects the international-standards consensus on what a strong law
+# contains - there is no arbitrary source-weighting to correct, unlike WDI's genuinely
+# different health/education/infra dimensions. Decompose when sub-components are rival
+# constructs the framework should weight itself; keep the total when the source has
+# aggregated one construct on a principled basis.
+# DE JURE CAVEAT: rates the law on paper, not information actually released. Afghanistan
+# scores 139/150 under a government that does not release information - the same
+# rules-on-paper failure mode as WB BRSS. Record in output; do not correct here (RTI
+# correctly measures the statute).
+# TIER = WEIGHTING: P1 in C25 (RTI's home - the FOI legal-framework leg), P2 in C23
+# (media-environment input, and C23 is already at 11 metrics).
+# 0-150 bounded scale with a meaningful floor -> S5 fixed-anchor candidate, pass-through.
+# =====================================================================
+D += [
+ dict(m="rti_total", s="RTI_RATING", d="+", at=[(25, "P1"), (23, "P2")],
+      note="de jure FOI legal-framework strength, 0-150. P1 in C25 Government transparency (home concept), P2 in C23 Media freedom. Fixed-anchor candidate. DE JURE ONLY - Afghanistan 139/150 illustrates rules-on-paper vs practice"),
+
+ dict(m="Right of Access", s="RTI_RATING", d="", at=[], why="component of rti_total (one coherent legal-quality construct; scored via the total)"),
+ dict(m="Scope", s="RTI_RATING", d="", at=[], why="component of rti_total"),
+ dict(m="Requesting Procedure", s="RTI_RATING", d="", at=[], why="component of rti_total"),
+ dict(m="Exceptions & Refusals", s="RTI_RATING", d="", at=[], why="component of rti_total"),
+ dict(m="Appeals", s="RTI_RATING", d="", at=[], why="component of rti_total"),
+ dict(m="Sanctions & Protections", s="RTI_RATING", d="", at=[], why="component of rti_total"),
+ dict(m="Promotional Measures", s="RTI_RATING", d="", at=[], why="component of rti_total"),
+ dict(m="has_rti_law", s="RTI_RATING", d="", at=[],
+      why="metadata flag (142 law / 54 floored), not a score - feeds the S8 reliability layer so a floored no-law country carries that context rather than reading as measured-and-failed"),
+ dict(m="rti_law_year", s="RTI_RATING", d="", at=[], why="metadata - year the FOI law was enacted, not a governance score"),
+]
