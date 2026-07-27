@@ -55,7 +55,7 @@ All indicators are normalized so **higher = better governance**. Every indicator
 
 ## 4. Metric inclusion / usability [LOCKED — 2026-07-10]
 
-**Principle [LOCKED]:** a metric's inclusion is judged by **current cross-sectional coverage on the spine** — the share of spine countries with a *recent-enough latest value* — **judged against the source's own cadence**. **History depth is a separate, non-gating attribute:** a metric with broad recent coverage but no long panel is fully includable; a metric with a long panel but stale/thin recent coverage may fail.
+**Principle [LOCKED]:** a metric's inclusion is judged by **current cross-sectional coverage on the spine** — the share of spine countries with a *recent-enough latest value* — **judged against the source's own cadence**. **DERIVED-METRIC COVERAGE RULE [2026-07-24]: a metric built from several components inherits coverage by its combination rule - UNION of component coverage when it is a mean-of-available (a country is scored if ANY component is present, e.g. wdi_health_index, the ASCOR area means), MIN (intersection) when it is a product or ratio that needs every input (e.g. a per-GDP or per-capita normalization needs both numerator and denominator). The union case is why zero-filled census metrics (UCDP, CPJ) read as near-universal coverage. History depth is a separate, non-gating attribute:** a metric with broad recent coverage but no long panel is fully includable; a metric with a long panel but stale/thin recent coverage may fail.
 
 This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the inclusion test: a per-election or snapshot source shows low panel-fill for structural reasons that say nothing about current usability.
 
@@ -182,14 +182,14 @@ Reported as **two coordinates, not collapsed by default** ("avg +0.3/yr, 4 of 5 
 
 Resolved during Step-1 metric selection, concept-by-concept. Authoritative per-source detail in `framework_decisions.md`; summary:
 
-- **C8** — AREAER `other_managed` is a residual, not a flexibility rank (handle separately / flag).
+- **C8** — AREAER `other_managed` is a residual, not a flexibility rank. RESOLVED at Step-1: the ER-regime *type* columns are not scored at all (type is not a quality ordering); C8 scores the inflation-targeting flag instead, so the residual never enters a score.
 - **C9** — FATF 2013-vs-2022 methodology-scale comparability (`methodology_round` flag is the lever: use-as-is / filter / down-weight). BRSS 0.70 reliability threshold sensitivity.
 - **C11** — KOF proxy (`dr_eg` = Economic, not Trade subindex) vs dedicated pipeline. Economic-relevance annotation missing.
-- **C12** — EPI policy/institutional sub-component selection. WB-carbon inferred-absence flag; revenue/GDP materiality. Economic-relevance annotation missing.
+- **C12** — EPI sub-component selection RESOLVED at Step-1 (score issue-category level: epi_agr, epi_wrs, epi_bdh, epi_cch; not the nested parent objectives). WB-carbon inferred-absence flag and revenue/GDP materiality remain Step-3 build items. Economic-relevance annotation still missing.
 - **C17** — Fraser Area-2 property-specific sub-component selection.
 - **C18/C25** — IDEA Political Finance cross-reference (homed in C25, also anti-corruption transparency).
 - **C20** — IDEA Voter Turnout compulsion adjustment.
-- **C22** — Pew SHI presence confirm.
+- **C22** — Pew SHI presence CONFIRMED at Step-1 (both GRI and SHI present and scored C22 P2).
 - **C23** — CPJ Israel/OPT lumped under ISR.
 - **C25** — RTI no-law floor (min−1SD assigned floor; `has_rti_law` flag) revisit.
 - **Cross-cutting** — WGI standard errors (optional ranking-confidence enhancement); WDI WBL/HCI/social-protection sparse recent coverage (investigate at harmonization); SPI-overall sparser than pillar-1 (flag); GTD/BCI currency verification.
