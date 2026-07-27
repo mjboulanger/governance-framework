@@ -513,7 +513,7 @@ D += [
 
 
 PENDING += [
- "WEIGHTING (Step 4): metric->concept weighting is UNSET. Working default = equal-weight-within-tier, with tiers (P1>P2>Sp) as coarse weighting - so every tier call this pass IS a weighting decision, and the numeric P1/P2/Sp multipliers are still to be set. Locked already: categories equal; concepts = relevance x measurement-quality (C11 Trade and C12 Environmental at 0.5 relevance; measurement-quality 1.0/0.75/0.5 mechanism locked, per-concept values due at Step 1).",
+ "WEIGHTING (Step 4): metric->concept weighting is UNSET. Working default = equal-weight-within-tier, with tiers (P1>P2>Sp) as coarse weighting - so every tier call this pass IS a weighting decision, and those multipliers are ALREADY LOCKED in metric_methodology S6 (2026-07-10): P1=1.0, P2=0.5, Sp=0, as revisitable DEFAULTS - an earlier version of this item wrongly said they were unset (corrected 2026-07-24); what is genuinely open at Step 4 is the equal-weight and promotion sensitivity check on those defaults. Locked already: categories equal; concepts = relevance x measurement-quality (C11 Trade and C12 Environmental at 0.5 relevance; measurement-quality 1.0/0.75/0.5 mechanism locked, per-concept values due at Step 1).",
  "WEIGHTING (Step 4): decide whether within-tier weighting should be CORRELATION-AWARE. Equal-weight-within-tier treats correlated metrics as independent, so it under-penalizes (a) over-measured concepts (C22 Civil liberties 15, C23 Media 11 - many correlated perception measures) and (b) single-source concentration (C19 Legislative checks 5-of-5 V-Dem coded as 5 independent metrics). Highest-value weighting question in the framework. Derived sub-composites (wdi_health_index, pts_index) already embed ad-hoc anti-concentration weighting that a general rule should subsume.",
 ]
 
@@ -659,4 +659,12 @@ D += [
 
 PENDING += [
  "C9 Financial sector COMPLETE: FATF effectiveness (P1, de facto AML/CFT) + FATF technical compliance (P2, de jure AML/CFT) + BRSS stringency (Sp, de jure banking). 3 metrics, clears thin flag. GAPS remain: securities, insurance, non-AML supervisory effectiveness - all await FSAP (PDF-locked). C9 output must state it measures AML/CFT + banking rules, not the full financial-supervision remit",
+]
+
+
+# ---- DOC-AUDIT ADDITIONS 2026-07-24 ----
+PENDING += [
+ "C17 Property rights - Fraser Area 2 UNRESOLVED FLAG: metric_methodology S11 and the master both call for property-specific sub-component selection, but fraser_clean.csv carries only area aggregates and fraser_legal_system (full Area 2) was scored at P2 without resolving the flag. Either extend the Fraser pipeline to sub-components or explicitly accept the aggregate - decide before Step 3",
+ "C20 Electoral process - IDEA Voter Turnout: master says keep-for-metric-pass but NO pipeline was ever built, so there is nothing to score. Status = not-built; the compulsion-adjustment question is moot unless a pipeline is added. Recorded so the master flag does not read as an open decision",
+ "C10 State control over the economy - SECOND-INDICATOR PAIRING DECLINED (user decision, session 2026-07-23). The master suggested pairing v2clstown with IMF GFS Public Corporations or Fraser government-enterprises; user declined both, and the one tested candidate (ccp_market_economy_provisions) failed on variance (81/19 binary de jure constitutional text). C10 stays single-indicator, carrying its S8 weight-review flag",
 ]
