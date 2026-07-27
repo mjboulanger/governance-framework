@@ -294,8 +294,8 @@ Source: World Bank **Bank Regulation and Supervision Survey (BRSS)** — the Bar
 master lists as Concept 9's supplementary banking source, now BUILT (nb 38, `wb_brss_clean.csv`). 5th wave
 (fielded 2017, released 2019; **reference year 2016**, derived from the question codes — not hardcoded).
 SUPPLEMENTARY tier. Fills the banking-regulation *de jure* leg that FATF (AML/CFT) does not cover. CC-BY-4.0.
-Auto-discovers the latest `.xlsx` from the permanent WB catalog page (dataset `0038632`); the single flagged
-constant is `BRSS_CATALOG_URL` (Cell 2).
+Auto-discovers the latest `.xlsx` from the permanent WB catalog page (dataset `0038632`); the flagged
+constants are `BRSS_CATALOG_URL` (Cell 2) and `CACHE_YEAR` (Cell 4, the new-wave detection sentinel that must be bumped to adopt a new wave). Note the reference year (2016) IS derived from the question codes; it is the cache/wave year that is hand-set.
 
 **What it measures — and what it does NOT:** a **de jure regulatory-STRINGENCY** score (rules on paper), NOT
 supervisory effectiveness/implementation. Advanced economies scoring mid-pack is CORRECT and expected (top of

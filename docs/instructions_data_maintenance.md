@@ -84,88 +84,22 @@ For each source, the pipeline derives the data "as-of" date from the data or fil
 
 ---
 
-## Update Frequency Reference
+## Source status, access method and update frequency
 
-Within each category, sources are ordered by number of indicators used in the framework.
+The per-source build status, access method, update frequency, coverage and `data_as_of_date` are **not maintained here**. They live in two places that are authoritative:
 
-### Category 1: PDF extraction (most manual)
-| Source ID | Source Name | Frequency |
-|-----------|-------------|-----------|
-| IMF_FSAP | IMF FSAP / BCP / IOSCO / IAIS | Per-country 5–10yr |
+- **`data/processed/source_registry.csv`** — written by each pipeline at build time (`source_id`, `access_method`, `python_approach`, `update_frequency`, `coverage_countries`, `coverage_years`, `highest_tier`, `category`, `tier`, `data_as_of_date`, `coverage`, `notes`). This is the build-truth record; see the Source Registry Architecture section of `framework_decisions.md` for how it is written and why the notebook seed list diverges from it.
+- **`docs/framework_decisions.md`** — the Consolidated Build Status table (by source) and the Build-Status by Concept audit, for a human-readable at-a-glance view.
 
-_(PEFA moved to Category 4 — structured "Scores Downloads" CSV, not PDF. ICNL dropped from the batch — HTML country notes, supplementary `tier3_web`, no pipeline.)_
+*A hand-maintained copy of that information used to sit here as six "Category 1-6" tables. It drifted out of date (built pipelines still listed as pending, dropped sources still listed as pending) because it duplicated a generated artifact, so it was removed 2026-07-24. To find which sources need a refresh, run `print_stale_sources()` from `src/download_log.py`.*
 
-### Category 2: Email/form download
-| Source ID | Source Name | Frequency |
-|-----------|-------------|-----------|
-| VDEM | V-Dem Full+Others | Annual |
-
-### Category 3: Web scrape (not yet built)
-| Source ID | Source Name | Frequency |
-|-----------|-------------|-----------|
-| FATF | FATF Compliance Ratings | Per-country ~10yr |
-| IPU_PARLINE | IPU Parline | Continuous |
-| WTO_TFA | WTO TFA Implementation | Continuous |
-| IMF_SDDS | IMF SDDS Subscriptions | Continuous |
-| CPJ | Committee to Protect Journalists | Continuous |
-
-### Category 4: Manual download
-| Source ID | Source Name | Built? |
-|-----------|-------------|--------|
-| IDEA_PARTIP | IDEA Global State of Democracy | ✅ |
-| PEW_GRI | Pew GRI / SHI | ✅ |
-| IMF_FISCAL_RULES | IMF Fiscal Rules Database | ✅ |
-| CLIMATE_LAWS | LSE Grantham / Climate Policy Radar | Downloaded, pipeline pending |
-| ODIN | Open Data Inventory | Downloaded, pipeline pending |
-| IRENA_POLICY | IRENA Renewable Energy Policies | Downloaded, pipeline pending |
-| OECD_TFI | OECD Trade Facilitation Indicators | ✅ (nb 34) |
-| IMF_AREAER | IMF AREAER (FARI capital-account) | ✅ FARI built (nb 32) |
-| IMF_AREAER_ERREGIME | IMF AREAER de-facto ER regime | ✅ (nb 37; hand-transcribed, checksum-validated) |
-| FATF | FATF Mutual Evaluation Ratings (AML/CFT) | ✅ (nb 35; Cloudflare-gated browser download) |
-| PEFA | PEFA (Scores Downloads CSV) | ✅ |
-| RSF_WPFI | RSF World Press Freedom Index | Optional cross-check only |
-
-### Category 5: Manual irregular (not built; most superseded — see framework_decisions.md)
-| Source ID | Source Name | Status |
-|-----------|-------------|--------|
-| UNCTAD_NTM | UNCTAD NTM Database | Pending |
-| RTI_RATING | RTI Rating | Pending |
-| TI_POLFINANCE | TI Political Finance Database | Pending |
-| IDEA_EMB | IDEA EMB Database | Pending |
-| GLOBAL_DATA_BAROMETER | Global Data Barometer | Pending |
-| REINHART_ROGOFF | Reinhart-Rogoff Exchange Rate | Pending, low priority |
-| DINCER_CB | Dincer-Eichengreen CB Transparency | Deprioritized (stale) |
-| LINZER_STATON | Linzer-Staton Judicial Independence | Deprioritized (stale) |
-
-Note: POLITY5 and NELDA were previously listed here but are now sourced via the QoG pipeline — see Category 6 and framework_decisions.md.
-
-### Category 6: Automated — API or direct download
-| Source ID | Source Name | Status |
-|-----------|-------------|--------|
-| WB_WDI | World Bank WDI | Active |
-| FSI | Fragile States Index | Active |
-| WGI | World Bank WGI | Active |
-| TI_CPI | TI Corruption Perceptions Index | Active |
-| IMF_SPI | WB Statistical Performance Indicators | Active |
-| UCDP | Uppsala Conflict Data Program | Active |
-| FRASER_REG / FRASER_LEGAL | Fraser EFW | Active |
-| QOG | QoG Standard TS (13 sources incl. POLITY5, NELDA) | Active |
-| POWELL_THYNE | Powell-Thyne Coup Database | Active |
-| UNODC_HOMICIDE | UNODC Homicide Statistics | Active |
-| IRENA_CAPACITY | IRENA Renewables Capacity | Active |
-| IMF_IMAPP | IMF iMaPP | Active |
-| YALE_EPI | Yale EPI | Active |
-| WB_CARBON | World Bank Carbon Pricing | Active (dashboard: existence/price/coverage/revenue) |
-| DPI | Database of Political Institutions | Active |
-| CIVICUS | CIVICUS Monitor | Active |
-| WJP | WJP Rule of Law Index | Active |
-| FH_FIW | Freedom House FIW | Active |
-| CHINN_ITO | Chinn-Ito Index (KAOPEN) | Active (scrape → year-stamped .xls; needs xlrd) |
-| WB_BRSS | World Bank Bank Regulation & Supervision Survey | Active (catalog auto-discover; FROZEN wave — manual 6th-wave check) |
-| ACLED | ACLED | Pending Research tier |
-| BASEL_AML | Basel AML Index | Pending Expert Edition |
-
----
+**Access-category vocabulary** (used throughout `framework_decisions.md` and the per-source sections below; the `category` column in `source_registry.csv` carries it per source):
+- **Category 1** — PDF extraction (most manual; narrative reports with no structured dataset).
+- **Category 2** — email / form-gated download.
+- **Category 3** — web scrape.
+- **Category 4** — manual download of a structured file (regular cadence).
+- **Category 5** — manual download, irregular / no cadence.
+- **Category 6** — automated (API or direct download); no action needed unless the pipeline fails.
 
 ## Per-Source Instructions
 
@@ -318,6 +252,7 @@ schedule; periodically check the catalog page for a 6th wave. If one is posted:
    meaning of any changed question must be re-checked by hand.
 3. Re-run `notebooks/exploration/38_wb_brss_pipeline.ipynb` end-to-end → `data/processed/wb_brss_clean.csv`
    + updated `download_log`; then re-run the `WB_BRSS` cell in `02_source_registry.ipynb`.
+**MANUAL UPDATE — `CACHE_YEAR` (Cell 4, = 2021):** the file-year of the wave the cache and the Cell-3 curation target (2019 wave, 2021-updated release). Cell 4 compares the catalog's newest file-year against it; if a newer wave is found it prints a LOUD alert and deliberately keeps using the cache rather than auto-adopting, because a new wave can renumber questions. **Bumping `CACHE_YEAR` (and deleting the old cache) is the step that actually adopts a new wave** — do it only AFTER re-validating `INCLUDED_QUESTIONS`. *(Improvement noted for Step 3: this could be derived by persisting the downloaded file's year rather than hand-set.)*
 **MANUAL UPDATE — reliability threshold (`RELIABILITY_MIN_COVERAGE`, Cell 6, = 0.70):** a scoring/scope
 constant, NOT a per-update edit; change only to revisit the reliable-vs-flagged cutoff (see framework_decisions.md).
 **Caveats:** DE JURE regulatory-stringency (rules on paper), NOT supervisory effectiveness — advanced
