@@ -2,7 +2,7 @@
 
 *Framework architecture, principles, source-level measurement decisions for 25 concepts, future enhancements, and outstanding work.*
 
-> **Document status.** This is the editable Markdown master, reconstructed from the May 2026 PDF and updated to reflect design-level decisions taken since. **As-of: 2026-07-09. MANUAL SNAPSHOT — does not auto-update.** Pipeline build status, data currency, and code are tracked separately in `docs/framework_decisions.md`, `data/processed/source_registry.csv`, and the download log. A dated changelog of substantive changes since the May version appears at the end of this document.
+> **Document status.** This is the **living master** for the framework's design (concepts, categories, source rosters, per-concept measurement decisions). It is edited directly as decisions are made; **git history is the record of changes** (the dated changelog at the end is frozen; it covered the May-to-July 2026 migration from the original PDF and is no longer maintained). Per-metric selection outcomes live in `data/processed/metric_selection.csv` (authoritative) and `src/metric_selection.py`; pipeline build status and data currency in `docs/framework_decisions.md`, `data/processed/source_registry.csv`, and the download log.
 
 ---
 
@@ -52,7 +52,7 @@ The framework organises governance into **5 categories** containing **25 unique 
 | | Financial sector regulatory and supervisory quality | FSAP/BCP/IOSCO/IAIS assessments (where available); FATF compliance ratings; Basel AML Index | Barth-Caprio-Levine bank regulation survey (2019); IMF FSI outcomes (low weight, low S/N) |
 | | State control over the economy | V-Dem v2clstown (state ownership/control of economy) | *(SOE governance quality split out, deferred to v2)* |
 | | Trade governance | WB Logistics Performance Index; OECD Trade Facilitation Indicators; WTO TFA implementation *(dropped — licence)*; KOF Globalisation Index Trade subindex; WB WITS tariff data; Heritage Trade Freedom | WTO Trade Policy Reviews (Tier 3); WTO RTA database |
-| | Environmental and climate governance | Yale EPI policy/institutional sub-components; LSE Grantham Climate Laws Database; ND-GAIN governance and readiness; IRENA Renewables Capacity Statistics; WB Carbon Pricing Dashboard | IEA energy data and Policies Database (free portions); BNEF Climatescope; WEF Energy Transition Index. *(IRENA Renewable Energy Policies Database deprioritized — see changelog)* |
+| | Environmental and climate governance | Yale EPI policy/institutional sub-components; LSE Grantham Climate Laws Database; ~~ND-GAIN~~ *(dropped at Step-1)*; ASCOR sovereign climate assessment; IRENA Renewables Capacity Statistics; WB Carbon Pricing Dashboard | IEA energy data and Policies Database (free portions); BNEF Climatescope; WEF Energy Transition Index. *(IRENA Renewable Energy Policies Database deprioritized — see changelog)* |
 
 \* *Concept appears in more than one category. Inventory: 25 unique concepts, 29 instances. WGI Voice and Accountability serves as Accountability category roll-up cross-check; WGI Rule of Law as Rule of Law category cross-check.*
 
@@ -422,7 +422,8 @@ The following sections cover all concepts in framework order. Each section provi
 |--------|----------|-------------------|
 | Yale Environmental Performance Index (EPI) — policy and institutional sub-components | Primary tier 1 | Workhorse for environmental governance content. 180 countries, biennial. Use sub-components selectively, not headline composite. |
 | LSE Grantham Climate Laws Database | Primary tier 1 | De jure environmental and climate framework. Universal coverage. Continuously updated. *(Built national-only cumulative stock + flow.)* |
-| ND-GAIN governance and readiness sub-scores | Primary tier 1 | Governance and readiness dimensions; 192 countries; annual. Broader governance content with environmental framing. |
+| ASCOR (TPI Centre / LSE) sovereign climate assessment | Primary tier 2 | Investor-led sovereign climate-*policy* assessment (legislation, carbon pricing, targets, just transition). ~85 countries, EM/frontier-oriented, income-group-exempted by design. Added at source level 2026-07-21; scored on 5 universally-answered areas. See `framework_decisions.md`. |
+| ND-GAIN governance and readiness sub-scores | **Dropped at Step-1** | Construct validity: readiness is fundamentally an adaptive-capacity / development measure (wealth, infrastructure), governance at most a weak distal factor; governance-readiness is WGI-repackaged. See `framework_decisions.md`. |
 | IRENA Renewables Capacity Statistics | Primary tier 1 | Workhorse for renewables outcomes. ~200 countries, annual. High S/N for renewables specifically. |
 | World Bank Carbon Pricing Dashboard | Primary tier 1 | Direct fit for carbon pricing existence and design. Universal coverage. *(Built; 71 countries — thin, flagged.)* |
 | IRENA Renewable Energy Policies Database | Deprioritized | No clean downloadable renewable-policy dataset exists; IRENA's policy work is report-based, and the joint IEA/IRENA Policies DB has no clean renewable filter and would duplicate Climate Laws. See changelog. |
@@ -453,9 +454,9 @@ The following sections cover all concepts in framework order. Each section provi
 |--------|----------|-------------------|
 | V-Dem state authority indicators (v2svstterr, v2svdomaut, related) | Primary tier 1 | Direct fit for administrative/territorial reach. ~180 countries, annual. Workhorse. |
 | FSI Security Apparatus (C1) | Primary tier 1 | Direct measure of coercive capacity (state monopoly on force, competing armed actors). 179 countries, annual. |
-| World Bank Informal Economy Database | Primary tier 2 | Informality as proxy for state reach into formal economy. ~160 countries. Direct conceptual link via administrative reach. |
+| World Bank Informal Economy Database | **Dropped at Step-1** | 0% current sovereign coverage (series ends 2020, fails recency). Informality-as-state-reach was the rationale; no current data. See `framework_decisions.md`. |
 | ILO social security coverage | Primary tier 2 | Formality via state administrative systems. ~150 countries. Direct measure of state reach. |
-| Hanson-Sigman state capacity index | Supplementary | Multi-dimensional latent variable measure. ~169 countries. Last comprehensive update 2021. Use as cross-check with double-counting caveat (incorporates V-Dem and other sources we use). |
+| Hanson-Sigman state capacity index | **Dropped at Step-1** | Series ends 2015, fails the 4-year recency window (the "last update 2021" note referred to the dataset release, not the data's latest year). See `framework_decisions.md`. |
 | Hendrix state capacity measures | Dropped — supersession | Foundational paper (2010); subsequent update thin. Superseded by Hanson-Sigman. |
 | Tax revenue / GDP (ICTD-UNU-WIDER, IMF GFS) | Dropped — S/N | Variation driven heavily by economic structure, tax base, political choices, informality. Low S/N for state extractive capacity proper. |
 | WGI Government Effectiveness | Dropped — precision | Too broad. Used in GE+AQ concept. |
@@ -609,7 +610,7 @@ The following sections cover all concepts in framework order. Each section provi
 | V-Dem legislative and executive constraint indicators (v2xlg_legcon and components: v2lgoppart, v2lgqstexp, v2lginvstp, v2lgotovst) | Primary tier 1 | Multiple direct precise measures of legislative oversight. Plus v2x_horacc (broader horizontal accountability index). ~180 countries, annual. |
 | Comparative Constitutions Project — separation of powers and checks features | Primary tier 1 | De jure constitutional architecture. Universal coverage. |
 | IPU Parline | ~~Primary tier 1~~ → **dropped from v1** | Scouted: **free** data via open REST API (`api.data.ipu.org`, 193 countries, daily, 500+ fields) — clean, automatable access. BUT licensed **CC BY-NC-SA (non-commercial)**, conflicting with the framework's commercial/investment purpose. Also largely redundant for legislative *checks*: V-Dem `v2xlg_legcon` + CCP + Polity cover the construct directly; Parline is structural/descriptive (chamber structure, oversight bodies), not a checks-strength index. Dropped on licence + redundancy; access route recorded if a non-commercial use or licence change ever reopens it. |
-| Polity5 Executive Constraints (XCONST) | Primary tier 2 | Classic executive constraints measure. Long time series. Update reliability concern; V-Dem supersession ongoing. |
+| Polity5 Executive Constraints (XCONST) | **Dropped at Step-1** | Series ends 2018, fails the 4-year recency window; V-Dem supersedes. (XCONST was never in the QoG extract regardless.) C19 is now single-source V-Dem. See `framework_decisions.md`. |
 | WGI Voice and Accountability | Category-level cross-check | Aggregate; used at Accountability category roll-up rather than concept primary. |
 | IDEA EMB Database | Dropped — placement | Moved to Electoral Process and Competition per vertical accountability fit. |
 | INTOSAI audit institution data | Supplementary | Tier 3 fragmentary cross-country dataset. Use selectively where extractable. |
@@ -783,6 +784,8 @@ The following sections cover all concepts in framework order. Each section provi
 ---
 
 ## Changelog — design-level changes since the May 2026 master
+
+> **This changelog is FROZEN (2026-07-24).** It recorded the May-to-July 2026 migration from the original PDF. The `.md` is now the living master, edited directly, with **git history as the record of subsequent changes**. New design decisions are made in place in the sections above, not appended here. The entries below are retained as the historical migration record.
 
 This section records substantive design-level decisions made after the May 2026 PDF version. Build mechanics (notebooks, file paths, access methods, data currency) live in `docs/framework_decisions.md`, `data/processed/source_registry.csv`, and the download log; only decisions that affect the framework's *design* (concepts, source roles, source dispositions) are recorded here.
 
