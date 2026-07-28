@@ -717,13 +717,13 @@ DICT = {
 # ---- Concept 2: Political stability and government continuity ----
  "vdem_regime_duration": dict(
      definition = "How long a country has continuously held its current type of political regime - a measure of regime stability/continuity. A derived metric based on V-Dem's regime classification.",
-     source_reports = "Would be derived from V-Dem's Regimes of the World variable v2x_regime, a 0-3 typology (0 = closed autocracy, 1 = electoral autocracy, 2 = electoral democracy, 3 = liberal democracy). V-Dem itself does not publish a duration variable.",
-     standalone_transform = "NOT BUILT. This metric does not exist in any pipeline yet - it appears only in the metric_selection record as a planned scored metric. The column is absent from vdem_filtered.csv. PLANNED: count consecutive years a country has stayed in the same v2x_regime category (a run-length from the regime series). The exact derivation rule is not yet fixed in code.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the duration count to the common framework scale.",
-     units = "Planned: years in current regime type (count). Higher = longer continuity.",
-     coverage = "Would follow v2x_regime coverage (~180 countries) once built.",
-     caveats = "PLANNED metric, not yet implemented anywhere - both the derivation and the scoring are outstanding build tasks. Scores Concept 2 (Political stability and government continuity). Direction assumes longer regime continuity is better, which is defensible for stability but worth revisiting (a long-stable autocracy also scores high on duration alone).",
-     status = "selected",
+     source_reports = "Derived from V-Dem's Regimes of the World variable v2x_regime, a 0-3 typology (0 = closed autocracy, 1 = electoral autocracy, 2 = electoral democracy, 3 = liberal democracy). Per framework_decisions, the regime TYPE is not scored directionally (type is not a quality ordering), but its DURATION is a legitimate stability signal derived from it.",
+     standalone_transform = "BUILT in src/derive_metrics.py. For each country-year, count consecutive years in the SAME v2x_regime category (reset to 1 the first year a new category appears; a category change resets the count). Then CAP at 30 years. A null v2x_regime breaks the run (that year is null, the run restarts after). Validated against Hungary (resets 2010 and 2018, its two real regime reclassifications) and France (stable, caps at 30).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 1-30 count to the common framework scale. The cap already handles the shape - scaling need not add further diminishing-returns treatment.",
+     units = "Years in current regime category, capped at 30 (1-30). Higher = more durable/entrenched.",
+     coverage = "172 spine countries (the V-Dem-covered ones). 41 spine micro-states/territories have no value; the closed regimes PRK/ERI/TKM and Taiwan are out of scope by design.",
+     caveats = "DIRECTION-AGNOSTIC durability: a long-stable AUTOCRACY scores as high as a long-stable democracy - this measures entrenchment/predictability of the political order, NOT its quality, and must not be read as a governance-quality signal (it is one leg of C2, paired with coups, conflict, and WGI stability). CAP at 30 is deliberate: past ~one political generation more years do not mean more stability, and the cap makes pre-1990 left-censoring moot (a country stable since before the panel is >=30 and caps to 30 regardless of its unseen true start) AND severs the metric from panel length. Known property: compresses the top (all entrenched regimes read 30) - correct for a stability signal, which needs 'recently changed vs entrenched', not fine ranking among the entrenched. Scores Concept 2 (Political stability and government continuity).",
+     status = "built",
  ),
 
  # ---- Concept 15: Judicial independence and quality (all interval-scale, direction +) ----
