@@ -17,8 +17,18 @@ Three-stage calculation, kept separate on purpose:
                          Usually TBD until Step-3.
 
 status: 'selected' = source_reports + standalone_transform locked at Step-1,
-        panel_scaling TBD at Step-3. 'built' = all fields final.
-"""
+         panel_scaling TBD at Step-3. 'built' = all fields final.
+
+ BUILD-STATUS DISCIPLINE (added 2026-07-24): describe only what EXISTS.
+   - standalone_transform = what a SOURCE PIPELINE (nb 03-40) actually does today.
+     In-source aggregations (FATF IO-mean, BRSS weighted mean, ODIN category-mean,
+     iMaPP breadth, Climate-Laws cumulative, compliance mean) ARE built - read from code.
+   - Anything computed LATER (log1p, per-capita, min-max, percentile, winsorize,
+     missingness penalty, spine zero-fill, cross-coder means like PTS, tier weighting)
+     is NOT built: the scoring/normalization layer does not exist yet. nb 39 only
+     PROPOSES a per-metric method (metric_distribution_profile.csv); human disposes at
+     Step 1/3. So panel_scaling states 'NOT BUILT yet' before naming the planned method.
+ """
 
 DICT = {
 
@@ -438,15 +448,127 @@ DICT = {
  "pts_index": dict(
      definition = "How severe state-perpetrated physical-integrity violations are - political imprisonment, torture, killings, and disappearances by the state. A combined Political Terror Scale score.",
      source_reports = "Political Terror Scale, obtained via the Quality of Government dataset. PTS publishes THREE separate 1-5 codings of the same year, one each from Amnesty International, Human Rights Watch, and the US State Department (higher = more state terror). We combine them.",
-     standalone_transform = "WE BUILD THIS. For each country-year we take the MEAN of whichever of the three coder scores are present (a union - a country is covered if ANY coder rated it, not only if all three did). We use the union rather than the intersection to maximize coverage; checks showed the coders do not differ systematically in severity, so averaging available ones does not bias the result.",
-     panel_scaling = "Decided at Step 3: converted to the common framework scale, inverting so that less state terror scores better.",
+     standalone_transform = "None yet in a pipeline. The source provides THREE separate 1-5 coder columns (pts_amnesty, pts_hrw, pts_statedept); they are carried through unchanged, not yet combined.",
+     panel_scaling = "NOT BUILT - the scoring layer does not exist yet. PLANNED (per the metric_selection derive= note): for each country-year take the MEAN of whichever coder scores are present (a union, so a country counts if ANY coder rated it, maximizing coverage; checks showed no systematic coder-severity bias). Then convert to the common scale, inverting so less state terror scores better.",
      units = "Score 1-5 (mean of available coders). Higher is WORSE (more state terror). Direction is negative.",
      coverage = "About 98% of country-years, largely via the State Department coding which has the widest reach.",
-     caveats = "The three individual coder columns are not scored separately (they are the inputs to this mean). Scores two concepts: Concept 16 (Personal security and public order) as a primary leg, and Concept 22 (Civil liberties) as a supporting leg.",
+     caveats = "The three individual coder columns are not scored separately (they are the planned inputs to the mean). The combining mean is NOT yet implemented anywhere - it lives only as a plan in metric_selection. Scores two concepts: Concept 16 (Personal security and public order) as a primary leg, and Concept 22 (Civil liberties) as a supporting leg.",
      status = "selected",
  ),
 
+# ================= CCP (Comparative Constitutions Project, via QoG) =================
+ # NOTE: value 96 is a MISSING sentinel in the source, not data - recode to blank before use.
 
+ "ccp_civil_rights_provisions": dict(
+     definition = "Whether a country's constitution contains civil-rights provisions written into the text. From the Comparative Constitutions Project.",
+     source_reports = "Comparative Constitutions Project (variable ccp_civil), via the Quality of Government dataset. Higher = more civil-rights provisions in the constitution.",
+     standalone_transform = "Recode needed before use: the source uses 96 as a MISSING marker (not a real value), so 96 must be set to blank (affects ~23 countries). This recode is flagged as a build step in metric_selection and is NOT yet applied. Otherwise the value is used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "Constitutional-provision measure (de jure). Higher is better.",
+     coverage = "Most countries with codified constitutions.",
+     caveats = "DE JURE only - measures what the constitution SAYS, not whether rights are honored in practice. Scores Concept 14 (Legal quality and predictability).",
+     status = "selected",
+ ),
+
+ "ccp_information_access": dict(
+     definition = "Whether a country's constitution guarantees access to government information - a constitutional right-to-information provision. From the Comparative Constitutions Project.",
+     source_reports = "Comparative Constitutions Project (variable ccp_infoacc), via the Quality of Government dataset. Higher = information-access provisions present in the constitution.",
+     standalone_transform = "Recode needed before use: the source uses 96 as a MISSING marker, so 96 must be set to blank (affects ~6 countries). Flagged in metric_selection, NOT yet applied. Otherwise used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "Constitutional-provision measure (de jure). Higher is better.",
+     coverage = "Most countries with codified constitutions.",
+     caveats = "DE JURE only - what the constitution SAYS, not practice. Scores Concept 14 (Legal quality and predictability).",
+     status = "selected",
+ ),
+
+ # ================= Romelli Central Bank Independence (via QoG) =================
+
+ "romelli_cbi_index": dict(
+     definition = "How independent a country's central bank is by law - insulation from political interference in its governance, objectives, policy, and financing of government. Romelli's extended Central Bank Independence index.",
+     source_reports = "Romelli Central Bank Independence Extended (CBIE) index, variable cbie_index, via the Quality of Government dataset. A de jure index built from central-bank legislation, higher = more independent. Long history (1923-2023).",
+     standalone_transform = "None. QoG carries the index unchanged; we use it as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "Index (roughly 0-1). Higher is better (more independent).",
+     coverage = "About 155 countries.",
+     caveats = "DE JURE - measures independence written into central-bank law, not day-to-day operational independence. The policy and lending sub-components exist but are not scored separately (they decompose this overall index). Scores Concept 8 (Macroeconomic policy framework quality).",
+     status = "selected",
+ ),
+
+ # ================= UCDP (Uppsala Conflict Data Program) =================
+
+ "ucdp_sb_intrastate_deaths_best": dict(
+     definition = "How much lethal internal armed conflict a country suffers - the best estimate of battle-related deaths in state-based INTRASTATE conflicts (government versus internal armed groups) in a year. From UCDP.",
+     source_reports = "Uppsala Conflict Data Program, country-year organized-violence dataset. Field: best estimate of deaths in state-based intrastate conflicts. A raw death COUNT, higher = more conflict deaths.",
+     standalone_transform = "None yet beyond selection/rename. The pipeline (nb 12) selects the intrastate death count as-published. INTRASTATE only is deliberate: interstate conflict is external aggression, a different construct (e.g. Ukraine's file-max interstate deaths would invert the meaning). Non-state and one-sided violence are excluded.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned (per metric_selection): express per-capita (raw counts favor large countries), apply log1p (the distribution is extreme and zero-inflated), zero-fill countries with no recorded conflict to the spine (absence = a true zero, ~99.5% of the panel), then convert to the common scale, inverting so fewer deaths score better.",
+     units = "Battle-related deaths (raw count as delivered; per-capita + log planned). Higher is WORSE. Direction is negative.",
+     coverage = "About 199 countries, 1989-2024. Most country-years are true zeros (no conflict).",
+     caveats = "Interstate deaths deliberately excluded (external aggression is not internal-stability failure). Scores Concept 2 (Political stability and government continuity).",
+     status = "selected",
+ ),
+
+ # ================= CPJ (Committee to Protect Journalists) =================
+ # Live census: CPJ's endpoints only return countries with >=1, so absence = a true zero.
+
+ "cpj_imprisoned": dict(
+     definition = "How many journalists a country has jailed for their work - a live count of those currently imprisoned. From the Committee to Protect Journalists.",
+     source_reports = "Committee to Protect Journalists, via its public API. A live census snapshot: the count of journalists currently imprisoned for their work, per country. Raw count, higher = more repression.",
+     standalone_transform = "Built in-pipeline (nb 36): CPJ's count endpoint only lists countries with at least one jailed journalist, so absence from the list means a TRUE ZERO - the pipeline fills those countries with 0. One row per country. No denominator applied (see caveats).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned (per metric_selection): apply log1p (counts are zero-inflated and skewed), keep as a raw count NOT per-capita, then convert to the common scale, inverting so fewer jailed journalists score better.",
+     units = "Count of imprisoned journalists (raw). Higher is WORSE. Direction is negative.",
+     coverage = "All framework countries (those not on CPJ's list are true zeros). Live snapshot, refreshed on each run.",
+     caveats = "Deliberately NOT per-capita: dividing by population inverts the ranking wrongly (China would look better than tiny Eritrea despite jailing far more journalists in absolute terms). CPJ lumps Israel/OPT under one code. Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ "cpj_murders_unsolved": dict(
+     definition = "How many journalist murders in a country have gone unsolved - complete-impunity killings over a rolling recent window. A measure of impunity for violence against the press. From the Committee to Protect Journalists.",
+     source_reports = "Committee to Protect Journalists, via its public API. The count of journalist murders classified 'Complete Impunity' (unsolved) over a rolling window of the last few years. Raw count, higher = more impunity.",
+     standalone_transform = "Built in-pipeline (nb 36): derived from per-case murder records by tallying complete-impunity cases per country; absence from CPJ's data means a true zero, filled with 0. Rolling window auto-derived from the current year (not hardcoded). One row per country.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned (per metric_selection): apply log1p, keep as a raw count, then convert to the common scale, inverting so fewer unsolved murders score better.",
+     units = "Count of unsolved journalist murders (raw, rolling window). Higher is WORSE. Direction is negative.",
+     coverage = "All framework countries (absence = true zero). Slow-moving over the window.",
+     caveats = "The impunity signal (unsolved), distinct from raw murder counts. The separate confirmed-murder count was DROPPED from scoring (conflict-contaminated - Israel/OPT alone was 32 of 99 in one pull). Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ # ================= FATF Mutual Evaluations =================
+ # Two axes on the SAME 0-3 scale, both higher=better, both built in-pipeline (nb 35 cell 5).
+
+ "fatf_effectiveness": dict(
+     definition = "How effective a country's anti-money-laundering and counter-terrorist-financing system is IN PRACTICE - the real-world outcomes, as judged by FATF's Mutual Evaluations. The de facto AML/CFT measure.",
+     source_reports = "Financial Action Task Force Mutual Evaluations. FATF rates 11 'Immediate Outcomes' (effectiveness) on a 4-level scale: High, Substantial, Moderate, Low. Higher = more effective.",
+     standalone_transform = "Built in-pipeline (nb 35): map the 4 levels to numbers (High=3, Substantial=2, Moderate=1, Low=0), then take the MEAN across the 11 Immediate Outcomes. Higher = more effective in practice.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-3 mean to the common framework scale.",
+     units = "Mean effectiveness 0-3. Higher is better.",
+     coverage = "About 199 countries (latest assessment per country).",
+     caveats = "DE FACTO leg - real-world outcomes, weighted more heavily (via tier) than the de jure compliance leg because it is the scarcer, better-discriminating signal. Measures AML/CFT specifically, not the whole financial-supervision remit. Scores Concept 9 (Financial sector regulatory and supervisory quality).",
+     status = "selected",
+ ),
+
+ "fatf_technical_compliance": dict(
+     definition = "How well a country's laws and rules match the FATF anti-money-laundering STANDARD on paper - technical compliance with the 40 Recommendations. The de jure AML/CFT measure.",
+     source_reports = "Financial Action Task Force Mutual Evaluations. FATF rates the 40 Recommendations on a 4-level scale: Compliant, Largely Compliant, Partially Compliant, Non-Compliant. Higher = better legal compliance with the standard.",
+     standalone_transform = "Built in-pipeline (nb 35): map the 4 levels to numbers (Compliant=3, Largely=2, Partially=1, Non=0), then take the MEAN across the Recommendations. IMPORTANT: a Recommendation rated 'N/A' (not applicable to that country) becomes blank and is EXCLUDED from the mean, never counted as 0 - it is a structural exclusion, not a low score.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-3 mean to the common framework scale.",
+     units = "Mean technical compliance 0-3. Higher is better.",
+     caveats = "DE JURE - compliance with the FATF STANDARD on paper, NOT real-world effectiveness. The gap between this and fatf_effectiveness is the framework's clearest illustration of why rules-on-paper overstate governance (compliance averages far higher than effectiveness). Scores Concept 9 (Financial sector regulatory and supervisory quality).",
+     coverage = "About 199 countries.",
+     status = "selected",
+ ),
+
+ # ================= WB Bank Regulation & Supervision Survey =================
+
+ "brss_regstringency": dict(
+     definition = "How stringent a country's banking regulation and supervision are on paper - the strength of prudential rules across supervisory power, independence, capital, monitoring, resolution, and related areas. Built from the World Bank's Bank Regulation and Supervision Survey.",
+     source_reports = "World Bank Bank Regulation and Supervision Survey (BRSS), 2019 wave (2016 reference year). A questionnaire of yes/no and numeric items on banking prudential regulation - not a pre-built index.",
+     standalone_transform = "Built in-pipeline (nb 38): from 9 clear-directional sub-constructs (supervisory power, independence, private monitoring, resolution regime, macroprudential, capital stringency, provisioning, liquidity/concentration, supervisory capacity). Each item is normalized 0-1 and signed for direction, combined into the 9 sub-scores, then a WEIGHTED MEAN produces the headline (weights: power/independence/private-monitoring/resolution/macroprudential = 2; capital/provisioning/liquidity/supervisory-capacity = 1). A coverage-reliability FLAG (not a penalty) excludes sparse entries downstream. Validated against Anginer et al. 2019.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 stringency score to the common framework scale.",
+     units = "De jure stringency index 0-1. Higher = stronger rules on paper.",
+     coverage = "About 161 countries (155 reliable after the coverage flag).",
+     caveats = "DE JURE rules-on-paper, NOT supervisory effectiveness. Scored as a SUPPLEMENTARY leg purely because the data is frozen at the 2016 vintage (too stale to drive a current score), NOT because banking regulation is peripheral - it is central to Concept 9 and would be a primary leg if current. Scores Concept 9 (Financial sector regulatory and supervisory quality).",
+     status = "selected",
+ ),
 
 
 
