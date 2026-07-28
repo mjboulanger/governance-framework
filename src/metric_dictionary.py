@@ -1456,7 +1456,144 @@ DICT = {
      status = "selected",
  ),
 
+# ================= WJP Rule of Law Index =================
+ # Eight factor scores, all 0-1, higher = more rule of law. Scored individually
+ # (decompose): the framework, not WJP, controls how factors weight into concepts.
 
+ "wjp_f2_absence_corruption": dict(
+     definition = "How free a country's government is from corruption - across the executive, judiciary, military/police, and legislature. WJP Rule of Law Index, Factor 2.",
+     source_reports = "World Justice Project Rule of Law Index, Factor 2 (Absence of Corruption). Published 0-1, higher = less corruption. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 score to the common framework scale.",
+     units = "Score 0-1. Higher is better (less corruption).",
+     coverage = "About 140 countries.",
+     caveats = "Scored as its own factor (decompose-or-keep-whole: the framework controls how WJP factors weight into concepts, not WJP). Scores Concept 18 (Control of corruption).",
+     status = "selected",
+ ),
+
+ "wjp_f3_open_government": dict(
+     definition = "How open a country's government is - publicized laws, right to information, civic participation, and complaint mechanisms. WJP Rule of Law Index, Factor 3.",
+     source_reports = "World Justice Project Rule of Law Index, Factor 3 (Open Government). Published 0-1, higher = more open. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 score to the common framework scale.",
+     units = "Score 0-1. Higher is better.",
+     coverage = "About 140 countries.",
+     caveats = "Scores TWO concepts: Concept 7 (Public financial management) and Concept 25 (Government transparency and openness).",
+     status = "selected",
+ ),
+
+ "wjp_f4_fundamental_rights": dict(
+     definition = "How well a country protects fundamental rights - equal treatment, life and security, due process, expression, religion, privacy, association, and labor rights. WJP Rule of Law Index, Factor 4.",
+     source_reports = "World Justice Project Rule of Law Index, Factor 4 (Fundamental Rights). Published 0-1, higher = stronger rights protection. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 score to the common framework scale.",
+     units = "Score 0-1. Higher is better.",
+     coverage = "About 140 countries.",
+     caveats = "Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "wjp_f5_order_security": dict(
+     definition = "How well a country maintains order and security - control of crime, civil conflict, and political violence. WJP Rule of Law Index, Factor 5.",
+     source_reports = "World Justice Project Rule of Law Index, Factor 5 (Order and Security). Published 0-1, higher = more order/security. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 score to the common framework scale.",
+     units = "Score 0-1. Higher is better.",
+     coverage = "About 140 countries.",
+     caveats = "Scores TWO concepts: Concept 16 (Personal security and public order) and Concept 2 (Political stability and government continuity).",
+     status = "selected",
+ ),
+
+ "wjp_f6_regulatory_enforcement": dict(
+     definition = "How well a country enforces regulations - whether rules are applied and enforced without improper influence or unreasonable delay, with respect for due process. WJP Rule of Law Index, Factor 6.",
+     source_reports = "World Justice Project Rule of Law Index, Factor 6 (Regulatory Enforcement). Published 0-1, higher = better enforcement. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 score to the common framework scale.",
+     units = "Score 0-1. Higher is better.",
+     coverage = "About 140 countries.",
+     caveats = "Scores TWO concepts: Concept 6 (Regulatory quality and business environment) and Concept 14 (Legal quality and predictability).",
+     status = "selected",
+ ),
+
+ "wjp_f6_5_no_expropriation": dict(
+     definition = "How free people and businesses are from unlawful expropriation - whether the government takes property without due process or adequate compensation. WJP sub-factor 6.5.",
+     source_reports = "World Justice Project Rule of Law Index, sub-factor 6.5 (government does not expropriate without lawful process and adequate compensation). Published 0-1, higher = more protected. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 score to the common framework scale.",
+     units = "Score 0-1. Higher is better.",
+     coverage = "About 140 countries.",
+     caveats = "A sub-factor (not a top-level factor), pulled specifically for its expropriation signal. Scores Concept 17 (Property rights and contract enforcement).",
+     status = "selected",
+ ),
+
+ "wjp_f7_civil_justice": dict(
+     definition = "How accessible and effective a country's civil justice is - whether people can resolve civil disputes affordably, without discrimination or delay, through impartial courts. WJP Rule of Law Index, Factor 7.",
+     source_reports = "World Justice Project Rule of Law Index, Factor 7 (Civil Justice). Published 0-1, higher = better civil justice. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 score to the common framework scale.",
+     units = "Score 0-1. Higher is better.",
+     coverage = "About 140 countries.",
+     caveats = "Scores Concept 15 (Judicial independence and quality).",
+     status = "selected",
+ ),
+
+ "wjp_f8_criminal_justice": dict(
+     definition = "How effective and fair a country's criminal justice is - effective investigation and adjudication, impartiality, due process, and freedom from corruption in the criminal system. WJP Rule of Law Index, Factor 8.",
+     source_reports = "World Justice Project Rule of Law Index, Factor 8 (Criminal Justice). Published 0-1, higher = better criminal justice. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 score to the common framework scale.",
+     units = "Score 0-1. Higher is better.",
+     coverage = "About 140 countries.",
+     caveats = "Scores Concept 15 (Judicial independence and quality).",
+     status = "selected",
+ ),
+
+ # ================= Freedom in the World (Freedom House) =================
+ # Sub-aggregate point totals scored individually (decompose), each with its own max.
+
+ "fh_a_electoral_process": dict(
+     definition = "How free and fair a country's electoral process is - whether the head of government and legislature are chosen in genuine elections under fair laws. Freedom in the World subcategory A.",
+     source_reports = "Freedom House, Freedom in the World, subcategory A (Electoral Process) point total. Scored 0-12 (three questions, 0-4 each), higher = freer elections. Annual.",
+     standalone_transform = "None. Selected and used as-published (the FH subcategory total, not the rolled-up PR/CL scores).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-12 total to the common framework scale.",
+     units = "Point total 0-12. Higher is better.",
+     coverage = "Near-universal (~195 countries/territories).",
+     caveats = "Scored at the subcategory level, not FH's aggregate PR/CL scores (decompose: the framework controls how FH parts weight into concepts). Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+ "fh_d_expression_belief": dict(
+     definition = "How free expression and belief are - freedom of media, religious practice, academic freedom, and open private discussion. Freedom in the World subcategory D.",
+     source_reports = "Freedom House, Freedom in the World, subcategory D (Freedom of Expression and Belief) point total. Scored 0-16 (four questions, 0-4 each), higher = freer. Annual.",
+     standalone_transform = "None. Selected and used as-published (the FH subcategory total).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-16 total to the common framework scale.",
+     units = "Point total 0-16. Higher is better.",
+     coverage = "Near-universal (~195 countries/territories).",
+     caveats = "Scores TWO concepts: Concept 23 (Media freedom and pluralism) and Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "fh_e_associational_rights": dict(
+     definition = "How free people are to associate and organize - freedom of assembly, freedom for civic and NGO groups, and free trade unions. Freedom in the World subcategory E.",
+     source_reports = "Freedom House, Freedom in the World, subcategory E (Associational and Organizational Rights) point total. Scored 0-12 (three questions, 0-4 each), higher = freer. Annual.",
+     standalone_transform = "None. Selected and used as-published (the FH subcategory total).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-12 total to the common framework scale.",
+     units = "Point total 0-12. Higher is better.",
+     coverage = "Near-universal (~195 countries/territories).",
+     caveats = "Scores Concept 24 (Civil society space and vitality).",
+     status = "selected",
+ ),
+
+ "fh_g_personal_autonomy": dict(
+     definition = "How much personal autonomy and individual rights people have - freedom of movement, property rights, personal social freedoms, and equality of opportunity. Freedom in the World subcategory G.",
+     source_reports = "Freedom House, Freedom in the World, subcategory G (Personal Autonomy and Individual Rights) point total. Scored 0-16 (four questions, 0-4 each), higher = more autonomy. Annual.",
+     standalone_transform = "None. Selected and used as-published (the FH subcategory total).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-16 total to the common framework scale.",
+     units = "Point total 0-16. Higher is better.",
+     coverage = "Near-universal (~195 countries/territories).",
+     caveats = "Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
 
     
 
