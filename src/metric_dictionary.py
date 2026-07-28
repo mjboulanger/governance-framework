@@ -22,6 +22,43 @@ status: 'selected' = source_reports + standalone_transform locked at Step-1,
 
 DICT = {
 
+ # ================= WGI (World Bank Worldwide Governance Indicators) =================
+ # 3 of 6 WGI indicators scored; the other 3 are category cross-checks (see metric_selection).
+ # All three share the World Bank estimate scale and are used exactly as published.
+
+ "wgi_political_stability": dict(
+     definition = "How stable a country's government is, and how free it is from political violence and terrorism. World Bank's Political Stability indicator.",
+     source_reports = "World Bank Worldwide Governance Indicators, code GOV_WGI_PV.EST. Published as a score from about -2.5 (least stable) to +2.5 (most stable), where 0 is roughly the world average that year. Updated yearly since 2003 (every two years before that).",
+     standalone_transform = "None. We use the World Bank's published score as-is.",
+     panel_scaling = "Decided at Step 3: the -2.5 to +2.5 score will be converted to the common framework scale.",
+     units = "Score about -2.5 (worst) to +2.5 (best). Higher is better.",
+     coverage = "Nearly every country (200+). Exact latest-year count not measured, as coverage this broad affects no decision.",
+     caveats = "COMBINED index: the World Bank builds it by averaging many other sources, so it overlaps with several metrics we use and we treat it as a broad cross-check, not an independent signal. We never use how closely a metric tracks WGI to decide inclusion, only to check direction. Scores Concept 2 (Political stability and government continuity).",
+     status = "selected",
+ ),
+
+ "wgi_government_effectiveness": dict(
+     definition = "How well a country's government delivers public services, sets and carries out policy, and runs a competent civil service free of political interference. World Bank's Government Effectiveness indicator.",
+     source_reports = "World Bank Worldwide Governance Indicators, code GOV_WGI_GE.EST. Same scale as the other WGI indicators: about -2.5 (worst) to +2.5 (best), 0 is roughly the world average that year. Updated yearly since 2003.",
+     standalone_transform = "None. We use the World Bank's published score as-is.",
+     panel_scaling = "Decided at Step 3: the -2.5 to +2.5 score will be converted to the common framework scale.",
+     units = "Score about -2.5 (worst) to +2.5 (best). Higher is better.",
+     coverage = "Nearly every country (200+). Exact latest-year count not measured, as coverage this broad affects no decision.",
+     caveats = "COMBINED index (see wgi_political_stability): overlaps with other metrics, used as a cross-check; direction-only for the WGI-correlation rule. Scores Concept 4 (Government effectiveness and administrative capacity).",
+     status = "selected",
+ ),
+
+ "wgi_regulatory_quality": dict(
+     definition = "How well a country designs and applies rules and regulations that let the private sector work - avoiding both red tape and gaps that let harm through. World Bank's Regulatory Quality indicator.",
+     source_reports = "World Bank Worldwide Governance Indicators, code GOV_WGI_RQ.EST. Same scale as the other WGI indicators: about -2.5 (worst) to +2.5 (best), 0 is roughly the world average that year. Updated yearly since 2003.",
+     standalone_transform = "None. We use the World Bank's published score as-is.",
+     panel_scaling = "Decided at Step 3: the -2.5 to +2.5 score will be converted to the common framework scale.",
+     units = "Score about -2.5 (worst) to +2.5 (best). Higher is better.",
+     coverage = "Nearly every country (200+). Exact latest-year count not measured, as coverage this broad affects no decision.",
+     caveats = "COMBINED index (see wgi_political_stability): overlaps with other metrics, used as a cross-check; direction-only for the WGI-correlation rule. Scores Concept 6 (Regulatory quality and business environment).",
+     status = "selected",
+ ),
+
  # ================= IMF_FISCAL_RULES (C8 Macroeconomic policy framework quality) =================
 
  "fr_num_rule_types": dict(
