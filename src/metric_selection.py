@@ -702,14 +702,18 @@ PENDING += [
 ]
 
 PENDING += [
- "BUILD BACKLOG - 8 SCORED-BUT-NOT-BUILT metrics found during dictionary backfill (2026-07-24). "
- "Their defining transform exists in NO pipeline; each is scored in metric_selection but produces no "
- "value yet. Must be built BEFORE Step-3 scoring or the affected concepts score short. "
- "FOUR simple derivations (specified, just uncoded): vdem_regime_duration (run-length on v2x_regime, "
- "in nb 03), pts_index (mean of the 3 QoG PTS coder columns, metric pass), wb_carbon_revenue_pct_gdp "
- "(raw carbon revenue / WDI GDP, metric pass), wdi_ip_nonresident_per_gdp (non-resident IP counts / "
- "WDI GDP, metric pass). FOUR composites needing a COMPOSITION DECISION first (which components, what "
- "weighting - unfinished Step-1 design, not mechanical): wdi_education_index, wdi_health_index, "
- "wdi_infrastructure_index, wdi_social_protection_index (all C5). Recommended sequence: triage + build "
- "the 4 simple ones, decide composition for the 4 C5 composites, then build - all before Step-3.",
+ "BUILD BACKLOG (updated 2026-07-24 after the derivation session). Original 8 scored-but-not-built "
+ "metrics found during dictionary backfill, now resolved as follows. FOUR simple derivations: THREE "
+ "BUILT in src/derive_metrics.py - vdem_regime_duration (capped run-length on v2x_regime), pts_index "
+ "(union-mean of the 3 QoG PTS coders), wb_carbon_revenue_pct_gdp (carbon revenue / reconstructed "
+ "total GDP as pct). ONE DROPPED - wdi_ip_nonresident_per_gdp (per-GDP ratio pathological at small "
+ "economies; C17 well-carried without it). FOUR C5 composites RECLASSIFIED to the SCALING LAYER (not "
+ "step-1 derivations): their spec is mean of z-normalized components, and z-normalization is a "
+ "cross-panel scaling op, so they build with the scaling layer, not derive_metrics.py. Membership is "
+ "FULLY SPECIFIED (no open composition decision): wdi_health_index (9 comps), wdi_education_index (4), "
+ "wdi_infrastructure_index (3), wdi_social_protection_index (3), all C5 P1. EMBEDDED SIGN-FLIPS the "
+ "scaling build MUST apply before averaging: wdi_maternal_mortality and wdi_mortality_under5 (health) "
+ "and wdi_pupil_teacher_ratio_secondary (edu) are higher=WORSE, invert before the mean; all other "
+ "components are higher=better. These embed equal-weight-across-components, an ad-hoc anti-concentration "
+ "choice the Step-4 correlation-aware weighting rule should subsume (see the WEIGHTING pending item).",
 ]
