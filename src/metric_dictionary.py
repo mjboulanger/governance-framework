@@ -1317,7 +1317,144 @@ DICT = {
      status = "selected",
  ),
 
+# ================= WB Carbon Pricing Dashboard =================
 
+ "wb_carbon_pricing_exists": dict(
+     definition = "Whether a country has a carbon price in force - a carbon tax or emissions trading scheme actually implemented. From the World Bank Carbon Pricing Dashboard.",
+     source_reports = "World Bank Carbon Pricing Dashboard, per instrument (carbon taxes and ETS) with status and jurisdiction. Not a country-level flag as delivered.",
+     standalone_transform = "Built in-pipeline (nb 20): set to 1 if the country has at least one IMPLEMENTED national carbon-pricing instrument (planned/under-consideration excluded). EU ETS is expanded to all EU member states. Otherwise 0.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: use the 0/1 flag on the common framework scale.",
+     units = "Binary 0/1. 1 = a carbon price exists. Higher is better.",
+     coverage = "Broad; most countries (0 where no scheme).",
+     caveats = "National schemes only; subnational (e.g. US state) schemes are not counted at country level. Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ "wb_carbon_price_usd": dict(
+     definition = "How high a country's carbon price is - the price per tonne of CO2, a measure of how strong the price signal is. From the World Bank Carbon Pricing Dashboard.",
+     source_reports = "World Bank Carbon Pricing Dashboard, price per instrument in US dollars per tonne CO2-equivalent.",
+     standalone_transform = "Built in-pipeline (nb 20): the MEAN price across a country's implemented instruments in each country-year, in US$/tCO2e. Zero or blank where no scheme.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the price to the common framework scale.",
+     units = "US dollars per tonne CO2e. Higher = stronger price signal (better).",
+     coverage = "Only countries with a carbon price (others are zero/absent).",
+     caveats = "Price LEVEL, a strength signal distinct from mere existence. Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ "wb_carbon_coverage_pct": dict(
+     definition = "What share of a country's greenhouse-gas emissions its carbon price covers - how much of the economy the price signal reaches. From the World Bank Carbon Pricing Dashboard.",
+     source_reports = "World Bank Carbon Pricing Dashboard, share of jurisdiction emissions covered by each instrument.",
+     standalone_transform = "Built in-pipeline (nb 20): the MAX jurisdictional coverage share for the country. Flagged as a current SNAPSHOT (wb_carbon_coverage_is_snapshot) where only the latest coverage figure is available rather than a full time series.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the coverage percentage to the common framework scale.",
+     units = "Percent of emissions covered (0-100). Higher is better.",
+     coverage = "Only countries with a carbon price. Some values are a latest-snapshot rather than time-varying.",
+     caveats = "Coverage BREADTH, distinct from price level and existence. Snapshot flag matters for historical years. Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ "wb_carbon_revenue_pct_gdp": dict(
+     definition = "How much carbon-pricing revenue a country raises relative to the size of its economy - revenue as a share of GDP. Planned, from World Bank carbon revenue and WDI GDP.",
+     source_reports = "World Bank Carbon Pricing Dashboard provides raw carbon revenue (stored as wb_carbon_revenue_usd_m, US$ millions). GDP would come from WDI. The RATIO is not published.",
+     standalone_transform = "NOT BUILT. The pipeline stores raw revenue only; the revenue/GDP ratio does not exist as a column. PLANNED (per pipeline comment): divide raw carbon revenue by WDI GDP at the metric pass. Being a ratio, its coverage will be the INTERSECTION of carbon-revenue and GDP availability (both needed).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the revenue/GDP ratio to the common framework scale.",
+     units = "Planned: carbon revenue as percent of GDP. Higher = more revenue raised relative to economy.",
+     coverage = "Would be the intersection of countries with carbon revenue and GDP data.",
+     caveats = "PLANNED metric - the ratio is not yet computed (raw revenue is stored, the /GDP step is deferred to the metric pass). Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ # ================= Powell-Thyne Coups =================
+ # Raw coup counts; more coups = worse (direction negative).
+
+ "pt_coup_successful": dict(
+     definition = "How many successful coups d'etat a country has had - forcible, unconstitutional seizures of executive power that succeeded. From the Powell-Thyne coup dataset.",
+     source_reports = "Powell and Thyne coup dataset (via the authors' data). Coup events coded by outcome; a successful coup is one where the perpetrators held power at least a week. Raw event count.",
+     standalone_transform = "None beyond selection/rename (from the source's successful-coup coding). A count of successful coups per country-year.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: likely a recency-weighted or windowed treatment of the count, then convert to the common scale, inverting so fewer coups score better.",
+     units = "Count of successful coups. Higher is WORSE. Direction is negative.",
+     coverage = "Global, 1950 onward. Most country-years are zero.",
+     caveats = "Paired with pt_coup_failed. A direct instability signal. Scores Concept 2 (Political stability and government continuity).",
+     status = "selected",
+ ),
+
+ "pt_coup_failed": dict(
+     definition = "How many failed coup attempts a country has had - unconstitutional seizure attempts that did not succeed. From the Powell-Thyne coup dataset.",
+     source_reports = "Powell and Thyne coup dataset. A failed coup is an attempt where perpetrators did not hold power for at least a week. Raw event count.",
+     standalone_transform = "None beyond selection/rename (from the source's failed-coup coding). A count of failed coup attempts per country-year.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: as with successful coups, a windowed treatment then convert to the common scale, inverting so fewer attempts score better.",
+     units = "Count of failed coup attempts. Higher is WORSE. Direction is negative.",
+     coverage = "Global, 1950 onward. Most country-years are zero.",
+     caveats = "Even FAILED attempts signal instability, so they are scored alongside successful coups rather than ignored. Scores Concept 2 (Political stability and government continuity).",
+     status = "selected",
+ ),
+
+ # ================= WDI - built vs planned =================
+
+ "wdi_tariff_rate_simple_mean": dict(
+     definition = "A country's average import tariff rate - the simple (unweighted) mean tariff across product lines. A marker of trade openness. From World Development Indicators.",
+     source_reports = "World Bank WDI, simple mean applied tariff rate, all products (code TM.TAX.MRCH.SM.AR.ZS). Published as a percentage. HIGHER = higher tariffs (more protectionist).",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale, inverting so lower tariffs score better.",
+     units = "Percent (average tariff rate). Higher is WORSE (more protectionist). Direction is negative.",
+     coverage = "Broad, most countries, though tariff data lags a few years.",
+     caveats = "Simple (unweighted) mean, so every product line counts equally regardless of trade volume. Scores Concept 11 (Trade governance).",
+     status = "selected",
+ ),
+
+ "wdi_education_index": dict(
+     definition = "A country's education outcomes overall - a planned composite of schooling and learning indicators. Intended to be built from World Development Indicators components.",
+     source_reports = "World Bank WDI. The pipeline pulls education COMPONENT indicators (e.g. completion rates, enrollment), but WDI publishes no single 'education index' at this composition.",
+     standalone_transform = "NOT BUILT. The composite column does not exist in wdi_clean.csv - only the raw components do. It appears only in the metric_selection record. PLANNED: combine the education components into one index (likely a mean of available components, so coverage would be their UNION).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the composite to the common framework scale.",
+     units = "Planned composite (scale to be set on construction). Higher = better education outcomes.",
+     coverage = "Would follow the component union once built.",
+     caveats = "PLANNED metric - neither the composite nor its scoring exists yet. Scores Concept 5 (Public service delivery and human development).",
+     status = "selected",
+ ),
+
+ "wdi_health_index": dict(
+     definition = "A country's health outcomes overall - a planned composite of health indicators. Intended to be built from World Development Indicators components.",
+     source_reports = "World Bank WDI. The pipeline pulls health COMPONENT indicators (e.g. UHC coverage, immunization, mortality), but publishes no single 'health index' at this composition.",
+     standalone_transform = "NOT BUILT. The composite does not exist in wdi_clean.csv - only raw components (including wdi_uhc_coverage_index, which IS a published WB sub-index). PLANNED: combine health components into one index (likely mean-of-available, coverage = union).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the composite to the common framework scale.",
+     units = "Planned composite. Higher = better health outcomes.",
+     coverage = "Would follow the component union once built.",
+     caveats = "PLANNED metric - not yet built. Scores Concept 5 (Public service delivery and human development).",
+     status = "selected",
+ ),
+
+ "wdi_infrastructure_index": dict(
+     definition = "A country's infrastructure quality overall - a planned composite of access indicators (electricity, water, sanitation, connectivity). Intended to be built from World Development Indicators components.",
+     source_reports = "World Bank WDI. The pipeline pulls infrastructure COMPONENT indicators, but publishes no single 'infrastructure index' at this composition.",
+     standalone_transform = "NOT BUILT. The composite does not exist in wdi_clean.csv - only raw components. PLANNED: combine infrastructure-access components into one index (likely mean-of-available, coverage = union).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the composite to the common framework scale.",
+     units = "Planned composite. Higher = better infrastructure.",
+     coverage = "Would follow the component union once built.",
+     caveats = "PLANNED metric - not yet built. Scores Concept 5 (Public service delivery and human development).",
+     status = "selected",
+ ),
+
+ "wdi_social_protection_index": dict(
+     definition = "A country's social-protection coverage overall - a planned composite of social-safety-net indicators. Intended to be built from World Development Indicators components.",
+     source_reports = "World Bank WDI. The pipeline pulls social-protection COMPONENT indicators, but publishes no single 'social protection index' at this composition.",
+     standalone_transform = "NOT BUILT. The composite does not exist in wdi_clean.csv - only raw components. PLANNED: combine social-protection components into one index (likely mean-of-available, coverage = union).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the composite to the common framework scale.",
+     units = "Planned composite. Higher = better social protection.",
+     coverage = "Would follow the component union once built.",
+     caveats = "PLANNED metric - not yet built. Scores Concept 5 (Public service delivery and human development).",
+     status = "selected",
+ ),
+
+ "wdi_ip_nonresident_per_gdp": dict(
+     definition = "How much foreign intellectual-property activity a country attracts relative to its economy - non-resident patent and trademark applications scaled by GDP. Planned, from WDI components.",
+     source_reports = "World Bank WDI. The pipeline stores raw non-resident application counts (wdi_patent_applications_nonresident, wdi_trademark_applications_nonresident). WDI publishes no per-GDP version.",
+     standalone_transform = "NOT BUILT. Only the raw counts exist in wdi_clean.csv; the per-GDP ratio does not. PLANNED: combine non-resident IP applications and divide by GDP. Being a ratio, coverage will be the INTERSECTION of IP-count and GDP availability.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the per-GDP ratio to the common framework scale.",
+     units = "Planned: non-resident IP applications per unit GDP. Higher = more attractive to foreign IP holders.",
+     coverage = "Would be the intersection of IP-count and GDP data.",
+     caveats = "PLANNED metric - the ratio is not yet computed. A proxy for how well a country's IP regime attracts foreign filings. Scores Concept 17 (Property rights and contract enforcement).",
+     status = "selected",
+ ),
 
 
 
