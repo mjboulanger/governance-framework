@@ -714,7 +714,142 @@ DICT = {
      status = "selected",
  ),
 
+# ---- Concept 2: Political stability and government continuity ----
+ "vdem_regime_duration": dict(
+     definition = "How long a country has continuously held its current type of political regime - a measure of regime stability/continuity. A derived metric based on V-Dem's regime classification.",
+     source_reports = "Would be derived from V-Dem's Regimes of the World variable v2x_regime, a 0-3 typology (0 = closed autocracy, 1 = electoral autocracy, 2 = electoral democracy, 3 = liberal democracy). V-Dem itself does not publish a duration variable.",
+     standalone_transform = "NOT BUILT. This metric does not exist in any pipeline yet - it appears only in the metric_selection record as a planned scored metric. The column is absent from vdem_filtered.csv. PLANNED: count consecutive years a country has stayed in the same v2x_regime category (a run-length from the regime series). The exact derivation rule is not yet fixed in code.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the duration count to the common framework scale.",
+     units = "Planned: years in current regime type (count). Higher = longer continuity.",
+     coverage = "Would follow v2x_regime coverage (~180 countries) once built.",
+     caveats = "PLANNED metric, not yet implemented anywhere - both the derivation and the scoring are outstanding build tasks. Scores Concept 2 (Political stability and government continuity). Direction assumes longer regime continuity is better, which is defensible for stability but worth revisiting (a long-stable autocracy also scores high on duration alone).",
+     status = "selected",
+ ),
 
+ # ---- Concept 15: Judicial independence and quality (all interval-scale, direction +) ----
+ "v2juhcind": dict(
+     definition = "How independent the high court is from government pressure - whether top judges rule on the law or bend to those in power. V-Dem's high-court-independence indicator.",
+     source_reports = "V-Dem variable v2juhcind. Interval scale (~ -4 to +4, higher = more independent). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 15 (Judicial independence and quality).",
+     status = "selected",
+ ),
+
+ "v2juncind": dict(
+     definition = "How independent the lower courts are from government pressure - judicial independence below the high court. V-Dem's lower-court-independence indicator.",
+     source_reports = "V-Dem variable v2juncind. Interval scale (~ -4 to +4, higher = more independent). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 15 (Judicial independence and quality).",
+     status = "selected",
+ ),
+
+ "v2jucomp": dict(
+     definition = "How reliably government officials comply with court rulings - whether judicial decisions are actually obeyed. V-Dem's compliance-with-judiciary indicator.",
+     source_reports = "V-Dem variable v2jucomp. Interval scale (~ -4 to +4, higher = more compliance with courts). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 15 (Judicial independence and quality).",
+     status = "selected",
+ ),
+
+ "v2jupack": dict(
+     definition = "How free the judiciary is from court-packing - whether the government manipulates the composition of courts by appointing loyalists. V-Dem's court-packing indicator (higher = less packing).",
+     source_reports = "V-Dem variable v2jupack. Interval scale (~ -4 to +4, higher = LESS court-packing / more protected). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better (less packing).",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Higher already means BETTER (less court-packing) on V-Dem's coding, so direction is positive. Scores Concept 15 (Judicial independence and quality).",
+     status = "selected",
+ ),
+
+ "v2jupurge": dict(
+     definition = "How free the judiciary is from arbitrary purges - whether judges are removed for political reasons. V-Dem's judicial-purge indicator (higher = fewer purges).",
+     source_reports = "V-Dem variable v2jupurge. Interval scale (~ -4 to +4, higher = FEWER arbitrary removals). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better (fewer purges).",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Higher already means BETTER (fewer purges) on V-Dem's coding, so direction is positive. Scores Concept 15 (Judicial independence and quality).",
+     status = "selected",
+ ),
+
+ # ---- Concept 16: Personal security and public order (interval-scale, direction +) ----
+ "v2cltort": dict(
+     definition = "How free people are from torture by the state - whether the government uses or tolerates torture. V-Dem's freedom-from-torture indicator (higher = less torture).",
+     source_reports = "V-Dem variable v2cltort. Interval scale (~ -4 to +4, higher = LESS torture / more freedom from it). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better (less torture).",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Higher already means BETTER (less torture) on V-Dem's coding, so direction is positive despite the grim subject. Scores Concept 16 (Personal security and public order).",
+     status = "selected",
+ ),
+
+ "v2clkill": dict(
+     definition = "How free people are from political killings by the state - extrajudicial executions and killings for political reasons. V-Dem's freedom-from-political-killings indicator (higher = fewer killings).",
+     source_reports = "V-Dem variable v2clkill. Interval scale (~ -4 to +4, higher = FEWER political killings). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better (fewer killings).",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Higher already means BETTER (fewer killings) on V-Dem's coding, so direction is positive. Scores Concept 16 (Personal security and public order).",
+     status = "selected",
+ ),
+
+ "v2clrgunev": dict(
+     definition = "How evenly civil liberties are applied across a country's territory - whether rights protection is uniform or varies sharply by region. V-Dem's rights-unevenness indicator (higher = more even/uniform).",
+     source_reports = "V-Dem variable v2clrgunev. Interval scale (~ -4 to +4, higher = MORE uniform application of rights across territory). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better (more even).",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 16 (Personal security and public order).",
+     status = "selected",
+ ),
+
+ # ---- Concept 17: Property rights and contract enforcement ----
+ "v2clprptym": dict(
+     definition = "How secure men's property rights are - whether men can own and use property free from arbitrary seizure. V-Dem's property-rights-for-men indicator.",
+     source_reports = "V-Dem variable v2clprptym. Interval scale (~ -4 to +4, higher = more secure property rights). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Paired with the women's property item (v2clprptyw) to cover property rights across genders. Scores Concept 17 (Property rights and contract enforcement).",
+     status = "selected",
+ ),
+
+ "v2clprptyw": dict(
+     definition = "How secure women's property rights are - whether women can own and use property free from arbitrary seizure. V-Dem's property-rights-for-women indicator.",
+     source_reports = "V-Dem variable v2clprptyw. Interval scale (~ -4 to +4, higher = more secure property rights). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The women's counterpart to v2clprptym. Scores Concept 17 (Property rights and contract enforcement).",
+     status = "selected",
+ ),
+
+ "v2xcl_prpty": dict(
+     definition = "How secure property rights are overall - a composite of men's and women's property security. V-Dem's property-rights index.",
+     source_reports = "V-Dem index v2xcl_prpty. Aggregate index scaled 0-1, higher = more secure property rights. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
+     units = "Index 0-1. Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "An aggregate index (0-1), unlike the individual property items on the interval scale. Scores Concept 17 (Property rights and contract enforcement).",
+     status = "selected",
+ ),
+    
 
 
 
