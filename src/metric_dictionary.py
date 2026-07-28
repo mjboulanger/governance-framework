@@ -324,11 +324,144 @@ DICT = {
      status = "selected",
  ),
 
+# ================= Fragile States Index (Fund for Peace) =================
+ # All four FSI components run 0-10 where HIGHER = MORE fragile = WORSE (direction negative).
+
+ "fsi_c1_security_apparatus": dict(
+     definition = "How compromised a country's security apparatus is - internal conflict, insurgency, crime, and the state's monopoly on force. Fragile States Index indicator C1.",
+     source_reports = "Fund for Peace Fragile States Index, indicator C1 (Security Apparatus). Published 0-10, where HIGHER means MORE fragile/worse. Annual.",
+     standalone_transform = "None. We use the published 0-10 component score as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale, inverting so that less fragility scores better.",
+     units = "Score 0-10. Higher is WORSE (more fragile). Direction is negative.",
+     coverage = "About 178 countries.",
+     caveats = "Scores Concept 13 (State capacity and monopoly on force). Note C13 draws two FSI components (this and others) - deliberate source concentration.",
+     status = "selected",
+ ),
+
+ "fsi_c2_factionalized_elites": dict(
+     definition = "How fragmented and factionalized a country's ruling elites are - power struggles, brinkmanship, and use of nationalist or identity rhetoric among leaders. Fragile States Index indicator C2.",
+     source_reports = "Fund for Peace Fragile States Index, indicator C2 (Factionalized Elites). Published 0-10, HIGHER means MORE factionalized/worse. Annual.",
+     standalone_transform = "None. We use the published 0-10 component score as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale, inverting so that less factionalism scores better.",
+     units = "Score 0-10. Higher is WORSE. Direction is negative.",
+     coverage = "About 178 countries.",
+     caveats = "Scores Concept 1 (Political settlement and elite bargain).",
+     status = "selected",
+ ),
+
+ "fsi_c3_group_grievance": dict(
+     definition = "How much division and grievance exists between groups in society - along ethnic, religious, regional, or other lines, including exclusion and communal tension. Fragile States Index indicator C3.",
+     source_reports = "Fund for Peace Fragile States Index, indicator C3 (Group Grievance). Published 0-10, HIGHER means MORE grievance/worse. Annual.",
+     standalone_transform = "None. We use the published 0-10 component score as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale, inverting so that less grievance scores better.",
+     units = "Score 0-10. Higher is WORSE. Direction is negative.",
+     coverage = "About 178 countries.",
+     caveats = "Scores Concept 1 (Political settlement and elite bargain).",
+     status = "selected",
+ ),
+
+ "fsi_p2_public_services": dict(
+     definition = "How well a country provides basic public services - health, education, water, sanitation, infrastructure - and how evenly. Fragile States Index indicator P2.",
+     source_reports = "Fund for Peace Fragile States Index, indicator P2 (Public Services). Published 0-10, HIGHER means WORSE service provision. Annual.",
+     standalone_transform = "None. We use the published 0-10 component score as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale, inverting so that better services score better.",
+     units = "Score 0-10. Higher is WORSE. Direction is negative.",
+     coverage = "About 178 countries.",
+     caveats = "Scores Concept 5 (Public service delivery and human development).",
+     status = "selected",
+ ),
+
+ # ================= IMF Statistical Performance Indicators (SPI) =================
+
+ "spi_overall": dict(
+     definition = "How strong a country's national statistical system is overall - whether it produces timely, reliable, well-sourced official data. World Bank/IMF Statistical Performance Indicators, overall score.",
+     source_reports = "Statistical Performance Indicators, overall score (WDI code IQ.SPI.OVRL). Published 0-100, higher = stronger statistical system. Full coverage from 2016, partial from 2004.",
+     standalone_transform = "None. We use the published 0-100 overall score as-is.",
+     panel_scaling = "Decided at Step 3: the 0-100 score will be converted to the common framework scale.",
+     units = "Score 0-100. Higher is better.",
+     coverage = "About 221 countries.",
+     caveats = "The five underlying pillars are not scored separately (they decompose this overall score). Overlaps with the ODIN open-data metrics, which measure a related aspect of statistical capacity. Scores Concept 3 (Statistical capacity and data transparency).",
+     status = "selected",
+ ),
+
+ # ================= IMF iMaPP (Macroprudential Policies) =================
+
+ "imapp_breadth_total": dict(
+     definition = "How broad a country's macroprudential policy toolkit is - how many distinct financial-stability instruments it has ever put to use. Built from the IMF's iMaPP database.",
+     source_reports = "IMF integrated Macroprudential Policy (iMaPP) database. It records, for each instrument and month, whether a country tightened (+1), loosened (-1), or did nothing (0) - an ACTION log, not a score.",
+     standalone_transform = "WE BUILD THIS. We treat ANY non-zero action as 'this country has used this instrument' (ignoring tighten vs loosen), then for each country-year count how many of 16 instruments it has EVER activated up to that point - a cumulative-ever breadth count. The 'Other' instrument category is excluded as too mixed.",
+     panel_scaling = "Decided at Step 3: the breadth count will be converted to the common framework scale.",
+     units = "Count of instruments ever used (0-16, cumulative). Higher = broader toolkit.",
+     coverage = "About 135 countries, 1990-2024.",
+     caveats = "Measures BREADTH of the toolkit, NOT quality or whether instruments are currently in force - it is a ratchet that only ever rises (once an instrument is used, it stays counted). Quality assessment is deferred to IMF FSAP. Documented example: Pakistan reads 15 of 16. Scores Concept 8 (Macroeconomic policy framework quality). The four category sub-counts are not scored separately.",
+     status = "selected",
+ ),
+
+ # ================= IMF AREAER FARI (capital-account restrictiveness) =================
+ # All FARI indices run 0-1 where HIGHER = MORE restrictive = WORSE (direction negative).
+
+ "fari_aggregate": dict(
+     definition = "How restricted a country's capital account is overall by law - the extent of official controls on cross-border financial flows. IMF's Financial Account Restrictiveness Index, aggregate.",
+     source_reports = "IMF AREAER Financial Account Restrictiveness Index (FARI), aggregate. Exported by hand from the AREAER portal (the portal is firewall-blocked to automation). Published 0-1, where HIGHER means MORE restrictive.",
+     standalone_transform = "None. We use the IMF's published 0-1 index as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale. Direction is a judgment item - restrictiveness is a policy stance, not self-evidently good or bad governance - to be settled then.",
+     units = "Index 0-1. Higher = more restrictive. Direction treated as negative (openness scores better), pending the Step-3 direction call.",
+     coverage = "About 194 countries, 1999-2024 (2024 partial).",
+     caveats = "The IMF-native authoritative capital-account measure; KAOPEN is the automated cross-check on it. Scores Concept 8 (Macroeconomic policy framework quality). Manual export each cycle.",
+     status = "selected",
+ ),
+
+ "fari_fdi_aggregate": dict(
+     definition = "How restricted a country's foreign direct investment flows are by law specifically - the FDI-focused slice of capital-account restrictiveness. IMF's FARI, FDI aggregate.",
+     source_reports = "IMF AREAER FARI, FDI aggregate sub-index. Published 0-1, HIGHER means MORE restrictive on FDI. Same manual export as fari_aggregate.",
+     standalone_transform = "None. We use the IMF's published 0-1 sub-index as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale (same direction treatment as fari_aggregate).",
+     units = "Index 0-1. Higher = more restrictive on FDI. Direction treated as negative.",
+     coverage = "About 194 countries, 1999-2024 (2024 partial).",
+     caveats = "The FDI-specific slice is a genuine advantage over indices that collapse to one number - it isolates investment-relevant restrictions. Scores Concept 8 (Macroeconomic policy framework quality).",
+     status = "selected",
+ ),
+
+ "fari_fdi_inflow": dict(
+     definition = "How restricted INBOUND foreign direct investment is by law - controls on money coming into the country. IMF's FARI, FDI inflow.",
+     source_reports = "IMF AREAER FARI, FDI inflow sub-index. Published 0-1, HIGHER means MORE restrictive on inbound FDI. Same manual export.",
+     standalone_transform = "None. We use the IMF's published 0-1 sub-index as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale (same direction treatment as fari_aggregate).",
+     units = "Index 0-1. Higher = more restrictive on inbound FDI. Direction treated as negative.",
+     coverage = "About 194 countries, 1999-2024 (2024 partial).",
+     caveats = "DELIBERATE partial double-count: this is scored at full weight ALONGSIDE fari_fdi_aggregate, a considered choice to tilt Concept 8 toward INBOUND capital access, which matters more to a sovereign investor than outbound. The outflow splits are dropped (outbound less material). Scores Concept 8 (Macroeconomic policy framework quality).",
+     status = "selected",
+ ),
+
+ # ================= Political Terror Scale (combined) =================
+
+ "pts_index": dict(
+     definition = "How severe state-perpetrated physical-integrity violations are - political imprisonment, torture, killings, and disappearances by the state. A combined Political Terror Scale score.",
+     source_reports = "Political Terror Scale, obtained via the Quality of Government dataset. PTS publishes THREE separate 1-5 codings of the same year, one each from Amnesty International, Human Rights Watch, and the US State Department (higher = more state terror). We combine them.",
+     standalone_transform = "WE BUILD THIS. For each country-year we take the MEAN of whichever of the three coder scores are present (a union - a country is covered if ANY coder rated it, not only if all three did). We use the union rather than the intersection to maximize coverage; checks showed the coders do not differ systematically in severity, so averaging available ones does not bias the result.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale, inverting so that less state terror scores better.",
+     units = "Score 1-5 (mean of available coders). Higher is WORSE (more state terror). Direction is negative.",
+     coverage = "About 98% of country-years, largely via the State Department coding which has the widest reach.",
+     caveats = "The three individual coder columns are not scored separately (they are the inputs to this mean). Scores two concepts: Concept 16 (Personal security and public order) as a primary leg, and Concept 22 (Civil liberties) as a supporting leg.",
+     status = "selected",
+ ),
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 
