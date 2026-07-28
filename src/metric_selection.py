@@ -653,12 +653,48 @@ D += [dict(m=c, s="WB_BRSS", d="+", at=[], why="component of brss_regstringency 
 D += [
  dict(m="brss_coverage", s="WB_BRSS", d="", at=[], why="metadata - per-country survey-question coverage fraction, not a score"),
  dict(m="brss_reliable", s="WB_BRSS", d="", at=[],
-      why="metadata reliability flag (coverage >=70%) - GATES whether a country's BRSS score is used (excludes sparse entries), does NOT attenuate the value (score-deflation-by-coverage was rejected as incoherent). Feeds S8"),
+why="metadata reliability flag (coverage >=70%) - GATES whether a country's BRSS score is used (excludes sparse entries), does NOT attenuate the value (score-deflation-by-coverage was rejected as incoherent). Feeds S8"),
  dict(m="country_code", s="WB_BRSS", d="", at=[], why="identifier"),
 ]
 
+# =====================================================================
+# IMF_FISCAL_RULES (24 cols -> 4 scored) -> C8 Macroeconomic policy framework quality.
+# Fills C8's previously-absent fiscal-framework leg. De jure design (breadth, strength,
+# teeth) + one de facto leg (compliance). Per-rule-type columns EXCLUDED as a class:
+# self-selected reference class (quality cols populated only for countries having that
+# rule type, e.g. legal_basis_rr n=13 = only 13 have revenue rules) + decompose-or-keep-whole.
+# Source current to 2024. Full operational detail per metric in metric_dictionary.py.
+# =====================================================================
+D += [
+ dict(m="fr_num_rule_types",  s="IMF_FISCAL_RULES", d="+", at=[(8, "P1")],
+      note="breadth 0-4 (count of ER/RR/BBR/DR in force). De jure. Fills C8 fiscal-framework leg"),
+ dict(m="fr_max_legal_basis", s="IMF_FISCAL_RULES", d="+", at=[(8, "P1")],
+      note="strength: strongest legal footing among a country's rules, ordinal 1-5 (5=constitutional). MAX not mean - mean penalizes breadth"),
+ dict(m="fr_any_enforcement", s="IMF_FISCAL_RULES", d="+", at=[(8, "P2")],
+      note="teeth: any rule carries formal enforcement, binary. P2 - lower discrimination, partly implied by legal basis"),
+ dict(m="fr_compliance_mean", s="IMF_FISCAL_RULES", d="+", at=[(8, "P2")],
+      note="de facto adherence: mean over present rule types of compliance {0/0.5/1}, 2=partial->0.5 (2024 manual). COVERAGE-FLAGGED 54 ctry (~28pct). ENDOGENEITY: compliance partly reflects rule laxity - direction weaker than de jure legs, hence P2"),
+]
+D += [
+ dict(m="fr_mean_legal_basis", s="IMF_FISCAL_RULES", d="", at=[],
+      why="mean legal basis PENALIZES BREADTH: adding a weak rule lowers the mean, so a country with a strong rule scores lower for having a second weaker one. fr_max_legal_basis (firmest footing) + fr_num_rule_types (breadth) capture what mean muddles"),
+]
+_FR_PER_RULE = ["fr_legal_basis_er","fr_legal_basis_rr","fr_legal_basis_bbr","fr_legal_basis_dr",
+                "fr_enforcement_er","fr_enforcement_rr","fr_enforcement_bbr","fr_enforcement_dr",
+                "fr_compliance_er","fr_compliance_rr","fr_compliance_bbr","fr_compliance_dr",
+                "fr_expenditure_rule","fr_revenue_rule","fr_budget_balance_rule","fr_debt_rule",
+                "fr_indep_body_sets_assumptions","fr_indep_body_monitors",
+                "fr_correction_mechanism","fr_correction_well_defined_triggers"]
+D += [dict(m=c, s="IMF_FISCAL_RULES", d="", at=[],
+           why="per-rule-type / feature component; scored via the derived cross-rule metrics (num_rule_types, max_legal_basis, any_enforcement, compliance_mean). Self-selected reference class if scored directly")
+      for c in _FR_PER_RULE]
+
 PENDING += [
- "C9 Financial sector COMPLETE: FATF effectiveness (P1, de facto AML/CFT) + FATF technical compliance (P2, de jure AML/CFT) + BRSS stringency (Sp, de jure banking). 3 metrics, clears thin flag. GAPS remain: securities, insurance, non-AML supervisory effectiveness - all await FSAP (PDF-locked). C9 output must state it measures AML/CFT + banking rules, not the full financial-supervision remit",
+ "IMF_FISCAL_RULES compliance PIPELINE NOTE: fr_compliance_mean is built in nb 25 via to_compliance ({0,1,2}->{0.0,1.0,0.5}, 2=partial) then mean over present rule types. If re-run, restart kernel first - cell 5 mutates fr in place and double-parsing collapses compliance to all-zero (caught 2026-07-24). Scaling (percentile vs fixed-anchor) is TBD at Step-3",
+]
+
+PENDING += [
+ "C9 Financial sector: FATF effectiveness (P1, de facto AML/CFT) + FATF technical compliance (P2, de jure AML/CFT) + BRSS stringency (Sp, de jure banking). CORRECTION 2026-07-24: earlier text said '3 metrics, clears thin flag' - WRONG, the S6 trigger counts PRESENT P1+P2 and BRSS is Sp (weight 0), so C9 has 2 scored indicators, BOTH FATF, and remains THIN + SINGLE-SOURCE (rests on AML/CFT). GAPS: securities, insurance, non-AML supervisory effectiveness - all await FSAP (PDF-locked). C9 output must state it measures AML/CFT + banking rules, not the full financial-supervision remit",
 ]
 
 
@@ -668,3 +704,4 @@ PENDING += [
  "C20 Electoral process - IDEA Voter Turnout: master says keep-for-metric-pass but NO pipeline was ever built, so there is nothing to score. Status = not-built; the compulsion-adjustment question is moot unless a pipeline is added. Recorded so the master flag does not read as an open decision",
  "C10 State control over the economy - SECOND-INDICATOR PAIRING DECLINED (user decision, session 2026-07-23). The master suggested pairing v2clstown with IMF GFS Public Corporations or Fraser government-enterprises; user declined both, and the one tested candidate (ccp_market_economy_provisions) failed on variance (81/19 binary de jure constitutional text). C10 stays single-indicator, carrying its S8 weight-review flag",
 ]
+
