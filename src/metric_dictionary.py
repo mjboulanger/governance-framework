@@ -965,7 +965,164 @@ DICT = {
      status = "selected",
  ),
 
+# ---- Concept 20: Electoral process and competition ----
+ # NOTE: v2elirreg/v2elintim/v2elvotbuy read like "bad things" but V-Dem codes them
+ # higher=CLEANER (few irregularities = high score), so direction is POSITIVE.
 
+ "v2x_polyarchy": dict(
+     definition = "How democratic a country's elections and core political freedoms are overall - free and fair elections plus the freedoms that make them meaningful. V-Dem's electoral democracy (polyarchy) index.",
+     source_reports = "V-Dem index v2x_polyarchy. Aggregate index scaled 0-1, higher = more electoral democracy. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
+     units = "Index 0-1. Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The headline electoral-democracy index. Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+ "v2elfrfair": dict(
+     definition = "How free and fair a country's elections are - taken as a whole, whether the most recent national election was clean. V-Dem's free-and-fair-elections indicator.",
+     source_reports = "V-Dem variable v2elfrfair. Interval scale (~ -4 to +4, higher = freer and fairer). Coded for election years. Annual (carried between elections in the source).",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+ "v2elirreg": dict(
+     definition = "How free elections are from irregularities - ballot-box fraud, miscounts, and other administrative manipulation. V-Dem's election-irregularities indicator (higher = FEWER irregularities).",
+     source_reports = "V-Dem variable v2elirreg. Interval scale (~ -3 to +3, where HIGHER means FEWER irregularities / cleaner). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +3). Higher is BETTER (fewer irregularities). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: the name reads like a bad thing, but V-Dem codes it higher=cleaner, so direction is POSITIVE. Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+ "v2elintim": dict(
+     definition = "How free elections are from voter intimidation - threats or coercion aimed at voters. V-Dem's election-intimidation indicator (higher = LESS intimidation).",
+     source_reports = "V-Dem variable v2elintim. Interval scale (~ -3 to +3, where HIGHER means LESS intimidation). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +3). Higher is BETTER (less intimidation). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=less-intimidation, so direction is POSITIVE. Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+ "v2elvotbuy": dict(
+     definition = "How free elections are from vote-buying - offering money or goods in exchange for votes. V-Dem's vote-buying indicator (higher = LESS vote-buying).",
+     source_reports = "V-Dem variable v2elvotbuy. Interval scale (~ -3 to +3, where HIGHER means LESS vote-buying). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +3). Higher is BETTER (less vote-buying). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=less-vote-buying, so direction is POSITIVE. Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+ "v2elaccept": dict(
+     definition = "Whether losing parties accept election results - whether defeated candidates concede peacefully rather than reject the outcome. V-Dem's election-acceptance indicator.",
+     source_reports = "V-Dem variable v2elaccept. Interval scale (~ -4 to +4, higher = results more readily accepted by losers). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+ "v2elembaut": dict(
+     definition = "How autonomous the election management body is - whether the body running elections is free from government interference. V-Dem's EMB-autonomy indicator.",
+     source_reports = "V-Dem variable v2elembaut. Interval scale (~ -3 to +4, higher = more autonomous election administration). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Closes the C20 election-administration leg and supersedes a standalone IDEA EMB build (V-Dem's EMB items cover it with clean directionality). Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+ "v2elembcap": dict(
+     definition = "How capable the election management body is - whether it has the capacity and resources to run elections properly. V-Dem's EMB-capacity indicator.",
+     source_reports = "V-Dem variable v2elembcap. Interval scale (~ -3 to +4, higher = more capable election administration). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The capacity companion to v2elembaut; together they close the C20 EMB leg. Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+ # ---- Concept 21: Political participation beyond voting (several also score C24/C25) ----
+ "v2x_partip": dict(
+     definition = "How much citizens participate in political life beyond just voting - through civil society, local government, and direct engagement. V-Dem's participatory component index.",
+     source_reports = "V-Dem index v2x_partip. Aggregate index scaled 0-1, higher = more participation. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
+     units = "Index 0-1. Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The headline participation index. Scores Concept 21 (Political participation beyond voting).",
+     status = "selected",
+ ),
+
+ "v2psprlnks": dict(
+     definition = "How parties connect to citizens - whether parties link to voters through genuine engagement rather than clientelism or personality alone. V-Dem's party-linkages indicator.",
+     source_reports = "V-Dem variable v2psprlnks. Interval scale (~ -4 to +4, higher = stronger programmatic party-citizen linkages). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 21 (Political participation beyond voting).",
+     status = "selected",
+ ),
+
+ "v2pscohesv": dict(
+     definition = "How cohesive political parties are - whether parties act as organized, disciplined bodies rather than loose personal vehicles. V-Dem's party-cohesion indicator.",
+     source_reports = "V-Dem variable v2pscohesv. Interval scale (~ -4 to +4, higher = more cohesive parties). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The weakest V-Dem signal against WGI (correlation +0.34) - a genuine but modest contributor. Scores Concept 21 (Political participation beyond voting).",
+     status = "selected",
+ ),
+
+ "v2cseeorgs": dict(
+     definition = "How free civil society organizations are to enter and operate - whether people can form and run CSOs without state obstruction. V-Dem's CSO-entry-and-exit indicator.",
+     source_reports = "V-Dem variable v2cseeorgs. Interval scale (~ -4 to +4, higher = freer CSO entry/operation). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores TWO concepts: Concept 21 (Political participation beyond voting) and Concept 24 (Civil society space and vitality).",
+     status = "selected",
+ ),
+
+ "v2dlconslt": dict(
+     definition = "How much the government consults the public in policymaking - whether major decisions involve genuine consultation with affected groups. V-Dem's engaged-consultation indicator.",
+     source_reports = "V-Dem variable v2dlconslt. Interval scale (~ -4 to +4, higher = more public consultation). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores TWO concepts: Concept 21 (Political participation beyond voting) and Concept 25 (Government transparency and openness).",
+     status = "selected",
+ ),
+
+ "v2csreprss": dict(
+     definition = "How free civil society is from government repression - whether the state harasses, restricts, or crushes civil society organizations. V-Dem's CSO-repression indicator (higher = LESS repression).",
+     source_reports = "V-Dem variable v2csreprss. Interval scale (~ -4 to +4, where HIGHER means LESS repression). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is BETTER (less repression). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=less-repression, so direction is POSITIVE despite the name. Scores TWO concepts: Concept 21 (Political participation beyond voting) and Concept 24 (Civil society space and vitality).",
+     status = "selected",
+ ),
 
 
 
