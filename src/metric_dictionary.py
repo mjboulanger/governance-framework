@@ -206,7 +206,66 @@ DICT = {
      status = "selected",
  ),
 
+# ================= OWID-distributed pass-throughs (TI CPI, UNODC, IRENA) =================
 
+ "ti_cpi_score": dict(
+     definition = "How corrupt a country's public sector is seen to be by experts and business people. Transparency International's Corruption Perceptions Index.",
+     source_reports = "Transparency International Corruption Perceptions Index, obtained via Our World in Data (TI's own files are password-protected). Published 0-100, where HIGHER means CLEANER (less corruption). Annual, covers 2012 onward.",
+     standalone_transform = "None. Renamed and regional aggregates removed; the 0-100 score is used as-is.",
+     panel_scaling = "Decided at Step 3: the 0-100 score will be converted to the common framework scale.",
+     units = "Score 0-100. Higher is better (cleaner). Note this is already the 'good' direction, unlike most corruption measures.",
+     coverage = "About 180 countries, 2012 onward.",
+     caveats = "A perceptions index built from multiple expert/business surveys, so it overlaps with other corruption metrics (BCI, WGI). Scores Concept 18 (Control of corruption).",
+     status = "selected",
+ ),
+
+ "unodc_homicide_rate": dict(
+     definition = "How many intentional homicides a country has per 100,000 people - a direct measure of lethal violence. UN Office on Drugs and Crime data.",
+     source_reports = "UNODC intentional homicide statistics, via Our World in Data. Published as homicides per 100,000 population. HIGHER means MORE violence.",
+     standalone_transform = "None. Renamed and regional aggregates removed; the rate is used as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale, inverting so that lower homicide scores better.",
+     units = "Homicides per 100,000 people. Higher is WORSE. Direction is negative.",
+     coverage = "About 208 countries, 1990-2024.",
+     caveats = "Already a per-population rate, so it is comparable across countries of different sizes. Scores Concept 16 (Personal security and public order).",
+     status = "selected",
+ ),
+
+ "irena_renewables_share_pct": dict(
+     definition = "What share of a country's electricity comes from renewable sources - a marker of energy-transition progress. IRENA/Ember data.",
+     source_reports = "Share of electricity from renewables, originally IRENA/Ember, via Our World in Data. Published as a percentage (0-100).",
+     standalone_transform = "None. Renamed and regional aggregates removed; the percentage is used as-is.",
+     panel_scaling = "Decided at Step 3: the 0-100 percentage will be converted to the common framework scale.",
+     units = "Percent of electricity from renewables (0-100). Higher is better.",
+     coverage = "About 226 countries, 1990-2025.",
+     caveats = "An OUTCOME measure (how much renewable electricity exists), not a governance measure of climate policy itself - it sits alongside the policy-based climate metrics rather than replacing them. Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ # ================= Climate Change Laws of the World (LSE Grantham) =================
+
+ "climate_laws_cumulative": dict(
+     definition = "How many domestic climate laws and policies a country has put in place over time - the running total in force. Built from the Climate Change Laws of the World database.",
+     source_reports = "Climate Change Laws of the World (LSE Grantham / Climate Policy Radar). A registry of individual climate laws and executive policies with enactment dates - NOT a pre-built score.",
+     standalone_transform = "WE BUILD THIS. We keep legislative and executive records (drop UNFCCC international-reporting entries), deduplicate so each law counts once, then for each country-year count all its national laws enacted that year or earlier - a cumulative running total. EU-level laws are dropped so they are not double-counted against members' own national laws.",
+     panel_scaling = "Decided at Step 3: the cumulative count will be converted to the common framework scale.",
+     units = "Count of climate laws in force (cumulative). Higher = more laws.",
+     coverage = "Broad, most countries.",
+     caveats = "This counts VOLUME, not quality - a country with many weak laws can outscore one with a few strong ones, and the count is not normalized by country size or need. For that reason it was DEMOTED from a primary to a secondary (P2) leg. Scores Concept 12 (Environmental and climate governance). We also keep an annual 'new_laws' flow, which is not scored (momentum is a separate idea).",
+     status = "selected",
+ ),
+
+ # ================= Chinn-Ito KAOPEN =================
+
+ "kaopen_norm": dict(
+     definition = "How open a country's capital account is by law - how free cross-border financial flows are from official controls. The normalized Chinn-Ito index.",
+     source_reports = "Chinn-Ito KAOPEN index, from the authors' data file (kaopen_YYYY.xls). We use the normalized version (their ka_open column), scaled 0-1, where HIGHER means MORE open. Built from the IMF's AREAER capital-control records.",
+     standalone_transform = "None. We use the authors' published normalized 0-1 value as-is (the raw PCA version is kept but not scored).",
+     panel_scaling = "Decided at Step 3: the 0-1 value will be converted to the common framework scale.",
+     units = "Index 0-1. Higher = more open. (Note: OPPOSITE sign to FARI, where higher = more restrictive.)",
+     coverage = "About 180 countries, long history to recent years.",
+     caveats = "DEMOTED to a Supplementary leg because it measures the SAME underlying thing as FARI (capital-account openness) and is built from the SAME IMF AREAER source - it is a cross-check on FARI, not an independent signal. Direction spot-checked in the pipeline (Hong Kong/Singapore open, Iran/Syria closed). Scores Concept 8 (Macroeconomic policy framework quality).",
+     status = "selected",
+ ),
 
 
 
