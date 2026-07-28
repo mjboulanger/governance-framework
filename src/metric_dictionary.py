@@ -157,6 +157,81 @@ DICT = {
      caveats = "The five-point categorical rating (Open/Narrowed/...) is the published headline; we score the finer numeric score behind it and drop the coarser rating. Scores Concept 21 (Political participation beyond voting) and Concept 24 (Civil society space and vitality).",
      status = "selected",
  ),
+
+# ================= QoG-sourced (Quality of Government Standard dataset) =================
+ # QoG re-serves other providers' variables unchanged. We pull the named variable and
+ # use it as-published; the ORIGINAL provider is what matters for interpretation.
+
+ "bci_corruption_index": dict(
+     definition = "How corrupt a country is overall, pooled statistically from many existing corruption measures. The Bayesian Corruption Indicator.",
+     source_reports = "Bayesian Corruption Indicator (Standaert), obtained via the Quality of Government dataset (QoG variable bci_bci). A model that combines many published corruption indicators into one score. HIGHER means MORE corruption.",
+     standalone_transform = "None. QoG carries the indicator unchanged; we use it as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale, inverting so that less corruption scores better.",
+     units = "Index (roughly 0-100 style). Higher is WORSE (more corruption). Direction is negative.",
+     coverage = "Broad, most countries.",
+     caveats = "Direction verified against the data: Finland scores low (-3.5, clean), Guinea-Bissau high (78.9, corrupt). Being a POOLED index, it shares inputs with other corruption metrics we use (e.g. TI CPI) - treat as convergent evidence, not fully independent. Scores Concept 18 (Control of corruption).",
+     status = "selected",
+ ),
+
+ "gpi_peace_index": dict(
+     definition = "How peaceful a country is - levels of violence, conflict, militarization, and personal safety. The Global Peace Index.",
+     source_reports = "Global Peace Index (Institute for Economics and Peace), via the Quality of Government dataset (QoG variable gpi_gpi). HIGHER means LESS peaceful (more violence/conflict).",
+     standalone_transform = "None. QoG carries the index unchanged; we use it as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale, inverting so that more peaceful scores better.",
+     units = "Index (roughly 1-5). Higher is WORSE (less peaceful). Direction is negative.",
+     coverage = "About 160+ countries.",
+     caveats = "Scores two concepts: Concept 2 (Political stability and government continuity) and Concept 16 (Personal security and public order).",
+     status = "selected",
+ ),
+
+ "obs_open_budget_index": dict(
+     definition = "How transparent a government's budget is - how much budget information it publishes and how accessible it is to the public. The Open Budget Index.",
+     source_reports = "Open Budget Index (International Budget Partnership), via the Quality of Government dataset (QoG variable ibp_obi). Published 0-100, higher = more budget transparency.",
+     standalone_transform = "None. QoG carries the index unchanged; we use it as-is.",
+     panel_scaling = "Decided at Step 3: the 0-100 index will be converted to the common framework scale.",
+     units = "Index 0-100. Higher is better (more transparent).",
+     coverage = "About 120 countries.",
+     caveats = "Scores two concepts: Concept 7 (Public financial management) as a primary leg, and Concept 25 (Government transparency and openness) as a supporting leg.",
+     status = "selected",
+ ),
+
+ "pei_electoral_integrity_index": dict(
+     definition = "How much integrity a country's elections have - fairness of the process from laws and boundaries through voting, counting, and results. The Perceptions of Electoral Integrity index.",
+     source_reports = "Perceptions of Electoral Integrity (Norris and colleagues), via the Quality of Government dataset (QoG variable pei_peii_1). An expert-survey index of election quality, higher = more integrity.",
+     standalone_transform = "None. QoG carries the index unchanged; we use it as-is.",
+     panel_scaling = "Decided at Step 3: converted to the common framework scale.",
+     units = "Index (roughly 0-100). Higher is better (more electoral integrity).",
+     coverage = "Countries that held elections in the covered period. Measured PER ELECTION, not every year, so a country only has a value in years it held a national election - expect high missingness between elections.",
+     caveats = "Scores Concept 20 (Electoral process and competition).",
+     status = "selected",
+ ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
  # ================= IMF_FISCAL_RULES (C8 Macroeconomic policy framework quality) =================
 
