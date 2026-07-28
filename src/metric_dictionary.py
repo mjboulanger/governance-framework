@@ -850,7 +850,120 @@ DICT = {
      status = "selected",
  ),
     
+# ---- Concept 18: Control of corruption ----
+ # DIRECTION TRAP: the aggregate v2x_corr runs the OPPOSITE way to the four individual
+ # corruption items. Do NOT infer direction from the "corruption" family name.
 
+ "v2x_corr": dict(
+     definition = "How corrupt a country is overall - the extent of corruption across the executive, legislature, judiciary, and public sector. V-Dem's political corruption index.",
+     source_reports = "V-Dem index v2x_corr. Aggregate index scaled 0-1, where HIGHER means MORE corrupt. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale, INVERTING so that less corruption scores better.",
+     units = "Index 0-1. Higher is WORSE (more corrupt). Direction is NEGATIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "REVERSE-CODED relative to the four individual V-Dem corruption items below. This aggregate runs higher=more-corrupt; the individual items run higher=LESS-corrupt. Verified empirically (v2x_corr correlates -0.88 with WGI, confirming higher=worse). Do NOT infer direction from the family name. Scores Concept 18 (Control of corruption).",
+     status = "selected",
+ ),
+
+ "v2excrptps": dict(
+     definition = "How free the executive is from bribery and graft - whether members of the executive grant favors in exchange for bribes or kickbacks. V-Dem's executive-bribery indicator (higher = LESS bribery).",
+     source_reports = "V-Dem variable v2excrptps. Interval scale (~ -4 to +4, where HIGHER means LESS executive bribery / cleaner). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is BETTER (less bribery). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: unlike the v2x_corr aggregate, this individual item is coded higher=cleaner, so direction is POSITIVE. Scores Concept 18 (Control of corruption).",
+     status = "selected",
+ ),
+
+ "v2exembez": dict(
+     definition = "How free the executive is from embezzlement - whether members of the executive steal or misappropriate public funds. V-Dem's executive-embezzlement indicator (higher = LESS embezzlement).",
+     source_reports = "V-Dem variable v2exembez. Interval scale (~ -4 to +4, where HIGHER means LESS embezzlement / cleaner). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is BETTER (less embezzlement). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=cleaner, so direction is POSITIVE (opposite to the v2x_corr aggregate). Scores Concept 18 (Control of corruption).",
+     status = "selected",
+ ),
+
+ "v2lgcrrpt": dict(
+     definition = "How free the legislature is from corruption - whether legislators accept bribes or use their position for private gain. V-Dem's legislative-corruption indicator (higher = LESS corrupt).",
+     source_reports = "V-Dem variable v2lgcrrpt. Interval scale (~ -4 to +4, where HIGHER means LESS legislative corruption / cleaner). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is BETTER (less corrupt). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=cleaner, so direction is POSITIVE (opposite to the v2x_corr aggregate). Scores Concept 18 (Control of corruption).",
+     status = "selected",
+ ),
+
+ "v2jucorrdc": dict(
+     definition = "How free the judiciary is from corruption - whether judges or court officials accept bribes or improperly influence decisions. V-Dem's judicial-corruption indicator (higher = LESS corrupt).",
+     source_reports = "V-Dem variable v2jucorrdc. Interval scale (~ -4 to +4, where HIGHER means LESS judicial corruption / cleaner). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is BETTER (less corrupt). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=cleaner, so direction is POSITIVE (opposite to the v2x_corr aggregate). Rounds out the four-branch corruption picture (executive bribery, executive embezzlement, legislative, judicial) alongside the reverse-coded aggregate. Scores Concept 18 (Control of corruption).",
+     status = "selected",
+ ),
+
+ # ---- Concept 19: Legislative and constitutional checks (interval + one 0-1 aggregate, direction +) ----
+ "v2xlg_legcon": dict(
+     definition = "How much the legislature constrains the executive - whether parliament can genuinely check and oversee the government. V-Dem's legislative-constraints index.",
+     source_reports = "V-Dem index v2xlg_legcon. Aggregate index scaled 0-1, higher = stronger legislative constraints on the executive. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
+     units = "Index 0-1. Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The headline index for this concept. Concept 19 is now SINGLE-SOURCE (V-Dem only) after Polity and CCP were dropped at Step-1 - see framework_decisions. Scores Concept 19 (Legislative and constitutional checks).",
+     status = "selected",
+ ),
+
+ "v2lgoppart": dict(
+     definition = "How much power the legislative opposition has - whether opposition parties can meaningfully participate in and influence legislative business. V-Dem's opposition-parties indicator.",
+     source_reports = "V-Dem variable v2lgoppart. Interval scale (~ -4 to +4, higher = stronger opposition role). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 19 (Legislative and constitutional checks).",
+     status = "selected",
+ ),
+
+ "v2lgqstexp": dict(
+     definition = "Whether the legislature questions the executive - whether parliament routinely interrogates government officials about their conduct. V-Dem's legislature-questions-officials indicator.",
+     source_reports = "V-Dem variable v2lgqstexp. Interval scale (~ -4 to +4, higher = more questioning of the executive). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 19 (Legislative and constitutional checks).",
+     status = "selected",
+ ),
+
+ "v2lginvstp": dict(
+     definition = "Whether the legislature can investigate the executive in practice - whether parliament has and uses the power to hold inquiries into government wrongdoing. V-Dem's legislature-investigates indicator.",
+     source_reports = "V-Dem variable v2lginvstp. Interval scale (~ -4 to +4, higher = stronger investigative capacity). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 19 (Legislative and constitutional checks).",
+     status = "selected",
+ ),
+
+ "v2lgotovst": dict(
+     definition = "Whether an executive oversight body exists and operates - an independent body (like an ombudsman or comptroller) that monitors the executive on the legislature's behalf. V-Dem's executive-oversight indicator.",
+     source_reports = "V-Dem variable v2lgotovst. Interval scale (~ -4 to +4, higher = stronger executive oversight). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 19 (Legislative and constitutional checks).",
+     status = "selected",
+ ),
 
 
 
