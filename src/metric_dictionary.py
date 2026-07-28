@@ -570,7 +570,149 @@ DICT = {
      status = "selected",
  ),
 
+# ================= V-Dem (Varieties of Democracy) =================
+ # The pipeline (nb 03) SELECTS V-Dem variables and uses them as-published - no direction
+ # handling, no recoding. Two scales: v2x_* aggregate INDICES run 0-1; individual v2cl*/
+ # v2ex*/v2el*/v2ju* items are interval measurement-model point estimates (~ -4 to +4,
+ # centered near 0). Direction is taken from the metric_selection record, NOT inferred from
+ # the variable family - see the corruption cluster, where the family name misleads.
 
+ # ---- Concept 1: Political settlement and elite bargain ----
+ "v2pepwrses": dict(
+     definition = "How equally political power is distributed across socioeconomic groups - whether the rich dominate politics or power is shared across income levels. V-Dem's power-by-socioeconomic-position indicator.",
+     source_reports = "V-Dem variable v2pepwrses. Interval measurement-model scale (roughly -4 to +4, higher = more equal distribution of power). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the interval scale to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better (more equal).",
+     coverage = "Near-universal (V-Dem covers ~180 countries).",
+     caveats = "Scores Concept 1 (Political settlement and elite bargain).",
+     status = "selected",
+ ),
+
+ "v2pepwrsoc": dict(
+     definition = "How equally political power is distributed across social groups - by ethnicity, religion, region, race, language, or caste. V-Dem's power-by-social-group indicator.",
+     source_reports = "V-Dem variable v2pepwrsoc. Interval scale (~ -4 to +4, higher = more equal across social groups). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 1 (Political settlement and elite bargain).",
+     status = "selected",
+ ),
+
+ "v2x_egal": dict(
+     definition = "How egalitarian a country's democracy is overall - whether rights, freedoms, and resources are distributed equally across groups. V-Dem's egalitarian component index.",
+     source_reports = "V-Dem index v2x_egal. Aggregate index scaled 0-1, higher = more egalitarian. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
+     units = "Index 0-1. Higher is better (more egalitarian).",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "An aggregate index (0-1 scale), unlike the individual V-Dem items on the interval scale. Scores Concept 1 (Political settlement and elite bargain).",
+     status = "selected",
+ ),
+
+ "v2psoppaut": dict(
+     definition = "How free opposition parties are to operate independently - without control or interference from the ruling party or government. V-Dem's opposition-party-autonomy indicator.",
+     source_reports = "V-Dem variable v2psoppaut. Interval scale (~ -4 to +4, higher = more autonomous opposition). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 1 (Political settlement and elite bargain).",
+     status = "selected",
+ ),
+
+ # ---- Concept 4: Government effectiveness and administrative capacity ----
+ "v2clrspct": dict(
+     definition = "How rigorous and impartial public administration is - whether officials apply the law consistently and without bias, rather than arbitrarily or corruptly. V-Dem's rigorous-and-impartial-administration indicator.",
+     source_reports = "V-Dem variable v2clrspct. Interval scale (~ -4 to +4, higher = more rigorous and impartial). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 4 (Government effectiveness and administrative capacity).",
+     status = "selected",
+ ),
+
+ # ---- Concept 10: State control over the economy ----
+ "v2clstown": dict(
+     definition = "How much the state controls private property and economic activity - low state ownership/control at the high end, pervasive state control at the low end. V-Dem's state-ownership-of-economy indicator.",
+     source_reports = "V-Dem variable v2clstown. Interval scale (~ -4 to +4, higher = MORE private/less state control). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better (less state control).",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Direction was evidence-resolved (2026-07-21): the relationship to governance quality is monotonic and roughly linear, with no threshold effect. The only scored indicator for Concept 10, which stays single-indicator (a second-indicator pairing was tested and declined). Scores Concept 10 (State control over the economy).",
+     status = "selected",
+ ),
+
+ # ---- Concept 13: State capacity and monopoly on force ----
+ "v2svstterr": dict(
+     definition = "How much of its territory the state actually controls - the share of the country over which the government has effective authority. V-Dem's state-authority-over-territory indicator.",
+     source_reports = "V-Dem variable v2svstterr. Published as a percentage (0-100) of territory controlled, higher = more control. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "Percent of territory controlled (0-100). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 13 (State capacity and monopoly on force). C13 draws two V-Dem items plus FSI - deliberate concentration on the strongest state-capacity signals.",
+     status = "selected",
+ ),
+
+ "v2svdomaut": dict(
+     definition = "How free a country's government is from foreign control over domestic policy - whether it makes its own decisions or is constrained by outside powers. V-Dem's domestic-autonomy indicator.",
+     source_reports = "V-Dem variable v2svdomaut. Interval scale (~ -4 to +4, higher = more autonomous). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 13 (State capacity and monopoly on force).",
+     status = "selected",
+ ),
+
+ # ---- Concept 14: Legal quality and predictability (v2cltrnslw also scores C25) ----
+ "v2cltrnslw": dict(
+     definition = "How transparent and predictable a country's laws are - whether laws are public, clear, and stable rather than secret, vague, or arbitrarily changed. V-Dem's transparent-laws indicator.",
+     source_reports = "V-Dem variable v2cltrnslw. Interval scale (~ -4 to +4, higher = more transparent/predictable laws). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores TWO concepts: Concept 14 (Legal quality and predictability) and Concept 25 (Government transparency and openness).",
+     status = "selected",
+ ),
+
+ "v2clacjstm": dict(
+     definition = "How equal men's access to justice is - whether men can secure fair treatment from the courts regardless of status or connections. V-Dem's access-to-justice-for-men indicator.",
+     source_reports = "V-Dem variable v2clacjstm. Interval scale (~ -4 to +4, higher = more equal access). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Paired with the women's-access item (v2clacjstw) to cover access to justice across genders. Scores Concept 14 (Legal quality and predictability).",
+     status = "selected",
+ ),
+
+ "v2clacjstw": dict(
+     definition = "How equal women's access to justice is - whether women can secure fair treatment from the courts. V-Dem's access-to-justice-for-women indicator.",
+     source_reports = "V-Dem variable v2clacjstw. Interval scale (~ -4 to +4, higher = more equal access). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The women's counterpart to v2clacjstm. Scores Concept 14 (Legal quality and predictability).",
+     status = "selected",
+ ),
+
+ "v2xeg_eqaccess": dict(
+     definition = "How equal access to power and resources is across the population overall - a composite of equal access regardless of gender, social group, and socioeconomic position. V-Dem's equal-access index.",
+     source_reports = "V-Dem index v2xeg_eqaccess. Aggregate index scaled 0-1, higher = more equal access. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
+     units = "Index 0-1. Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "An aggregate index (0-1), unlike the individual items on the interval scale. Scores Concept 14 (Legal quality and predictability).",
+     status = "selected",
+ ),
 
 
 
