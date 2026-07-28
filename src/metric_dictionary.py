@@ -59,6 +59,105 @@ DICT = {
      status = "selected",
  ),
 
+# ================= Fraser Institute — Economic Freedom of the World =================
+
+ "fraser_trade_freedom": dict(
+     definition = "How free a country is to trade internationally - low tariffs, few trade barriers, few capital and exchange controls. Fraser Institute's Area 4 (Freedom to Trade Internationally).",
+     source_reports = "Fraser Institute Economic Freedom of the World, Area 4 score. Published 0-10, higher = freer trade. Annual from 2000, every five years before that.",
+     standalone_transform = "None. We use Fraser's published 0-10 area score as-is.",
+     panel_scaling = "Decided at Step 3: the 0-10 score will be converted to the common framework scale.",
+     units = "Score 0-10. Higher is better (freer).",
+     coverage = "About 165 countries.",
+     caveats = "Supersedes the older Heritage Trade Freedom measure (documented). Scores Concept 11 (Trade governance).",
+     status = "selected",
+ ),
+
+ "fraser_regulation": dict(
+     definition = "How lightly and sensibly a country regulates credit, labour, and business - avoiding costly or arbitrary rules. Fraser Institute's Area 5 (Regulation).",
+     source_reports = "Fraser Institute Economic Freedom of the World, Area 5 score. Published 0-10, higher = lighter/better-designed regulation. Annual from 2000, every five years before that.",
+     standalone_transform = "None. We use Fraser's published 0-10 area score as-is.",
+     panel_scaling = "Decided at Step 3: the 0-10 score will be converted to the common framework scale.",
+     units = "Score 0-10. Higher is better.",
+     coverage = "About 165 countries.",
+     caveats = "Scores Concept 6 (Regulatory quality and business environment).",
+     status = "selected",
+ ),
+
+ "fraser_legal_system": dict(
+     definition = "How strong a country's legal system and property rights are - judicial independence, impartial courts, protection of property, enforcement of contracts. Fraser Institute's Area 2 (Legal System and Property Rights).",
+     source_reports = "Fraser Institute Economic Freedom of the World, Area 2 score. Published 0-10, higher = stronger legal system and property protection. Annual from 2000, every five years before that.",
+     standalone_transform = "None. We use Fraser's published 0-10 area score as-is.",
+     panel_scaling = "Decided at Step 3: the 0-10 score will be converted to the common framework scale.",
+     units = "Score 0-10. Higher is better.",
+     coverage = "About 165 countries.",
+     caveats = "We score the whole Area 2 aggregate. There is an OPEN item (see framework_decisions): the concept calls for a property-rights-specific sub-component, but the cleaned Fraser file carries only the area totals, so this uses the full area for now. Scores Concept 17 (Property rights and contract enforcement).",
+     status = "selected",
+ ),
+
+ # ================= Pew Research — Religious Restrictions =================
+ # Both indices run 0-10 where HIGHER = MORE restriction/hostility = WORSE (direction is negative).
+
+ "pew_gov_restrictions_index": dict(
+     definition = "How much a government restricts religious beliefs and practices through laws, policies, and official actions. Pew's Government Restrictions Index.",
+     source_reports = "Pew Research Center, Government Restrictions Index (GRI). Published 0-10, where HIGHER means MORE restriction. Annual.",
+     standalone_transform = "None. We use Pew's published 0-10 index as-is.",
+     panel_scaling = "Decided at Step 3: the 0-10 index will be converted to the common framework scale, inverting so that less restriction scores better.",
+     units = "Index 0-10. Higher is WORSE (more restriction). Direction is negative.",
+     coverage = "About 198 countries.",
+     caveats = "Direction verified against the data: New Zealand 0.35 (low restriction), China 9.09 (high). Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "pew_social_hostilities_index": dict(
+     definition = "How much religious hostility comes from private actors in society - mob or sectarian violence, harassment, terrorism over religion. Pew's Social Hostilities Index.",
+     source_reports = "Pew Research Center, Social Hostilities Index (SHI). Published 0-10, where HIGHER means MORE hostility. Annual.",
+     standalone_transform = "None. We use Pew's published 0-10 index as-is.",
+     panel_scaling = "Decided at Step 3: the 0-10 index will be converted to the common framework scale, inverting so that less hostility scores better.",
+     units = "Index 0-10. Higher is WORSE (more hostility). Direction is negative.",
+     coverage = "About 198 countries.",
+     caveats = "Measures societal hostility (private actors), the companion to GRI's government restriction. Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ # ================= ODIN — Open Data Inventory (Open Data Watch) =================
+ # IMPORTANT: these are NOT ODIN's official national index. We build them ourselves by
+ # simple-averaging ODIN's published category scores; the scale is a raw ~0-2, not rescaled.
+
+ "odin_openness": dict(
+     definition = "How openly a country publishes its official statistics - machine-readable formats, non-proprietary files, download options, metadata, clear terms of use. Built from Open Data Watch's ODIN openness elements.",
+     source_reports = "Open Data Watch, ODIN. ODIN publishes per-category element scores (each roughly 0-10) but no single official openness number at the scale we need. Biennial editions.",
+     standalone_transform = "WE BUILD THIS. We take ODIN's five openness elements (machine readability, non-proprietary, download options, metadata, terms of use), average them across ODIN's data categories, then average those - a transparent simple mean. This is NOT ODIN's official weighting. The result sits on a raw relative scale (roughly 0-2), deliberately not rescaled.",
+     panel_scaling = "Decided at Step 3: this raw ~0-2 score will be converted to the common framework scale. Rankings are meaningful now; the absolute numbers exist only to feed that later step.",
+     units = "Built score, raw relative scale (~0-2). Higher is better (more open).",
+     coverage = "See the ODIN edition; roughly 190 countries.",
+     caveats = "OUR aggregation, not ODIN's published index (which uses ODIN's own weighting and 0-100 scaling). Overlaps substantially with the IMF SPI statistical-capacity metric. Scores Concept 3 (Statistical capacity and data transparency).",
+     status = "selected",
+ ),
+
+ "odin_overall": dict(
+     definition = "A country's overall open-data performance - the average of its data openness and its data coverage. Built from Open Data Watch's ODIN scores.",
+     source_reports = "Open Data Watch, ODIN. Same source as odin_openness; ODIN publishes per-category element scores, not a single official number at the scale we need. Biennial editions.",
+     standalone_transform = "WE BUILD THIS. Simple mean of our two built ODIN sub-scores (odin_openness and odin_coverage). Same raw ~0-2 relative scale, not rescaled. Not ODIN's official national index.",
+     panel_scaling = "Decided at Step 3: this raw ~0-2 score will be converted to the common framework scale.",
+     units = "Built score, raw relative scale (~0-2). Higher is better.",
+     coverage = "See the ODIN edition; roughly 190 countries.",
+     caveats = "OUR aggregation, not ODIN's published index. Scored as a Supplementary leg of Concept 25 (Government transparency and openness). See odin_openness for the aggregation detail.",
+     status = "selected",
+ ),
+
+ # ================= CIVICUS Monitor =================
+
+ "civicus_score": dict(
+     definition = "How open and protected civic space is - the freedom to associate, assemble, and speak without state repression. CIVICUS Monitor's underlying numeric score.",
+     source_reports = "CIVICUS Monitor, via its public API. A numeric civic-space score (the basis for CIVICUS's five-point Open/Narrowed/Obstructed/Repressed/Closed rating). Higher = more open.",
+     standalone_transform = "None. We use the API's numeric score as-is (keeping the latest rating in each calendar year).",
+     panel_scaling = "Decided at Step 3: the score will be converted to the common framework scale.",
+     units = "CIVICUS numeric score. Higher is better (more open civic space).",
+     coverage = "About 199 countries, but ONLY from 2022 onward - the API returns no earlier data even though CIVICUS launched in 2016. This is a real recency floor to be aware of.",
+     caveats = "The five-point categorical rating (Open/Narrowed/...) is the published headline; we score the finer numeric score behind it and drop the coarser rating. Scores Concept 21 (Political participation beyond voting) and Concept 24 (Civil society space and vitality).",
+     status = "selected",
+ ),
+    
  # ================= IMF_FISCAL_RULES (C8 Macroeconomic policy framework quality) =================
 
  "fr_num_rule_types": dict(
