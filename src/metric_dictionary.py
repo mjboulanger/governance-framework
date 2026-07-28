@@ -1124,7 +1124,198 @@ DICT = {
      status = "selected",
  ),
 
+# ---- Concept 22: Civil liberties (interval items + v2x_civlib/v2x_clpriv 0-1 aggregates) ----
+ "v2x_civlib": dict(
+     definition = "How well a country protects civil liberties overall - physical integrity, private freedoms, and political liberties combined. V-Dem's civil liberties index.",
+     source_reports = "V-Dem index v2x_civlib. Aggregate index scaled 0-1, higher = stronger civil liberties. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
+     units = "Index 0-1. Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The headline civil-liberties index. Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
 
+ "v2x_clpriv": dict(
+     definition = "How well a country protects private civil liberties - freedom from forced labor, property rights, freedom of movement, and freedom of religion. V-Dem's private civil liberties index.",
+     source_reports = "V-Dem index v2x_clpriv. Aggregate index scaled 0-1, higher = stronger private liberties. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
+     units = "Index 0-1. Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "v2clrelig": dict(
+     definition = "How free people are to practice religion - whether the state restricts religious belief and worship. V-Dem's freedom-of-religion indicator.",
+     source_reports = "V-Dem variable v2clrelig. Interval scale (~ -4 to +4, higher = more religious freedom). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "v2cldmovem": dict(
+     definition = "How free men are to move around - domestic and foreign travel without arbitrary restriction. V-Dem's freedom-of-movement-for-men indicator.",
+     source_reports = "V-Dem variable v2cldmovem. Interval scale (~ -4 to +4, higher = more freedom of movement). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Paired with the women's movement item (v2cldmovew). Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "v2cldmovew": dict(
+     definition = "How free women are to move around - domestic and foreign travel without arbitrary restriction. V-Dem's freedom-of-movement-for-women indicator.",
+     source_reports = "V-Dem variable v2cldmovew. Interval scale (~ -4 to +4, higher = more freedom of movement). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The women's counterpart to v2cldmovem (the master names the pair 'v2cldmovem/w'). Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "v2clsocgrp": dict(
+     definition = "How equally civil liberties are enjoyed across social groups - whether some ethnic, religious, or other groups face weaker rights protection. V-Dem's social-group-equality-in-liberties indicator.",
+     source_reports = "V-Dem variable v2clsocgrp. Interval scale (~ -4 to +4, higher = more equal enjoyment of liberties across groups). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "v2clslavef": dict(
+     definition = "How free people are from forced labor - the absence of slavery and coerced work. V-Dem's freedom-from-forced-labor indicator (higher = LESS forced labor).",
+     source_reports = "V-Dem variable v2clslavef. Interval scale (~ -4 to +4, where HIGHER means LESS forced labor). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is BETTER (less forced labor). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=less-forced-labor, so direction is POSITIVE. Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ # ---- Concept 23: Media freedom and pluralism ----
+ # The individual media items read like bad things (censorship, harassment, self-censorship,
+ # bias) but V-Dem codes them higher=BETTER (less of the bad thing). Verified against the data.
+
+ "v2x_freexp_altinf": dict(
+     definition = "How free expression and access to alternative information are overall - media freedom, freedom of speech, and the availability of independent information sources. V-Dem's freedom-of-expression index.",
+     source_reports = "V-Dem index v2x_freexp_altinf. Aggregate index scaled 0-1, higher = more free expression and information access. Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
+     units = "Index 0-1. Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "The headline media/expression index. Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ "v2mecenefm": dict(
+     definition = "How free the media is from government censorship - direct and indirect censorship of print and broadcast. V-Dem's media-censorship indicator (higher = LESS censorship).",
+     source_reports = "V-Dem variable v2mecenefm. Interval scale (~ -3 to +3, where HIGHER means LESS censorship). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +3). Higher is BETTER (less censorship). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=less-censorship, so direction is POSITIVE. Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ "v2meharjrn": dict(
+     definition = "How free journalists are from harassment - the absence of threats, arrests, or violence against reporters for their work. V-Dem's harassment-of-journalists indicator (higher = LESS harassment).",
+     source_reports = "V-Dem variable v2meharjrn. Interval scale (~ -3 to +4, where HIGHER means LESS harassment of journalists). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +4). Higher is BETTER (less harassment). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=less-harassment, so direction is POSITIVE. Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ "v2mecorrpt": dict(
+     definition = "How free the media is from corruption - whether journalists and outlets take bribes to publish or suppress stories. V-Dem's media-corruption indicator (higher = LESS media corruption).",
+     source_reports = "V-Dem variable v2mecorrpt. Interval scale (~ -3 to +3, where HIGHER means LESS media corruption). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +3). Higher is BETTER (less corruption). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=less-media-corruption, so direction is POSITIVE. Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ "v2meslfcen": dict(
+     definition = "How free journalists are from self-censorship - whether reporters avoid sensitive topics out of fear. V-Dem's self-censorship indicator (higher = LESS self-censorship).",
+     source_reports = "V-Dem variable v2meslfcen. Interval scale (~ -3 to +3, where HIGHER means LESS self-censorship). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +3). Higher is BETTER (less self-censorship). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=less-self-censorship, so direction is POSITIVE. Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ "v2merange": dict(
+     definition = "How wide the range of political perspectives in the media is - whether many viewpoints are represented or coverage is narrow. V-Dem's media-perspectives-range indicator.",
+     source_reports = "V-Dem variable v2merange. Interval scale (~ -3 to +3, higher = wider range of perspectives). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +3). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ "v2mebias": dict(
+     definition = "How free media coverage is from bias - whether outlets cover the opposition as well as the government fairly. V-Dem's media-bias indicator (higher = LESS bias).",
+     source_reports = "V-Dem variable v2mebias. Interval scale (~ -3 to +3, where HIGHER means LESS bias). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +3). Higher is BETTER (less bias). Direction is POSITIVE.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "DIRECTION: coded higher=less-bias, so direction is POSITIVE. Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ "v2mecrit": dict(
+     definition = "How free the media is to criticize the government - whether outlets can publish critical coverage without reprisal. V-Dem's print/broadcast-critical indicator.",
+     source_reports = "V-Dem variable v2mecrit. Interval scale (~ -3 to +3, higher = more freedom to criticize). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -3 to +3). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ # ---- Concept 24: Civil society space (C24-only; the other C24 items sit under C21) ----
+ "v2cscnsult": dict(
+     definition = "How routinely the government consults civil society organizations - whether CSOs are involved in policymaking. V-Dem's CSO-consultation indicator.",
+     source_reports = "V-Dem variable v2cscnsult. Interval scale (~ -4 to +4, higher = more CSO consultation). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 24 (Civil society space and vitality).",
+     status = "selected",
+ ),
+
+ "v2csprtcpt": dict(
+     definition = "How actively citizens participate in civil society organizations - whether CSOs draw broad, engaged membership rather than being hollow or elite-only. V-Dem's CSO-participatory-environment indicator.",
+     source_reports = "V-Dem variable v2csprtcpt. Interval scale (~ -4 to +4, higher = more active civil-society participation). Annual.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
+     coverage = "Near-universal (~180 countries).",
+     caveats = "Scores Concept 24 (Civil society space and vitality).",
+     status = "selected",
+ ),
 
 
 
