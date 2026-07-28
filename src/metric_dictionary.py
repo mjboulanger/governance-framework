@@ -448,12 +448,12 @@ DICT = {
  "pts_index": dict(
      definition = "How severe state-perpetrated physical-integrity violations are - political imprisonment, torture, killings, and disappearances by the state. A combined Political Terror Scale score.",
      source_reports = "Political Terror Scale, obtained via the Quality of Government dataset. PTS publishes THREE separate 1-5 codings of the same year, one each from Amnesty International, Human Rights Watch, and the US State Department (higher = more state terror). We combine them.",
-     standalone_transform = "None yet in a pipeline. The source provides THREE separate 1-5 coder columns (pts_amnesty, pts_hrw, pts_statedept); they are carried through unchanged, not yet combined.",
-     panel_scaling = "NOT BUILT - the scoring layer does not exist yet. PLANNED (per the metric_selection derive= note): for each country-year take the MEAN of whichever coder scores are present (a union, so a country counts if ANY coder rated it, maximizing coverage; checks showed no systematic coder-severity bias). Then convert to the common scale, inverting so less state terror scores better.",
+     standalone_transform = "BUILT in src/derive_metrics.py. Row-wise MEAN of whichever of the three 1-5 coder columns (pts_amnesty, pts_hrw, pts_statedept) are present - a UNION (a country-year counts if ANY coder rated it). Validated: Canada/Norway/Sweden 1.0, China/Saudi 4.0, Syria 5.0 (2019); 190 countries covered.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 1-5 mean to the common scale, inverting so less state terror scores better.",
      units = "Score 1-5 (mean of available coders). Higher is WORSE (more state terror). Direction is negative.",
      coverage = "About 98% of country-years, largely via the State Department coding which has the widest reach.",
      caveats = "The three individual coder columns are not scored separately (they are the planned inputs to the mean). The combining mean is NOT yet implemented anywhere - it lives only as a plan in metric_selection. Scores two concepts: Concept 16 (Personal security and public order) as a primary leg, and Concept 22 (Civil liberties) as a supporting leg.",
-     status = "selected",
+     status = "built",
  ),
 
 # ================= CCP (Comparative Constitutions Project, via QoG) =================
@@ -1355,12 +1355,12 @@ DICT = {
  "wb_carbon_revenue_pct_gdp": dict(
      definition = "How much carbon-pricing revenue a country raises relative to the size of its economy - revenue as a share of GDP. Planned, from World Bank carbon revenue and WDI GDP.",
      source_reports = "World Bank Carbon Pricing Dashboard provides raw carbon revenue (stored as wb_carbon_revenue_usd_m, US$ millions). GDP would come from WDI. The RATIO is not published.",
-     standalone_transform = "NOT BUILT. The pipeline stores raw revenue only; the revenue/GDP ratio does not exist as a column. PLANNED (per pipeline comment): divide raw carbon revenue by WDI GDP at the metric pass. Being a ratio, its coverage will be the INTERSECTION of carbon-revenue and GDP availability (both needed).",
+     standalone_transform = "BUILT in src/derive_metrics.py. Raw carbon revenue (wb_carbon_revenue_usd_m, US$m) x 1e6 / total GDP x 100, expressed as PERCENT of GDP. Total GDP is reconstructed as wdi_gdp_per_capita_usd x wdi_population_total (same WDI row, so exact). Coverage is the INTERSECTION of carbon-revenue and GDP (39 countries). Validated: Sweden 0.39pct, France 0.35pct, Germany 0.30pct of GDP - the expected 0.1-0.7pct band for EU carbon-pricers.",
      panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the revenue/GDP ratio to the common framework scale.",
      units = "Planned: carbon revenue as percent of GDP. Higher = more revenue raised relative to economy.",
      coverage = "Would be the intersection of countries with carbon revenue and GDP data.",
      caveats = "PLANNED metric - the ratio is not yet computed (raw revenue is stored, the /GDP step is deferred to the metric pass). Scores Concept 12 (Environmental and climate governance).",
-     status = "selected",
+     status = "built",
  ),
 
  # ================= Powell-Thyne Coups =================
@@ -1445,17 +1445,7 @@ DICT = {
      status = "selected",
  ),
 
- "wdi_ip_nonresident_per_gdp": dict(
-     definition = "How much foreign intellectual-property activity a country attracts relative to its economy - non-resident patent and trademark applications scaled by GDP. Planned, from WDI components.",
-     source_reports = "World Bank WDI. The pipeline stores raw non-resident application counts (wdi_patent_applications_nonresident, wdi_trademark_applications_nonresident). WDI publishes no per-GDP version.",
-     standalone_transform = "NOT BUILT. Only the raw counts exist in wdi_clean.csv; the per-GDP ratio does not. PLANNED: combine non-resident IP applications and divide by GDP. Being a ratio, coverage will be the INTERSECTION of IP-count and GDP availability.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the per-GDP ratio to the common framework scale.",
-     units = "Planned: non-resident IP applications per unit GDP. Higher = more attractive to foreign IP holders.",
-     coverage = "Would be the intersection of IP-count and GDP data.",
-     caveats = "PLANNED metric - the ratio is not yet computed. A proxy for how well a country's IP regime attracts foreign filings. Scores Concept 17 (Property rights and contract enforcement).",
-     status = "selected",
- ),
-
+ 
 # ================= WJP Rule of Law Index =================
  # Eight factor scores, all 0-1, higher = more rule of law. Scored individually
  # (decompose): the framework, not WJP, controls how factors weight into concepts.

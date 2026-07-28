@@ -332,11 +332,7 @@ D += [
       why="same construct as simple mean; trade-weighting is endogenous to trade patterns (prohibitive tariffs suppress the trade that would weight them)"),
 
  # ---- C17 property / IP ----
- dict(m="wdi_ip_nonresident_per_gdp", s="WDI", d="+", at=[(17, "P2")],
-      derive="mean of z-normalized (patent_applications_nonresident, trademark_applications_nonresident), each divided by GDP current US$ (wdi_gdp_per_capita_usd * wdi_population_total)",
-      note="partial proxy for the master's WIPO IP row. NONRESIDENT only: foreign firms seeking protection in a jurisdiction is revealed-preference evidence of confidence in that protection; resident filings measure domestic innovation capacity, not governance. GDP-normalized - raw counts are dominated by economy size"),
- dict(m="wdi_patent_applications_nonresident", s="WDI", d="", at=[], why="component of wdi_ip_nonresident_per_gdp"),
- dict(m="wdi_trademark_applications_nonresident", s="WDI", d="", at=[], why="component of wdi_ip_nonresident_per_gdp"),
+ dict(m="wdi_ip_nonresident_per_gdp", s="WB_WDI", d="", at=[], why="DROPPED v1 2026-07-24: per-GDP ratio pathological at small economies (Sao Tome ~6720, ~100x real innovation hubs - small IP count over tiny GDP explodes, measuring economy size not IP-regime quality). C17 well-carried without it (V-Dem x3 + Heritage + Fraser + WJP 6.5). Non-resident-share-of-total-filings is the correct construction if an IP signal is wanted in v2"),
  dict(m="wdi_patent_applications_resident", s="WDI", d="", at=[],
       why="measures domestic innovation activity, not IP protection quality; also 57.8% coverage, below the 60% bar"),
  dict(m="wdi_trademark_applications_resident", s="WDI", d="", at=[],

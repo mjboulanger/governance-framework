@@ -87,12 +87,38 @@ def derive_vdem_regime_duration():
     return res
 
 
+def derive_pts_index():
+    q = pd.read_csv(os.path.join(PROC, "qog_clean.csv"), low_memory=False,
+                    usecols=["country_code", "year", "pts_amnesty", "pts_hrw", "pts_statedept"])
+    coders = ["pts_amnesty", "pts_hrw", "pts_statedept"]
+    q["pts_index"] = q[coders].mean(axis=1, skipna=True)
+    q = q.rename(columns={"country_code": "iso3"})
+    return q[["iso3", "year", "pts_index"]].dropna(subset=["pts_index"])
+
+
+def _wdi_total_gdp():
+    w = pd.read_csv(os.path.join(PROC, "wdi_clean.csv"), low_memory=False,
+                    usecols=["country_code", "year", "wdi_gdp_per_capita_usd", "wdi_population_total"])
+    w["gdp_usd"] = w["wdi_gdp_per_capita_usd"] * w["wdi_population_total"]
+    return w[["country_code", "year", "gdp_usd"]].dropna(subset=["gdp_usd"])
+
+
+def derive_wb_carbon_revenue_pct_gdp():
+    c = pd.read_csv(os.path.join(PROC, "wb_carbon_clean.csv"), low_memory=False,
+                    usecols=["country_code", "year", "wb_carbon_revenue_usd_m"]).dropna(subset=["wb_carbon_revenue_usd_m"])
+    g = _wdi_total_gdp()
+    m = c.merge(g, on=["country_code", "year"], how="inner")
+    m["wb_carbon_revenue_pct_gdp"] = (m["wb_carbon_revenue_usd_m"] * 1e6) / m["gdp_usd"] * 100.0
+    m = m.rename(columns={"country_code": "iso3"})
+    return m[["iso3", "year", "wb_carbon_revenue_pct_gdp"]]
+
+
 def build_and_write():
     """Assemble all derived metrics onto the spine and write derived_metrics.csv.
     Currently: vdem_regime_duration (the other 3 simple derivations land here next)."""
     sp = _spine()  # iso3 + country_name, 213 rows
 
-    parts = [derive_vdem_regime_duration()]   # each: [iso3, year, <metric>...]
+    parts = [derive_vdem_regime_duration(), derive_pts_index(), derive_wb_carbon_revenue_pct_gdp()]   # each: [iso3, year, <metric>...]
 
     # outer-merge all derived parts on iso3+year, then left-join onto the spine's iso3
     from functools import reduce
