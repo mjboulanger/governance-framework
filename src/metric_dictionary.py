@@ -1595,7 +1595,105 @@ DICT = {
      status = "selected",
  ),
 
-    
+# ================= EPI (Yale Environmental Performance Index) =================
+ # Issue-category scores 0-100, higher=better. Scored at issue-category level (decompose),
+ # not the nested parent objectives.
+
+ "epi_agr": dict(
+     definition = "How sustainable a country's agriculture is - sustainable nitrogen use and agricultural practices. Yale EPI issue category, Agriculture.",
+     source_reports = "Yale Environmental Performance Index, issue category 'agr' (Agriculture). Published 0-100, higher = more sustainable. Biennial.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-100 score to the common framework scale.",
+     units = "Score 0-100. Higher is better.",
+     coverage = "About 180 countries.",
+     caveats = "Scored at the issue-category level (decompose), not EPI's nested parent objectives. Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ "epi_bdh": dict(
+     definition = "How well a country protects biodiversity and habitat - protected areas, species protection, and habitat conservation. Yale EPI issue category, Biodiversity and Habitat.",
+     source_reports = "Yale Environmental Performance Index, issue category 'bdh' (Biodiversity and Habitat). Published 0-100, higher = better protection. Biennial.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-100 score to the common framework scale.",
+     units = "Score 0-100. Higher is better.",
+     coverage = "About 180 countries.",
+     caveats = "Scored at the issue-category level (decompose). Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ "epi_cch": dict(
+     definition = "How well a country is mitigating climate change - progress on cutting greenhouse-gas emissions and related trends. Yale EPI issue category, Climate Change.",
+     source_reports = "Yale Environmental Performance Index, issue category 'cch' (Climate Change). Published 0-100, higher = better mitigation. Biennial.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-100 score to the common framework scale.",
+     units = "Score 0-100. Higher is better.",
+     coverage = "About 180 countries.",
+     caveats = "Scored at the issue-category level (decompose). An outcome/trend measure alongside the policy-based climate metrics. Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ "epi_wrs": dict(
+     definition = "How well a country manages water resources - chiefly wastewater treatment and sanitation infrastructure. Yale EPI issue category, Water Resources.",
+     source_reports = "Yale Environmental Performance Index, issue category 'wrs' (Water Resources). Published 0-100, higher = better management. Biennial.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-100 score to the common framework scale.",
+     units = "Score 0-100. Higher is better.",
+     coverage = "About 180 countries.",
+     caveats = "Scored at the issue-category level (decompose). Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ # ================= ASCOR (TPI Centre / LSE) sovereign climate assessment =================
+
+ "ascor_climate_governance": dict(
+     definition = "How well a sovereign governs its climate transition - the strength of its climate policy framework: legislation, targets, carbon pricing, and just-transition provisions. Built from the ASCOR assessment.",
+     source_reports = "ASCOR (Assessing Sovereign Climate-related Opportunities and Risks), TPI Centre at LSE. An investor-led assessment answering yes/no/partial questions across several climate-policy areas. Not a single published score.",
+     standalone_transform = "Built in-pipeline (nb 40): take the MEAN across the 5 assessment areas that ALL assessed countries answer, deliberately excluding areas that ASCOR exempts for certain income groups (so every country is scored on a common basis). Higher = stronger climate governance.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the composite to the common framework scale.",
+     units = "Built composite (mean of 5 areas). Higher is better.",
+     coverage = "About 85 countries, EM/frontier-oriented.",
+     caveats = "OUR composite over the 5 universally-answered areas (not all 9 - the income-group-exempted areas are excluded by design so coverage is comparable). ASCOR_SCORED_AREAS is a hardcoded pipeline judgment flagged for re-validation on any methodology change. Added at source level 2026-07-21. Scores Concept 12 (Environmental and climate governance).",
+     status = "selected",
+ ),
+
+ # ================= RTI Rating =================
+
+ "rti_total": dict(
+     definition = "How strong a country's right-to-information (freedom of information) LAW is on paper - the legal framework for public access to government-held information. The RTI Rating total.",
+     source_reports = "RTI Rating (Access Info Europe and the Centre for Law and Democracy). Total of 7 sub-category point scores, on a 0-150 scale, higher = stronger RTI law. Parses cleanly from the RTI Rating website. Updated as laws change.",
+     standalone_transform = "None. The published total is used as-published (the 7 sub-scores are dropped - decompose-or-keep-whole: one coherent legal-quality construct on the CLD international-standards weighting).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-150 total to the common framework scale.",
+     units = "Score 0-150. Higher is better (stronger law).",
+     coverage = "About 140 countries with an RTI law (a has_rti_law flag marks those without, which are floored).",
+     caveats = "DE JURE - measures the LAW on paper, not whether access works in practice (e.g. Afghanistan scores 139/150 on paper). Scores TWO concepts: Concept 25 (Government transparency and openness) and Concept 23 (Media freedom and pluralism).",
+     status = "selected",
+ ),
+
+ # ================= TI Political Finance Database =================
+
+ "polfin_transparency_integrity": dict(
+     definition = "How transparent and well-regulated a country's political finance is - rules on disclosure, donation limits, and oversight of money in politics. From the political finance database.",
+     source_reports = "Political finance transparency/integrity sub-index (International IDEA / TI political finance data). Higher = stronger political-finance regulation and transparency.",
+     standalone_transform = "None. Selected and used as-published.",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "Sub-index score. Higher is better.",
+     coverage = "Broad, most countries.",
+     caveats = "One of the few sources unique to Concept 25 (little overlap with other concepts' sources). Scores Concept 25 (Government transparency and openness).",
+     status = "selected",
+ ),
+
+ # ================= OECD Trade Facilitation Indicators =================
+
+ "tfi_avg": dict(
+     definition = "How efficient a country's trade procedures are - the average of OECD Trade Facilitation Indicators covering customs, formalities, documentation, and border-agency cooperation. A measure of how smoothly goods cross the border.",
+     source_reports = "OECD Trade Facilitation Indicators, average across the TFI sub-indicators. Published roughly 0-2, higher = better trade facilitation. Periodic updates.",
+     standalone_transform = "None. Selected and used as-published (the TFI average).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
+     units = "TFI score (~0-2). Higher is better.",
+     coverage = "About 160 countries.",
+     caveats = "Scores Concept 11 (Trade governance).",
+     status = "selected",
+ ),    
 
 
 
