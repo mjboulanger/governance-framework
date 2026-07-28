@@ -267,7 +267,62 @@ DICT = {
      status = "selected",
  ),
 
+# ================= World Bank WDI-distributed (LPI, HCI+, WBL 2.0) =================
 
+ "wdi_lpi_overall": dict(
+     definition = "How well a country's logistics and trade infrastructure works - customs efficiency, infrastructure quality, shipment timeliness, tracking. World Bank Logistics Performance Index, overall score.",
+     source_reports = "World Bank Logistics Performance Index, overall score (WDI code LP.LPI.OVRL.XQ). Published on a 1-5 scale, higher = better logistics. Released roughly every two years.",
+     standalone_transform = "None. We use the World Bank's published overall LPI score as-is.",
+     panel_scaling = "Decided at Step 3: the 1-5 score will be converted to the common framework scale.",
+     units = "Score 1-5. Higher is better.",
+     coverage = "About 160 countries, in survey years.",
+     caveats = "Released only every couple of years, so between-survey years may be missing. Scores Concept 11 (Trade governance).",
+     status = "selected",
+ ),
+
+ "wdi_hci_plus_overall": dict(
+     definition = "How much human capital a child born today can expect to accumulate by adulthood, given the country's health and education - a composite of survival, schooling, and health. World Bank Human Capital Index (HCI+ version).",
+     source_reports = "World Bank Human Capital Index Plus, overall (WDI code HD_HCIP_OVRL_TO). Published 0-1, higher = more human capital realized. We use HCI+ because the standard HCI is not available through the World Bank API.",
+     standalone_transform = "None. We use the World Bank's published HCI+ overall score as-is.",
+     panel_scaling = "Decided at Step 3: the 0-1 score will be converted to the common framework scale.",
+     units = "Score 0-1. Higher is better.",
+     coverage = "About 170 countries, in release years.",
+     caveats = "HCI+ substitutes for standard HCI (API availability). An OUTCOME-oriented measure of human-capital delivery, used as evidence of public-service capacity. Scores Concept 5 (Public service delivery and human development).",
+     status = "selected",
+ ),
+
+ "wbl_legal_framework": dict(
+     definition = "How equal a country's LAWS are for women across their working life - the legal rights on the books covering mobility, workplace, pay, marriage, parenthood, entrepreneurship, assets, and pensions. World Bank Women, Business and the Law, legal-framework score.",
+     source_reports = "World Bank Women, Business and the Law 2.0, overall legal-framework score (WDI code GD_WBL_OVL_LAW). Published 0-100, higher = more legal gender equality. Annual.",
+     standalone_transform = "None. We use the World Bank's published 0-100 score as-is.",
+     panel_scaling = "Decided at Step 3: the 0-100 score will be converted to the common framework scale.",
+     units = "Score 0-100. Higher is better.",
+     coverage = "About 190 countries.",
+     caveats = "One of three WBL 2.0 facets we score together at Concept 22 (legal framework, supportive frameworks, enforcement) - deliberate source concentration, as WBL is the standard cross-country measure of women's legal equality. This one covers the LAW as written. Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "wbl_supportive_framework": dict(
+     definition = "Whether a country has the institutions and mechanisms that make gender-equality laws real - the supporting frameworks behind the rights on paper. World Bank Women, Business and the Law, supportive-frameworks score.",
+     source_reports = "World Bank Women, Business and the Law 2.0, supportive-frameworks score (WDI code GD_WBL_OVL_SFR). Published 0-100, higher = stronger supporting institutions. Annual.",
+     standalone_transform = "None. We use the World Bank's published 0-100 score as-is.",
+     panel_scaling = "Decided at Step 3: the 0-100 score will be converted to the common framework scale.",
+     units = "Score 0-100. Higher is better.",
+     coverage = "About 190 countries.",
+     caveats = "Second of the three WBL 2.0 facets scored at Concept 22 (see wbl_legal_framework). This one covers the supporting institutions that back the laws. Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
+
+ "wbl_enforcement_perceptions": dict(
+     definition = "How well gender-equality laws are actually enforced and experienced in practice, not just written down. World Bank Women, Business and the Law, enforcement score.",
+     source_reports = "World Bank Women, Business and the Law 2.0, enforcement score (WDI code GD_WBL_OVL_ENF). Published 0-100, higher = better enforcement in practice. Annual.",
+     standalone_transform = "None. We use the World Bank's published 0-100 score as-is.",
+     panel_scaling = "Decided at Step 3: the 0-100 score will be converted to the common framework scale.",
+     units = "Score 0-100. Higher is better.",
+     coverage = "About 190 countries.",
+     caveats = "Third of the three WBL 2.0 facets scored at Concept 22 (see wbl_legal_framework). This one is the DE FACTO leg - whether the laws work in practice, complementing the de jure legal-framework score. Scores Concept 22 (Civil liberties).",
+     status = "selected",
+ ),
 
 
 
