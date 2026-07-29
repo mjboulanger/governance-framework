@@ -205,6 +205,28 @@ DICT = {
      status = "selected",
  ),
 
+ "idea_participation": dict(
+     definition = "The Participation attribute of International IDEA's Global State of Democracy (GSoD) indices - a 0-1 measure of how much citizens engage in political life beyond voting: civil society activity, civic engagement, electoral participation, direct and local democracy.",
+     source_reports = "International IDEA, Global State of Democracy (GSoD) Indices. Published as a 0-1 aggregate attribute with subcomponents. Model-based estimates combining multiple underlying sources.",
+     standalone_transform = "None - used as the published 0-1 attribute score. Direction POSITIVE (higher = more participatory). Composite chosen over subcomponents: civil_society (r=0.980) and civic_engagement (r=0.832) are redundant with it; electoral_participation and direct_democracy are weak/degenerate; local_democracy scored separately as a distinct facet.",
+     panel_scaling = "NOT BUILT yet (scoring layer does not exist). Already on a 0-1 scale, so scaling is light.",
+     units = "Continuous 0-1, higher = better. Direction positive.",
+     coverage = "174 countries, 1990-2025 (full history, current). Matches V-Dem's temporal depth - a genuine full-panel independent source, unlike CIVICUS (2022+ only).",
+     caveats = "P1 in Concept 21 (Political participation beyond voting). Placed P1 specifically because C21 is otherwise V-Dem-dominated (6 of 7 existing metrics are V-Dem: the v2x_partip composite plus 5 facets); GSoD is the main independent full-history measure. Validated: Denmark 0.96, Switzerland 0.94, Norway 0.91 (top) down to North Korea 0.03 (bottom).",
+     status = "built",
+ ),
+
+ "idea_local_democracy": dict(
+     definition = "The Local Democracy subcomponent of IDEA GSoD's Participation attribute - a 0-1 measure of participatory institutions and engagement at the subnational/local level.",
+     source_reports = "International IDEA, GSoD Indices. Subcomponent of the Participation attribute. Model-based 0-1 estimate.",
+     standalone_transform = "None - published 0-1 score. Direction POSITIVE.",
+     panel_scaling = "NOT BUILT yet. Light (already 0-1).",
+     units = "Continuous 0-1, higher = better. Direction positive.",
+     coverage = "174 countries, 1990-2025.",
+     caveats = "P2 in Concept 21. Scored as a distinct facet because it is the sharpest democracy/autocracy discriminator in the GSoD participation cluster (clean-autocracy gap 0.85 vs the composite's 0.66) and only moderately correlated with the composite (r=0.744, ~half its variance independent) - captures local/subnational participation the national-focused V-Dem cluster underweights. OVERLAP: it is a subcomponent of idea_participation (also scored), so the two share mechanical variance - NAMED for the Step-4 correlation-aware weighting so they are not treated as fully independent.",
+     status = "built",
+ ),
+
  "nelda_concerns_not_free_fair": dict(
      definition = "Whether there were significant concerns, before an election, that it would not be free and fair (NELDA variable NELDA11). A pre-election red flag.",
      source_reports = "NELDA (National Elections Across Democracy and Autocracy, Hyde and Marinov), sourced via QoG Standard TS. Binary yes/no per election.",

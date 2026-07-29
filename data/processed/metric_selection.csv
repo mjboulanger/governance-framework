@@ -46,6 +46,12 @@ odin_overall,ODIN,+,,,25,Sp,True,
 odin_coverage,ODIN,,,,,,False,redundant with SPI (both measure whether data exists)
 civicus_score,CIVICUS,+,,,21,P1,True,
 civicus_score,CIVICUS,+,,,24,P1,True,
+idea_participation,IDEA_GSOD,+,,"IDEA GSoD Participation attribute (0-1, higher=more participatory). P1: direct on-concept measure of participation, and an INDEPENDENT full-history source (1990-2025, 174 countries) in a concept otherwise dominated by V-Dem (6 of 7 existing metrics are V-Dem: its composite v2x_partip plus 5 facets; CIVICUS covers only 2022+). Breaks the V-Dem monoculture across the whole panel. Validated: Denmark 0.96 / Switzerland 0.94 down to North Korea 0.03. GSoD composite chosen over its subcomponents - civil_society (r=0.98) and civic_engagement (r=0.83) are redundant with it",21,P1,True,
+idea_local_democracy,IDEA_GSOD,+,,"IDEA GSoD Local Democracy subcomponent (0-1). P2: the sharpest democracy/autocracy discriminator in the GSoD participation cluster (gap 0.85 > composite 0.66) and only moderately correlated with the composite (r=0.744, so ~half its variance is independent) - captures subnational/local participation that the national-focused V-Dem cluster and the GSoD composite underweight. Mechanical overlap with idea_participation (its parent composite) flagged for Step-4 correlation-aware weighting",21,P2,True,
+idea_civil_society,IDEA_GSOD,,,,,,False,"EXCLUDED: redundant with idea_participation (r=0.980, essentially the composite restated). Scoring it would double-count the composite"
+idea_civic_engagement,IDEA_GSOD,,,,,,False,EXCLUDED: largely redundant with idea_participation (r=0.832)
+idea_electoral_participation,IDEA_GSOD,,,,,,False,"EXCLUDED: weak discriminator (clean 0.666 vs autocracy 0.453, gap 0.21) - electoral participation/turnout separates democracies from autocracies poorly (autocracies can drive high turnout via mobilisation/coercion). Also duplicates C20 electoral-process content"
+idea_direct_democracy,IDEA_GSOD,,,,,,False,"EXCLUDED: degenerate for scoring (mean 0.089 - most countries near zero, few have referenda/initiative mechanisms) and weak discriminator (gap 0.15). Measures presence of direct-democracy institutions, a narrow feature, not general participatory quality"
 civicus_rating,CIVICUS,,,,,,False,ordinal coarsening of civicus_score
 kaopen_norm,CHINN_ITO,+,,DEMOTED P1->Sp: same construct as FARI from same AREAER source data,8,Sp,True,
 kaopen,CHINN_ITO,,,,,,False,raw scale; kaopen_norm preferred (bounded)
