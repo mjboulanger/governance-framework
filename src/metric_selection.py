@@ -79,6 +79,8 @@ D = [
  # ---- FSI ----
  dict(m="fsi_c1_security_apparatus",   s="FSI", d="-", at=[(13,"P1")]),
  dict(m="fsi_c2_factionalized_elites", s="FSI", d="-", at=[(1,"P1")], note="C1 takes two FSI components - source concentration"),
+ dict(m="dpi_total_fragmentation", s="DPI", d="", at=[],
+      why="EXCLUDED from C1 on validity, not data quality (2026-07-24). The DPI pipeline is CORRECT (pure rename of raw DPI columns, no transform bug) and the data is REAL - dpi_total_fragmentation follows DPI Frac exactly (prob two random deputies differ in party; Barbados one-party legislature = 0.0 confirms the definition). But DPI Frac is an INVALID proxy for C1 horizontal-elite-organisation: it measures seat-dispersion across party LABELS, which conflates genuine pluralism with managed-autocracy pseudo-pluralism. Belarus reads 0.994 (regime permits many toothless nominal parties) - same as a real multiparty democracy - so the measure cannot distinguish democratic fragmentation from authoritarian pseudo-fragmentation, i.e. it is confounded by the very regime type C1 assesses. Related DPI fragmentation cols (govfrac, oppfrac, herfindahls, polariz) share the confound. C1 keeps FSI Factionalized Elites (P1) - expert-coded ACTUAL elite fragmentation with no regime-type confound. NOTE: raw DPI numgov appears to be government SEATS not party count (~85pct confidence: Barbados 30 = House size; not codebook-verified). DPI data/pipeline are fine and remain available for other concepts if a non-confounded variable fits."),
  dict(m="fsi_c3_group_grievance",      s="FSI", d="-", at=[(1,"P1")]),
  dict(m="fsi_p2_public_services",      s="FSI", d="-", at=[(5,"P1")]),
 

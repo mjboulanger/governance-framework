@@ -468,7 +468,7 @@ _Verified 2026-06-24. Reconciles each concept's primary sources against actual p
 
 | Concept | Status |
 |---------|--------|
-| **1 · Political settlement** | **✅ Built:** V-Dem power-distribution *(vdem)* · FSI Factionalized Elites *(fsi c2)* · FSI Group Grievance *(fsi c3)* · DPI *(dpi_clean)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |
+| **1 · Political settlement** | **✅ Built:** V-Dem power-distribution *(vdem)* · FSI Factionalized Elites *(fsi c2)* · FSI Group Grievance *(fsi c3)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |
 | **2 · Political stability & regime durability** | **✅ Built:** WGI Pol. Stability *(wgi)* · V-Dem regime data *(vdem)* · Powell-Thyne coups *(powell_thyne)* · UCDP *(ucdp)* · GPI *(QoG)* · WJP F5 *(wjp)*<br>**🟡 Outstanding:** ACLED `[parked: research-API approval pending]`<br>**⚪ Closed:** — |
 | **3 · Statistical & informational infrastructure** | **✅ Built:** WB SPI *(spi_clean)* · ODIN *(odin_clean)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** IMF SDDS (tier-2) *(dropped — redundant with SPI + ODIN, which cover the dissemination/transparency facet continuously and, for ODIN, with independent audit; SDDS is a coarse ~4-level ordinal, partly self-reported. Re-entry: cheap public DSBB source if a de jure commitment signal distinct from de facto capacity is later wanted.)* |
 | **4 · Government effectiveness & admin quality** | **✅ Built:** WGI Govt Effectiveness *(wgi)* · V-Dem v2clrspct *(vdem)*<br>**🟡 Outstanding:** —<br>**⚪ Closed:** — |

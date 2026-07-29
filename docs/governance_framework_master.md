@@ -24,7 +24,7 @@ The framework organises governance into **5 categories** containing **25 unique 
 
 | Category | Concept | Primary sources | Secondary / supplementary |
 |----------|---------|-----------------|---------------------------|
-| **1. Political foundations** | Political settlement | V-Dem power-distribution indicators; FSI Factionalized Elites (P1); FSI Group Grievance (S1); DPI party fragmentation; Powell-Thyne coups | (none selected as supplementary tier) |
+| **1. Political foundations** | Political settlement | V-Dem power-distribution indicators; FSI Factionalized Elites (P1); FSI Group Grievance (S1); Powell-Thyne coups *(DPI excluded on validity - see C1 section)* | (none selected as supplementary tier) |
 | | Political stability and regime durability | WGI Political Stability; V-Dem regime duration; Powell-Thyne coups; UCDP and/or ACLED; GPI; WJP Factor 5 | Polity Durable (cross-check); GTD (currency caveat); MMP; ICRG/EIU (optional paid) |
 | **2. State capacity** | State capacity | V-Dem state authority indicators; FSI Security Apparatus (C1) | WB Informal Economy Database; ILO social security coverage; Hanson-Sigman state capacity |
 | | Statistical and informational infrastructure* | World Bank SPI; Open Data Inventory | IMF SDDS subscriptions *(dropped v1 — redundant with SPI/ODIN)* |
@@ -177,7 +177,7 @@ The following sections cover all concepts in framework order. Each section provi
 | V-Dem power-distribution indicators (v2pepwrses, v2pepwrsoc, v2x_egal, v2psoppaut, factionalism) | Primary tier 1 | Direct fit for vertical power distribution and horizontal factionalism dimensions. Expert coding, ~180 countries, annual. |
 | FSI Factionalized Elites (P1) | Primary tier 1 | Direct conceptual match for elite fragmentation. 179 countries, annual. Placed here (not in Stability) to maintain conceptual separation. |
 | FSI Group Grievance (S1) | Primary tier 1 | Captures vertical fragmentation/social cohesion. Same source family as P1. Placed here for the same reason. |
-| DPI (Database of Political Institutions) | Primary tier 2 | Party fragmentation and government composition as proxies for horizontal elite organisation. ~180 countries. |
+| DPI (Database of Political Institutions) | EXCLUDED - validity (2026-07-24) | Was selected Primary tier 2 (party fragmentation as elite-organisation proxy). NOT scored: DPI data and pipeline are CORRECT, but DPI Frac measures seat-dispersion across party LABELS and conflates genuine pluralism with managed-autocracy pseudo-pluralism (Belarus 0.994 = many toothless regime-permitted parties, same as a real multiparty democracy; Barbados one-party = 0.0). Confounded by the very regime type C1 assesses, so an invalid proxy. C1 keeps FSI Factionalized Elites (P1, expert-coded actual elite fragmentation). See metric_selection dpi_total_fragmentation why= and decisions log. |
 | Powell-Thyne coups | Supplementary | Revealed measure of settlement instability through realised regime breakdown. Universal, 1950–present. |
 | ESID political settlements typology | Dropped — coverage | Conceptually most direct match but ~40 developing countries only. Fails coverage threshold. Added to future enhancements as candidate for commissioned expert survey. |
 | BTI stateness component | Dropped — coverage | ~140 transformation countries; excludes most developed economies. |
