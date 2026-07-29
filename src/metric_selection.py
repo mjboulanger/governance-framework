@@ -36,7 +36,7 @@ D = [
  dict(m="irena_renewables_share_pct",   s="IRENA_CAPACITY", d="+", at=[(12,"P1")]),
  dict(m="bci_corruption_index",         s="BCI",            d="-", at=[(18,"P2")], note="direction verified: Finland -3.5 low, Guinea-Bissau 78.9 high"),
  dict(m="gpi_peace_index",              s="GPI",            d="-", at=[(2,"P2"),(16,"P2")]),
- dict(m="obs_open_budget_index",        s="OBS",            d="+", at=[(7,"P1"),(25,"P2")]),
+ dict(m="obs_open_budget_index",        s="OBS",            d="+", at=[(8,"P1"),(25,"P2")]),
  dict(m="polfin_transparency_integrity",s="TI_POLFINANCE",  d="+", at=[(25,"P2")], note="master flags possible C18 cross-reference"),
  dict(m="pew_gov_restrictions_index",   s="PEW_GRI",        d="-", at=[(22,"P2")], note="direction verified: NZ 0.35 low, China 9.09 high"),
  dict(m="pew_social_hostilities_index", s="PEW_GRI",        d="-", at=[(22,"P2")]),

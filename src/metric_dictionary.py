@@ -201,7 +201,7 @@ DICT = {
      panel_scaling = "Decided at Step 3: the 0-100 index will be converted to the common framework scale.",
      units = "Index 0-100. Higher is better (more transparent).",
      coverage = "About 120 countries.",
-     caveats = "Scores two concepts: Concept 7 (Public financial management) as a primary leg, and Concept 25 (Government transparency and openness) as a supporting leg.",
+     caveats = "Scores two concepts: Concept 8 (Macroeconomic policy framework quality - which now includes public financial management after the C7 fold) as a primary leg, and Concept 25 (Government transparency and openness) as a supporting leg.",
      status = "selected",
  ),
 
