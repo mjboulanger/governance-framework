@@ -205,6 +205,28 @@ DICT = {
      status = "selected",
  ),
 
+ "pefa_core_management": dict(
+     definition = "How well a government runs the frontline machinery of managing public money - whether the budget is credible and executed as planned, and whether spending is controlled (procurement, payroll, tax administration, internal audit). Built from PEFA.",
+     source_reports = "PEFA (Public Expenditure and Financial Accountability), the gold-standard PFM assessment. Indicators graded A-D (mapped to 4-1). Not a published composite - PEFA reports indicator-level grades only.",
+     standalone_transform = "BUILT in src/derive_metrics.py. Mean of two PEFA PILLAR means: Pillar I (budget reliability, PI-01..03) and Pillar V (predictability and control in execution, PI-19..25). Each pillar = unweighted mean of its indicator scores; the composite = mean of the two pillar means (so the two pillars are equal-weighted regardless of indicator count). Single 2016-framework assessment per country. Validated: Georgia 3.30, Rwanda 3.06 (strong PFM), Chad 1.40, Nigeria 1.52 (weak).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 1-4 composite to the common framework scale. NOTE for Step-4: C8 uses INTENTIONAL sub-dimension weighting (fiscal 40 / monetary 40 / external 20) - this metric is in the FISCAL bucket; bucket weight must NOT be driven by metric count.",
+     units = "Composite score 1-4 (D=1 to A=4). Higher is better.",
+     coverage = "82 spine countries. CROSS-SECTIONAL: one assessment per country, vintage varies 2017-2026 (not a time series - PEFA assessments are irregular and cross-framework assessments are not comparable). Donor-driven coverage skews developing-heavy - a reference-class caveat at scaling.",
+     caveats = "PFM leg of Concept 8 (Macroeconomic policy framework quality, which absorbed public financial management when C7 was folded in 2026-07-24). The frontline how-well-is-money-managed core, paired with pefa_accountability (back-end) and obs_open_budget_index (transparency). Single-vintage snapshot per country, NOT a trajectory.",
+     status = "built",
+ ),
+
+ "pefa_accountability": dict(
+     definition = "How well a government keeps and independently checks its financial books - whether accounts are properly kept, reconciled and reported, and whether external audit and legislative scrutiny of the budget and accounts function. Built from PEFA.",
+     source_reports = "PEFA (Public Expenditure and Financial Accountability). Indicators graded A-D (mapped to 4-1). Not a published composite.",
+     standalone_transform = "BUILT in src/derive_metrics.py. Mean of two PEFA PILLAR means: Pillar VI (accounting and reporting, PI-26..28) and Pillar VII (external scrutiny and audit, PI-29..31). Each pillar = unweighted mean of its indicators; composite = mean of the two pillar means. Single 2016-framework assessment per country. Validated: Georgia 3.67, Rwanda 2.92 (strong), Chad 1.17 (weak).",
+     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 1-4 composite to the common scale. NOTE for Step-4: in C8's FISCAL bucket (fiscal 40 / monetary 40 / external 20 sub-dimension weighting); bucket weight must NOT be driven by metric count.",
+     units = "Composite score 1-4 (D=1 to A=4). Higher is better.",
+     coverage = "82 spine countries. CROSS-SECTIONAL, one assessment per country, vintage varies 2017-2026 (not a time series). Donor-skewed developing-heavy coverage.",
+     caveats = "PFM back-end (accounting + audit) leg of Concept 8. P2 (below pefa_core_management): more hygiene than frontline quality. IMPORTANT OVERLAP: Pillar VII (external scrutiny/audit) overlaps Concept 19 (Legislative and constitutional checks) legislative-oversight content - the audit/scrutiny signal is measured here (via PEFA) and in C19 (via V-Dem). NAMED for the Step-4 correlation-aware weighting item so the two are not treated as fully independent. Single-vintage snapshot per country.",
+     status = "built",
+ ),
+
  "pei_electoral_integrity_index": dict(
      definition = "How much integrity a country's elections have - fairness of the process from laws and boundaries through voting, counting, and results. The Perceptions of Electoral Integrity index.",
      source_reports = "Perceptions of Electoral Integrity (Norris and colleagues), via the Quality of Government dataset (QoG variable pei_peii_1). An expert-survey index of election quality, higher = more integrity.",

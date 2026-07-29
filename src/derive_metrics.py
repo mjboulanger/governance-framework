@@ -113,12 +113,54 @@ def derive_wb_carbon_revenue_pct_gdp():
     return m[["iso3", "year", "wb_carbon_revenue_pct_gdp"]]
 
 
+# PEFA composite metrics for C8 (Option C: two composites, not four pillars). Each composite =
+# mean of its constituent PILLAR means (so pillars are equal-weighted within a composite -
+# framework-controlled, not driven by indicator counts). Pillar means = unweighted mean of that
+# pillar's indicator scores (1-4, D=1..A=4), single 2016-framework assessment per country.
+# CROSS-SECTIONAL: one assessment per country, vintage varies 2017-2026 (not a time series).
+#   pefa_core_management  = mean(Pillar I reliability, Pillar V execution control)  -> C8 P1
+#   pefa_accountability   = mean(Pillar VI accounting, Pillar VII external scrutiny) -> C8 P2
+# Pillars II/III/IV excluded (II transparency overlaps OBS; III peripheral/SOE v2; IV overlaps
+# C8 fiscal-rules leg). VII (audit/scrutiny) overlaps C19 legislative oversight - named in dict.
+# quality_flag ignored (2/2621 rows, immaterial). Pillar-level detail not persisted (unscored).
+_PEFA_PILLAR_INDS = {
+    "I":   ["PI-01", "PI-02", "PI-03"],
+    "V":   ["PI-19", "PI-20", "PI-21", "PI-22", "PI-23", "PI-24", "PI-25"],
+    "VI":  ["PI-26", "PI-27", "PI-28"],
+    "VII": ["PI-29", "PI-30", "PI-31"],
+}
+_PEFA_COMPOSITES = {
+    "pefa_core_management": ["I", "V"],
+    "pefa_accountability":  ["VI", "VII"],
+}
+
+
+def derive_pefa_composites():
+    import pandas as pd
+    d = pd.read_csv(os.path.join(PROC, "pefa_clean.csv"), low_memory=False)
+    core = d[(d.framework_version == 2016) & (d.level == "indicator")].copy()
+    # pillar mean per country
+    pillar = {}
+    for pil, inds in _PEFA_PILLAR_INDS.items():
+        pillar[pil] = (core[core.indicator_code.isin(inds)]
+                       .groupby("country_code")["numeric_score"].mean().rename(pil))
+    pil_df = pd.concat(pillar.values(), axis=1)  # index=country_code, cols=pillars
+    # composite = mean of its pillar means (equal pillar weight; NaN pillars skipped)
+    out = core[["country_code", "assessment_year"]].drop_duplicates().rename(
+        columns={"country_code": "iso3", "assessment_year": "year"})
+    for comp, pils in _PEFA_COMPOSITES.items():
+        s = pil_df[pils].mean(axis=1, skipna=True).rename(comp).reset_index().rename(
+            columns={"country_code": "iso3"})
+        out = out.merge(s, on="iso3", how="left")
+    return out
+
+
 def build_and_write():
     """Assemble all derived metrics onto the spine and write derived_metrics.csv.
     Currently: vdem_regime_duration (the other 3 simple derivations land here next)."""
     sp = _spine()  # iso3 + country_name, 213 rows
 
-    parts = [derive_vdem_regime_duration(), derive_pts_index(), derive_wb_carbon_revenue_pct_gdp()]   # each: [iso3, year, <metric>...]
+    parts = [derive_vdem_regime_duration(), derive_pts_index(), derive_wb_carbon_revenue_pct_gdp(), derive_pefa_composites()]   # each: [iso3, year, <metric>...]
 
     # outer-merge all derived parts on iso3+year, then left-join onto the spine's iso3
     from functools import reduce
