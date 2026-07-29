@@ -8,6 +8,13 @@ wgi_voice_accountability,WGI,,,,,,False,category cross-check (Accountability rol
 ti_cpi_score,TI_CPI,+,,,18,P1,True,
 unodc_homicide_rate,UNODC_HOMICIDE,-,,,16,P1,True,
 pei_electoral_integrity_index,PEI,+,,,20,P1,True,
+nelda_concerns_not_free_fair,NELDA,-,,"NELDA11: pre-election concerns elections wont be free/fair (1=concern=BAD, d=-). Event-level (election years only, ~24.5pct of country-years), one obs per country-year. NELDA EXCLUDES ~21 consolidated democracies by design, so absence = established-democracy (implicitly clean), a coverage bias to note at scaling. Supplementary: C20 has 10 P1 metrics; NELDA triangulates. Raw 99 (unclear) -> NaN in pipeline",20,Sp,True,
+nelda_media_bias_incumbent,NELDA,-,,"NELDA16: media bias favoring incumbent (1=bias=BAD, d=-). Sharpest NELDA separator (clean 0.019 vs rigged 0.741). Same event-level/coverage caveats as nelda_concerns_not_free_fair",20,Sp,True,
+nelda_riots_protests_after,NELDA,-,,"NELDA: riots/protests after election with vote-fraud allegations (1=occurred=BAD, d=-). Same event-level/coverage caveats",20,Sp,True,
+nelda_violence_deaths_before,NELDA,-,,"NELDA33: significant violence w/ civilian deaths before/during election (1=occurred=BAD, d=-). Same event-level/coverage caveats",20,Sp,True,
+nelda_opposition_allowed,NELDA,+,,"NELDA: was opposition allowed (1=allowed=GOOD, d=+). Lower coverage (n=1130) as it is only coded where relevant. Same event-level/coverage caveats",20,Sp,True,
+nelda_mtop_low_signal,NELDA,,,,,,False,"EXCLUDED: near-zero discrimination between clean democracies (1.000) and rigged autocracies (0.964) - carries almost no signal for electoral quality. Renamed from the misleading nelda_meaningful_opposition; kept in qog_clean.csv as documented-low-signal, not scored"
+nelda_election_held,NELDA,,,,,,False,"EXCLUDED: election-TYPE descriptor (values 1-5), not a quality measure - type-not-quality principle. Same for nelda_executive_election / nelda_legislative_election"
 wdi_lpi_overall,WB_LPI,+,,,11,P1,True,
 tfi_avg,OECD_TFI,+,,,11,P1,True,
 fraser_trade_freedom,HERITAGE_TR,+,,Fraser Area 4; supersedes Heritage Trade Freedom,11,P1,True,

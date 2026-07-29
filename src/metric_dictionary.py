@@ -205,6 +205,61 @@ DICT = {
      status = "selected",
  ),
 
+ "nelda_concerns_not_free_fair": dict(
+     definition = "Whether there were significant concerns, before an election, that it would not be free and fair (NELDA variable NELDA11). A pre-election red flag.",
+     source_reports = "NELDA (National Elections Across Democracy and Autocracy, Hyde and Marinov), sourced via QoG Standard TS. Binary yes/no per election.",
+     standalone_transform = "None - used as the raw 0/1 indicator. RENAMED from the pipeline's earlier misleading label 'nelda_free_and_fair' (which inverted the meaning: the variable flags CONCERNS, so 1 = bad). Direction NEGATIVE.",
+     panel_scaling = "NOT BUILT yet. Event-level to country-year mapping and the consolidated-democracy-absence bias must be handled at scaling.",
+     units = "Binary: 1 = concerns existed (worse), 0 = no concerns. Direction negative.",
+     coverage = "82+ event-level coverage. NELDA is election-level: data exists only in election years (~24.5% of country-years), one observation per country-year, systematically ABSENT for ~21 consolidated democracies excluded by NELDA's design (absence implies established-democracy, i.e. implicitly clean - a coverage bias for the scaling layer to handle, not neutral missingness). Raw 99 ('unclear/could not code') converted to NaN in the QoG pipeline (nb 14).",
+     caveats = "Supplementary in Concept 20 (Electoral process); C20 has 10 P1 metrics, NELDA triangulates. Validated: clean democracies 0.000, rigged autocracies 0.093.",
+     status = "built",
+ ),
+
+ "nelda_media_bias_incumbent": dict(
+     definition = "Whether media coverage was biased in favor of the incumbent during the election campaign (NELDA variable NELDA16).",
+     source_reports = "NELDA via QoG Standard TS. Binary yes/no per election.",
+     standalone_transform = "None - raw 0/1. RENAMED from the pipeline's WRONG label 'nelda_multiple_parties' (mbbe is a media-bias variable, not a party-count variable - the old name described an entirely different concept). Direction NEGATIVE.",
+     panel_scaling = "NOT BUILT yet. Same event-level/scaling notes.",
+     units = "Binary: 1 = media biased for incumbent (worse), 0 = not. Direction negative.",
+     coverage = "82+ event-level coverage. NELDA is election-level: data exists only in election years (~24.5% of country-years), one observation per country-year, systematically ABSENT for ~21 consolidated democracies excluded by NELDA's design (absence implies established-democracy, i.e. implicitly clean - a coverage bias for the scaling layer to handle, not neutral missingness). Raw 99 ('unclear/could not code') converted to NaN in the QoG pipeline (nb 14).",
+     caveats = "Supplementary in Concept 20. Sharpest NELDA discriminator: clean democracies 0.019 vs rigged autocracies 0.741.",
+     status = "built",
+ ),
+
+ "nelda_riots_protests_after": dict(
+     definition = "Whether there were riots and protests after the election involving allegations of vote fraud (NELDA).",
+     source_reports = "NELDA via QoG Standard TS. Binary yes/no per election.",
+     standalone_transform = "None - raw 0/1. RENAMED from the pipeline's WRONG label 'nelda_ruling_party_advantage' (rpae is post-election riots/protests, not ruling-party advantage). Direction NEGATIVE.",
+     panel_scaling = "NOT BUILT yet. Same event-level/scaling notes.",
+     units = "Binary: 1 = riots/protests after election (worse), 0 = not. Direction negative.",
+     coverage = "82+ event-level coverage. NELDA is election-level: data exists only in election years (~24.5% of country-years), one observation per country-year, systematically ABSENT for ~21 consolidated democracies excluded by NELDA's design (absence implies established-democracy, i.e. implicitly clean - a coverage bias for the scaling layer to handle, not neutral missingness). Raw 99 ('unclear/could not code') converted to NaN in the QoG pipeline (nb 14).",
+     caveats = "Supplementary in Concept 20. Validated: clean 0.019, rigged 0.329.",
+     status = "built",
+ ),
+
+ "nelda_violence_deaths_before": dict(
+     definition = "Whether there was significant violence involving civilian deaths immediately before or during the election (NELDA variable NELDA33).",
+     source_reports = "NELDA via QoG Standard TS. Binary yes/no per election.",
+     standalone_transform = "None - raw 0/1. RENAMED from the pipeline's imprecise label 'nelda_violence_candidate'. Direction NEGATIVE.",
+     panel_scaling = "NOT BUILT yet. Same event-level/scaling notes.",
+     units = "Binary: 1 = violence with civilian deaths (worse), 0 = not. Direction negative.",
+     coverage = "82+ event-level coverage. NELDA is election-level: data exists only in election years (~24.5% of country-years), one observation per country-year, systematically ABSENT for ~21 consolidated democracies excluded by NELDA's design (absence implies established-democracy, i.e. implicitly clean - a coverage bias for the scaling layer to handle, not neutral missingness). Raw 99 ('unclear/could not code') converted to NaN in the QoG pipeline (nb 14).",
+     caveats = "Supplementary in Concept 20. Validated: clean 0.000, rigged 0.167.",
+     status = "built",
+ ),
+
+ "nelda_opposition_allowed": dict(
+     definition = "Whether opposition was allowed to participate in the election (NELDA).",
+     source_reports = "NELDA via QoG Standard TS. Binary yes/no per election.",
+     standalone_transform = "None - raw 0/1. Name unchanged (was already correct). Direction POSITIVE (1 = opposition allowed = better).",
+     panel_scaling = "NOT BUILT yet. Same event-level/scaling notes. Lower coverage (n=1130) - coded only where relevant.",
+     units = "Binary: 1 = opposition allowed (better), 0 = not. Direction positive.",
+     coverage = "82+ event-level coverage. NELDA is election-level: data exists only in election years (~24.5% of country-years), one observation per country-year, systematically ABSENT for ~21 consolidated democracies excluded by NELDA's design (absence implies established-democracy, i.e. implicitly clean - a coverage bias for the scaling layer to handle, not neutral missingness). Raw 99 ('unclear/could not code') converted to NaN in the QoG pipeline (nb 14).",
+     caveats = "Supplementary in Concept 20. The one positively-directed NELDA metric. Validated: clean 1.000, rigged 0.727.",
+     status = "built",
+ ),
+
  "pefa_core_management": dict(
      definition = "How well a government runs the frontline machinery of managing public money - whether the budget is credible and executed as planned, and whether spending is controlled (procurement, payroll, tax administration, internal audit). Built from PEFA.",
      source_reports = "PEFA (Public Expenditure and Financial Accountability), the gold-standard PFM assessment. Indicators graded A-D (mapped to 4-1). Not a published composite - PEFA reports indicator-level grades only.",
