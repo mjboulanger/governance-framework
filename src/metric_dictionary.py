@@ -1327,17 +1327,7 @@ DICT = {
      status = "selected",
  ),
 
- "v2meharjrn": dict(
-     definition = "How free journalists are from harassment - the absence of threats, arrests, or violence against reporters for their work. V-Dem's harassment-of-journalists indicator (higher = LESS harassment).",
-     source_reports = "V-Dem variable v2meharjrn. Interval scale (~ -3 to +4, where HIGHER means LESS harassment of journalists). Annual.",
-     standalone_transform = "None. Selected and used as-published.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
-     units = "V-Dem interval scale (~ -3 to +4). Higher is BETTER (less harassment). Direction is POSITIVE.",
-     coverage = "Near-universal (~180 countries).",
-     caveats = "DIRECTION: coded higher=less-harassment, so direction is POSITIVE. Scores Concept 23 (Media freedom and pluralism).",
-     status = "selected",
- ),
-
+ 
  "v2mecorrpt": dict(
      definition = "How free the media is from corruption - whether journalists and outlets take bribes to publish or suppress stories. V-Dem's media-corruption indicator (higher = LESS media corruption).",
      source_reports = "V-Dem variable v2mecorrpt. Interval scale (~ -3 to +3, where HIGHER means LESS media corruption). Annual.",
@@ -1349,17 +1339,7 @@ DICT = {
      status = "selected",
  ),
 
- "v2meslfcen": dict(
-     definition = "How free journalists are from self-censorship - whether reporters avoid sensitive topics out of fear. V-Dem's self-censorship indicator (higher = LESS self-censorship).",
-     source_reports = "V-Dem variable v2meslfcen. Interval scale (~ -3 to +3, where HIGHER means LESS self-censorship). Annual.",
-     standalone_transform = "None. Selected and used as-published.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
-     units = "V-Dem interval scale (~ -3 to +3). Higher is BETTER (less self-censorship). Direction is POSITIVE.",
-     coverage = "Near-universal (~180 countries).",
-     caveats = "DIRECTION: coded higher=less-self-censorship, so direction is POSITIVE. Scores Concept 23 (Media freedom and pluralism).",
-     status = "selected",
- ),
-
+ 
  "v2merange": dict(
      definition = "How wide the range of political perspectives in the media is - whether many viewpoints are represented or coverage is narrow. V-Dem's media-perspectives-range indicator.",
      source_reports = "V-Dem variable v2merange. Interval scale (~ -3 to +3, higher = wider range of perspectives). Annual.",
@@ -1382,17 +1362,7 @@ DICT = {
      status = "selected",
  ),
 
- "v2mecrit": dict(
-     definition = "How free the media is to criticize the government - whether outlets can publish critical coverage without reprisal. V-Dem's print/broadcast-critical indicator.",
-     source_reports = "V-Dem variable v2mecrit. Interval scale (~ -3 to +3, higher = more freedom to criticize). Annual.",
-     standalone_transform = "None. Selected and used as-published.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
-     units = "V-Dem interval scale (~ -3 to +3). Higher is better.",
-     coverage = "Near-universal (~180 countries).",
-     caveats = "Scores Concept 23 (Media freedom and pluralism).",
-     status = "selected",
- ),
-
+ 
  # ---- Concept 24: Civil society space (C24-only; the other C24 items sit under C21) ----
  "v2cscnsult": dict(
      definition = "How routinely the government consults civil society organizations - whether CSOs are involved in policymaking. V-Dem's CSO-consultation indicator.",
@@ -1783,22 +1753,6 @@ DICT = {
      caveats = "Scores Concept 11 (Trade governance).",
      status = "selected",
  ),    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     
  # ================= IMF_FISCAL_RULES (C8 Macroeconomic policy framework quality) =================

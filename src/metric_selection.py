@@ -224,8 +224,7 @@ _VDEM = {
  21: ["v2x_partip", "v2psprlnks", "v2pscohesv", "v2cseeorgs", "v2dlconslt", "v2csreprss"],
  22: ["v2x_civlib", "v2x_clpriv", "v2clrelig", "v2cldmovem", "v2cldmovew",
       "v2clsocgrp", "v2clslavef"],
- 23: ["v2x_freexp_altinf", "v2mecenefm", "v2meharjrn", "v2mecorrpt",
-      "v2meslfcen", "v2merange", "v2mebias", "v2mecrit"],
+ 23: ["v2x_freexp_altinf", "v2mecenefm", "v2mecorrpt", "v2merange", "v2mebias"],  # collapsed 8->5 (2026-07-24, within-source collapse rule); dropped v2meharjrn/v2meslfcen/v2mecrit as excluded entries below
  24: ["v2cseeorgs", "v2csreprss", "v2cscnsult", "v2csprtcpt"],
  25: ["v2cltrnslw", "v2dlconslt"],
 }
@@ -256,6 +255,12 @@ D += [
       why="regime TYPE is a classification not a quality ordering; input to vdem_regime_duration"),
  dict(m="v2x_horacc", s="VDEM", d="", at=[],
       why="aggregate of components already scored (r=+0.976 with v2xlg_legcon, +0.86 with judicial family) and spans C19/C15 which the framework deliberately separated; category cross-check for Accountability (horizontal)"),
+ dict(m="v2meharjrn", s="VDEM", d="", at=[],
+      why="COLLAPSED out of C23 Media freedom (2026-07-24, within-source metric collapse rule, methodology S6). Harassment of journalists. Gate 1: r>0.85 with composite v2x_freexp_altinf and siblings. Gate 2 FAILED: top divergences from the composite are clean-end scale/ceiling noise (Denmark, Switzerland score higher on the component than the composite - both agree 'very free'), no material distinction. C23 keeps composite + v2mecorrpt/v2merange/v2mecenefm/v2mebias, each retained for distinct decision-relevant signal"),
+ dict(m="v2meslfcen", s="VDEM", d="", at=[],
+      why="COLLAPSED out of C23 Media freedom (2026-07-24, within-source collapse rule). Media self-censorship. Gate 1: r>0.85 with composite. Gate 2 FAILED: divergences small and top-end scale wobble (Switzerland etc.), no interpretable distinction the composite blends away"),
+ dict(m="v2mecrit", s="VDEM", d="", at=[],
+      why="COLLAPSED out of C23 Media freedom (2026-07-24, within-source collapse rule). Print/broadcast critical of government. Gate 1: r>0.85 with composite. Gate 2 FAILED: divergences are clean-end scale noise (Germany etc.), no distinct signal"),
 ]
 
 PENDING += [

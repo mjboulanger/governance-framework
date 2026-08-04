@@ -173,17 +173,17 @@ v2clsocgrp,VDEM,+,,,22,P1,True,
 v2clslavef,VDEM,+,,,22,P1,True,
 v2x_freexp_altinf,VDEM,+,,,23,P1,True,
 v2mecenefm,VDEM,+,,,23,P1,True,
-v2meharjrn,VDEM,+,,,23,P1,True,
 v2mecorrpt,VDEM,+,,,23,P1,True,
-v2meslfcen,VDEM,+,,,23,P1,True,
 v2merange,VDEM,+,,,23,P1,True,
 v2mebias,VDEM,+,,,23,P1,True,
-v2mecrit,VDEM,+,,,23,P1,True,
 v2cscnsult,VDEM,+,,,24,P1,True,
 v2csprtcpt,VDEM,+,,,24,P1,True,
 vdem_regime_duration,VDEM,+,"years since v2x_regime last changed, computed from the panel",master specifies regime DURATION via V-Dem's own classification; raw type is not a quality ordering,2,P1,True,
 v2x_regime,VDEM,,,,,,False,regime TYPE is a classification not a quality ordering; input to vdem_regime_duration
 v2x_horacc,VDEM,,,,,,False,"aggregate of components already scored (r=+0.976 with v2xlg_legcon, +0.86 with judicial family) and spans C19/C15 which the framework deliberately separated; category cross-check for Accountability (horizontal)"
+v2meharjrn,VDEM,,,,,,False,"COLLAPSED out of C23 Media freedom (2026-07-24, within-source metric collapse rule, methodology S6). Harassment of journalists. Gate 1: r>0.85 with composite v2x_freexp_altinf and siblings. Gate 2 FAILED: top divergences from the composite are clean-end scale/ceiling noise (Denmark, Switzerland score higher on the component than the composite - both agree 'very free'), no material distinction. C23 keeps composite + v2mecorrpt/v2merange/v2mecenefm/v2mebias, each retained for distinct decision-relevant signal"
+v2meslfcen,VDEM,,,,,,False,"COLLAPSED out of C23 Media freedom (2026-07-24, within-source collapse rule). Media self-censorship. Gate 1: r>0.85 with composite. Gate 2 FAILED: divergences small and top-end scale wobble (Switzerland etc.), no interpretable distinction the composite blends away"
+v2mecrit,VDEM,,,,,,False,"COLLAPSED out of C23 Media freedom (2026-07-24, within-source collapse rule). Print/broadcast critical of government. Gate 1: r>0.85 with composite. Gate 2 FAILED: divergences are clean-end scale noise (Germany etc.), no distinct signal"
 wjp_f2_absence_corruption,WJP,+,,,18,P1,True,
 wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,14,P1,True,
 wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,25,P1,True,
