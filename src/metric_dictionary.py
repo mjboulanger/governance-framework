@@ -780,17 +780,7 @@ DICT = {
      status = "selected",
  ),
 
- "v2clacjstm": dict(
-     definition = "How equal men's access to justice is - whether men can secure fair treatment from the courts regardless of status or connections. V-Dem's access-to-justice-for-men indicator.",
-     source_reports = "V-Dem variable v2clacjstm. Interval scale (~ -4 to +4, higher = more equal access). Annual.",
-     standalone_transform = "None. Selected and used as-published.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
-     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
-     coverage = "Near-universal (~180 countries).",
-     caveats = "Paired with the women's-access item (v2clacjstw) to cover access to justice across genders. Scores Concept 14 (Legal quality and predictability).",
-     status = "selected",
- ),
-
+ 
  "v2clacjstw": dict(
      definition = "How equal women's access to justice is - whether women can secure fair treatment from the courts. V-Dem's access-to-justice-for-women indicator.",
      source_reports = "V-Dem variable v2clacjstw. Interval scale (~ -4 to +4, higher = more equal access). Annual.",

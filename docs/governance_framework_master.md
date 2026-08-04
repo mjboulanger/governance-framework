@@ -476,7 +476,7 @@ The following sections cover all concepts in framework order. Each section provi
 | Source | Decision | Rationale / notes |
 |--------|----------|-------------------|
 | V-Dem v2cltrnslw (Transparent laws with predictable enforcement) | Primary tier 1 | Most direct single measure of the concept. Expert coding, ~180 countries, annual. |
-| V-Dem v2clacjstm and v2clacjstw (Access to justice) | Primary tier 1 | Direct fit for equal-treatment dimension. ~180 countries. |
+| V-Dem v2clacjstw (Access to justice) - COLLAPSED from 2 to 1 (2026-07-24) | Primary tier 1 | Access-to-justice for women, kept. The men/women pair (v2clacjstm/v2clacjstw) was collapsed to one under the within-source collapse rule (methodology S6): they correlate r=0.96 - near-identical twins, the highest redundancy in any collapse. Unlike C17 property rights (where the gender split diverged interpretably via discriminatory inheritance law), physical/procedural access to justice is barely gender-differentiated, so the men metric added no distinct signal. Kept v2clacjstw (marginally the more binding constraint). ~180 countries. |
 | V-Dem v2xeg_eqaccess (Equality before law) | Primary tier 1 | Direct fit for equality dimension. ~180 countries. |
 | WJP Rule of Law — Factor 4 (Fundamental Rights) | Primary tier 1 | Direct fit for equal-treatment content. 142 countries (borderline). |
 | WJP Rule of Law — Factor 3 (Open Government) | Primary tier 1 | Direct fit for accessibility of law dimension. 142 countries. |

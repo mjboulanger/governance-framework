@@ -213,7 +213,7 @@ _VDEM = {
  4:  ["v2clrspct"],
  10: ["v2clstown"],
  13: ["v2svstterr", "v2svdomaut"],
- 14: ["v2cltrnslw", "v2clacjstm", "v2clacjstw", "v2xeg_eqaccess"],
+ 14: ["v2cltrnslw", "v2clacjstw", "v2xeg_eqaccess"],  # collapsed 4->3 (2026-07-24); dropped v2clacjstm (men) - near-identical to v2clacjstw (women), r=0.96; excluded below
  15: ["v2juhcind", "v2juncind", "v2jucomp", "v2jupack", "v2jupurge"],
  16: ["v2cltort", "v2clkill", "v2clrgunev"],
  17: ["v2xcl_prpty"],  # collapsed 3->1 (2026-07-24, within-source collapse); dropped v2clprptym/v2clprptyw as excluded entries below
@@ -269,6 +269,8 @@ D += [
       why="COLLAPSED out of C18 Control of corruption (2026-07-24, within-source collapse rule, methodology S6). Executive bribery/corrupt exchanges. Gate 1: r>0.85 with composite v2x_corr and r=0.89 with v2exembez (the other executive metric). Gate 2 FAILED: EXECUTIVE corruption is the most-measured dimension in C18 already - it is what TI CPI, BCI, and WJP predominantly capture, plus it is in the V-Dem composite - so the two V-Dem executive sub-metrics add no distinct signal beyond composite + 3 independent executive-weighted sources. C18 KEEPS the branch-distinct signals (v2lgcrrpt legislative, v2jucorrdc judicial) because those DO carry decision-relevant distinctions the composite blends away (e.g. Burkina Faso/Ghana corrupt-courts-clean-legislature vs PNG/Sri Lanka clean-courts-corrupt-legislature; judicial corruption specifically threatens contract enforcement)"),
  dict(m="v2exembez", s="VDEM", d="", at=[],
       why="COLLAPSED out of C18 Control of corruption (2026-07-24, within-source collapse rule). Executive embezzlement/theft of state funds. Gate 1: r>0.85 with composite, r=0.89 with v2excrptps (same executive branch). Gate 2 FAILED for the same reason as v2excrptps: executive corruption is already the most-measured dimension (TI CPI, BCI, WJP, and the composite all capture it); the bribery-vs-embezzlement sub-split is finer than C18 needs. Kept the branch-distinct legislative + judicial components instead"),
+ dict(m="v2clacjstm", s="VDEM", d="", at=[],
+      why="COLLAPSED out of C14 Legal quality (2026-07-24, within-source collapse rule, methodology S6). Access to justice for men. Gate 1: r=0.96 with v2clacjstw (access to justice for women) - the highest redundancy in any collapse so far, near-identical twins. Gate 2 FAILED: unlike C17 property rights (where the gender split diverged interpretably via discriminatory inheritance law), physical/procedural access to justice is barely gender-differentiated (r=0.96), so the men metric adds no distinct signal over the women metric. Kept v2clacjstw (marginally the more binding constraint where they differ). C14 keeps v2cltrnslw (transparent/predictable law, distinct construct), v2xeg_eqaccess (equal-access index, r~0.72 most distinct), plus the retained access-to-justice metric - and CCP x2 + WJP x2 independent sources"),
 ]
 
 PENDING += [
