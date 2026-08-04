@@ -1185,17 +1185,7 @@ DICT = {
      status = "selected",
  ),
 
- "v2x_clpriv": dict(
-     definition = "How well a country protects private civil liberties - freedom from forced labor, property rights, freedom of movement, and freedom of religion. V-Dem's private civil liberties index.",
-     source_reports = "V-Dem index v2x_clpriv. Aggregate index scaled 0-1, higher = stronger private liberties. Annual.",
-     standalone_transform = "None. Selected and used as-published.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert the 0-1 index to the common framework scale.",
-     units = "Index 0-1. Higher is better.",
-     coverage = "Near-universal (~180 countries).",
-     caveats = "Scores Concept 22 (Civil liberties).",
-     status = "selected",
- ),
-
+ 
  "v2clrelig": dict(
      definition = "How free people are to practice religion - whether the state restricts religious belief and worship. V-Dem's freedom-of-religion indicator.",
      source_reports = "V-Dem variable v2clrelig. Interval scale (~ -4 to +4, higher = more religious freedom). Annual.",

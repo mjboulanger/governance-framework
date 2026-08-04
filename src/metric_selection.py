@@ -222,8 +222,8 @@ _VDEM = {
  20: ["v2x_polyarchy", "v2elfrfair", "v2elirreg", "v2elintim", "v2elvotbuy",
       "v2elaccept", "v2elembaut", "v2elembcap"],
  21: ["v2x_partip", "v2psprlnks", "v2pscohesv", "v2cseeorgs", "v2dlconslt", "v2csreprss"],
- 22: ["v2x_civlib", "v2x_clpriv", "v2clrelig", "v2cldmovem", "v2cldmovew",
-      "v2clsocgrp", "v2clslavef"],
+ 22: ["v2x_civlib", "v2clrelig", "v2cldmovem", "v2cldmovew",
+      "v2clsocgrp", "v2clslavef"],  # collapsed 7->6 (2026-07-24); dropped v2x_clpriv (2nd index, r=0.96 with v2x_civlib); excluded below
  23: ["v2x_freexp_altinf", "v2mecenefm", "v2mecorrpt", "v2merange", "v2mebias"],  # collapsed 8->5 (2026-07-24, within-source collapse rule); dropped v2meharjrn/v2meslfcen/v2mecrit as excluded entries below
  24: ["v2cseeorgs", "v2csreprss", "v2cscnsult", "v2csprtcpt"],
  25: ["v2cltrnslw", "v2dlconslt"],
@@ -271,6 +271,8 @@ D += [
       why="COLLAPSED out of C18 Control of corruption (2026-07-24, within-source collapse rule). Executive embezzlement/theft of state funds. Gate 1: r>0.85 with composite, r=0.89 with v2excrptps (same executive branch). Gate 2 FAILED for the same reason as v2excrptps: executive corruption is already the most-measured dimension (TI CPI, BCI, WJP, and the composite all capture it); the bribery-vs-embezzlement sub-split is finer than C18 needs. Kept the branch-distinct legislative + judicial components instead"),
  dict(m="v2clacjstm", s="VDEM", d="", at=[],
       why="COLLAPSED out of C14 Legal quality (2026-07-24, within-source collapse rule, methodology S6). Access to justice for men. Gate 1: r=0.96 with v2clacjstw (access to justice for women) - the highest redundancy in any collapse so far, near-identical twins. Gate 2 FAILED: unlike C17 property rights (where the gender split diverged interpretably via discriminatory inheritance law), physical/procedural access to justice is barely gender-differentiated (r=0.96), so the men metric adds no distinct signal over the women metric. Kept v2clacjstw (marginally the more binding constraint where they differ). C14 keeps v2cltrnslw (transparent/predictable law, distinct construct), v2xeg_eqaccess (equal-access index, r~0.72 most distinct), plus the retained access-to-justice metric - and CCP x2 + WJP x2 independent sources"),
+ dict(m="v2x_clpriv", s="VDEM", d="", at=[],
+      why="COLLAPSED out of C22 Civil liberties (2026-07-24, within-source collapse rule, methodology S6). Private civil liberties INDEX. Gate 1: r=0.96 with the retained v2x_civlib index - two composites measuring nearly the same thing, i.e. the concept was scoring the same aggregate twice. Gate 2 FAILED: its divergences from v2x_civlib are modest (max 0.85z vs 1.7-1.95z for genuinely distinct metrics retained elsewhere) and reflect only that political repression exceeds private-sphere restriction in some states (Zimbabwe/Venezuela/Bangladesh/Belarus) or the reverse (Qatar) - a pattern the RETAINED COMPONENTS (v2clrelig, v2cldmovem/w, v2clsocgrp, v2clslavef) already capture directly and more granularly, since v2x_clpriv is an aggregate of exactly those. Keeping it alongside its own components double-counts. C22 keeps v2x_civlib (broad index matching the concept scope) + 5 distinct components; note v2clsocgrp (r 0.59-0.69) and v2clslavef (r 0.59-0.75) are the most DISTINCT components in any cluster examined, and the movement gender pair (r=0.81) carries real signal unlike C14's 0.96 twins - so C22's OVER flag is mostly legitimate breadth (15 metrics across 5 genuinely different sources), not redundancy"),
 ]
 
 PENDING += [
