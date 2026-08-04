@@ -134,8 +134,6 @@ v2jupurge,VDEM,+,,,15,P1,True,
 v2cltort,VDEM,+,,,16,P1,True,
 v2clkill,VDEM,+,,,16,P1,True,
 v2clrgunev,VDEM,+,,,16,P1,True,
-v2clprptym,VDEM,+,,,17,P1,True,
-v2clprptyw,VDEM,+,,,17,P1,True,
 v2xcl_prpty,VDEM,+,,,17,P1,True,
 v2x_corr,VDEM,-,,REVERSE-CODED (r=-0.880 vs WGI). V-Dem's individual corruption items run the OTHER way - do not infer sign from the family,18,P1,True,
 v2excrptps,VDEM,+,,,18,P1,True,
@@ -184,6 +182,8 @@ v2x_horacc,VDEM,,,,,,False,"aggregate of components already scored (r=+0.976 wit
 v2meharjrn,VDEM,,,,,,False,"COLLAPSED out of C23 Media freedom (2026-07-24, within-source metric collapse rule, methodology S6). Harassment of journalists. Gate 1: r>0.85 with composite v2x_freexp_altinf and siblings. Gate 2 FAILED: top divergences from the composite are clean-end scale/ceiling noise (Denmark, Switzerland score higher on the component than the composite - both agree 'very free'), no material distinction. C23 keeps composite + v2mecorrpt/v2merange/v2mecenefm/v2mebias, each retained for distinct decision-relevant signal"
 v2meslfcen,VDEM,,,,,,False,"COLLAPSED out of C23 Media freedom (2026-07-24, within-source collapse rule). Media self-censorship. Gate 1: r>0.85 with composite. Gate 2 FAILED: divergences small and top-end scale wobble (Switzerland etc.), no interpretable distinction the composite blends away"
 v2mecrit,VDEM,,,,,,False,"COLLAPSED out of C23 Media freedom (2026-07-24, within-source collapse rule). Print/broadcast critical of government. Gate 1: r>0.85 with composite. Gate 2 FAILED: divergences are clean-end scale noise (Germany etc.), no distinct signal"
+v2clprptym,VDEM,,,,,,False,"COLLAPSED out of C17 Property rights (2026-07-24, within-source collapse rule, methodology S6). Property rights for men. Gate 1: r=0.942 with composite v2xcl_prpty. Gate 2 FAILED for C17's purpose: divergences from the composite are extreme-low-tail wobble (Afghanistan, North Korea, Somalia - both already 'near-absent'), not decision-relevant distinctions for investor-facing property/expropriation risk. Option (c) chosen: collapse the V-Dem cluster to the composite; the gendered men/women disaggregation is a civil-liberties/gender dimension that belongs in C22 (which already carries WB Women Business and the Law), not in C17's contract-enforcement/expropriation scope. C17 stays adequately measured (composite + WJP no-expropriation + Fraser legal, 3 independent sources)"
+v2clprptyw,VDEM,,,,,,False,"COLLAPSED out of C17 Property rights (2026-07-24, within-source collapse rule). Property rights for women. Gate 1: r=0.935 with composite. Its divergences ARE somewhat interpretable (Jordan/Cuba - women's property rights lagging the general environment via discriminatory inheritance/marital law), i.e. a real gender-gap signal - but that signal belongs to C22 (Civil liberties / gender), not C17's investor-facing property-rights-and-contract-enforcement scope. Collapsed to keep C17 focused on the general expropriation/enforcement environment (composite). If the property-rights gender gap is wanted, it should be added to C22, not retained here"
 wjp_f2_absence_corruption,WJP,+,,,18,P1,True,
 wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,14,P1,True,
 wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,25,P1,True,

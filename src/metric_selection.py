@@ -216,7 +216,7 @@ _VDEM = {
  14: ["v2cltrnslw", "v2clacjstm", "v2clacjstw", "v2xeg_eqaccess"],
  15: ["v2juhcind", "v2juncind", "v2jucomp", "v2jupack", "v2jupurge"],
  16: ["v2cltort", "v2clkill", "v2clrgunev"],
- 17: ["v2clprptym", "v2clprptyw", "v2xcl_prpty"],
+ 17: ["v2xcl_prpty"],  # collapsed 3->1 (2026-07-24, within-source collapse); dropped v2clprptym/v2clprptyw as excluded entries below
  18: ["v2x_corr", "v2excrptps", "v2exembez", "v2lgcrrpt", "v2jucorrdc"],
  19: ["v2xlg_legcon", "v2lgoppart", "v2lgqstexp", "v2lginvstp", "v2lgotovst"],
  20: ["v2x_polyarchy", "v2elfrfair", "v2elirreg", "v2elintim", "v2elvotbuy",
@@ -261,6 +261,10 @@ D += [
       why="COLLAPSED out of C23 Media freedom (2026-07-24, within-source collapse rule). Media self-censorship. Gate 1: r>0.85 with composite. Gate 2 FAILED: divergences small and top-end scale wobble (Switzerland etc.), no interpretable distinction the composite blends away"),
  dict(m="v2mecrit", s="VDEM", d="", at=[],
       why="COLLAPSED out of C23 Media freedom (2026-07-24, within-source collapse rule). Print/broadcast critical of government. Gate 1: r>0.85 with composite. Gate 2 FAILED: divergences are clean-end scale noise (Germany etc.), no distinct signal"),
+ dict(m="v2clprptym", s="VDEM", d="", at=[],
+      why="COLLAPSED out of C17 Property rights (2026-07-24, within-source collapse rule, methodology S6). Property rights for men. Gate 1: r=0.942 with composite v2xcl_prpty. Gate 2 FAILED for C17's purpose: divergences from the composite are extreme-low-tail wobble (Afghanistan, North Korea, Somalia - both already 'near-absent'), not decision-relevant distinctions for investor-facing property/expropriation risk. Option (c) chosen: collapse the V-Dem cluster to the composite; the gendered men/women disaggregation is a civil-liberties/gender dimension that belongs in C22 (which already carries WB Women Business and the Law), not in C17's contract-enforcement/expropriation scope. C17 stays adequately measured (composite + WJP no-expropriation + Fraser legal, 3 independent sources)"),
+ dict(m="v2clprptyw", s="VDEM", d="", at=[],
+      why="COLLAPSED out of C17 Property rights (2026-07-24, within-source collapse rule). Property rights for women. Gate 1: r=0.935 with composite. Its divergences ARE somewhat interpretable (Jordan/Cuba - women's property rights lagging the general environment via discriminatory inheritance/marital law), i.e. a real gender-gap signal - but that signal belongs to C22 (Civil liberties / gender), not C17's investor-facing property-rights-and-contract-enforcement scope. Collapsed to keep C17 focused on the general expropriation/enforcement environment (composite). If the property-rights gender gap is wanted, it should be added to C22, not retained here"),
 ]
 
 PENDING += [

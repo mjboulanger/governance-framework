@@ -916,28 +916,8 @@ DICT = {
  ),
 
  # ---- Concept 17: Property rights and contract enforcement ----
- "v2clprptym": dict(
-     definition = "How secure men's property rights are - whether men can own and use property free from arbitrary seizure. V-Dem's property-rights-for-men indicator.",
-     source_reports = "V-Dem variable v2clprptym. Interval scale (~ -4 to +4, higher = more secure property rights). Annual.",
-     standalone_transform = "None. Selected and used as-published.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
-     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
-     coverage = "Near-universal (~180 countries).",
-     caveats = "Paired with the women's property item (v2clprptyw) to cover property rights across genders. Scores Concept 17 (Property rights and contract enforcement).",
-     status = "selected",
- ),
-
- "v2clprptyw": dict(
-     definition = "How secure women's property rights are - whether women can own and use property free from arbitrary seizure. V-Dem's property-rights-for-women indicator.",
-     source_reports = "V-Dem variable v2clprptyw. Interval scale (~ -4 to +4, higher = more secure property rights). Annual.",
-     standalone_transform = "None. Selected and used as-published.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
-     units = "V-Dem interval scale (~ -4 to +4). Higher is better.",
-     coverage = "Near-universal (~180 countries).",
-     caveats = "The women's counterpart to v2clprptym. Scores Concept 17 (Property rights and contract enforcement).",
-     status = "selected",
- ),
-
+ 
+ 
  "v2xcl_prpty": dict(
      definition = "How secure property rights are overall - a composite of men's and women's property security. V-Dem's property-rights index.",
      source_reports = "V-Dem index v2xcl_prpty. Aggregate index scaled 0-1, higher = more secure property rights. Annual.",
