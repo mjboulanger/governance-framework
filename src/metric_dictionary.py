@@ -944,28 +944,8 @@ DICT = {
      status = "selected",
  ),
 
- "v2excrptps": dict(
-     definition = "How free the executive is from bribery and graft - whether members of the executive grant favors in exchange for bribes or kickbacks. V-Dem's executive-bribery indicator (higher = LESS bribery).",
-     source_reports = "V-Dem variable v2excrptps. Interval scale (~ -4 to +4, where HIGHER means LESS executive bribery / cleaner). Annual.",
-     standalone_transform = "None. Selected and used as-published.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
-     units = "V-Dem interval scale (~ -4 to +4). Higher is BETTER (less bribery). Direction is POSITIVE.",
-     coverage = "Near-universal (~180 countries).",
-     caveats = "DIRECTION: unlike the v2x_corr aggregate, this individual item is coded higher=cleaner, so direction is POSITIVE. Scores Concept 18 (Control of corruption).",
-     status = "selected",
- ),
-
- "v2exembez": dict(
-     definition = "How free the executive is from embezzlement - whether members of the executive steal or misappropriate public funds. V-Dem's executive-embezzlement indicator (higher = LESS embezzlement).",
-     source_reports = "V-Dem variable v2exembez. Interval scale (~ -4 to +4, where HIGHER means LESS embezzlement / cleaner). Annual.",
-     standalone_transform = "None. Selected and used as-published.",
-     panel_scaling = "NOT BUILT yet (the scoring layer does not exist). Planned: convert to the common framework scale.",
-     units = "V-Dem interval scale (~ -4 to +4). Higher is BETTER (less embezzlement). Direction is POSITIVE.",
-     coverage = "Near-universal (~180 countries).",
-     caveats = "DIRECTION: coded higher=cleaner, so direction is POSITIVE (opposite to the v2x_corr aggregate). Scores Concept 18 (Control of corruption).",
-     status = "selected",
- ),
-
+ 
+ 
  "v2lgcrrpt": dict(
      definition = "How free the legislature is from corruption - whether legislators accept bribes or use their position for private gain. V-Dem's legislative-corruption indicator (higher = LESS corrupt).",
      source_reports = "V-Dem variable v2lgcrrpt. Interval scale (~ -4 to +4, where HIGHER means LESS legislative corruption / cleaner). Annual.",
