@@ -82,6 +82,8 @@ Attempt and success dates for each source are recorded in `data/raw/download_log
 
 For each source, the pipeline derives the data "as-of" date from the data or filename — not hardcoded. The only manual inputs required on update are flagged per-source below under **MANUAL UPDATE**.
 
+**`download_log.data_as_of_date` now dates cross-sectional metrics in the scoring panel [2026-07-24].** The normalization step (`src/build_normalized_panel.py`, methodology §5) reads `data_as_of_date` from `data/raw/download_log.csv` to stamp the panel year of the four scored sources that carry **no `year` column** (WB_BRSS, CPJ, RTI_RATING, TI_POLFINANCE). The code parses the leading 4-digit year from that field, so any format works (`2016`, `2026-06`, or free-text like `2016 (BRSS 5th wave...)`). This is data-driven: when a pipeline re-fetches one of these sources and updates the log, the panel year follows automatically with no code change. **What to keep current:** ensure a re-fetch of any of these four updates its `data_as_of_date` in the log. The one that will NOT auto-move is **WB_BRSS**; it is a frozen 2016-reference wave, so its `data_as_of_date` stays `2016` until a 6th BRSS wave is released (see the WB_BRSS per-source note); this is a deliberate fixed value, not a stale one. If a year-less source is ever added without a log entry, the panel build raises `no download_log vintage for year-less source ...` rather than silently stamping the current year. Fill its `data_as_of_date` to resolve.
+
 ---
 
 ## Source status, access method and update frequency

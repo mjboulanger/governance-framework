@@ -100,3 +100,82 @@ def normalize_zfamily(df, value_col, method, year_col="year",
     z = (all_t - mu) / sd
     out[present] = z.clip(-winsor, winsor)
     return out, prov
+
+
+# ---------------------------------------------------------------------------
+# Non-z normalization families (methodology S5). These are simpler than the
+# z-family: percentile needs the fixed-baseline discipline; binary and
+# fixed-anchor are pass-throughs. Kept here so normalize.py holds ALL families.
+# ---------------------------------------------------------------------------
+
+def normalize_percentile(df, value_col, year_col="year",
+                         window_years=WINDOW_YEARS):
+    """Percentile-rank each value against the metric's FIXED trailing-window
+    baseline distribution, mapped to [0,1]. Same fixed-baseline principle as
+    the z-family: the reference is the pooled values in the metric's own
+    most-recent-`window_years`; every value (current and historical) is ranked
+    against that fixed reference, NOT a within-year rank.
+
+    Ties: a value's percentile = fraction of baseline values strictly less than
+    it, plus half the fraction equal (midrank) - stable and symmetric.
+    Returns (out Series aligned to df.index, prov dict).
+    """
+    v = pd.to_numeric(df[value_col], errors="coerce")
+    yr = pd.to_numeric(df[year_col], errors="coerce")
+    present = v.notna() & yr.notna()
+    if present.sum() == 0:
+        return pd.Series(np.nan, index=df.index), dict(
+            baseline_n_years=0, baseline_n_obs=0, baseline_year_span=None,
+            baseline_mean=np.nan, baseline_sd=np.nan)
+
+    max_yr = int(yr[present].max())
+    lo_yr = max_yr - (window_years - 1)
+    in_window = present & (yr >= lo_yr) & (yr <= max_yr)
+    base = np.sort(v[in_window].astype(float).to_numpy())  # np.sort returns a new writable array (avoids read-only view)
+    nb = len(base)
+
+    win_years = sorted(yr[in_window].dropna().astype(int).unique())
+    prov = dict(
+        baseline_n_years=len(win_years),
+        baseline_n_obs=int(in_window.sum()),
+        baseline_year_span=(win_years[0], win_years[-1]) if win_years else None,
+        baseline_mean=float(np.mean(base)) if nb else np.nan,
+        baseline_sd=float(np.std(base)) if nb else np.nan,
+    )
+
+    out = pd.Series(np.nan, index=df.index)
+    if nb == 0:
+        return out, prov
+    vals = v[present].astype(float).to_numpy()
+    # midrank percentile against the fixed baseline
+    lo = np.searchsorted(base, vals, side="left")
+    hi = np.searchsorted(base, vals, side="right")
+    pct = (lo + hi) / 2.0 / nb
+    out[present] = pct
+    return out, prov
+
+
+def normalize_binary(df, value_col):
+    """Occurrence/binary metric: pass the raw 0/1 through unchanged (already on
+    the common 0-1 scale). No baseline. NaN preserved. Any nonzero maps to 1.0,
+    zero to 0.0 (defensive: guards against 2-valued non-0/1 codings)."""
+    v = pd.to_numeric(df[value_col], errors="coerce")
+    out = pd.Series(np.nan, index=df.index)
+    present = v.notna()
+    out[present] = (v[present] != 0).astype(float)
+    prov = dict(baseline_n_years=None, baseline_n_obs=int(present.sum()),
+                baseline_year_span=None, baseline_mean=np.nan, baseline_sd=np.nan)
+    return out, prov
+
+
+def normalize_fixed_anchor(df, value_col):
+    """Fixed-anchor metric: already on a theoretically-anchored bounded 0-1
+    scale (share-of-applicable-Yes composites, fixed-anchor indices). Pass
+    through unchanged. NaN preserved."""
+    v = pd.to_numeric(df[value_col], errors="coerce")
+    out = pd.Series(np.nan, index=df.index)
+    present = v.notna()
+    out[present] = v[present].astype(float)
+    prov = dict(baseline_n_years=None, baseline_n_obs=int(present.sum()),
+                baseline_year_span=None, baseline_mean=np.nan, baseline_sd=np.nan)
+    return out, prov
