@@ -1,17 +1,17 @@
 family,file,metric,n,n_unique,min,max,median,skew,excess_kurt,zero_frac,boundary_pile,suggested_method,flag_reason,final_method,method_source,note
 symmetric,areaer_er_clean.csv,areaer_regime_ordinal,193,10,1.0,10.0,6.0,0.1,-1.48,0.0,0.24,REVIEW:zscore,ceiling/floor pile (24%),,,
 symmetric,areaer_fari_clean.csv,fari_aggregate,4744,423,0.0,0.947,0.293,0.23,-1.49,0.02,0.03,zscore,,,,
-symmetric,areaer_fari_clean.csv,fari_fdi_aggregate,4707,12,0.0,1.0,0.5,0.2,-1.0,0.1,0.27,REVIEW:zscore,ceiling/floor pile (27%),,,
+symmetric,areaer_fari_clean.csv,fari_fdi_aggregate,4707,12,0.0,1.0,0.5,0.2,-1.0,0.1,0.27,REVIEW:zscore,ceiling/floor pile (27%),zscore,reviewed,"REVIEW resolved 2026-07-24: kept zscore. 12 distinct values, past the ordinal (<=6) cutoff. FARI values are restriction SHARES on 0-1 with real interval meaning, not arbitrary ordinal categories - the S5 ordinal family targets category variables (FATF NC/PC/LC/C, PTS, CCP), not coarse-but-metric shares."
 symmetric,areaer_fari_clean.csv,fari_inflow,4744,173,0.0,1.0,0.233,0.49,-1.06,0.04,0.04,zscore,,,,
 symmetric,areaer_fari_clean.csv,fari_outflow,4734,173,0.0,1.0,0.385,0.13,-1.53,0.14,0.16,zscore,,,,
-symmetric,areaer_fari_clean.csv,fari_fdi_inflow,4707,7,0.0,1.0,0.5,0.14,-0.94,0.13,0.32,REVIEW:zscore,ceiling/floor pile (32%),,,
+symmetric,areaer_fari_clean.csv,fari_fdi_inflow,4707,7,0.0,1.0,0.5,0.14,-0.94,0.13,0.32,REVIEW:zscore,ceiling/floor pile (32%),zscore,reviewed,"REVIEW resolved 2026-07-24: kept zscore. Only 7 distinct values (just past <=6) BUT they are restriction shares on 0-1 with genuine interval meaning; coarseness comes from few underlying sub-restrictions, not unmeasured category gaps. Scored consistently with fari_fdi_aggregate."
 zero_inflated,areaer_fari_clean.csv,fari_fdi_outflow,4648,3,0.0,1.0,0.5,0.05,-1.79,0.43,0.83,log1p_zscore,,,,
 symmetric,chinn_ito_clean.csv,kaopen,8247,46,-1.939,2.281,-0.175,0.41,-1.4,0.0,0.32,REVIEW:zscore,ceiling/floor pile (32%),,,
-symmetric,chinn_ito_clean.csv,kaopen_norm,8247,46,0.0,1.0,0.418,0.41,-1.4,0.1,0.32,REVIEW:zscore,ceiling/floor pile (32%),,,
+symmetric,chinn_ito_clean.csv,kaopen_norm,8247,46,0.0,1.0,0.418,0.41,-1.4,0.1,0.32,REVIEW:zscore,ceiling/floor pile (32%),zscore,reviewed,"REVIEW resolved 2026-07-24: kept zscore. Methodology S5 pre-answers this metric by name - Chinn-Ito's two humps are real capital-account open/closed signal, not artifact; percentile would discard that."
 symmetric,civicus_clean.csv,civicus_score,657,510,3.94,100.0,49.94,0.05,-1.24,0.0,0.0,zscore,,,,
 zero_inflated,climate_laws_clean.csv,new_laws,5124,25,0.0,31.0,0.0,5.09,41.97,0.52,0.52,percentile,,,,
 right_skew_pos,climate_laws_clean.csv,climate_laws_cumulative,5124,118,1.0,217.0,7.0,3.64,20.37,0.0,0.16,log_zscore,,,,
-moderate_skew,cpj_clean.csv,cpj_imprisoned,49,17,0.0,50.0,2.0,2.51,6.89,0.27,0.29,REVIEW:zscore,ceiling/floor pile (29%),,,
+moderate_skew,cpj_clean.csv,cpj_imprisoned,49,17,0.0,50.0,2.0,2.51,6.89,0.27,0.29,REVIEW:zscore,ceiling/floor pile (29%),log1p_zscore,reviewed,"REVIEW resolved 2026-07-24: OVERRODE suggested zscore -> log1p_zscore. COUNT of imprisoned journalists (zero_frac 0.27, skew 2.51, excess kurt 6.89, max 50 vs median 2) - squarely the S5 zero-inflated-count family. Did not auto-trigger only because zero_frac 0.27 sits under the 0.60 DEFAULT threshold. Plain z would let Turkey/China-scale outliers dominate; log1p compresses the tail while keeping zero meaningful."
 zero_inflated,cpj_clean.csv,cpj_murdered_total,49,8,0.0,32.0,1.0,4.71,23.67,0.45,0.47,percentile,,,,
 zero_inflated,cpj_clean.csv,cpj_murdered_confirmed,49,8,0.0,32.0,1.0,4.72,23.78,0.45,0.47,percentile,,,,
 zero_inflated,cpj_clean.csv,cpj_murders_unsolved,49,8,0.0,32.0,0.0,4.7,23.59,0.51,0.53,percentile,,,,
@@ -107,7 +107,7 @@ right_skew_pos,fatf_clean.csv,n_upgrades,143,18,1.0,27.0,3.0,2.33,7.28,0.0,0.25,
 ordinal,fh_fiw_clean.csv,fh_a1,2483,5,0.0,4.0,3.0,-0.54,-1.32,0.21,0.63,percentile,,,,
 ordinal,fh_fiw_clean.csv,fh_a2,2483,5,0.0,4.0,3.0,-0.62,-1.11,0.14,0.58,percentile,,,,
 ordinal,fh_fiw_clean.csv,fh_a3,2483,5,0.0,4.0,3.0,-0.48,-1.1,0.13,0.45,percentile,,,,
-symmetric,fh_fiw_clean.csv,fh_a_electoral_process,2483,13,0.0,12.0,9.0,-0.56,-1.2,0.11,0.4,REVIEW:zscore,ceiling/floor pile (40%),,,
+symmetric,fh_fiw_clean.csv,fh_a_electoral_process,2483,13,0.0,12.0,9.0,-0.56,-1.2,0.11,0.4,REVIEW:zscore,ceiling/floor pile (40%),zscore,reviewed,"REVIEW resolved 2026-07-24: kept zscore. Methodology S5 pre-answers this metric by name - genuinely bimodal governance index. The 40pct ceiling pile (median 9 of 12) is consolidated democracies at 'fully free elections', informative; z preserves distance-from-perfect."
 ordinal,fh_fiw_clean.csv,fh_d1,2483,5,0.0,4.0,2.0,-0.14,-1.0,0.1,0.29,percentile,,,,
 ordinal,fh_fiw_clean.csv,fh_d2,2483,5,0.0,4.0,3.0,-0.85,-0.41,0.04,0.49,percentile,,,,
 ordinal,fh_fiw_clean.csv,fh_d3,2483,5,0.0,4.0,3.0,-0.67,-0.74,0.04,0.46,percentile,,,,
@@ -116,7 +116,7 @@ symmetric,fh_fiw_clean.csv,fh_d_expression_belief,2483,17,0.0,16.0,12.0,-0.58,-0
 ordinal,fh_fiw_clean.csv,fh_e1,2483,5,0.0,4.0,3.0,-0.4,-1.24,0.12,0.48,percentile,,,,
 ordinal,fh_fiw_clean.csv,fh_e2,2483,5,0.0,4.0,3.0,-0.44,-1.18,0.09,0.47,percentile,,,,
 ordinal,fh_fiw_clean.csv,fh_e3,2483,5,0.0,4.0,3.0,-0.35,-0.89,0.06,0.33,percentile,,,,
-symmetric,fh_fiw_clean.csv,fh_e_associational_rights,2483,13,0.0,12.0,8.0,-0.39,-1.19,0.03,0.25,REVIEW:zscore,ceiling/floor pile (25%),,,
+symmetric,fh_fiw_clean.csv,fh_e_associational_rights,2483,13,0.0,12.0,8.0,-0.39,-1.19,0.03,0.25,REVIEW:zscore,ceiling/floor pile (25%),zscore,reviewed,"REVIEW resolved 2026-07-24: kept zscore. Same source/family/construct type as fh_a_electoral_process (0-12 bounded FIW sub-score, mild skew, boundary pile); treating it differently would be incoherent."
 ordinal,fh_fiw_clean.csv,fh_g1,2483,5,0.0,4.0,3.0,-0.58,-0.74,0.05,0.4,percentile,,,,
 ordinal,fh_fiw_clean.csv,fh_g2,2483,5,0.0,4.0,2.0,-0.05,-0.98,0.02,0.23,percentile,,,,
 ordinal,fh_fiw_clean.csv,fh_g3,2483,5,0.0,4.0,2.0,-0.14,-0.72,0.03,0.18,percentile,,,,
@@ -141,7 +141,7 @@ symmetric,idea_gsod_clean.csv,idea_free_political_parties,5996,2422,0.006,1.0,0.
 symmetric,idea_gsod_clean.csv,idea_effective_parliament,5996,2093,0.0,1.0,0.559,-0.7,0.2,0.09,0.1,zscore,,,,
 symmetric,idea_gsod_clean.csv,idea_free_association_assembly,5996,2895,0.0,1.0,0.582,-0.27,-0.83,0.0,0.0,zscore,,,,
 symmetric,idea_gsod_clean.csv,idea_judicial_independence,5996,2475,0.0,1.0,0.516,0.15,-0.61,0.0,0.01,zscore,,,,
-moderate_skew,imapp_clean.csv,imapp_breadth_total,4690,17,0.0,16.0,2.0,1.15,0.51,0.26,0.26,REVIEW:zscore,ceiling/floor pile (26%),,,
+moderate_skew,imapp_clean.csv,imapp_breadth_total,4690,17,0.0,16.0,2.0,1.15,0.51,0.26,0.26,REVIEW:zscore,ceiling/floor pile (26%),log1p_zscore,reviewed,"REVIEW resolved 2026-07-24: OVERRODE suggested zscore -> log1p_zscore. Count of macroprudential measures in force (0-16, median 2, zero_frac 0.26, skew 1.15) - count with zero pile and right tail, same treatment as cpj_imprisoned. Weakest of the two count cases; plain z was defensible, log1p chosen for consistency across 'number in force' counts."
 ordinal,imapp_clean.csv,imapp_breadth_borrower_based,4690,5,0.0,4.0,0.0,1.32,0.6,0.61,0.64,percentile,,,,
 ordinal,imapp_clean.csv,imapp_breadth_capital_based,4690,6,0.0,5.0,0.0,1.64,1.5,0.63,0.66,percentile,,,,
 ordinal,imapp_clean.csv,imapp_breadth_liquidity_funding,4690,5,0.0,4.0,1.0,0.97,0.17,0.48,0.5,percentile,,,,
@@ -185,7 +185,7 @@ symmetric,qog_clean.csv,romelli_cbi_policy,4944,32,0.0,1.0,0.6,-0.48,-0.66,0.0,0
 symmetric,qog_clean.csv,romelli_cbi_lending,4944,90,0.0,1.0,0.532,-0.03,-1.22,0.04,0.34,REVIEW:zscore,ceiling/floor pile (34%),,,
 symmetric,qog_clean.csv,polity5_score,4531,21,-10.0,10.0,6.0,-0.64,-1.07,0.03,0.22,REVIEW:zscore,ceiling/floor pile (22%),,,
 moderate_skew,qog_clean.csv,polity5_regime_durability,4588,171,0.0,170.0,14.0,2.18,5.43,0.11,0.11,zscore,,,,
-symmetric,rti_rating_clean.csv,rti_total,191,74,9.318,139.0,73.0,-0.25,-1.17,0.0,0.27,REVIEW:zscore,ceiling/floor pile (27%),,,
+symmetric,rti_rating_clean.csv,rti_total,191,74,9.318,139.0,73.0,-0.25,-1.17,0.0,0.27,REVIEW:zscore,ceiling/floor pile (27%),zscore,reviewed,"REVIEW resolved 2026-07-24: kept zscore. 74 unique values on the 0-150 RTI scale, near-symmetric (skew -0.25), pile diffuse rather than at a bound (min 9.3, max 139, median 73). Continuous composite where distance is meaningful; percentile would discard it."
 symmetric,rti_rating_clean.csv,Right of Access,140,7,0.0,6.0,4.0,-0.32,-0.66,0.09,0.17,zscore,,,,
 symmetric,rti_rating_clean.csv,Scope,140,23,7.0,30.0,24.0,-0.45,-0.73,0.0,0.14,zscore,,,,
 symmetric,rti_rating_clean.csv,Requesting Procedure,140,24,2.0,28.0,18.0,-0.44,0.14,0.0,0.02,zscore,,,,

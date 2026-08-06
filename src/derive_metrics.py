@@ -155,12 +155,114 @@ def derive_pefa_composites():
     return out
 
 
+def derive_fatf_composites():
+    """FATF Mutual Evaluation composites (C9 Financial sector regulatory quality).
+
+    fatf_effectiveness        = mean of the 11 Immediate Outcomes  (IO*_num, 0-3: LE/ME/SE/HE)  -> DE FACTO
+    fatf_technical_compliance = mean of the 40 Recommendations     (R*_num,  0-3: NC/PC/LC/C)   -> DE JURE
+
+    N/A ratings arrive as NaN and are EXCLUDED from the mean (never counted as 0) - a
+    structural exclusion per the metric dictionary, handled by mean(skipna=True).
+    Cross-sectional source (one latest assessment per jurisdiction): the value is placed
+    at its own assessment year, same convention as derive_pefa_composites.
+    """
+    import pandas as pd
+    d = pd.read_csv(os.path.join(PROC, "fatf_clean.csv"), low_memory=False)
+
+    io_cols = [c for c in d.columns if c.startswith("IO") and c.endswith("_num")]
+    r_cols  = [c for c in d.columns if c.startswith("R") and c.endswith("_num")
+               and c[1:-4].isdigit()]
+    assert len(io_cols) == 11, "expected 11 Immediate Outcome cols, got %d" % len(io_cols)
+    assert len(r_cols) == 40, "expected 40 Recommendation cols, got %d" % len(r_cols)
+
+    out = pd.DataFrame({
+        "iso3": d["iso3"],
+        "year": pd.to_datetime(d["report_date"], errors="coerce").dt.year,
+        "fatf_effectiveness":        d[io_cols].mean(axis=1, skipna=True),
+        "fatf_technical_compliance": d[r_cols].mean(axis=1, skipna=True),
+    })
+    out = out[out["iso3"].notna() & out["year"].notna()].copy()
+    out["year"] = out["year"].astype(int)
+    return out
+
+
+_WDI_INDICES = {
+    # C5 sub-composites (framework_decisions "decompose and equal-weight yourself":
+    # else health = 41% of C5 purely on series count). Components combined as
+    # equal-weight mean-of-available of their WINSORIZED-Z values (normalize.py,
+    # methodology S5 engine) so each contributes equally regardless of raw scale.
+    # Inverted components (higher = worse) are negated after the z-transform.
+    "wdi_health_index": [
+        ("wdi_life_expectancy",            +1),
+        ("wdi_mortality_under5",           -1),
+        ("wdi_maternal_mortality",         -1),
+        ("wdi_immunization_dpt",           +1),
+        ("wdi_immunization_measles",       +1),
+        ("wdi_uhc_coverage_index",         +1),
+        ("wdi_hospital_beds_per_1000",     +1),
+        ("wdi_nurses_per_1000",            +1),
+        ("wdi_physicians_per_1000",        +1),
+    ],
+    "wdi_education_index": [
+        # pupil_teacher_ratio_PRIMARY excluded separately (0.0% current coverage);
+        # expenditure metrics excluded as INPUT-not-outcome (C5 scope)
+        ("wdi_primary_completion_rate",       +1),
+        ("wdi_primary_enrollment_gross",      +1),
+        ("wdi_secondary_enrollment_gross",    +1),
+        ("wdi_pupil_teacher_ratio_secondary", -1),
+    ],
+    "wdi_infrastructure_index": [
+        ("wdi_electricity_access",       +1),
+        ("wdi_basic_water_access",       +1),
+        ("wdi_basic_sanitation_access",  +1),
+    ],
+    "wdi_social_protection_index": [
+        ("wdi_safety_net_coverage",        +1),
+        ("wdi_social_insurance_coverage",  +1),
+        ("wdi_social_protection_coverage", +1),
+    ],
+}
+
+
+def derive_wdi_indices():
+    """C5 service-delivery sub-composites from WDI sector components.
+
+    Each component is winsorized-z transformed (S5 engine, its own trailing-20yr
+    pooled baseline), direction-aligned (inverted components negated), then the
+    index = equal-weight mean of AVAILABLE component z's (union coverage, S4).
+    The finished index is itself normalized later as a single metric in S5 -
+    re-standardizing an average of z's is benign (preserves order/distances).
+    """
+    import pandas as pd
+    from normalize import normalize_zfamily
+    need = sorted({c for comps in _WDI_INDICES.values() for c, _ in comps})
+    d = pd.read_csv(os.path.join(PROC, "wdi_clean.csv"),
+                    usecols=["country_code", "year"] + need, low_memory=False)
+    d = d.rename(columns={"country_code": "iso3"})
+    out = d[["iso3", "year"]].copy()
+    for index_name, comps in _WDI_INDICES.items():
+        zcols = []
+        for col, sign in comps:
+            z, _prov = normalize_zfamily(d, col, "zscore")
+            zc = "_z_%s" % col
+            d[zc] = sign * z
+            zcols.append(zc)
+        out[index_name] = d[zcols].mean(axis=1, skipna=True)
+        d.drop(columns=zcols, inplace=True)
+    # keep only rows where at least one index has a value
+    idx_cols = list(_WDI_INDICES)
+    out = out[out[idx_cols].notna().any(axis=1)].copy()
+    out["year"] = out["year"].astype(int)
+    return out
+
+
 def build_and_write():
     """Assemble all derived metrics onto the spine and write derived_metrics.csv.
-    Currently: vdem_regime_duration (the other 3 simple derivations land here next)."""
+    Currently: vdem_regime_duration, pts_index, wb_carbon_revenue_pct_gdp,
+    pefa_core_management + pefa_accountability, fatf_effectiveness + fatf_technical_compliance."""
     sp = _spine()  # iso3 + country_name, 213 rows
 
-    parts = [derive_vdem_regime_duration(), derive_pts_index(), derive_wb_carbon_revenue_pct_gdp(), derive_pefa_composites()]   # each: [iso3, year, <metric>...]
+    parts = [derive_vdem_regime_duration(), derive_pts_index(), derive_wb_carbon_revenue_pct_gdp(), derive_pefa_composites(), derive_fatf_composites(), derive_wdi_indices()]   # each: [iso3, year, <metric>...]
 
     # outer-merge all derived parts on iso3+year, then left-join onto the spine's iso3
     from functools import reduce
