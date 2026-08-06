@@ -9,6 +9,9 @@ __pycache__/
 
 # Data outputs (generated; not tracked)
 data/outputs/
+# Normalized metric panel: large (~56MB) regenerable build artifact
+# (deterministic output of src/build_normalized_panel.py from committed inputs)
+data/processed/normalized_panel.csv
 
 # OS
 .DS_Store
