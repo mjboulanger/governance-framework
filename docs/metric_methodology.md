@@ -137,7 +137,36 @@ This **rejects panel-fill rate** (non-null cells ÷ all country-years) as the in
 **Concept → category: effective weight = relevance × measurement-quality.** Two orthogonal concept-level weights, multiplied:
 
 - **Relevance [LOCKED — DEFAULT].** Equal within category, except **Concept 11 (Trade) and Concept 12 (Environmental) at 0.5**. Decided directly in working session 2026-07-21. The four-level annotation exercise (Very strong / Strong / Moderate / Thin) was **superseded** — relevance was expressed directly as weights, the two half-weights being the implicit low-relevance judgment; the annotation worksheet is retired. Values are a judgment DEFAULT, not evidence-forced — revisit if evidence or use argues otherwise.
-- **Measurement-quality [mechanism LOCKED; values at Step 1].** A coarse multiplier (**1.0 / 0.75 / 0.5**) down-weighting concepts that are *inherently thinly measured for all countries* (e.g. financial-sector supervisory effectiveness: de jure sources only, no effectiveness measure). Orthogonal to relevance (matters vs measurable) and to the per-country reliability flag (§8). Deliberately coarse and conservative so hard-to-measure but institutionally deep dimensions are nudged, not gutted. Per-concept values set at Step-1 metric selection, when final indicator sets exist. **Application principle [2026-08-10]:** the multiplier fires ONLY for a genuine concept-level CONSTRUCT gap - where even the best available metric misses the true construct the concept names (the C9 case: FATF + BRSS measure de-jure AML stringency and rules-on-paper, with NO measure of actual supervisory effectiveness for any country). It is NOT a source-count or coverage instrument. Three consequences: (1) **default is 1.0**; a downgrade is the exception, requiring a demonstrable construct gap. (2) **Thinness is not a downgrade** - a concept measured by one or a few SOLID metrics that genuinely capture the construct stays at 1.0 (few-but-good is not poorly-measured; e.g. a single V-Dem index that directly measures the dimension). (3) **Within-concept weak metrics are tiering's job, not the multiplier's** - a concept with some weak metrics already down-tiered (P2/Sp) is NOT downgraded for that; tiering ranks quality WITHIN a concept, the multiplier judges whether the whole CONSTRUCT is under-measured ACROSS all its metrics. Penalizing both would double-count the same weakness. The multiplier is a scalpel for the C9-type whole-construct gap, not a blanket on thin or mixed-quality concepts. *Compounding caution:* C11/C12 already carry half relevance — their measurement-quality multipliers must be set deliberately at Step 1 so the product does not unintentionally near-zero them.
+- **Measurement-quality [mechanism LOCKED; values at Step 1].** A coarse multiplier (**1.0 / 0.75 / 0.5**) down-weighting concepts that are *inherently thinly measured for all countries* (e.g. financial-sector supervisory effectiveness: de jure sources only, no effectiveness measure). Orthogonal to relevance (matters vs measurable) and to the per-country reliability flag (§8). Deliberately coarse and conservative so hard-to-measure but institutionally deep dimensions are nudged, not gutted. Per-concept values set at Step-1 metric selection, when final indicator sets exist. **Application principle [2026-08-10]:** the multiplier fires ONLY for a genuine concept-level CONSTRUCT gap - where even the best available metric misses the true construct the concept names (the C9 case: FATF + BRSS measure de-jure AML stringency and rules-on-paper, with NO measure of actual supervisory effectiveness for any country). It is NOT a source-count or coverage instrument. Three consequences: (1) **default is 1.0**; a downgrade is the exception, requiring a demonstrable construct gap. (2) **Thinness is not a downgrade** - a concept measured by one or a few SOLID metrics that genuinely capture the construct stays at 1.0 (few-but-good is not poorly-measured; e.g. a single V-Dem index that directly measures the dimension). (3) **Within-concept weak metrics are tiering's job, not the multiplier's** - a concept with some weak metrics already down-tiered (P2/Sp) is NOT downgraded for that; tiering ranks quality WITHIN a concept, the multiplier judges whether the whole CONSTRUCT is under-measured ACROSS all its metrics. Penalizing both would double-count the same weakness. The multiplier is a scalpel for the C9-type whole-construct gap, not a blanket on thin or mixed-quality concepts.
+
+**Concept-weight VALUES set [2026-08-10; `data/processed/concept_weights.csv`].** Effective concept weight = relevance x measurement-quality (both default 1.0). Only 3 of 24 concepts carry a downgrade: C9 measurement-quality 0.75 (construct gap - no broad supervisory-effectiveness measure), C11 + C12 relevance 0.5 (locked 2026-07-21). C11/C12 measurement-quality is DELIBERATELY left at 1.0 so the product does not near-zero them. Full table:
+
+| Concept | Relevance | Meas.-quality | Effective | Note |
+|---|---|---|---|---|
+| C1 Political settlement | 1.00 | 1.00 | 1.00 |  |
+| C2 Political stability and regime durability | 1.00 | 1.00 | 1.00 |  |
+| C3 Statistical and informational infrastructure | 1.00 | 1.00 | 1.00 |  |
+| C4 Government effectiveness and administrative quality | 1.00 | 1.00 | 1.00 |  |
+| C5 Service delivery and provision of public goods | 1.00 | 1.00 | 1.00 |  |
+| C6 Regulatory quality | 1.00 | 1.00 | 1.00 |  |
+| C8 Macroeconomic policy framework quality | 1.00 | 1.00 | 1.00 |  |
+| C9 Financial sector regulatory and supervisory quality | 1.00 | 0.75 | 0.75 | construct gap |
+| C10 State control over the economy | 1.00 | 1.00 | 1.00 |  |
+| C11 Trade governance | 0.50 | 1.00 | 0.50 | half relevance (locked 2026-07-21) |
+| C12 Environmental and climate governance | 0.50 | 1.00 | 0.50 | half relevance (locked 2026-07-21) |
+| C13 State capacity (structural core) | 1.00 | 1.00 | 1.00 |  |
+| C14 Legal quality and predictability | 1.00 | 1.00 | 1.00 |  |
+| C15 Judicial independence and quality | 1.00 | 1.00 | 1.00 |  |
+| C16 Personal security and order | 1.00 | 1.00 | 1.00 |  |
+| C17 Property rights and contract enforcement | 1.00 | 1.00 | 1.00 |  |
+| C18 Control of corruption | 1.00 | 1.00 | 1.00 |  |
+| C19 Legislative and constitutional checks | 1.00 | 1.00 | 1.00 |  |
+| C20 Electoral process and competition | 1.00 | 1.00 | 1.00 |  |
+| C21 Political participation beyond voting | 1.00 | 1.00 | 1.00 |  |
+| C22 Civil liberties | 1.00 | 1.00 | 1.00 |  |
+| C23 Media freedom and pluralism | 1.00 | 1.00 | 1.00 |  |
+| C24 Civil society space and vitality | 1.00 | 1.00 | 1.00 |  |
+| C25 Government transparency and openness | 1.00 | 1.00 | 1.00 |  | *Compounding caution:* C11/C12 already carry half relevance — their measurement-quality multipliers must be set deliberately at Step 1 so the product does not unintentionally near-zero them.
 
 **Missingness penalty [mechanism LOCKED — 2026-07-21; parameters at Step 1].** Pure renormalization (§6) is too lenient on its own: a country scored from 1 of 4 indicators gets a confident-looking number it did not earn. Absence of measurement can itself be governance signal — but only sometimes. Mechanism:
 

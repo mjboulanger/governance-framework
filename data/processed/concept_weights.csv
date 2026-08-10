@@ -1,0 +1,25 @@
+concept_id,concept_name,relevance,measurement_quality,effective_weight,rationale
+1,Political settlement,1.0,1.0,1.0,
+2,Political stability and regime durability,1.0,1.0,1.0,
+3,Statistical and informational infrastructure,1.0,1.0,1.0,
+4,Government effectiveness and administrative quality,1.0,1.0,1.0,
+5,Service delivery and provision of public goods,1.0,1.0,1.0,
+6,Regulatory quality,1.0,1.0,1.0,
+8,Macroeconomic policy framework quality,1.0,1.0,1.0,
+9,Financial sector regulatory and supervisory quality,1.0,0.75,0.75,"Financial sector reg/supervisory quality: measurement-quality 0.75 - genuine construct gap. The only de-facto effectiveness signal (fatf_effectiveness) is a narrow AML/CFT slice; the rest (fatf_technical_compliance, brss) are de jure rules-on-paper. No broad prudential-supervisory-effectiveness measure exists for any country. Nudged not gutted (a real de-facto signal exists)."
+10,State control over the economy,1.0,1.0,1.0,
+11,Trade governance,0.5,1.0,0.5,"Trade governance: half relevance - trade openness is partly a policy STANCE, less central to the governance/accountability core of its category (locked 2026-07-21)."
+12,Environmental and climate governance,0.5,1.0,0.5,Environmental and climate governance: half relevance - a real but secondary dimension of the governance core for investor accountability (locked 2026-07-21).
+13,State capacity (structural core),1.0,1.0,1.0,
+14,Legal quality and predictability,1.0,1.0,1.0,
+15,Judicial independence and quality,1.0,1.0,1.0,
+16,Personal security and order,1.0,1.0,1.0,
+17,Property rights and contract enforcement,1.0,1.0,1.0,
+18,Control of corruption,1.0,1.0,1.0,
+19,Legislative and constitutional checks,1.0,1.0,1.0,
+20,Electoral process and competition,1.0,1.0,1.0,
+21,Political participation beyond voting,1.0,1.0,1.0,
+22,Civil liberties,1.0,1.0,1.0,
+23,Media freedom and pluralism,1.0,1.0,1.0,
+24,Civil society space and vitality,1.0,1.0,1.0,
+25,Government transparency and openness,1.0,1.0,1.0,

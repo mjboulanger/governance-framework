@@ -120,6 +120,43 @@ Items remaining for v1 framework completion, in approximate order of dependency:
 - **Track record / predictability / payment culture composite design.** Originally deferred. Multiple sourcing options exist: sovereign rating action histories, fiscal-rule compliance rates, IMF program completion records, CDS spreads, EMBI sub-components. Decision needed on whether to handle as distributed content across existing concepts or as a standalone composite dimension.
 - **Equality incorporation design.** Left as open question when equality was removed as standalone concept. Options: disaggregated scoring of existing indicators by group, equality-specific indicators within relevant concepts, or other approach.
 - **Process/outcome classification of metrics.** Original framework principle (process = within state apparatus; outcome = touches non-state actors) is established but hasn't been applied concept-by-concept. Address at metric-pass stage.
+**Concept-level weighting: relevance x measurement-quality [values SET 2026-08-10; data/processed/concept_weights.csv].**
+
+**Why two concept-level multipliers.** A concept's contribution to its category is scaled by two orthogonal judgments (methodology S7): **relevance** (does this dimension MATTER to the category core?) and **measurement-quality** (can it be MEASURED well, for all countries, by the metrics that exist?). Distinct axes - a dimension can matter greatly yet be poorly measured, or be secondary yet measured cleanly - so keeping them separate preserves information a single number would lose. Metric-level quality is handled separately by tiering (P1/P2/Sp) WITHIN each concept; these two multipliers operate BETWEEN concepts. Effective concept weight = relevance x measurement-quality; categories are equal-weighted.
+
+**Both multipliers default to 1.0** - a concept is downgraded only for a demonstrated reason. Only 3 of 24 carry any downgrade:
+
+| Concept | Relevance | Meas.-quality | Effective | Note |
+|---|---|---|---|---|
+| C1 Political settlement | 1.00 | 1.00 | 1.00 |  |
+| C2 Political stability and regime durability | 1.00 | 1.00 | 1.00 |  |
+| C3 Statistical and informational infrastructure | 1.00 | 1.00 | 1.00 |  |
+| C4 Government effectiveness and administrative quality | 1.00 | 1.00 | 1.00 |  |
+| C5 Service delivery and provision of public goods | 1.00 | 1.00 | 1.00 |  |
+| C6 Regulatory quality | 1.00 | 1.00 | 1.00 |  |
+| C8 Macroeconomic policy framework quality | 1.00 | 1.00 | 1.00 |  |
+| C9 Financial sector regulatory and supervisory quality | 1.00 | 0.75 | 0.75 | construct gap |
+| C10 State control over the economy | 1.00 | 1.00 | 1.00 |  |
+| C11 Trade governance | 0.50 | 1.00 | 0.50 | half relevance (locked 2026-07-21) |
+| C12 Environmental and climate governance | 0.50 | 1.00 | 0.50 | half relevance (locked 2026-07-21) |
+| C13 State capacity (structural core) | 1.00 | 1.00 | 1.00 |  |
+| C14 Legal quality and predictability | 1.00 | 1.00 | 1.00 |  |
+| C15 Judicial independence and quality | 1.00 | 1.00 | 1.00 |  |
+| C16 Personal security and order | 1.00 | 1.00 | 1.00 |  |
+| C17 Property rights and contract enforcement | 1.00 | 1.00 | 1.00 |  |
+| C18 Control of corruption | 1.00 | 1.00 | 1.00 |  |
+| C19 Legislative and constitutional checks | 1.00 | 1.00 | 1.00 |  |
+| C20 Electoral process and competition | 1.00 | 1.00 | 1.00 |  |
+| C21 Political participation beyond voting | 1.00 | 1.00 | 1.00 |  |
+| C22 Civil liberties | 1.00 | 1.00 | 1.00 |  |
+| C23 Media freedom and pluralism | 1.00 | 1.00 | 1.00 |  |
+| C24 Civil society space and vitality | 1.00 | 1.00 | 1.00 |  |
+| C25 Government transparency and openness | 1.00 | 1.00 | 1.00 |  |
+
+**Rationale for the sub-1 concepts:**
+- **C9 (Financial sector regulatory and supervisory quality) - measurement-quality 0.75.** The one genuine CONSTRUCT gap: the construct is supervisory effectiveness, but the only de-facto signal (fatf_effectiveness) is a narrow AML/CFT slice and the rest (fatf_technical_compliance, brss) are de jure rules-on-paper. No broad prudential-effectiveness measure exists for any country. Nudged (0.75) not gutted (0.5) - a real de-facto signal does exist. This is the methodology's own worked example.
+- **C11 (Trade governance) and C12 (Environmental and climate governance) - relevance 0.5.** Half relevance (locked 2026-07-21): real but secondary dimensions of their categories' governance core. Their measurement-quality is left at 1.0 DELIBERATELY - stacking an MQ downgrade on the halved relevance would near-zero them (0.5 x 0.75 = 0.375), which the methodology warns against; neither has a severe enough construct gap to justify it (both carry direct, construct-valid metrics).
+
 - **Weighting scheme.** Resolved 2026-07-21 (working session; full spec `metric_methodology.md` §7): the **5 categories are equal-weighted**; concept weights within category are **equal except Trade (11) and Environmental (12) at half** — the half-weights are the implicit low-relevance judgment, and the earlier four-level annotation exercise was superseded (worksheet retired). Two further mechanisms are locked with parameters set at Step-1 metric selection: a coarse concept-level **measurement-quality multiplier** (1.0/0.75/0.5) for concepts with a genuine CONSTRUCT gap (even the best available metric misses the true construct, e.g. C9 financial supervision: de-jure/AML sources only, no effectiveness measure) - default 1.0, downgrade the exception; thinness alone is NOT a downgrade (few-but-solid metrics stay 1.0) and within-concept weak metrics are handled by tiering, not this multiplier (no double-penalty) [application principle 2026-08-10], and a **missingness penalty** (latest slice only; per-source endogenous/exogenous tags; full / capped-partial / no-penalty regimes) applied after §6 renormalization.
 - **Concept 25 (Government transparency and openness) reconsideration.** Significant indicator overlap with other concepts (only the IDEA Political Finance Database and Global Data Barometer are unique to it). **Decision (revisited 2026-06-18): KEEP as own concept.** "Government transparency and openness" is a coherent, investor-legible dimension; overlap tracked under the repetition rule. The Global Data Barometer is deprioritized as its open-data source (thin, edition-unstable, duplicates ODIN). Still flagged to revisit with the full framework view before finalising. See changelog and `framework_decisions.md`.
 
