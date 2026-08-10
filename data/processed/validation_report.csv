@@ -1,0 +1,120 @@
+check,category,subject,measure,value,threshold,status,detail
+anchor_high,Accountability,DNK,percentile,1.0,>=0.75,PASS,score=0.7231 rank=1/192
+anchor_high,Accountability,NZL,percentile,0.8906,>=0.75,PASS,score=0.6474 rank=22/192
+anchor_high,Accountability,NOR,percentile,0.9948,>=0.75,PASS,score=0.7226 rank=2/192
+anchor_high,Accountability,CHE,percentile,0.974,>=0.75,PASS,score=0.6982 rank=6/192
+anchor_high,Accountability,SGP,percentile,0.375,>=0.75,REVIEW,score=0.4574 rank=121/192
+anchor_low,Accountability,SOM,percentile,0.1979,<=0.25,PASS,score=0.3679 rank=155/192
+anchor_low,Accountability,YEM,percentile,0.1146,<=0.25,PASS,score=0.2976 rank=171/192
+anchor_low,Accountability,SSD,percentile,0.0573,<=0.25,PASS,score=0.2716 rank=182/192
+anchor_low,Accountability,SYR,percentile,0.0833,<=0.25,PASS,score=0.2813 rank=177/192
+anchor_low,Accountability,VEN,percentile,0.0781,<=0.25,PASS,score=0.2794 rank=178/192
+anchor_high,Economic and fiscal governance,DNK,percentile,0.9323,>=0.75,PASS,score=0.6629 rank=14/192
+anchor_high,Economic and fiscal governance,NZL,percentile,0.849,>=0.75,PASS,score=0.6228 rank=30/192
+anchor_high,Economic and fiscal governance,NOR,percentile,0.9219,>=0.75,PASS,score=0.6555 rank=16/192
+anchor_high,Economic and fiscal governance,CHE,percentile,0.9792,>=0.75,PASS,score=0.6994 rank=5/192
+anchor_high,Economic and fiscal governance,SGP,percentile,0.8802,>=0.75,PASS,score=0.6328 rank=24/192
+anchor_low,Economic and fiscal governance,SOM,percentile,0.2865,<=0.25,REVIEW,score=0.4211 rank=138/192
+anchor_low,Economic and fiscal governance,YEM,percentile,0.0208,<=0.25,PASS,score=0.2738 rank=189/192
+anchor_low,Economic and fiscal governance,SSD,percentile,0.0052,<=0.25,PASS,score=0.2247 rank=192/192
+anchor_low,Economic and fiscal governance,SYR,percentile,0.026,<=0.25,PASS,score=0.2764 rank=188/192
+anchor_low,Economic and fiscal governance,VEN,percentile,0.0104,<=0.25,PASS,score=0.2484 rank=191/192
+anchor_high,Political foundations,DNK,percentile,0.9948,>=0.75,PASS,score=0.6899 rank=2/192
+anchor_high,Political foundations,NZL,percentile,0.9375,>=0.75,PASS,score=0.6541 rank=13/192
+anchor_high,Political foundations,NOR,percentile,0.9792,>=0.75,PASS,score=0.6805 rank=5/192
+anchor_high,Political foundations,CHE,percentile,1.0,>=0.75,PASS,score=0.7079 rank=1/192
+anchor_high,Political foundations,SGP,percentile,0.8802,>=0.75,PASS,score=0.6166 rank=24/192
+anchor_low,Political foundations,SOM,percentile,0.099,<=0.25,PASS,score=0.3644 rank=174/192
+anchor_low,Political foundations,YEM,percentile,0.0156,<=0.25,PASS,score=0.2549 rank=190/192
+anchor_low,Political foundations,SSD,percentile,0.0208,<=0.25,PASS,score=0.2863 rank=189/192
+anchor_low,Political foundations,SYR,percentile,0.0469,<=0.25,PASS,score=0.3210 rank=184/192
+anchor_low,Political foundations,VEN,percentile,0.1146,<=0.25,PASS,score=0.3749 rank=171/192
+anchor_high,Rule of law,DNK,percentile,0.9896,>=0.75,PASS,score=0.7866 rank=3/192
+anchor_high,Rule of law,NZL,percentile,0.9792,>=0.75,PASS,score=0.7606 rank=5/192
+anchor_high,Rule of law,NOR,percentile,0.9844,>=0.75,PASS,score=0.7704 rank=4/192
+anchor_high,Rule of law,CHE,percentile,0.9583,>=0.75,PASS,score=0.7407 rank=9/192
+anchor_high,Rule of law,SGP,percentile,0.9062,>=0.75,PASS,score=0.7026 rank=19/192
+anchor_low,Rule of law,SOM,percentile,0.0573,<=0.25,PASS,score=0.2899 rank=182/192
+anchor_low,Rule of law,YEM,percentile,0.0312,<=0.25,PASS,score=0.2510 rank=187/192
+anchor_low,Rule of law,SSD,percentile,0.0104,<=0.25,PASS,score=0.2090 rank=191/192
+anchor_low,Rule of law,SYR,percentile,0.0885,<=0.25,PASS,score=0.3269 rank=176/192
+anchor_low,Rule of law,VEN,percentile,0.0208,<=0.25,PASS,score=0.2382 rank=189/192
+anchor_high,State capacity,DNK,percentile,0.9948,>=0.75,PASS,score=0.7084 rank=2/192
+anchor_high,State capacity,NZL,percentile,0.9688,>=0.75,PASS,score=0.6931 rank=7/192
+anchor_high,State capacity,NOR,percentile,0.9792,>=0.75,PASS,score=0.6970 rank=5/192
+anchor_high,State capacity,CHE,percentile,0.9219,>=0.75,PASS,score=0.6709 rank=16/192
+anchor_high,State capacity,SGP,percentile,1.0,>=0.75,PASS,score=0.7100 rank=1/192
+anchor_low,State capacity,SOM,percentile,0.0573,<=0.25,PASS,score=0.2841 rank=182/192
+anchor_low,State capacity,YEM,percentile,0.0104,<=0.25,PASS,score=0.1859 rank=191/192
+anchor_low,State capacity,SSD,percentile,0.0052,<=0.25,PASS,score=0.1757 rank=192/192
+anchor_low,State capacity,SYR,percentile,0.0469,<=0.25,PASS,score=0.2659 rank=184/192
+anchor_low,State capacity,VEN,percentile,0.0625,<=0.25,PASS,score=0.3002 rank=181/192
+discrimination,SGP capacity/rule-of-law vs accountability,SGP,pctile_gap,0.5312,>0.15,PASS,capacity=1.00 rule-of-law=0.91 accountability=0.38
+inversion_scan,Accountability,TOP10,ranking,,eyeball,INFO,"DNK, NOR, SWE, IRL, LUX, CHE, DEU, FIN, EST, BEL"
+inversion_scan,Accountability,BOTTOM10,ranking,,eyeball,INFO,"AFG, MMR, NIC, GNQ, BLR, SAU, TJK, AZE, CHN, QAT"
+inversion_scan,Economic and fiscal governance,TOP10,ranking,,eyeball,INFO,"LUX, LVA, DEU, NLD, CHE, LTU, FRA, SWE, LIE, IRL"
+inversion_scan,Economic and fiscal governance,BOTTOM10,ranking,,eyeball,INFO,"SSD, VEN, LBY, YEM, SYR, GNQ, IRN, CUB, AFG, SDN"
+inversion_scan,Political foundations,TOP10,ranking,,eyeball,INFO,"CHE, DNK, ISL, IRL, NOR, JPN, FIN, LUX, AUT, MLT"
+inversion_scan,Political foundations,BOTTOM10,ranking,,eyeball,INFO,"AFG, MMR, YEM, SSD, TCD, SDN, COD, PAK, SYR, IRN"
+inversion_scan,Rule of law,TOP10,ranking,,eyeball,INFO,"SMR, MCO, DNK, NOR, NZL, SWE, IRL, DEU, CHE, LUX"
+inversion_scan,Rule of law,BOTTOM10,ranking,,eyeball,INFO,"AFG, SSD, NIC, VEN, SDN, YEM, COD, MMR, CAF, TCD"
+inversion_scan,State capacity,TOP10,ranking,,eyeball,INFO,"SGP, DNK, SWE, FIN, NOR, DEU, NZL, LUX, ISL, AUS"
+inversion_scan,State capacity,BOTTOM10,ranking,,eyeball,INFO,"SSD, YEM, SDN, CAF, AFG, COD, TCD, LBY, SYR, HTI"
+inversion_scan_concept,C1 Political settlement,TOP10,ranking,,eyeball,INFO,"DNK, NOR, IRL, ISL, CHE, FIN, JPN, DEU, LUX, LTU"
+inversion_scan_concept,C1 Political settlement,BOTTOM10,ranking,,eyeball,INFO,"AFG, SSD, MMR, TJK, YEM, NIC, SAU, TCD, BHR, CHN"
+inversion_scan_concept,C2 Political stability and regime durability,TOP10,ranking,,eyeball,INFO,"CHE, AUT, SGP, ISL, NZL, JPN, IRL, LUX, DNK, FIN"
+inversion_scan_concept,C2 Political stability and regime durability,BOTTOM10,ranking,,eyeball,INFO,"MLI, NGA, BFA, AFG, YEM, SDN, MMR, SYR, NER, ISR"
+inversion_scan_concept,C3 Statistical and informational infrastructure,TOP10,ranking,,eyeball,INFO,"NOR, POL, DNK, SVN, FIN, PRT, KOR, SGP, SWE, NZL"
+inversion_scan_concept,C3 Statistical and informational infrastructure,BOTTOM10,ranking,,eyeball,INFO,"SSD, SYR, MCO, LBY, FSM, GNQ, VEN, HTI, YEM, DJI"
+inversion_scan_concept,C4 Government effectiveness and administrative quality,TOP10,ranking,,eyeball,INFO,"SGP, CHE, DNK, DEU, LUX, AUS, NZL, FIN, SWE, MCO"
+inversion_scan_concept,C4 Government effectiveness and administrative quality,BOTTOM10,ranking,,eyeball,INFO,"SSD, YEM, AFG, VEN, NIC, TCD, CAF, LBY, HTI, COD"
+inversion_scan_concept,C5 Service delivery and provision of public goods,TOP10,ranking,,eyeball,INFO,"MCO, SWE, NLD, KNA, FIN, SGP, NOR, BEL, PRT, ISL"
+inversion_scan_concept,C5 Service delivery and provision of public goods,BOTTOM10,ranking,,eyeball,INFO,"CAF, TCD, SOM, NER, SDN, GNQ, LBR, COD, AGO, ETH"
+inversion_scan_concept,C6 Regulatory quality,TOP10,ranking,,eyeball,INFO,"SGP, DNK, NZL, FIN, IRL, LUX, AUS, NOR, SWE, NLD"
+inversion_scan_concept,C6 Regulatory quality,BOTTOM10,ranking,,eyeball,INFO,"VEN, SYR, YEM, SSD, LBY, SOM, SDN, CUB, GNQ, AFG"
+inversion_scan_concept,C8 Macroeconomic and financial policy framework,TOP10,ranking,,eyeball,INFO,"LVA, LTU, FRA, NLD, MLT, DEU, SVK, LUX, XKX, EST"
+inversion_scan_concept,C8 Macroeconomic and financial policy framework,BOTTOM10,ranking,,eyeball,INFO,"CUB, BRB, BLZ, KIR, WSM, SUR, COM, LCA, KNA, ETH"
+inversion_scan_concept,C9 Financial sector regulatory and supervisory quality,TOP10,ranking,,eyeball,INFO,"LVA, GBR, ESP, FRA, ISR, BLZ, SGP, MYS, ITA, LUX"
+inversion_scan_concept,C9 Financial sector regulatory and supervisory quality,BOTTOM10,ranking,,eyeball,INFO,"TON, CAF, SWZ, VEN, GNQ, HTI, TCD, GAB, COG, STP"
+inversion_scan_concept,C10 State control over the economy,TOP10,ranking,,eyeball,INFO,"JPN, CHE, PER, LVA, LUX, GTM, LTU, BEL, DEU, CZE"
+inversion_scan_concept,C10 State control over the economy,BOTTOM10,ranking,,eyeball,INFO,"AFG, TJK, SSD, DZA, VEN, SAU, RWA, CUB, QAT, GNQ"
+inversion_scan_concept,C11 Trade governance,TOP10,ranking,,eyeball,INFO,"SGP, NLD, DNK, FIN, DEU, SWE, BEL, FRA, AUT, CAN"
+inversion_scan_concept,C11 Trade governance,BOTTOM10,ranking,,eyeball,INFO,"IRN, GNQ, NRU, BDI, FSM, KIR, TCD, ETH, ZWE, CAF"
+inversion_scan_concept,C12 Environmental and climate governance,TOP10,ranking,,eyeball,INFO,"DNK, SWE, NOR, LUX, DEU, FIN, AUT, PRT, LTU, CHE"
+inversion_scan_concept,C12 Environmental and climate governance,BOTTOM10,ranking,,eyeball,INFO,"SMR, MCO, PLW, LBY, TUV, SSD, SYR, YEM, KNA, XKX"
+inversion_scan_concept,C13 State capacity (structural core),TOP10,ranking,,eyeball,INFO,"ISL, PRT, LUX, AUT, SVK, NZL, EST, FIN, KOR, HUN"
+inversion_scan_concept,C13 State capacity (structural core),BOTTOM10,ranking,,eyeball,INFO,"YEM, LBY, SSD, PSE, SYR, HTI, SDN, AFG, UKR, LBN"
+inversion_scan_concept,C14 Legal quality and predictability,TOP10,ranking,,eyeball,INFO,"MCO, LUX, DNK, NZL, FRA, IRL, NOR, CHE, URY, BEL"
+inversion_scan_concept,C14 Legal quality and predictability,BOTTOM10,ranking,,eyeball,INFO,"AFG, YEM, SSD, NIC, VEN, TJK, EGY, HTI, ZWE, CAF"
+inversion_scan_concept,C15 Judicial independence and quality,TOP10,ranking,,eyeball,INFO,"DNK, FIN, NOR, NZL, SWE, DEU, AUS, CHE, IRL, EST"
+inversion_scan_concept,C15 Judicial independence and quality,BOTTOM10,ranking,,eyeball,INFO,"NIC, TCD, AZE, GNQ, BDI, MMR, KHM, SDN, SLV, SSD"
+inversion_scan_concept,C16 Personal security and order,TOP10,ranking,,eyeball,INFO,"SMR, TUV, MCO, BRN, IRL, CHE, FSM, JPN, TON, DNK"
+inversion_scan_concept,C16 Personal security and order,BOTTOM10,ranking,,eyeball,INFO,"AFG, COD, YEM, VEN, SDN, RUS, ETH, SSD, NGA, PAK"
+inversion_scan_concept,C17 Property rights and contract enforcement,TOP10,ranking,,eyeball,INFO,"NOR, DEU, IRL, NLD, SWE, DNK, NZL, BEL, LUX, ISL"
+inversion_scan_concept,C17 Property rights and contract enforcement,BOTTOM10,ranking,,eyeball,INFO,"SSD, SWZ, SDN, SOM, CAF, COD, AFG, MMR, GNQ, GIN"
+inversion_scan_concept,C18 Control of corruption,TOP10,ranking,,eyeball,INFO,"LIE, DNK, NOR, SGP, NZL, SWE, FIN, ISL, LUX, CHE"
+inversion_scan_concept,C18 Control of corruption,BOTTOM10,ranking,,eyeball,INFO,"VEN, YEM, SOM, NIC, AZE, SSD, PLW, TCD, COD, HTI"
+inversion_scan_concept,C19 Legislative and constitutional checks,TOP10,ranking,,eyeball,INFO,"SWE, NOR, DEU, DNK, CHL, FIN, CRI, NLD, GBR, CHE"
+inversion_scan_concept,C19 Legislative and constitutional checks,BOTTOM10,ranking,,eyeball,INFO,"NIC, BLR, VEN, AZE, QAT, SLV, KHM, RUS, SAU, UZB"
+inversion_scan_concept,C20 Electoral process and competition,TOP10,ranking,,eyeball,INFO,"FIN, BEL, DNK, SWE, NOR, NLD, CAN, CHL, CHE, AUS"
+inversion_scan_concept,C20 Electoral process and competition,BOTTOM10,ranking,,eyeball,INFO,"SAU, SYR, BRN, GNQ, TCD, MMR, VEN, KHM, SSD, AFG"
+inversion_scan_concept,C21 Political participation beyond voting,TOP10,ranking,,eyeball,INFO,"KIR, NOR, SMR, LIE, DNK, FSM, PLW, MHL, KNA, GRD"
+inversion_scan_concept,C21 Political participation beyond voting,BOTTOM10,ranking,,eyeball,INFO,"AFG, AZE, SSD, NIC, SDN, QAT, ARE, MMR, BLR, TJK"
+inversion_scan_concept,C22 Civil liberties,TOP10,ranking,,eyeball,INFO,"MCO, IRL, LUX, DEU, BEL, EST, NZL, LIE, FIN, SWE"
+inversion_scan_concept,C22 Civil liberties,BOTTOM10,ranking,,eyeball,INFO,"AFG, YEM, SDN, MMR, SSD, SYR, LBY, IRN, PSE, SAU"
+inversion_scan_concept,C23 Media freedom and pluralism,TOP10,ranking,,eyeball,INFO,"DNK, IRL, EST, BEL, SWE, KNA, LUX, CAN, CHE, NOR"
+inversion_scan_concept,C23 Media freedom and pluralism,BOTTOM10,ranking,,eyeball,INFO,"LAO, MMR, CHN, QAT, BLR, RUS, GNQ, TJK, SWZ, AFG"
+inversion_scan_concept,C24 Civil society space and vitality,TOP10,ranking,,eyeball,INFO,"KIR, NOR, LUX, SMR, DNK, LIE, IRL, CHE, KNA, BHS"
+inversion_scan_concept,C24 Civil society space and vitality,BOTTOM10,ranking,,eyeball,INFO,"BLR, CUB, AZE, AFG, NIC, CHN, GNQ, RUS, TJK, MMR"
+inversion_scan_concept,C25 Government transparency and openness,TOP10,ranking,,eyeball,INFO,"NOR, FIN, IRL, LUX, SWE, DEU, DNK, CHE, EST, CHL"
+inversion_scan_concept,C25 Government transparency and openness,BOTTOM10,ranking,,eyeball,INFO,"GNQ, FSM, NRU, WSM, KIR, MMR, BLR, TON, VEN, PSE"
+coherence,Accountability | Economic and fiscal governance,pearson_r,correlation,0.7085,0.30-0.95,PASS,
+coherence,Accountability | Political foundations,pearson_r,correlation,0.8244,0.30-0.95,PASS,
+coherence,Accountability | Rule of law,pearson_r,correlation,0.8234,0.30-0.95,PASS,
+coherence,Accountability | State capacity,pearson_r,correlation,0.6652,0.30-0.95,PASS,
+coherence,Economic and fiscal governance | Political foundations,pearson_r,correlation,0.6473,0.30-0.95,PASS,
+coherence,Economic and fiscal governance | Rule of law,pearson_r,correlation,0.7289,0.30-0.95,PASS,
+coherence,Economic and fiscal governance | State capacity,pearson_r,correlation,0.8439,0.30-0.95,PASS,
+coherence,Political foundations | Rule of law,pearson_r,correlation,0.8684,0.30-0.95,PASS,
+coherence,Political foundations | State capacity,pearson_r,correlation,0.7701,0.30-0.95,PASS,
+coherence,Rule of law | State capacity,pearson_r,correlation,0.8228,0.30-0.95,PASS,
