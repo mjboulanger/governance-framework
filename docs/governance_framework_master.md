@@ -47,7 +47,7 @@ The framework organises governance into **5 categories** containing **25 unique 
 | | Control of corruption | V-Dem corruption indicators; Transparency International CPI; WJP Factor 2 | Bayesian Corruption Indicator (currency verification); UNCAC review content (Tier 3, supplementary) |
 | | Legislative and constitutional checks* | *(see Accountability horizontal row above — multi-placed)* | |
 | **5. Economic and fiscal governance** | Public financial management (PFM) | PEFA (where current); Open Budget Survey | IMF Fiscal Transparency Evaluations (coverage verify); IMF WEO fiscal outcomes (low S/N, low weight) |
-| | Macroeconomic policy framework quality | Romelli CBI Index; IMF Fiscal Rules Database; IMF AREAER (FARI); Chinn-Ito KAOPEN; IMF iMaPP; IMF AREAER de-facto ER classification (BUILT — nb 37, checksum-validated transcription) | Reinhart-Rogoff (de facto regime, supplementary; data ends 2019); Dincer-Eichengreen CB Transparency (deprioritized); Heritage Monetary Freedom / Fraser Sound Money (monetary only); EIU Country Risk macro (optional paid) |
+| | Macroeconomic and financial policy framework | Romelli CBI Index; IMF Fiscal Rules Database; IMF AREAER (FARI); Chinn-Ito KAOPEN; IMF iMaPP; IMF AREAER de-facto ER classification (BUILT — nb 37, checksum-validated transcription) | Reinhart-Rogoff (de facto regime, supplementary; data ends 2019); Dincer-Eichengreen CB Transparency (deprioritized); Heritage Monetary Freedom / Fraser Sound Money (monetary only); EIU Country Risk macro (optional paid) |
 | | Regulatory quality* | *(see State capacity row above — multi-placed)* | |
 | | Financial sector regulatory and supervisory quality | FSAP/BCP/IOSCO/IAIS assessments (where available); FATF compliance ratings; Basel AML Index | Barth-Caprio-Levine bank regulation survey (2019); IMF FSI outcomes (low weight, low S/N) |
 | | State control over the economy | V-Dem v2clstown (state ownership/control of economy) | *(SOE governance quality split out, deferred to v2)* |
@@ -136,7 +136,7 @@ Items remaining for v1 framework completion, in approximate order of dependency:
 | C4 Government effectiveness and administrative quality | 1.00 | 1.00 | 1.00 |  |
 | C5 Service delivery and provision of public goods | 1.00 | 1.00 | 1.00 |  |
 | C6 Regulatory quality | 1.00 | 1.00 | 1.00 |  |
-| C8 Macroeconomic policy framework quality | 1.00 | 1.00 | 1.00 |  |
+| C8 Macroeconomic and financial policy framework | 1.00 | 1.00 | 1.00 |  |
 | C9 Financial sector regulatory and supervisory quality | 1.00 | 0.75 | 0.75 | construct gap |
 | C10 State control over the economy | 1.00 | 1.00 | 1.00 |  |
 | C11 Trade governance | 0.50 | 1.00 | 0.50 | half relevance (locked 2026-07-21) |
@@ -340,7 +340,7 @@ The following sections cover all concepts in framework order. Each section provi
 
 ### Concept 7: Public financial management (PFM) — RETIRED / FOLDED INTO CONCEPT 8
 
-**Status (2026-07-24):** Concept 7 has been **folded into Concept 8 (Macroeconomic policy framework quality)** and retired as a standalone concept. Concept NUMBER 7 is now a vacant stable ID — C8–C25 keep their numbers; the inventory drops from 25 to 24 unique concepts. PFM content (budget credibility, execution controls, procurement, accounting, external audit) is now scored under Concept 8, rescoped to cover the **design AND management** of macro-policy institutions (see C8).
+**Status (2026-07-24):** Concept 7 has been **folded into Concept 8 (Macroeconomic and financial policy framework)** and retired as a standalone concept. Concept NUMBER 7 is now a vacant stable ID — C8–C25 keep their numbers; the inventory drops from 25 to 24 unique concepts. PFM content (budget credibility, execution controls, procurement, accounting, external audit) is now scored under Concept 8, rescoped to cover the **design AND management** of macro-policy institutions (see C8).
 
 **Rationale:** PFM is thematically closer to macroeconomic/fiscal policy than to general administrative capacity (C4) — the budget is the central instrument of fiscal policy, so managing public money belongs with fiscal-policy institutions rather than general bureaucratic competence. Folding also resolved C7's standalone thinness structurally (it held only OBS scored, with PEFA pipelined but unscored). The C4 overlap (PFM as administrative competence) is acknowledged; the fiscal-policy theme was judged to dominate. Full options analysis (fold-C8 vs fold-C4 vs keep-separate) in framework_decisions changelog.
 
@@ -348,7 +348,7 @@ The following sections cover all concepts in framework order. Each section provi
 
 ---
 
-### Concept 8: Macroeconomic policy framework quality
+### Concept 8: Macroeconomic and financial policy framework
 
 **Category:** Economic and fiscal governance
 **Scope:** the **design and management** of macroeconomic and fiscal-policy institutions. Two levels: (1) POLICY-FRAMEWORK DESIGN — fiscal rules and fiscal council design, monetary policy framework, central bank independence and credibility, macroprudential institutional setup, exchange rate regime governance; and (2) PUBLIC FINANCIAL MANAGEMENT (former Concept 7, folded 2026-07-24) — budget credibility and execution, spending controls, procurement, accounting and reporting, external audit. Distinct from macroeconomic OUTCOMES (inflation, realised fiscal balance, debt path), which are deliberately out of scope (governance quality, not outcomes; outcomes live in the sibling sovereign-credit / macro-vulnerability modules). **v2 to-do:** no outcome/execution legs yet (budget-execution-vs-plan, inflation-target-hit-rate) — deferred to v2 pending the governance-vs-outcome boundary decision (see to-do list).

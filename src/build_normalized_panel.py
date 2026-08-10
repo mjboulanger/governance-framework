@@ -6,6 +6,12 @@ Reads every scored metric from its source file, applies its assigned final_metho
 pooled baseline, harmonizes to a common 0-1 scale, direction-aligns so higher =
 better, and writes one long panel: data/processed/normalized_panel.csv.
 
+Also emits Tier-3 attribution (raw -> harmonized reconstructable from stored values):
+  metric_normalization_params.csv : per-metric scalar params (method, pre-transform,
+                                     baseline_mean/sd, n_obs, year_span, winsor, direction)
+  percentile_baselines.csv         : the ACTUAL sorted baseline vector for each percentile
+                                     metric (mean/sd cannot reconstruct a midrank percentile)
+
 Inputs (all already built):
   - metric_selection.csv          : the 144 scored metrics, tier, direction
   - metric_distribution_profile.csv: final_method + the source FILE per metric
@@ -15,7 +21,8 @@ Inputs (all already built):
 
 Output columns (long, one row per iso3 x year x metric):
   iso3, year, metric, raw_value, normalized, harmonized, direction,
-  final_method, method_source, baseline_n_years, baseline_n_obs, baseline_year_span
+  final_method, method_source, baseline_n_years, baseline_n_obs, baseline_year_span,
+  baseline_mean, baseline_sd
 """
 import os
 import numpy as np
@@ -27,10 +34,12 @@ import re
 from config import PROCESSED_DIR, RAW_DIR, FRAMEWORK_START_YEAR, CURRENT_YEAR
 from country_harmonization import add_iso3
 from normalize import (normalize_zfamily, normalize_percentile,
-                       normalize_binary, normalize_fixed_anchor)
+                       normalize_binary, normalize_fixed_anchor, WINSOR)
 
 PROC = PROCESSED_DIR
 ZFAMILY = {"zscore", "log_zscore", "log1p_zscore"}
+# pre-transform label per method, for Tier-3 params (reconstructs raw -> transformed)
+PRE_TRANSFORM = {"zscore": "identity", "log_zscore": "log", "log1p_zscore": "log1p"}
 # census metrics whose absent spine country-years are a REAL 0 (D5a build note):
 CENSUS_ZEROFILL = {"climate_laws_cumulative", "wb_carbon_pricing_exists"}
 
@@ -99,6 +108,8 @@ def _load_metric(metric, fname, spine, source_id):
         out = grid.merge(out, on=["iso3", "year"], how="left")
         out["value"] = out["value"].fillna(0.0)
     return out
+
+
 def build():
     spine = set(pd.read_csv(os.path.join(PROC, "country_spine.csv"))["iso3"])
     sel = pd.read_csv(os.path.join(PROC, "metric_selection.csv"))
@@ -112,6 +123,8 @@ def build():
 
     metrics = sorted(scored["metric"].unique())
     parts, skipped = [], []
+    param_rows = []          # Tier-3 scalar params, one row per metric
+    pct_baseline_rows = []   # Tier-3 percentile baseline vectors, long form
 
     for m in metrics:
         fname = file_of.get(m)
@@ -135,10 +148,12 @@ def build():
 
         harm = _harmonize(norm, method)
         # direction-align: higher = better everywhere. flip if metric is "-".
-        if str(direction.get(m)).strip() == "-":
+        flipped = str(direction.get(m)).strip() == "-"
+        if flipped:
             harm = 1.0 - harm
 
         span = prov.get("baseline_year_span")
+        span_str = ("%d-%d" % (span[0], span[1])) if span else None
         part = pd.DataFrame({
             "iso3": d["iso3"].values, "year": d["year"].values, "metric": m,
             "raw_value": d["value"].values,
@@ -147,11 +162,33 @@ def build():
             "method_source": msource_of.get(m),
             "baseline_n_years": prov.get("baseline_n_years"),
             "baseline_n_obs": prov.get("baseline_n_obs"),
-            "baseline_year_span": ("%d-%d" % (span[0], span[1])) if span else None,
+            "baseline_year_span": span_str,
+            "baseline_mean": prov.get("baseline_mean"),
+            "baseline_sd": prov.get("baseline_sd"),
         })
         # drop rows with no raw value (census keeps its 0s; others drop NaN)
         part = part[part["raw_value"].notna()]
         parts.append(part)
+
+        # ---- Tier-3 scalar param record for this metric ----
+        # winsor and harmonize only apply to z-family; recorded as None otherwise
+        param_rows.append(dict(
+            metric=m, final_method=method, method_source=msource_of.get(m),
+            direction=direction.get(m), direction_flipped=bool(flipped),
+            pre_transform=PRE_TRANSFORM.get(method),          # None for non-z
+            baseline_mean=prov.get("baseline_mean"),
+            baseline_sd=prov.get("baseline_sd"),
+            baseline_n_obs=prov.get("baseline_n_obs"),
+            baseline_year_span=span_str,
+            winsor=WINSOR if method in ZFAMILY else None,
+            harmonize_rule=("(clip(z,+/-%g)+%g)/%g" % (WINSOR, WINSOR, 2 * WINSOR))
+                           if method in ZFAMILY else "identity (already 0-1)",
+        ))
+        # ---- Tier-3 percentile baseline vector (the actual midrank parameter) ----
+        if method == "percentile":
+            vec = prov.get("baseline_vector") or []
+            for pos, val in enumerate(vec):
+                pct_baseline_rows.append(dict(metric=m, position=pos, value=val))
 
     panel = pd.concat(parts, ignore_index=True)
     panel = panel.sort_values(["metric", "iso3", "year"]).reset_index(drop=True)
@@ -160,17 +197,32 @@ def build():
         panel.to_csv(out_path, index=False, lineterminator="\n")
     except TypeError:
         panel.to_csv(out_path, index=False, line_terminator="\n")
-    return panel, skipped
+
+    # Tier-3 param tables
+    params = pd.DataFrame(param_rows).sort_values("metric").reset_index(drop=True)
+    params.to_csv(os.path.join(PROC, "metric_normalization_params.csv"), index=False)
+    pctbase = pd.DataFrame(pct_baseline_rows,
+                           columns=["metric", "position", "value"]).sort_values(
+        ["metric", "position"]).reset_index(drop=True)
+    pctbase.to_csv(os.path.join(PROC, "percentile_baselines.csv"), index=False)
+
+    return panel, skipped, params, pctbase
 
 
 if __name__ == "__main__":
-    panel, skipped = build()
+    panel, skipped, params, pctbase = build()
     print("normalized_panel.csv written:", panel.shape)
     print("distinct metrics:", panel["metric"].nunique(), "/ 144 scored")
     print("distinct countries:", panel["iso3"].nunique())
     print("year range:", int(panel["year"].min()), "-", int(panel["year"].max()))
     print("harmonized range: [%.3f, %.3f]  mean %.3f" % (
         panel["harmonized"].min(), panel["harmonized"].max(), panel["harmonized"].mean()))
+    print("baseline_mean/sd now in panel:",
+          all(c in panel.columns for c in ["baseline_mean", "baseline_sd"]))
+    print("metric_normalization_params.csv:", params.shape,
+          "| methods:", params.final_method.value_counts().to_dict())
+    print("percentile_baselines.csv:", pctbase.shape,
+          "| percentile metrics:", pctbase.metric.nunique() if len(pctbase) else 0)
     if skipped:
         print("\nSKIPPED metrics (%d) - INVESTIGATE:" % len(skipped))
         for m, why in skipped:

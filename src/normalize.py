@@ -141,6 +141,10 @@ def normalize_percentile(df, value_col, year_col="year",
         baseline_year_span=(win_years[0], win_years[-1]) if win_years else None,
         baseline_mean=float(np.mean(base)) if nb else np.nan,
         baseline_sd=float(np.std(base)) if nb else np.nan,
+        # full sorted baseline vector: the ACTUAL parameter of a midrank percentile
+        # transform (mean/sd do NOT reconstruct it). Persisted for Tier-3 attribution
+        # so raw -> harmonized is exactly reconstructable. Small (9 metrics, low-100s each).
+        baseline_vector=base.tolist(),
     )
 
     out = pd.Series(np.nan, index=df.index)
