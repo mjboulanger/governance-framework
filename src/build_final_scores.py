@@ -49,7 +49,10 @@ def build():
     tags = pd.read_csv(os.path.join(PROC, "metric_missingness_tags.csv")).set_index(
         "metric")["missingness_tag"].to_dict()
     sel = pd.read_csv(os.path.join(PROC, "metric_selection.csv"))
-    csrc = pd.read_csv(os.path.join(PROC, "concept_sources.csv")).drop_duplicates("concept_id")
+    # concept->category from the single source-of-truth (concept_sources.py), not a
+    # regenerable CSV copy: reading the .py directly makes drift structurally impossible.
+    from concept_sources import to_rows
+    csrc = pd.DataFrame(to_rows()).drop_duplicates("concept_id")
     c2cat = csrc.set_index("concept_id")["category"].to_dict()
 
     # included metrics per concept (the penalty universe: all assigned scored metrics)

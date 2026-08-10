@@ -40,3 +40,8 @@ data/processed/_*.txt
 # Step-0 metric inventory: early profiling artifact, read by no pipeline code
 # (superseded by metric_distribution_profile.csv + metric_selection.csv)
 data/processed/step0_metric_inventory.csv
+
+# concept_sources.csv: regenerable review artifact, NOT a pipeline dependency.
+# The scoring pipeline reads concept_sources.py (to_rows()) directly; this CSV is
+# a convenience copy for spreadsheet review. Regenerate: python src/concept_sources.py
+data/processed/concept_sources.csv

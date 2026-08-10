@@ -50,3 +50,18 @@ def to_rows():
                                  category_2=CATS[c["cats"][1]] if len(c["cats"]) > 1 else "",
                                  source_id=src, status=status))
     return rows
+
+if __name__ == "__main__":
+    # Regenerate the review CSV data/processed/concept_sources.csv from this
+    # source-of-truth. The scoring pipeline reads to_rows() directly (no CSV
+    # dependency); this CSV is a gitignored convenience artifact for eyeballing
+    # / spreadsheet review only. Run: python src/concept_sources.py
+    import os, csv
+    rows = to_rows()
+    out = os.path.join(os.path.dirname(__file__), "..", "data", "processed", "concept_sources.csv")
+    out = os.path.normpath(out)
+    with open(out, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
+        w.writeheader()
+        w.writerows(rows)
+    print("wrote", out, "(%d rows)" % len(rows))
