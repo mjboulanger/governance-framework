@@ -1,0 +1,111 @@
+concept_id,concept_name,category,multi_placed,category_2,source_id,status
+1,Political settlement,Political foundations,False,,VDEM,built
+1,Political settlement,Political foundations,False,,FSI,built
+1,Political settlement,Political foundations,False,,DPI,built
+2,Political stability and regime durability,Political foundations,False,,WGI,built
+2,Political stability and regime durability,Political foundations,False,,VDEM,built
+2,Political stability and regime durability,Political foundations,False,,POWELL_THYNE,built
+2,Political stability and regime durability,Political foundations,False,,UCDP,built
+2,Political stability and regime durability,Political foundations,False,,GPI,built
+2,Political stability and regime durability,Political foundations,False,,WJP,built
+2,Political stability and regime durability,Political foundations,False,,ACLED,outstanding
+3,Statistical and informational infrastructure,State capacity,True,Accountability,IMF_SPI,built
+3,Statistical and informational infrastructure,State capacity,True,Accountability,ODIN,built
+3,Statistical and informational infrastructure,State capacity,True,Accountability,IMF_SPI_SDDS,closed
+4,Government effectiveness and administrative quality,State capacity,False,,WGI,built
+4,Government effectiveness and administrative quality,State capacity,False,,VDEM,built
+5,Service delivery and provision of public goods,State capacity,False,,WDI,built
+5,Service delivery and provision of public goods,State capacity,False,,WB_HCI,built
+5,Service delivery and provision of public goods,State capacity,False,,FSI,built
+5,Service delivery and provision of public goods,State capacity,False,,WHO_GHO,closed
+5,Service delivery and provision of public goods,State capacity,False,,UNESCO_UIS,closed
+5,Service delivery and provision of public goods,State capacity,False,,UNDP_HDI,closed
+6,Regulatory quality,Economic and fiscal governance,True,State capacity,WGI,built
+6,Regulatory quality,Economic and fiscal governance,True,State capacity,WJP,built
+6,Regulatory quality,Economic and fiscal governance,True,State capacity,FRASER_REG,built
+7,Public financial management,Economic and fiscal governance,False,,PEFA,built
+7,Public financial management,Economic and fiscal governance,False,,OBS,built
+8,Macroeconomic and financial policy framework,Economic and fiscal governance,False,,ROMELLI_CBI,built
+8,Macroeconomic and financial policy framework,Economic and fiscal governance,False,,IMF_FISCAL_RULES,built
+8,Macroeconomic and financial policy framework,Economic and fiscal governance,False,,IMF_AREAER,built
+8,Macroeconomic and financial policy framework,Economic and fiscal governance,False,,CHINN_ITO,built
+8,Macroeconomic and financial policy framework,Economic and fiscal governance,False,,IMF_IMAPP,built
+8,Macroeconomic and financial policy framework,Economic and fiscal governance,False,,IMF_AREAER_ERREGIME,built
+8,Macroeconomic and financial policy framework,Economic and fiscal governance,False,,DINCER_CB,closed
+8,Macroeconomic and financial policy framework,Economic and fiscal governance,False,,REINHART_ROGOFF,closed
+9,Financial sector regulatory and supervisory quality,Economic and fiscal governance,False,,FATF,built
+9,Financial sector regulatory and supervisory quality,Economic and fiscal governance,False,,WB_BRSS,built
+9,Financial sector regulatory and supervisory quality,Economic and fiscal governance,False,,FSAP,outstanding
+9,Financial sector regulatory and supervisory quality,Economic and fiscal governance,False,,BASEL_AML,outstanding
+10,State control over the economy,Economic and fiscal governance,False,,VDEM,built
+11,Trade governance,Economic and fiscal governance,False,,WB_LPI,built
+11,Trade governance,Economic and fiscal governance,False,,OECD_TFI,built
+11,Trade governance,Economic and fiscal governance,False,,WDI,built
+11,Trade governance,Economic and fiscal governance,False,,HERITAGE_TR,built
+11,Trade governance,Economic and fiscal governance,False,,WTO_TFA,closed
+11,Trade governance,Economic and fiscal governance,False,,KOF_TRADE,closed
+11,Trade governance,Economic and fiscal governance,False,,UNCTAD_NTM,closed
+12,Environmental and climate governance,Economic and fiscal governance,False,,YALE_EPI,built
+12,Environmental and climate governance,Economic and fiscal governance,False,,CLIMATE_LAWS,built
+12,Environmental and climate governance,Economic and fiscal governance,False,,IRENA_CAPACITY,built
+12,Environmental and climate governance,Economic and fiscal governance,False,,WB_CARBON,built
+12,Environmental and climate governance,Economic and fiscal governance,False,,ASCOR,built
+12,Environmental and climate governance,Economic and fiscal governance,False,,ND_GAIN,closed
+12,Environmental and climate governance,Economic and fiscal governance,False,,IRENA_POLICY,closed
+13,State capacity (structural core),State capacity,False,,VDEM,built
+13,State capacity (structural core),State capacity,False,,FSI,built
+13,State capacity (structural core),State capacity,False,,WB_INFORMAL,built
+13,State capacity (structural core),State capacity,False,,HANSON_SIGMAN,built
+13,State capacity (structural core),State capacity,False,,ILO_SOCIAL,outstanding
+14,Legal quality and predictability,Rule of law,False,,VDEM,built
+14,Legal quality and predictability,Rule of law,False,,WJP,built
+14,Legal quality and predictability,Rule of law,False,,CCP,built
+15,Judicial independence and quality,Rule of law,True,Accountability,VDEM,built
+15,Judicial independence and quality,Rule of law,True,Accountability,WJP,built
+15,Judicial independence and quality,Rule of law,True,Accountability,LINZER_STATON,closed
+16,Personal security and order,Rule of law,False,,UNODC_HOMICIDE,built
+16,Personal security and order,Rule of law,False,,VDEM,built
+16,Personal security and order,Rule of law,False,,PTS,built
+16,Personal security and order,Rule of law,False,,WJP,built
+16,Personal security and order,Rule of law,False,,GPI,built
+17,Property rights and contract enforcement,Rule of law,False,,VDEM,built
+17,Property rights and contract enforcement,Rule of law,False,,WJP,built
+17,Property rights and contract enforcement,Rule of law,False,,FRASER_LEGAL,built
+17,Property rights and contract enforcement,Rule of law,False,,WDI,built
+17,Property rights and contract enforcement,Rule of law,False,,HERITAGE_PR,closed
+18,Control of corruption,Rule of law,False,,VDEM,built
+18,Control of corruption,Rule of law,False,,TI_CPI,built
+18,Control of corruption,Rule of law,False,,WJP,built
+18,Control of corruption,Rule of law,False,,BCI,built
+19,Legislative and constitutional checks,Accountability,True,Rule of law,VDEM,built
+19,Legislative and constitutional checks,Accountability,True,Rule of law,CCP,built
+19,Legislative and constitutional checks,Accountability,True,Rule of law,POLITY5,built
+19,Legislative and constitutional checks,Accountability,True,Rule of law,IPU_PARLINE,closed
+20,Electoral process and competition,Accountability,False,,VDEM,built
+20,Electoral process and competition,Accountability,False,,FH_FIW,built
+20,Electoral process and competition,Accountability,False,,PEI,built
+20,Electoral process and competition,Accountability,False,,NELDA,built
+20,Electoral process and competition,Accountability,False,,IDEA_EMB,closed
+21,Political participation beyond voting,Accountability,False,,VDEM,built
+21,Political participation beyond voting,Accountability,False,,CIVICUS,built
+21,Political participation beyond voting,Accountability,False,,IDEA_PARTIP,built
+22,Civil liberties,Accountability,False,,FH_FIW,built
+22,Civil liberties,Accountability,False,,VDEM,built
+22,Civil liberties,Accountability,False,,PEW_GRI,built
+22,Civil liberties,Accountability,False,,PTS,built
+22,Civil liberties,Accountability,False,,WB_WBL,built
+23,Media freedom and pluralism,Accountability,False,,VDEM,built
+23,Media freedom and pluralism,Accountability,False,,FH_FIW,built
+23,Media freedom and pluralism,Accountability,False,,RTI_RATING,built
+23,Media freedom and pluralism,Accountability,False,,CPJ,built
+23,Media freedom and pluralism,Accountability,False,,RSF_WPFI,closed
+24,Civil society space and vitality,Accountability,False,,VDEM,built
+24,Civil society space and vitality,Accountability,False,,CIVICUS,built
+24,Civil society space and vitality,Accountability,False,,FH_FIW,built
+24,Civil society space and vitality,Accountability,False,,ICNL,closed
+25,Government transparency and openness,Accountability,False,,VDEM,built
+25,Government transparency and openness,Accountability,False,,WJP,built
+25,Government transparency and openness,Accountability,False,,RTI_RATING,built
+25,Government transparency and openness,Accountability,False,,OBS,built
+25,Government transparency and openness,Accountability,False,,TI_POLFINANCE,built
+25,Government transparency and openness,Accountability,False,,GLOBAL_DATA_BAROMETER,closed
