@@ -166,7 +166,7 @@ D = [
  dict(m="wb_carbon_price_usd",      s="WB_CARBON", d="+", at=[(12,"P1")], note="zero-fill to spine"),
  dict(m="wb_carbon_coverage_pct",   s="WB_CARBON", d="+", at=[(12,"P2")], note="already a percentage; no denominator needed"),
  dict(m="wb_carbon_revenue_pct_gdp",s="WB_CARBON", d="+", at=[(12,"P2")],
-      derive="revenue_usd_m * 1e6 / (wdi_gdp_per_capita_usd * wdi_population_total)",
+      derive="wb_carbon_revenue_usd_m * 1e6 / (wdi_gdp_per_capita_usd * wdi_population_total) * 100  (percent of GDP; built in derive_wb_carbon_revenue_pct_gdp)",
       note="denominator is CURRENT US$ (NY.GDP.PCAP.CD) - nominal over nominal"),
  dict(m="wb_carbon_revenue_usd_m",  s="WB_CARBON", d="", at=[], why="component of wb_carbon_revenue_pct_gdp"),
 ]
@@ -360,18 +360,18 @@ _WDI_NEG = {"wdi_maternal_mortality", "wdi_mortality_under5", "wdi_pupil_teacher
 
 D += [
  dict(m="wdi_health_index", s="WDI", d="+", at=[(5, "P1")],
-      derive="mean of z-normalized " + ", ".join(_WDI_HEALTH) +
+      derive="mean of winsorized-z (trailing-20yr pooled baseline, S5 engine) " + ", ".join(_WDI_HEALTH) +
              " (maternal_mortality and mortality_under5 sign-flipped)",
       note="9 components; equal-weighting these raw would give health 41% of C5"),
  dict(m="wdi_education_index", s="WDI", d="+", at=[(5, "P1")],
-      derive="mean of z-normalized " + ", ".join(_WDI_EDU) +
+      derive="mean of winsorized-z (trailing-20yr pooled baseline, S5 engine) " + ", ".join(_WDI_EDU) +
              " (pupil_teacher_ratio_secondary sign-flipped)",
       note="pupil_teacher_ratio_PRIMARY excluded separately: 0.0% current coverage"),
  dict(m="wdi_infrastructure_index", s="WDI", d="+", at=[(5, "P1")],
-      derive="mean of z-normalized " + ", ".join(_WDI_INFRA),
+      derive="mean of winsorized-z (trailing-20yr pooled baseline, S5 engine) " + ", ".join(_WDI_INFRA),
       note="ceiling-piled at ~100%; S5 keeps these on z-score, NOT percentile - the pile is informative and z preserves distance-from-universal"),
  dict(m="wdi_social_protection_index", s="WDI", d="+", at=[(5, "P1")],
-      derive="mean of z-normalized " + ", ".join(_WDI_SOCP),
+      derive="mean of winsorized-z (trailing-20yr pooled baseline, S5 engine) " + ", ".join(_WDI_SOCP),
       note="thinnest sub-composite: components at 61-68% coverage, all irregular cadence"),
 
  # ---- C11 trade ----

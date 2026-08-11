@@ -111,7 +111,7 @@ pt_autocoup,POWELL_THYNE,,,,,,False,too rare to discriminate
 wb_carbon_pricing_exists,WB_CARBON,+,,zero-fill to spine; absence is INFERRED non-existence (docs) - out-of-scope/subnational instruments possible,12,P1,True,
 wb_carbon_price_usd,WB_CARBON,+,,zero-fill to spine,12,P1,True,
 wb_carbon_coverage_pct,WB_CARBON,+,,already a percentage; no denominator needed,12,P2,True,
-wb_carbon_revenue_pct_gdp,WB_CARBON,+,revenue_usd_m * 1e6 / (wdi_gdp_per_capita_usd * wdi_population_total),denominator is CURRENT US$ (NY.GDP.PCAP.CD) - nominal over nominal,12,P2,True,
+wb_carbon_revenue_pct_gdp,WB_CARBON,+,wb_carbon_revenue_usd_m * 1e6 / (wdi_gdp_per_capita_usd * wdi_population_total) * 100  (percent of GDP; built in derive_wb_carbon_revenue_pct_gdp),denominator is CURRENT US$ (NY.GDP.PCAP.CD) - nominal over nominal,12,P2,True,
 wb_carbon_revenue_usd_m,WB_CARBON,,,,,,False,component of wb_carbon_revenue_pct_gdp
 v2pepwrses,VDEM,+,,,1,P1,True,
 v2pepwrsoc,VDEM,+,,,1,P1,True,
@@ -195,10 +195,10 @@ wjp_f6_regulatory_enforcement,WJP,+,,"C4 disambiguation resolved: P1 in C6 (tigh
 wjp_f6_5_no_expropriation,WJP,+,,sub-component pulled specifically for C17; full Factor 6 stays in C6,17,P1,True,
 wjp_f7_civil_justice,WJP,+,,,15,P1,True,
 wjp_f8_criminal_justice,WJP,+,,,15,P1,True,
-wdi_health_index,WDI,+,"mean of z-normalized wdi_immunization_dpt, wdi_immunization_measles, wdi_life_expectancy, wdi_uhc_coverage_index, wdi_hospital_beds_per_1000, wdi_nurses_per_1000, wdi_physicians_per_1000, wdi_maternal_mortality, wdi_mortality_under5 (maternal_mortality and mortality_under5 sign-flipped)",9 components; equal-weighting these raw would give health 41% of C5,5,P1,True,
-wdi_education_index,WDI,+,"mean of z-normalized wdi_primary_completion_rate, wdi_primary_enrollment_gross, wdi_secondary_enrollment_gross, wdi_pupil_teacher_ratio_secondary (pupil_teacher_ratio_secondary sign-flipped)",pupil_teacher_ratio_PRIMARY excluded separately: 0.0% current coverage,5,P1,True,
-wdi_infrastructure_index,WDI,+,"mean of z-normalized wdi_basic_water_access, wdi_basic_sanitation_access, wdi_electricity_access","ceiling-piled at ~100%; S5 keeps these on z-score, NOT percentile - the pile is informative and z preserves distance-from-universal",5,P1,True,
-wdi_social_protection_index,WDI,+,"mean of z-normalized wdi_safety_net_coverage, wdi_social_insurance_coverage, wdi_social_protection_coverage","thinnest sub-composite: components at 61-68% coverage, all irregular cadence",5,P1,True,
+wdi_health_index,WDI,+,"mean of winsorized-z (trailing-20yr pooled baseline, S5 engine) wdi_immunization_dpt, wdi_immunization_measles, wdi_life_expectancy, wdi_uhc_coverage_index, wdi_hospital_beds_per_1000, wdi_nurses_per_1000, wdi_physicians_per_1000, wdi_maternal_mortality, wdi_mortality_under5 (maternal_mortality and mortality_under5 sign-flipped)",9 components; equal-weighting these raw would give health 41% of C5,5,P1,True,
+wdi_education_index,WDI,+,"mean of winsorized-z (trailing-20yr pooled baseline, S5 engine) wdi_primary_completion_rate, wdi_primary_enrollment_gross, wdi_secondary_enrollment_gross, wdi_pupil_teacher_ratio_secondary (pupil_teacher_ratio_secondary sign-flipped)",pupil_teacher_ratio_PRIMARY excluded separately: 0.0% current coverage,5,P1,True,
+wdi_infrastructure_index,WDI,+,"mean of winsorized-z (trailing-20yr pooled baseline, S5 engine) wdi_basic_water_access, wdi_basic_sanitation_access, wdi_electricity_access","ceiling-piled at ~100%; S5 keeps these on z-score, NOT percentile - the pile is informative and z preserves distance-from-universal",5,P1,True,
+wdi_social_protection_index,WDI,+,"mean of winsorized-z (trailing-20yr pooled baseline, S5 engine) wdi_safety_net_coverage, wdi_social_insurance_coverage, wdi_social_protection_coverage","thinnest sub-composite: components at 61-68% coverage, all irregular cadence",5,P1,True,
 wdi_tariff_rate_simple_mean,WDI,-,,"higher tariffs = less open; direction is a D3 item (policy stance vs governance quality, same question as FARI). 84.9% coverage",11,P1,True,
 wdi_tariff_rate_weighted_mean,WDI,,,,,,False,same construct as simple mean; trade-weighting is endogenous to trade patterns (prohibitive tariffs suppress the trade that would weight them)
 wdi_ip_nonresident_per_gdp,WB_WDI,,,,,,False,"DROPPED v1 2026-07-24: per-GDP ratio pathological at small economies (Sao Tome ~6720, ~100x real innovation hubs - small IP count over tiny GDP explodes, measuring economy size not IP-regime quality). C17 well-carried without it (V-Dem x3 + Heritage + Fraser + WJP 6.5). Non-resident-share-of-total-filings is the correct construction if an IP signal is wanted in v2"
