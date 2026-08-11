@@ -339,6 +339,39 @@ def write_report(findings, corr, cats, spine):
     out.append(corr.round(3).to_string())
     out.append("```")
     out.append("")
+    # --- Directionality (#2) ---
+    dfd = fdf[fdf["check"].astype(str).str.startswith("dir_")]
+    if len(dfd):
+        mono = dfd[dfd["check"] == "dir_monotonicity"]
+        corr_d = dfd[dfd["check"] == "dir_correlation"]
+        anch = dfd[dfd["check"] == "dir_anchor"]
+        n_sign_err = int((dfd["status"] == "REVIEW").sum())
+        mono_pass = int((mono["status"] == "PASS").sum())
+        mono_rev = int((mono["status"] == "REVIEW").sum())
+        corr_pass = int((corr_d["status"] == "PASS").sum())
+        corr_rev = int((corr_d["status"] == "REVIEW").sum())
+        anch_pass = int((anch["status"] == "PASS").sum())
+        anch_info = int((anch["status"] == "INFO").sum())
+        anch_skip = int((anch["status"] == "SKIP").sum())
+        verdict = "directionality passes" if n_sign_err == 0 else "REVIEW needed"
+        out.append("## Directionality (#2)")
+        out.append("")
+        out.append("Three layers verify each metric points the right way (higher = better governance). Monotonicity: raw-to-harmonized sign matches the direction tag. Anchor-semantic: high-governance anchors outscore low ones on the metric. Correlation: metric tracks WGI-broad and GDP/capita with the right sign.")
+        out.append("")
+        out.append("- Monotonicity: %d PASS, %d flagged (flip mis-applied)." % (mono_pass, mono_rev))
+        out.append("- Correlation: %d PASS, %d negative-vs-reference." % (corr_pass, corr_rev))
+        out.append("- Anchor-semantic: %d aligned_correct, %d inconclusive-orthogonal, %d sparse-skip." % (anch_pass, anch_info, anch_skip))
+        out.append("")
+        out.append("**Result: %s** (%d sign errors across all metrics)." % (verdict, n_sign_err))
+        out.append("")
+        orth = anch[anch["status"] == "INFO"]["subject"].tolist()
+        dejure = [m for m in orth if m in ("rti_total", "polfin_transparency_integrity", "ccp_information_access")]
+        if orth:
+            out.append("The %d anchor-orthogonal metrics do not separate the whole-governance anchors - expected where a metric measures a dimension not tracked by overall governance (capital-account openness, central-bank independence, coup incidence in non-coup states, religious restriction). Information, not a fault." % len(orth))
+            out.append("")
+        if dejure:
+            out.append("**De jure vs de facto (recorded):** %s measure the strength of a LAW on paper (right-to-information, political-finance disclosure, constitutional provisions). Failed states with strong statutes they cannot honor (e.g. South Sudan high on right-to-information) score well on these - the de-jure/de-facto gap the framework deliberately tracks. Contained by tier-weighting and concept-level triangulation; flagged so a high single-metric rank on a collapsed state is read correctly." % ", ".join(dejure))
+            out.append("")
     out.append("## Inversion scan (eyeball review)")
     out.append("")
     out.append("Top/bottom %d per category and concept (sovereigns). No auto-pass; scan for "

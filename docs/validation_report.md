@@ -80,6 +80,20 @@ Rule of law                              0.828                           0.731  
 State capacity                           0.666                           0.846                  0.762        0.823           1.000
 ```
 
+## Directionality (#2)
+
+Three layers verify each metric points the right way (higher = better governance). Monotonicity: raw-to-harmonized sign matches the direction tag. Anchor-semantic: high-governance anchors outscore low ones on the metric. Correlation: metric tracks WGI-broad and GDP/capita with the right sign.
+
+- Monotonicity: 144 PASS, 0 flagged (flip mis-applied).
+- Correlation: 144 PASS, 0 negative-vs-reference.
+- Anchor-semantic: 103 aligned_correct, 16 inconclusive-orthogonal, 25 sparse-skip.
+
+**Result: directionality passes** (0 sign errors across all metrics).
+
+The 16 anchor-orthogonal metrics do not separate the whole-governance anchors - expected where a metric measures a dimension not tracked by overall governance (capital-account openness, central-bank independence, coup incidence in non-coup states, religious restriction). Information, not a fault.
+
+**De jure vs de facto (recorded):** ccp_information_access, polfin_transparency_integrity, rti_total measure the strength of a LAW on paper (right-to-information, political-finance disclosure, constitutional provisions). Failed states with strong statutes they cannot honor (e.g. South Sudan high on right-to-information) score well on these - the de-jure/de-facto gap the framework deliberately tracks. Contained by tier-weighting and concept-level triangulation; flagged so a high single-metric rank on a collapsed state is read correctly.
+
 ## Inversion scan (eyeball review)
 
 Top/bottom 10 per category and concept (sovereigns). No auto-pass; scan for captured/failed states appearing high, clean states appearing low, or thin-coverage artifacts.
