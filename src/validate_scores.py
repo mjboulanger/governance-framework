@@ -29,6 +29,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
 from config import PROCESSED_DIR
 from concept_sources import CONCEPTS
+from country_harmonization import add_iso3
 
 PROC = PROCESSED_DIR
 DOCS = os.path.join(os.path.dirname(__file__), "..", "docs")
@@ -175,6 +176,112 @@ def check_coherence(fs, cats, findings):
                                  threshold="0.30-0.95", status=status, detail=""))
     return corr
 
+# --- #2 Directionality (three layers, all 144 metrics) [every-update] ---
+
+DIR_ANCHOR_HIGH = ["DNK", "NZL", "NOR", "CHE"]      # SGP excluded: discriminator, not monotone-high
+DIR_ANCHOR_LOW = ["SOM", "YEM", "SSD", "SYR", "VEN"]
+WGI_METRICS = ["wgi_political_stability", "wgi_government_effectiveness", "wgi_regulatory_quality",
+               "wgi_control_of_corruption", "wgi_rule_of_law", "wgi_voice_accountability"]
+ANCHOR_GAP = 0.25
+
+
+def _latest_slice(panel):
+    return panel.sort_values("year").groupby(["iso3", "metric"]).tail(1)
+
+
+def check_monotonicity(panel, findings):
+    """[every-update] Layer 1: was the direction FLIP applied correctly by the CODE?
+    harmonized is already direction-aligned (higher=better). raw vs harmonized:
+    '+' metric -> POSITIVE spearman; '-' metric -> NEGATIVE (flipped). A sign
+    disagreeing with the direction tag = flip mis-applied. Tests code-applied-the-tag;
+    Layer 2 tests the-tag-is-right - kept independent so neither masks the other."""
+    ls = _latest_slice(panel)
+    for metric, g in ls.groupby("metric"):
+        d = g[["raw_value", "harmonized"]].dropna()
+        direction = g["direction"].dropna().iloc[0] if g["direction"].notna().any() else None
+        if len(d) < 5 or d["raw_value"].nunique() < 2 or direction is None:
+            findings.append(dict(check="dir_monotonicity", category=str(direction), subject=metric,
+                                 measure="spearman", value=np.nan, threshold="sign matches direction",
+                                 status="SKIP", detail="n<5 or constant raw or no direction"))
+            continue
+        rho = d["raw_value"].rank().corr(d["harmonized"].rank())  # spearman = pearson on ranks (no scipy)
+        expected_positive = (direction == "+")
+        ok = (rho > 0) if expected_positive else (rho < 0)
+        status = "PASS" if (ok and abs(rho) > 0.1) else "REVIEW"
+        findings.append(dict(check="dir_monotonicity", category=direction, subject=metric,
+                             measure="spearman", value=round(float(rho), 4),
+                             threshold=("+" if expected_positive else "-") + " expected",
+                             status=status, detail="n=%d" % len(d)))
+
+
+def check_anchor_semantic(panel, findings):
+    """[every-update] Layer 2: is the direction TAG itself right? Mean harmonized
+    percentile of high-anchors vs low-anchors per metric. aligned_correct (high well
+    above low) confirms; aligned_WRONG (low above high) = likely sign error;
+    inconclusive = metric orthogonal to overall governance (anchors don't separate) =
+    INFORMATION, not failure."""
+    ls = _latest_slice(panel)
+    for metric, g in ls.groupby("metric"):
+        h = g.set_index("iso3")["harmonized"].dropna()
+        if len(h) < 10:
+            continue
+        pct = h.rank(pct=True)
+        hi = [pct[i] for i in DIR_ANCHOR_HIGH if i in pct.index]
+        lo = [pct[i] for i in DIR_ANCHOR_LOW if i in pct.index]
+        if len(hi) < 2 or len(lo) < 2:
+            findings.append(dict(check="dir_anchor", category="", subject=metric, measure="hi_minus_lo",
+                                 value=np.nan, threshold="|gap|>0.25", status="SKIP",
+                                 detail="anchors sparse (hi=%d lo=%d)" % (len(hi), len(lo))))
+            continue
+        gap = float(np.mean(hi) - np.mean(lo))
+        if gap > ANCHOR_GAP:
+            status, cls = "PASS", "aligned_correct"
+        elif gap < -ANCHOR_GAP:
+            status, cls = "REVIEW", "aligned_WRONG (likely sign error)"
+        else:
+            status, cls = "INFO", "inconclusive_orthogonal"
+        findings.append(dict(check="dir_anchor", category=cls, subject=metric, measure="hi_minus_lo",
+                             value=round(gap, 4), threshold="|gap|>0.25", status=status,
+                             detail="hi_mean=%.2f lo_mean=%.2f (hi=%d lo=%d)" % (
+                                 np.mean(hi), np.mean(lo), len(hi), len(lo))))
+
+
+def check_reference_correlation(panel, sel, findings):
+    """[every-update] Layer 3: does each metric track independent governance/income
+    signal, right sign? Spearman of harmonized vs WGI-broad (mean of 6 WGI pillars; a
+    WGI metric excluded from its OWN test) and vs GDP/capita USD (external). NB Spearman
+    is rank-based, so PPP vs non-PPP GDP is near-irrelevant here. Both refs lean
+    capacity/income, so weak/neg corr on accountability metrics can be EXPECTED - read
+    by concept, not pass/fail. Only clearly-negative (< -0.1) is flagged."""
+    ls = _latest_slice(panel)
+    wg = ls[ls.metric.isin(WGI_METRICS)].pivot_table(index="iso3", columns="metric", values="harmonized")
+    wgi_broad = wg.mean(axis=1)
+    wdi = pd.read_csv(os.path.join(PROC, "wdi_clean.csv"), low_memory=False)
+    wdi = add_iso3(wdi, filename_hint="wdi_clean.csv")
+    gdp = (wdi[wdi.iso3.notna() & wdi.wdi_gdp_per_capita_usd.notna()]
+           .sort_values("year").groupby("iso3").tail(1).set_index("iso3")["wdi_gdp_per_capita_usd"])
+    cat_of = sel.dropna(subset=["concept_id"]).drop_duplicates("metric").set_index("metric")["concept_id"]
+    for metric, g in ls.groupby("metric"):
+        h = g.set_index("iso3")["harmonized"].dropna()
+        if len(h) < 20:
+            continue
+        if metric in WGI_METRICS:
+            others = [m for m in WGI_METRICS if m != metric]
+            ref = ls[ls.metric.isin(others)].pivot_table(index="iso3", columns="metric", values="harmonized").mean(axis=1)
+        else:
+            ref = wgi_broad
+        j = pd.concat([h, ref], axis=1, join="inner").dropna()
+        r_wgi = j.iloc[:, 0].rank().corr(j.iloc[:, 1].rank()) if len(j) >= 20 else np.nan  # spearman via ranks
+        jg = pd.concat([h, gdp], axis=1, join="inner").dropna()
+        r_gdp = jg.iloc[:, 0].rank().corr(jg.iloc[:, 1].rank()) if len(jg) >= 20 else np.nan  # spearman via ranks
+        neg = (pd.notna(r_wgi) and r_wgi < -0.1) or (pd.notna(r_gdp) and r_gdp < -0.1)
+        findings.append(dict(check="dir_correlation", category=str(cat_of.get(metric, "")),
+                             subject=metric, measure="spearman_wgi/gdp",
+                             value=round(float(r_wgi), 3) if pd.notna(r_wgi) else np.nan,
+                             threshold=">=-0.1 (neg=flag)", status="REVIEW" if neg else "PASS",
+                             detail="r_wgi=%s r_gdp=%s n=%d" % (
+                                 ("%.3f" % r_wgi) if pd.notna(r_wgi) else "na",
+                                 ("%.3f" % r_gdp) if pd.notna(r_gdp) else "na", len(h))))
 
 def _md_table(df, cols):
     lines = ["| " + " | ".join(cols) + " |", "|" + "|".join(["---"] * len(cols)) + "|"]
@@ -254,11 +361,16 @@ def write_report(findings, corr, cats, spine):
 
 def build():
     fs, cats, cs, concept_name, spine = _load()
+    panel = pd.read_csv(os.path.join(PROC, "normalized_panel.csv"))
+    sel = pd.read_csv(os.path.join(PROC, "metric_selection.csv"))
     findings = []
     check_anchors(fs, cats, findings)
     check_singapore_discrimination(fs, cats, findings)
     check_inversions(fs, cats, cs, concept_name, findings)
     corr = check_coherence(fs, cats, findings)
+    check_monotonicity(panel, findings)
+    check_anchor_semantic(panel, findings)
+    check_reference_correlation(panel, sel, findings)
     fdf = write_report(findings, corr, cats, spine)
     return fdf, corr
 

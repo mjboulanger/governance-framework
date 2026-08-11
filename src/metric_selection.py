@@ -155,8 +155,8 @@ D = [
 
  # ---- Powell-Thyne: rare events, needs a trailing window ----
  dict(m="pt_coup_successful", s="POWELL_THYNE", d="-", at=[(2,"P1"),(1,"Sp")],
-      derive="10-year trailing window count", note="window length is a Step-4 parameter; 27 successful coups in last 5 yrs"),
- dict(m="pt_coup_failed",     s="POWELL_THYNE", d="-", at=[(2,"P1")], derive="10-year trailing window count"),
+      derive="10-year trailing window count", note="Built in derive_metrics.derive_pt_coups (trailing 10yr sum per country-year; Mali 2024 window=4). Window length is a Step-4 parameter. Previously entered as raw per-year counts (unbuilt), which made the latest single year ~0 for everyone - no signal; the window is what discriminates coup-proneness"),
+ dict(m="pt_coup_failed",     s="POWELL_THYNE", d="-", at=[(2,"P1")], derive="10-year trailing window count", note="Built in derive_metrics.derive_pt_coups alongside successful coups"),
  dict(m="pt_coup_alleged",    s="POWELL_THYNE", d="",  at=[], why="weaker evidence than realised events"),
  dict(m="pt_autocoup",        s="POWELL_THYNE", d="",  at=[], why="too rare to discriminate"),
 
@@ -530,8 +530,8 @@ PENDING += [
 # =====================================================================
 D += [
  dict(m="ucdp_sb_intrastate_deaths_best", s="UCDP", d="-", at=[(2, "P1")],
-      derive="per-capita (/ wdi_population_total), log1p",
-      note="civil-war/insurgency battle deaths - the observed-fatality leg of C2. Zero-filled census, 41 nonzero of 196 in 2024"),
+      derive="log1p(deaths per 100k population): deaths / wdi_population_total * 100000, then log1p",
+      note="civil-war/insurgency battle deaths - the observed-fatality leg of C2. Built in derive_metrics.derive_ucdp_percapita. Spec corrected from literal per-capita+log1p, which was a no-op (log1p of a ~1e-4 fraction is ~1e-4); per-100k puts the rate on an O(1-100) scale where log1p meaningfully compresses the heavy tail (Syria 2024 = 8.9/100k -> 2.29). Census zero-fill for absent countries, capped at real data year. 41 nonzero of 196 in 2024"),
 
  # interstate: external aggression, wrong construct for a political-STABILITY concept
  dict(m="ucdp_sb_interstate_deaths_best", s="UCDP", d="", at=[],

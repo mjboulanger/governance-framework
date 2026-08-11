@@ -6,8 +6,8 @@ ccp_civil_rights_provisions,percentile,rule,+,False,,15.515590809628009,33.39862
 ccp_information_access,percentile,rule,+,False,,4.772702407002188,17.028632372769422,3656,2004-2023,,identity (already 0-1)
 civicus_score,zscore,rule,+,False,identity,51.040000000000006,25.920666589977923,657,2022-2025,3.0,"(clip(z,+/-3)+3)/6"
 climate_laws_cumulative,percentile,reviewed,+,False,,14.291549295774647,18.5393876846499,4260,2007-2026,,identity (already 0-1)
-cpj_imprisoned,log1p_zscore,reviewed,-,True,log1p,1.2940045538993648,1.1287679303326381,49,2026-2026,3.0,"(clip(z,+/-3)+3)/6"
-cpj_murders_unsolved,percentile,rule,-,True,,1.9591836734693877,5.283625779181122,49,2026-2026,,identity (already 0-1)
+cpj_imprisoned,percentile,reviewed,-,True,,0.07253521126760563,1.2817412799992294,4260,2007-2026,,identity (already 0-1)
+cpj_murders_unsolved,percentile,rule,-,True,,0.022535211267605635,0.6039456765434833,4260,2007-2026,,identity (already 0-1)
 epi_agr,zscore,rule,+,False,identity,45.51525423728813,17.635877468612264,354,2022-2024,3.0,"(clip(z,+/-3)+3)/6"
 epi_bdh,zscore,rule,+,False,identity,51.13389830508475,21.07668760762545,354,2022-2024,3.0,"(clip(z,+/-3)+3)/6"
 epi_cch,zscore,rule,+,False,identity,41.66271186440677,14.156770335006069,354,2022-2024,3.0,"(clip(z,+/-3)+3)/6"
@@ -52,15 +52,15 @@ pei_electoral_integrity_index,zscore,rule,+,False,identity,55.06659441944418,17.
 pew_gov_restrictions_index,zscore,rule,-,True,identity,3.1110370967741936,2.1713147712205627,3100,2007-2022,3.0,"(clip(z,+/-3)+3)/6"
 pew_social_hostilities_index,zscore,rule,-,True,identity,2.3395824935483875,2.3095793214549554,3100,2007-2022,3.0,"(clip(z,+/-3)+3)/6"
 polfin_transparency_integrity,zscore,rule,+,False,identity,0.6056405080987124,0.2688773776351219,175,2026-2026,3.0,"(clip(z,+/-3)+3)/6"
-pt_coup_failed,percentile,rule,-,True,,0.0013051422605063951,0.04845154974395919,3831,2006-2025,,identity (already 0-1)
-pt_coup_successful,percentile,rule,-,True,,0.01957713390759593,0.18387893586061355,3831,2006-2025,,identity (already 0-1)
+pt_coup_failed,percentile,rule,-,True,,0.009624413145539907,0.11729081775578139,4260,2006-2025,,identity (already 0-1)
+pt_coup_successful,percentile,rule,-,True,,0.17582159624413146,0.6719234573158975,4260,2006-2025,,identity (already 0-1)
 pts_index,zscore,reviewed,-,True,identity,2.3623092528887715,1.1237189313205063,3779,2005-2024,3.0,"(clip(z,+/-3)+3)/6"
 romelli_cbi_index,zscore,rule,+,False,identity,0.6775674287607687,0.1583110043495401,3018,2004-2023,3.0,"(clip(z,+/-3)+3)/6"
 rti_total,zscore,reviewed,+,False,identity,65.60834953955381,39.528016585173155,191,2026-2026,3.0,"(clip(z,+/-3)+3)/6"
 spi_overall,zscore,rule,+,False,identity,65.57001402743143,17.194601352958067,1604,2016-2024,3.0,"(clip(z,+/-3)+3)/6"
 tfi_avg,zscore,rule,+,False,identity,1.1623258196721309,0.44666997662913177,488,2017-2022,3.0,"(clip(z,+/-3)+3)/6"
 ti_cpi_score,zscore,rule,+,False,identity,43.34646017699115,19.068619935137285,2260,2012-2024,3.0,"(clip(z,+/-3)+3)/6"
-ucdp_sb_intrastate_deaths_best,log1p_zscore,rule,-,True,log1p,1.004610829700391,2.2329017163865506,3810,2005-2024,3.0,"(clip(z,+/-3)+3)/6"
+ucdp_sb_intrastate_deaths_best,percentile,reviewed,-,True,,0.1399987886697934,0.5476257546382692,4260,2005-2024,,identity (already 0-1)
 unodc_homicide_rate,percentile,rule,-,True,,7.92338689064163,12.11106928185976,2503,2005-2024,,identity (already 0-1)
 v2clacjstw,zscore,rule,+,False,identity,0.8869470351180195,1.2685585669271917,3474,2006-2025,3.0,"(clip(z,+/-3)+3)/6"
 v2cldmovem,zscore,rule,+,False,identity,1.2521407599309153,0.8861705947610266,3474,2006-2025,3.0,"(clip(z,+/-3)+3)/6"
@@ -120,7 +120,7 @@ v2xlg_legcon,zscore,rule,+,False,identity,0.5899733796296296,0.29764701158304757
 vdem_regime_duration,zscore,rule,+,False,identity,16.782532751091704,9.665234325922093,3435,2006-2025,3.0,"(clip(z,+/-3)+3)/6"
 wb_carbon_coverage_pct,zscore,rule,+,False,identity,44.09371146732429,14.495752935925323,811,2006-2025,3.0,"(clip(z,+/-3)+3)/6"
 wb_carbon_price_usd,zscore,rule,+,False,identity,28.72453257020182,28.089101157963253,768,2006-2025,3.0,"(clip(z,+/-3)+3)/6"
-wb_carbon_pricing_exists,binary,rule,+,False,,,,7881,,,identity (already 0-1)
+wb_carbon_pricing_exists,binary,rule,+,False,,,,7668,,,identity (already 0-1)
 wb_carbon_revenue_pct_gdp,log1p_zscore,reviewed,+,False,log1p,0.11614693811563229,0.139056382573353,431,2005-2024,3.0,"(clip(z,+/-3)+3)/6"
 wbl_enforcement_perceptions,zscore,rule,+,False,identity,53.34539772727273,16.430391181809018,176,2025-2025,3.0,"(clip(z,+/-3)+3)/6"
 wbl_legal_framework,zscore,rule,+,False,identity,66.99106382978725,18.403640884467304,188,2025-2025,3.0,"(clip(z,+/-3)+3)/6"

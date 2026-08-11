@@ -1,92 +1,92 @@
 metric,source_id,direction,derive,note,concept_id,tier,include,exclude_reason
-wgi_political_stability,WGI,+,,,2.0,P1,True,
-wgi_government_effectiveness,WGI,+,,,4.0,P1,True,
-wgi_regulatory_quality,WGI,+,,,6.0,P1,True,
+wgi_political_stability,WGI,+,,,2,P1,True,
+wgi_government_effectiveness,WGI,+,,,4,P1,True,
+wgi_regulatory_quality,WGI,+,,,6,P1,True,
 wgi_control_of_corruption,WGI,,,,,,False,category cross-check (Rule of Law roll-up); aggregator sharing sources with CPI
 wgi_rule_of_law,WGI,,,,,,False,category cross-check (Rule of Law roll-up)
 wgi_voice_accountability,WGI,,,,,,False,category cross-check (Accountability roll-up)
-ti_cpi_score,TI_CPI,+,,,18.0,P1,True,
-unodc_homicide_rate,UNODC_HOMICIDE,-,,,16.0,P1,True,
-pei_electoral_integrity_index,PEI,+,,,20.0,P1,True,
-nelda_concerns_not_free_fair,NELDA,-,,"NELDA11: pre-election concerns elections wont be free/fair (1=concern=BAD, d=-). Event-level (election years only, ~24.5pct of country-years), one obs per country-year. NELDA EXCLUDES ~21 consolidated democracies by design, so absence = established-democracy (implicitly clean), a coverage bias to note at scaling. Supplementary: C20 has 10 P1 metrics; NELDA triangulates. Raw 99 (unclear) -> NaN in pipeline",20.0,Sp,True,
-nelda_media_bias_incumbent,NELDA,-,,"NELDA16: media bias favoring incumbent (1=bias=BAD, d=-). Sharpest NELDA separator (clean 0.019 vs rigged 0.741). Same event-level/coverage caveats as nelda_concerns_not_free_fair",20.0,Sp,True,
-nelda_riots_protests_after,NELDA,-,,"NELDA: riots/protests after election with vote-fraud allegations (1=occurred=BAD, d=-). Same event-level/coverage caveats",20.0,Sp,True,
-nelda_violence_deaths_before,NELDA,-,,"NELDA33: significant violence w/ civilian deaths before/during election (1=occurred=BAD, d=-). Same event-level/coverage caveats",20.0,Sp,True,
-nelda_opposition_allowed,NELDA,+,,"NELDA: was opposition allowed (1=allowed=GOOD, d=+). Lower coverage (n=1130) as it is only coded where relevant. Same event-level/coverage caveats",20.0,Sp,True,
+ti_cpi_score,TI_CPI,+,,,18,P1,True,
+unodc_homicide_rate,UNODC_HOMICIDE,-,,,16,P1,True,
+pei_electoral_integrity_index,PEI,+,,,20,P1,True,
+nelda_concerns_not_free_fair,NELDA,-,,"NELDA11: pre-election concerns elections wont be free/fair (1=concern=BAD, d=-). Event-level (election years only, ~24.5pct of country-years), one obs per country-year. NELDA EXCLUDES ~21 consolidated democracies by design, so absence = established-democracy (implicitly clean), a coverage bias to note at scaling. Supplementary: C20 has 10 P1 metrics; NELDA triangulates. Raw 99 (unclear) -> NaN in pipeline",20,Sp,True,
+nelda_media_bias_incumbent,NELDA,-,,"NELDA16: media bias favoring incumbent (1=bias=BAD, d=-). Sharpest NELDA separator (clean 0.019 vs rigged 0.741). Same event-level/coverage caveats as nelda_concerns_not_free_fair",20,Sp,True,
+nelda_riots_protests_after,NELDA,-,,"NELDA: riots/protests after election with vote-fraud allegations (1=occurred=BAD, d=-). Same event-level/coverage caveats",20,Sp,True,
+nelda_violence_deaths_before,NELDA,-,,"NELDA33: significant violence w/ civilian deaths before/during election (1=occurred=BAD, d=-). Same event-level/coverage caveats",20,Sp,True,
+nelda_opposition_allowed,NELDA,+,,"NELDA: was opposition allowed (1=allowed=GOOD, d=+). Lower coverage (n=1130) as it is only coded where relevant. Same event-level/coverage caveats",20,Sp,True,
 nelda_mtop_low_signal,NELDA,,,,,,False,"EXCLUDED: near-zero discrimination between clean democracies (1.000) and rigged autocracies (0.964) - carries almost no signal for electoral quality. Renamed from the misleading nelda_meaningful_opposition; kept in qog_clean.csv as documented-low-signal, not scored"
 nelda_election_held,NELDA,,,,,,False,"EXCLUDED: election-TYPE descriptor (values 1-5), not a quality measure - type-not-quality principle. Same for nelda_executive_election / nelda_legislative_election"
-wdi_lpi_overall,WB_LPI,+,,,11.0,P1,True,
-tfi_avg,OECD_TFI,+,,,11.0,P1,True,
-fraser_trade_freedom,HERITAGE_TR,+,,Fraser Area 4; supersedes Heritage Trade Freedom,11.0,P1,True,
-fraser_regulation,FRASER_REG,+,,,6.0,P2,True,
-fraser_legal_system,FRASER_LEGAL,+,,,17.0,P2,True,
-wdi_hci_plus_overall,WB_HCI,+,,,5.0,P2,True,
+wdi_lpi_overall,WB_LPI,+,,,11,P1,True,
+tfi_avg,OECD_TFI,+,,,11,P1,True,
+fraser_trade_freedom,HERITAGE_TR,+,,Fraser Area 4; supersedes Heritage Trade Freedom,11,P1,True,
+fraser_regulation,FRASER_REG,+,,,6,P2,True,
+fraser_legal_system,FRASER_LEGAL,+,,,17,P2,True,
+wdi_hci_plus_overall,WB_HCI,+,,,5,P2,True,
 hanson_sigman_state_capacity,HANSON_SIGMAN,,,,,,False,RECENCY FAIL: 0.0% current sovereign coverage (series ends 2015); named as a dead tail in metric_methodology S4
-irena_renewables_share_pct,IRENA_CAPACITY,+,,,12.0,P1,True,
-bci_corruption_index,BCI,-,,"direction verified: Finland -3.5 low, Guinea-Bissau 78.9 high",18.0,P2,True,
-gpi_peace_index,GPI,-,,,2.0,P2,True,
-gpi_peace_index,GPI,-,,,16.0,P2,True,
-obs_open_budget_index,OBS,+,,,8.0,P1,True,
-obs_open_budget_index,OBS,+,,,25.0,P2,True,
-pefa_core_management,PEFA,+,,"PEFA composite (folded into C8 with PFM). Mean of Pillar I (budget reliability, PI-01..03) and Pillar V (predictability/control in execution, PI-19..25) pillar-means - the frontline how-well-is-money-managed core. P1: central to PFM quality. CROSS-SECTIONAL, one 2016-framework assessment per country, vintage varies 2017-2026 (not a panel). 82 countries, donor-skewed developing-heavy coverage - reference-class caveat at scaling",8.0,P1,True,
-pefa_accountability,PEFA,+,,"PEFA composite. Mean of Pillar VI (accounting/reporting, PI-26..28) and Pillar VII (external scrutiny/audit, PI-29..31) pillar-means - the back-end books-and-audit accountability layer. P2 (below core management): more hygiene than frontline quality. VII/scrutiny OVERLAPS C19 legislative oversight - flagged for Step-4 correlation-aware weighting. Same cross-sectional/vintage-varies/coverage caveats as pefa_core_management",8.0,P2,True,
-polfin_transparency_integrity,TI_POLFINANCE,+,,master flags possible C18 cross-reference,25.0,P2,True,
-pew_gov_restrictions_index,PEW_GRI,-,,"direction verified: NZ 0.35 low, China 9.09 high",22.0,P2,True,
-pew_social_hostilities_index,PEW_GRI,-,,,22.0,P2,True,
-wbl_legal_framework,WB_WBL,+,,,22.0,P2,True,
-wbl_supportive_framework,WB_WBL,+,,,22.0,P2,True,
-wbl_enforcement_perceptions,WB_WBL,+,,,22.0,P2,True,
-romelli_cbi_index,ROMELLI_CBI,+,,,8.0,P1,True,
+irena_renewables_share_pct,IRENA_CAPACITY,+,,,12,P1,True,
+bci_corruption_index,BCI,-,,"direction verified: Finland -3.5 low, Guinea-Bissau 78.9 high",18,P2,True,
+gpi_peace_index,GPI,-,,,2,P2,True,
+gpi_peace_index,GPI,-,,,16,P2,True,
+obs_open_budget_index,OBS,+,,,8,P1,True,
+obs_open_budget_index,OBS,+,,,25,P2,True,
+pefa_core_management,PEFA,+,,"PEFA composite (folded into C8 with PFM). Mean of Pillar I (budget reliability, PI-01..03) and Pillar V (predictability/control in execution, PI-19..25) pillar-means - the frontline how-well-is-money-managed core. P1: central to PFM quality. CROSS-SECTIONAL, one 2016-framework assessment per country, vintage varies 2017-2026 (not a panel). 82 countries, donor-skewed developing-heavy coverage - reference-class caveat at scaling",8,P1,True,
+pefa_accountability,PEFA,+,,"PEFA composite. Mean of Pillar VI (accounting/reporting, PI-26..28) and Pillar VII (external scrutiny/audit, PI-29..31) pillar-means - the back-end books-and-audit accountability layer. P2 (below core management): more hygiene than frontline quality. VII/scrutiny OVERLAPS C19 legislative oversight - flagged for Step-4 correlation-aware weighting. Same cross-sectional/vintage-varies/coverage caveats as pefa_core_management",8,P2,True,
+polfin_transparency_integrity,TI_POLFINANCE,+,,master flags possible C18 cross-reference,25,P2,True,
+pew_gov_restrictions_index,PEW_GRI,-,,"direction verified: NZ 0.35 low, China 9.09 high",22,P2,True,
+pew_social_hostilities_index,PEW_GRI,-,,,22,P2,True,
+wbl_legal_framework,WB_WBL,+,,,22,P2,True,
+wbl_supportive_framework,WB_WBL,+,,,22,P2,True,
+wbl_enforcement_perceptions,WB_WBL,+,,,22,P2,True,
+romelli_cbi_index,ROMELLI_CBI,+,,,8,P1,True,
 romelli_cbi_lending,ROMELLI_CBI,,,,,,False,decomposition of romelli_cbi_index
 romelli_cbi_policy,ROMELLI_CBI,,,,,,False,decomposition of romelli_cbi_index
-climate_laws_cumulative,CLIMATE_LAWS,+,,DEMOTED P1->P2: volume not quality; unnormalized cumulative count,12.0,P2,True,
+climate_laws_cumulative,CLIMATE_LAWS,+,,DEMOTED P1->P2: volume not quality; unnormalized cumulative count,12,P2,True,
 new_laws,CLIMATE_LAWS,,,,,,False,annual flow = first difference of stock; momentum is a separate coordinate
-odin_openness,ODIN,+,,ODIN's distinctive leg per master; coverage leg overlaps SPI,3.0,P1,True,
-odin_overall,ODIN,+,,,25.0,Sp,True,
+odin_openness,ODIN,+,,ODIN's distinctive leg per master; coverage leg overlaps SPI,3,P1,True,
+odin_overall,ODIN,+,,,25,Sp,True,
 odin_coverage,ODIN,,,,,,False,redundant with SPI (both measure whether data exists)
-civicus_score,CIVICUS,+,,,21.0,P1,True,
-civicus_score,CIVICUS,+,,,24.0,P1,True,
-idea_participation,IDEA_GSOD,+,,"IDEA GSoD Participation attribute (0-1, higher=more participatory). P1: direct on-concept measure of participation, and an INDEPENDENT full-history source (1990-2025, 174 countries) in a concept otherwise dominated by V-Dem (6 of 7 existing metrics are V-Dem: its composite v2x_partip plus 5 facets; CIVICUS covers only 2022+). Breaks the V-Dem monoculture across the whole panel. Validated: Denmark 0.96 / Switzerland 0.94 down to North Korea 0.03. GSoD composite chosen over its subcomponents - civil_society (r=0.98) and civic_engagement (r=0.83) are redundant with it",21.0,P1,True,
-idea_local_democracy,IDEA_GSOD,+,,"IDEA GSoD Local Democracy subcomponent (0-1). P2: the sharpest democracy/autocracy discriminator in the GSoD participation cluster (gap 0.85 > composite 0.66) and only moderately correlated with the composite (r=0.744, so ~half its variance is independent) - captures subnational/local participation that the national-focused V-Dem cluster and the GSoD composite underweight. Mechanical overlap with idea_participation (its parent composite) flagged for Step-4 correlation-aware weighting",21.0,P2,True,
+civicus_score,CIVICUS,+,,,21,P1,True,
+civicus_score,CIVICUS,+,,,24,P1,True,
+idea_participation,IDEA_GSOD,+,,"IDEA GSoD Participation attribute (0-1, higher=more participatory). P1: direct on-concept measure of participation, and an INDEPENDENT full-history source (1990-2025, 174 countries) in a concept otherwise dominated by V-Dem (6 of 7 existing metrics are V-Dem: its composite v2x_partip plus 5 facets; CIVICUS covers only 2022+). Breaks the V-Dem monoculture across the whole panel. Validated: Denmark 0.96 / Switzerland 0.94 down to North Korea 0.03. GSoD composite chosen over its subcomponents - civil_society (r=0.98) and civic_engagement (r=0.83) are redundant with it",21,P1,True,
+idea_local_democracy,IDEA_GSOD,+,,"IDEA GSoD Local Democracy subcomponent (0-1). P2: the sharpest democracy/autocracy discriminator in the GSoD participation cluster (gap 0.85 > composite 0.66) and only moderately correlated with the composite (r=0.744, so ~half its variance is independent) - captures subnational/local participation that the national-focused V-Dem cluster and the GSoD composite underweight. Mechanical overlap with idea_participation (its parent composite) flagged for Step-4 correlation-aware weighting",21,P2,True,
 idea_civil_society,IDEA_GSOD,,,,,,False,"EXCLUDED: redundant with idea_participation (r=0.980, essentially the composite restated). Scoring it would double-count the composite"
 idea_civic_engagement,IDEA_GSOD,,,,,,False,EXCLUDED: largely redundant with idea_participation (r=0.832)
 idea_electoral_participation,IDEA_GSOD,,,,,,False,"EXCLUDED: weak discriminator (clean 0.666 vs autocracy 0.453, gap 0.21) - electoral participation/turnout separates democracies from autocracies poorly (autocracies can drive high turnout via mobilisation/coercion). Also duplicates C20 electoral-process content"
 idea_direct_democracy,IDEA_GSOD,,,,,,False,"EXCLUDED: degenerate for scoring (mean 0.089 - most countries near zero, few have referenda/initiative mechanisms) and weak discriminator (gap 0.15). Measures presence of direct-democracy institutions, a narrow feature, not general participatory quality"
 civicus_rating,CIVICUS,,,,,,False,ordinal coarsening of civicus_score
-kaopen_norm,CHINN_ITO,+,,DEMOTED P1->Sp: same construct as FARI from same AREAER source data,8.0,Sp,True,
+kaopen_norm,CHINN_ITO,+,,DEMOTED P1->Sp: same construct as FARI from same AREAER source data,8,Sp,True,
 kaopen,CHINN_ITO,,,,,,False,raw scale; kaopen_norm preferred (bounded)
 polity5_score,POLITY5,,,,,,False,"RECENCY FAIL: series ends 2018 (165 ctry), 7 yrs stale vs 4-yr window"
 polity5_regime_durability,POLITY5,,,,,,False,RECENCY FAIL: series ends 2018
 kof_economic_globalisation,KOF_TRADE,,,,,,False,source closed; C11 proxy abandoned
 nd_gain_readiness,ND_GAIN,,,,,,False,source dropped 2026-07-22 on construct validity (capacity not governance)
 nd_gain_governance_readiness,ND_GAIN,,,,,,False,source dropped 2026-07-22; WGI-repackaged
-pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present","coverage 97.9% via State Dept (union of available coders, NOT min). No coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity",16.0,P1,True,
-pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present","coverage 97.9% via State Dept (union of available coders, NOT min). No coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity",22.0,P2,True,
+pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present","coverage 97.9% via State Dept (union of available coders, NOT min). No coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity",16,P1,True,
+pts_index,PTS,-,"mean of pts_amnesty, pts_hrw, pts_statedept where present","coverage 97.9% via State Dept (union of available coders, NOT min). No coder severity effect: common-sample means 3.135/3.167/3.073 (n=96); own-sample spread is coverage not severity",22,P2,True,
 pts_amnesty,PTS,,,,,,False,component of pts_index
 pts_hrw,PTS,,,,,,False,component of pts_index
 pts_statedept,PTS,,,,,,False,component of pts_index
 wb_informal_economy,WB_INFORMAL,,,,,,False,RECENCY FAIL: both dge and mimic at 0.0% current sovereign coverage (series ends 2020); named as a dead tail in metric_methodology S4
 wb_informal_economy_dge,WB_INFORMAL,,,,,,False,component of wb_informal_economy
 wb_informal_economy_mimic,WB_INFORMAL,,,,,,False,component of wb_informal_economy
-fsi_c1_security_apparatus,FSI,-,,,13.0,P1,True,
-fsi_c2_factionalized_elites,FSI,-,,C1 takes two FSI components - source concentration,1.0,P1,True,
+fsi_c1_security_apparatus,FSI,-,,,13,P1,True,
+fsi_c2_factionalized_elites,FSI,-,,C1 takes two FSI components - source concentration,1,P1,True,
 dpi_total_fragmentation,DPI,,,,,,False,"EXCLUDED from C1 on validity, not data quality (2026-07-24). The DPI pipeline is CORRECT (pure rename of raw DPI columns, no transform bug) and the data is REAL - dpi_total_fragmentation follows DPI Frac exactly (prob two random deputies differ in party; Barbados one-party legislature = 0.0 confirms the definition). But DPI Frac is an INVALID proxy for C1 horizontal-elite-organisation: it measures seat-dispersion across party LABELS, which conflates genuine pluralism with managed-autocracy pseudo-pluralism. Belarus reads 0.994 (regime permits many toothless nominal parties) - same as a real multiparty democracy - so the measure cannot distinguish democratic fragmentation from authoritarian pseudo-fragmentation, i.e. it is confounded by the very regime type C1 assesses. Related DPI fragmentation cols (govfrac, oppfrac, herfindahls, polariz) share the confound. C1 keeps FSI Factionalized Elites (P1) - expert-coded ACTUAL elite fragmentation with no regime-type confound. NOTE: raw DPI numgov appears to be government SEATS not party count (~85pct confidence: Barbados 30 = House size; not codebook-verified). DPI data/pipeline are fine and remain available for other concepts if a non-confounded variable fits."
-fsi_c3_group_grievance,FSI,-,,,1.0,P1,True,
-fsi_p2_public_services,FSI,-,,,5.0,P1,True,
-spi_overall,IMF_SPI,+,,,3.0,P1,True,
+fsi_c3_group_grievance,FSI,-,,,1,P1,True,
+fsi_p2_public_services,FSI,-,,,5,P1,True,
+spi_overall,IMF_SPI,+,,,3,P1,True,
 spi_pillar1_data_use,IMF_SPI,,,,,,False,decomposition of spi_overall
 spi_pillar2_data_services,IMF_SPI,,,,,,False,decomposition of spi_overall
 spi_pillar3_data_products,IMF_SPI,,,,,,False,decomposition of spi_overall
 spi_pillar4_data_sources,IMF_SPI,,,,,,False,decomposition of spi_overall
 spi_pillar5_data_infrastructure,IMF_SPI,,,,,,False,decomposition of spi_overall
-imapp_breadth_total,IMF_IMAPP,+,,"cumulative-ever ratchet: breadth not quality (docs: Pakistan 15/16). Diluted - C8 is well populated | TIER P1->P2 (2026-07-24): demoted for D4 C8 Monetary bucket. imapp is conceptually Monetary (macroprudential = financial-stability policy) but is a breadth-not-quality proxy, so P2 keeps romelli_cbi (P1) the dominant monetary signal (2/3 vs 1/3 within the 40% Monetary bucket) while placing imapp in its correct conceptual home.",8.0,P2,True,
+imapp_breadth_total,IMF_IMAPP,+,,cumulative-ever ratchet: breadth not quality (docs: Pakistan 15/16). Diluted - C8 is well populated,8,P1,True,
 imapp_breadth_borrower_based,IMF_IMAPP,,,,,,False,decomposition of imapp_breadth_total
 imapp_breadth_capital_based,IMF_IMAPP,,,,,,False,decomposition of imapp_breadth_total
 imapp_breadth_liquidity_funding,IMF_IMAPP,,,,,,False,decomposition of imapp_breadth_total
 imapp_breadth_provision_reserve_tax,IMF_IMAPP,,,,,,False,decomposition of imapp_breadth_total
-fari_aggregate,IMF_AREAER,-,,higher = more restrictive; direction is a D3 item (policy stance vs quality),8.0,P1,True,
-fari_fdi_aggregate,IMF_AREAER,-,,,8.0,P1,True,
-fari_fdi_inflow,IMF_AREAER,-,,DELIBERATE partial double-count with fdi_aggregate - user decision to tilt toward inbound access,8.0,P1,True,
+fari_aggregate,IMF_AREAER,-,,higher = more restrictive; direction is a D3 item (policy stance vs quality),8,P1,True,
+fari_fdi_aggregate,IMF_AREAER,-,,,8,P1,True,
+fari_fdi_inflow,IMF_AREAER,-,,DELIBERATE partial double-count with fdi_aggregate - user decision to tilt toward inbound access,8,P1,True,
 fari_inflow,IMF_AREAER,,,,,,False,split; aggregates are the doc-mandated scored fields
 fari_outflow,IMF_AREAER,,,,,,False,split; outbound less material to sovereign investor
 fari_fdi_outflow,IMF_AREAER,,,,,,False,split; outbound less material to sovereign investor
@@ -94,85 +94,85 @@ areaer_regime_ordinal,IMF_AREAER_ERREGIME,,,,,,False,regime type is a policy cho
 areaer_arrangement,IMF_AREAER_ERREGIME,,,,,,False,categorical label; see areaer_regime_ordinal
 areaer_regime_group,IMF_AREAER_ERREGIME,,,,,,False,regime type not quality
 areaer_mpf,IMF_AREAER_ERREGIME,,,,,,False,PENDING: derive inflation-targeting binary; IT is defensibly better governance where regime type is not
-ccp_civil_rights_provisions,CCP,+,,BLOCKED: recode 96 -> NaN first (23 countries),14.0,P1,True,
-ccp_information_access,CCP,+,,BLOCKED: recode 96 -> NaN first (6 countries),14.0,P1,True,
+ccp_civil_rights_provisions,CCP,+,,BLOCKED: recode 96 -> NaN first (23 countries),14,P1,True,
+ccp_information_access,CCP,+,,BLOCKED: recode 96 -> NaN first (6 countries),14,P1,True,
 ccp_equality_provisions,CCP,,,,,,False,no variance: 176/4 split
 ccp_government_system,CCP,,,,,,False,no variance: 188/4 split. C19 loses its only non-VDEM source
 ccp_market_economy_provisions,CCP,,,,,,False,"81/19 binary, de jure constitutional text; too weak as a 2nd indicator for C10"
-cpj_imprisoned,CPJ,-,,"zero-fill to spine; log1p (zero-inflated). Raw count, no denominator - per-capita inverts ranking (China 0.04/m vs Eritrea 4.3/m)",23.0,P1,True,
-cpj_murders_unsolved,CPJ,-,,impunity signal; zero-fill to spine,23.0,P2,True,
+cpj_imprisoned,CPJ,-,,"zero-fill to spine; log1p (zero-inflated). Raw count, no denominator - per-capita inverts ranking (China 0.04/m vs Eritrea 4.3/m)",23,P1,True,
+cpj_murders_unsolved,CPJ,-,,impunity signal; zero-fill to spine,23,P2,True,
 cpj_murdered_confirmed,CPJ,,,,,,False,conflict-contaminated (Israel/OPT 32 of 99 total); duplicated by unsolved
 cpj_murdered_total,CPJ,,,,,,False,superseded by cpj_murdered_confirmed
-pt_coup_successful,POWELL_THYNE,-,10-year trailing window count,window length is a Step-4 parameter; 27 successful coups in last 5 yrs,2.0,P1,True,
-pt_coup_successful,POWELL_THYNE,-,10-year trailing window count,window length is a Step-4 parameter; 27 successful coups in last 5 yrs,1.0,Sp,True,
-pt_coup_failed,POWELL_THYNE,-,10-year trailing window count,,2.0,P1,True,
+pt_coup_successful,POWELL_THYNE,-,10-year trailing window count,"Built in derive_metrics.derive_pt_coups (trailing 10yr sum per country-year; Mali 2024 window=4). Window length is a Step-4 parameter. Previously entered as raw per-year counts (unbuilt), which made the latest single year ~0 for everyone - no signal; the window is what discriminates coup-proneness",2,P1,True,
+pt_coup_successful,POWELL_THYNE,-,10-year trailing window count,"Built in derive_metrics.derive_pt_coups (trailing 10yr sum per country-year; Mali 2024 window=4). Window length is a Step-4 parameter. Previously entered as raw per-year counts (unbuilt), which made the latest single year ~0 for everyone - no signal; the window is what discriminates coup-proneness",1,Sp,True,
+pt_coup_failed,POWELL_THYNE,-,10-year trailing window count,Built in derive_metrics.derive_pt_coups alongside successful coups,2,P1,True,
 pt_coup_alleged,POWELL_THYNE,,,,,,False,weaker evidence than realised events
 pt_autocoup,POWELL_THYNE,,,,,,False,too rare to discriminate
-wb_carbon_pricing_exists,WB_CARBON,+,,zero-fill to spine; absence is INFERRED non-existence (docs) - out-of-scope/subnational instruments possible,12.0,P1,True,
-wb_carbon_price_usd,WB_CARBON,+,,zero-fill to spine,12.0,P1,True,
-wb_carbon_coverage_pct,WB_CARBON,+,,already a percentage; no denominator needed,12.0,P2,True,
-wb_carbon_revenue_pct_gdp,WB_CARBON,+,revenue_usd_m * 1e6 / (wdi_gdp_per_capita_usd * wdi_population_total),denominator is CURRENT US$ (NY.GDP.PCAP.CD) - nominal over nominal,12.0,P2,True,
+wb_carbon_pricing_exists,WB_CARBON,+,,zero-fill to spine; absence is INFERRED non-existence (docs) - out-of-scope/subnational instruments possible,12,P1,True,
+wb_carbon_price_usd,WB_CARBON,+,,zero-fill to spine,12,P1,True,
+wb_carbon_coverage_pct,WB_CARBON,+,,already a percentage; no denominator needed,12,P2,True,
+wb_carbon_revenue_pct_gdp,WB_CARBON,+,revenue_usd_m * 1e6 / (wdi_gdp_per_capita_usd * wdi_population_total),denominator is CURRENT US$ (NY.GDP.PCAP.CD) - nominal over nominal,12,P2,True,
 wb_carbon_revenue_usd_m,WB_CARBON,,,,,,False,component of wb_carbon_revenue_pct_gdp
-v2pepwrses,VDEM,+,,,1.0,P1,True,
-v2pepwrsoc,VDEM,+,,,1.0,P1,True,
-v2x_egal,VDEM,+,,,1.0,P1,True,
-v2psoppaut,VDEM,+,,,1.0,P1,True,
-v2clrspct,VDEM,+,,,4.0,P1,True,
-v2clstown,VDEM,+,,"direction evidence-resolved 2026-07-21: monotonic/linear, no threshold",10.0,P1,True,
-v2svstterr,VDEM,+,,,13.0,P1,True,
-v2svdomaut,VDEM,+,,,13.0,P1,True,
-v2cltrnslw,VDEM,+,,,14.0,P1,True,
-v2cltrnslw,VDEM,+,,,25.0,P1,True,
-v2clacjstw,VDEM,+,,,14.0,P1,True,
-v2xeg_eqaccess,VDEM,+,,,14.0,P1,True,
-v2juhcind,VDEM,+,,,15.0,P1,True,
-v2juncind,VDEM,+,,,15.0,P1,True,
-v2jucomp,VDEM,+,,,15.0,P1,True,
-v2jupack,VDEM,+,,,15.0,P1,True,
-v2jupurge,VDEM,+,,,15.0,P1,True,
-v2cltort,VDEM,+,,,16.0,P1,True,
-v2clkill,VDEM,+,,,16.0,P1,True,
-v2clrgunev,VDEM,+,,,16.0,P1,True,
-v2xcl_prpty,VDEM,+,,,17.0,P1,True,
-v2x_corr,VDEM,-,,REVERSE-CODED (r=-0.880 vs WGI). V-Dem's individual corruption items run the OTHER way - do not infer sign from the family,18.0,P1,True,
-v2lgcrrpt,VDEM,+,,,18.0,P1,True,
-v2jucorrdc,VDEM,+,,,18.0,P1,True,
-v2xlg_legcon,VDEM,+,,,19.0,P1,True,
-v2lgoppart,VDEM,+,,,19.0,P1,True,
-v2lgqstexp,VDEM,+,,,19.0,P1,True,
-v2lginvstp,VDEM,+,,,19.0,P1,True,
-v2lgotovst,VDEM,+,,,19.0,P1,True,
-v2x_polyarchy,VDEM,+,,,20.0,P1,True,
-v2elfrfair,VDEM,+,,,20.0,P1,True,
-v2elirreg,VDEM,+,,,20.0,P1,True,
-v2elintim,VDEM,+,,,20.0,P1,True,
-v2elvotbuy,VDEM,+,,,20.0,P1,True,
-v2elaccept,VDEM,+,,,20.0,P1,True,
-v2elembaut,VDEM,+,,EMB autonomy - closes the C20 EMB leg; supersedes IDEA EMB Database,20.0,P1,True,
-v2elembcap,VDEM,+,,EMB capacity - closes the C20 EMB leg; supersedes IDEA EMB Database,20.0,P1,True,
-v2x_partip,VDEM,+,,,21.0,P1,True,
-v2psprlnks,VDEM,+,,,21.0,P1,True,
-v2pscohesv,VDEM,+,,weakest V-Dem signal vs WGI (r=+0.338),21.0,P1,True,
-v2cseeorgs,VDEM,+,,,21.0,P1,True,
-v2cseeorgs,VDEM,+,,,24.0,P1,True,
-v2dlconslt,VDEM,+,,,21.0,P1,True,
-v2dlconslt,VDEM,+,,,25.0,P1,True,
-v2csreprss,VDEM,+,,,21.0,P1,True,
-v2csreprss,VDEM,+,,,24.0,P1,True,
-v2x_civlib,VDEM,+,,,22.0,P1,True,
-v2clrelig,VDEM,+,,,22.0,P1,True,
-v2cldmovem,VDEM,+,,,22.0,P1,True,
-v2cldmovew,VDEM,+,,master names the pair as 'v2cldmovem/w',22.0,P1,True,
-v2clsocgrp,VDEM,+,,,22.0,P1,True,
-v2clslavef,VDEM,+,,,22.0,P1,True,
-v2x_freexp_altinf,VDEM,+,,,23.0,P1,True,
-v2mecenefm,VDEM,+,,,23.0,P1,True,
-v2mecorrpt,VDEM,+,,,23.0,P1,True,
-v2merange,VDEM,+,,,23.0,P1,True,
-v2mebias,VDEM,+,,,23.0,P1,True,
-v2cscnsult,VDEM,+,,,24.0,P1,True,
-v2csprtcpt,VDEM,+,,,24.0,P1,True,
-vdem_regime_duration,VDEM,+,"years since v2x_regime last changed, computed from the panel",master specifies regime DURATION via V-Dem's own classification; raw type is not a quality ordering,2.0,P1,True,
+v2pepwrses,VDEM,+,,,1,P1,True,
+v2pepwrsoc,VDEM,+,,,1,P1,True,
+v2x_egal,VDEM,+,,,1,P1,True,
+v2psoppaut,VDEM,+,,,1,P1,True,
+v2clrspct,VDEM,+,,,4,P1,True,
+v2clstown,VDEM,+,,"direction evidence-resolved 2026-07-21: monotonic/linear, no threshold",10,P1,True,
+v2svstterr,VDEM,+,,,13,P1,True,
+v2svdomaut,VDEM,+,,,13,P1,True,
+v2cltrnslw,VDEM,+,,,14,P1,True,
+v2cltrnslw,VDEM,+,,,25,P1,True,
+v2clacjstw,VDEM,+,,,14,P1,True,
+v2xeg_eqaccess,VDEM,+,,,14,P1,True,
+v2juhcind,VDEM,+,,,15,P1,True,
+v2juncind,VDEM,+,,,15,P1,True,
+v2jucomp,VDEM,+,,,15,P1,True,
+v2jupack,VDEM,+,,,15,P1,True,
+v2jupurge,VDEM,+,,,15,P1,True,
+v2cltort,VDEM,+,,,16,P1,True,
+v2clkill,VDEM,+,,,16,P1,True,
+v2clrgunev,VDEM,+,,,16,P1,True,
+v2xcl_prpty,VDEM,+,,,17,P1,True,
+v2x_corr,VDEM,-,,REVERSE-CODED (r=-0.880 vs WGI). V-Dem's individual corruption items run the OTHER way - do not infer sign from the family,18,P1,True,
+v2lgcrrpt,VDEM,+,,,18,P1,True,
+v2jucorrdc,VDEM,+,,,18,P1,True,
+v2xlg_legcon,VDEM,+,,,19,P1,True,
+v2lgoppart,VDEM,+,,,19,P1,True,
+v2lgqstexp,VDEM,+,,,19,P1,True,
+v2lginvstp,VDEM,+,,,19,P1,True,
+v2lgotovst,VDEM,+,,,19,P1,True,
+v2x_polyarchy,VDEM,+,,,20,P1,True,
+v2elfrfair,VDEM,+,,,20,P1,True,
+v2elirreg,VDEM,+,,,20,P1,True,
+v2elintim,VDEM,+,,,20,P1,True,
+v2elvotbuy,VDEM,+,,,20,P1,True,
+v2elaccept,VDEM,+,,,20,P1,True,
+v2elembaut,VDEM,+,,EMB autonomy - closes the C20 EMB leg; supersedes IDEA EMB Database,20,P1,True,
+v2elembcap,VDEM,+,,EMB capacity - closes the C20 EMB leg; supersedes IDEA EMB Database,20,P1,True,
+v2x_partip,VDEM,+,,,21,P1,True,
+v2psprlnks,VDEM,+,,,21,P1,True,
+v2pscohesv,VDEM,+,,weakest V-Dem signal vs WGI (r=+0.338),21,P1,True,
+v2cseeorgs,VDEM,+,,,21,P1,True,
+v2cseeorgs,VDEM,+,,,24,P1,True,
+v2dlconslt,VDEM,+,,,21,P1,True,
+v2dlconslt,VDEM,+,,,25,P1,True,
+v2csreprss,VDEM,+,,,21,P1,True,
+v2csreprss,VDEM,+,,,24,P1,True,
+v2x_civlib,VDEM,+,,,22,P1,True,
+v2clrelig,VDEM,+,,,22,P1,True,
+v2cldmovem,VDEM,+,,,22,P1,True,
+v2cldmovew,VDEM,+,,master names the pair as 'v2cldmovem/w',22,P1,True,
+v2clsocgrp,VDEM,+,,,22,P1,True,
+v2clslavef,VDEM,+,,,22,P1,True,
+v2x_freexp_altinf,VDEM,+,,,23,P1,True,
+v2mecenefm,VDEM,+,,,23,P1,True,
+v2mecorrpt,VDEM,+,,,23,P1,True,
+v2merange,VDEM,+,,,23,P1,True,
+v2mebias,VDEM,+,,,23,P1,True,
+v2cscnsult,VDEM,+,,,24,P1,True,
+v2csprtcpt,VDEM,+,,,24,P1,True,
+vdem_regime_duration,VDEM,+,"years since v2x_regime last changed, computed from the panel",master specifies regime DURATION via V-Dem's own classification; raw type is not a quality ordering,2,P1,True,
 v2x_regime,VDEM,,,,,,False,regime TYPE is a classification not a quality ordering; input to vdem_regime_duration
 v2x_horacc,VDEM,,,,,,False,"aggregate of components already scored (r=+0.976 with v2xlg_legcon, +0.86 with judicial family) and spans C19/C15 which the framework deliberately separated; category cross-check for Accountability (horizontal)"
 v2meharjrn,VDEM,,,,,,False,"COLLAPSED out of C23 Media freedom (2026-07-24, within-source metric collapse rule, methodology S6). Harassment of journalists. Gate 1: r>0.85 with composite v2x_freexp_altinf and siblings. Gate 2 FAILED: top divergences from the composite are clean-end scale/ceiling noise (Denmark, Switzerland score higher on the component than the composite - both agree 'very free'), no material distinction. C23 keeps composite + v2mecorrpt/v2merange/v2mecenefm/v2mebias, each retained for distinct decision-relevant signal"
@@ -184,22 +184,22 @@ v2excrptps,VDEM,,,,,,False,"COLLAPSED out of C18 Control of corruption (2026-07-
 v2exembez,VDEM,,,,,,False,"COLLAPSED out of C18 Control of corruption (2026-07-24, within-source collapse rule). Executive embezzlement/theft of state funds. Gate 1: r>0.85 with composite, r=0.89 with v2excrptps (same executive branch). Gate 2 FAILED for the same reason as v2excrptps: executive corruption is already the most-measured dimension (TI CPI, BCI, WJP, and the composite all capture it); the bribery-vs-embezzlement sub-split is finer than C18 needs. Kept the branch-distinct legislative + judicial components instead"
 v2clacjstm,VDEM,,,,,,False,"COLLAPSED out of C14 Legal quality (2026-07-24, within-source collapse rule, methodology S6). Access to justice for men. Gate 1: r=0.96 with v2clacjstw (access to justice for women) - the highest redundancy in any collapse so far, near-identical twins. Gate 2 FAILED: unlike C17 property rights (where the gender split diverged interpretably via discriminatory inheritance law), physical/procedural access to justice is barely gender-differentiated (r=0.96), so the men metric adds no distinct signal over the women metric. Kept v2clacjstw (marginally the more binding constraint where they differ). C14 keeps v2cltrnslw (transparent/predictable law, distinct construct), v2xeg_eqaccess (equal-access index, r~0.72 most distinct), plus the retained access-to-justice metric - and CCP x2 + WJP x2 independent sources"
 v2x_clpriv,VDEM,,,,,,False,"COLLAPSED out of C22 Civil liberties (2026-07-24, within-source collapse rule, methodology S6). Private civil liberties INDEX. Gate 1: r=0.96 with the retained v2x_civlib index - two composites measuring nearly the same thing, i.e. the concept was scoring the same aggregate twice. Gate 2 FAILED: its divergences from v2x_civlib are modest (max 0.85z vs 1.7-1.95z for genuinely distinct metrics retained elsewhere) and reflect only that political repression exceeds private-sphere restriction in some states (Zimbabwe/Venezuela/Bangladesh/Belarus) or the reverse (Qatar) - a pattern the RETAINED COMPONENTS (v2clrelig, v2cldmovem/w, v2clsocgrp, v2clslavef) already capture directly and more granularly, since v2x_clpriv is an aggregate of exactly those. Keeping it alongside its own components double-counts. C22 keeps v2x_civlib (broad index matching the concept scope) + 5 distinct components; note v2clsocgrp (r 0.59-0.69) and v2clslavef (r 0.59-0.75) are the most DISTINCT components in any cluster examined, and the movement gender pair (r=0.81) carries real signal unlike C14's 0.96 twins - so C22's OVER flag is mostly legitimate breadth (15 metrics across 5 genuinely different sources), not redundancy"
-wjp_f2_absence_corruption,WJP,+,,,18.0,P1,True,
-wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,14.0,P1,True,
-wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,25.0,P1,True,
-wjp_f4_fundamental_rights,WJP,+,,,14.0,P1,True,
-wjp_f5_order_security,WJP,+,,,16.0,P1,True,
-wjp_f5_order_security,WJP,+,,,2.0,P2,True,
-wjp_f6_regulatory_enforcement,WJP,+,,"C4 disambiguation resolved: P1 in C6 (tightest construct fit - the factor IS regulatory enforcement), P2 in C4 (sub-factors 6.3/6.4 cover administrative-procedure quality). Follows the established WJP pattern (F5 = P1 C16 / P2 C2; F3 = P1 both C14 and C25). Only the aggregate is extracted, so a clean 6.1-6.4 split is not available",6.0,P1,True,
-wjp_f6_regulatory_enforcement,WJP,+,,"C4 disambiguation resolved: P1 in C6 (tightest construct fit - the factor IS regulatory enforcement), P2 in C4 (sub-factors 6.3/6.4 cover administrative-procedure quality). Follows the established WJP pattern (F5 = P1 C16 / P2 C2; F3 = P1 both C14 and C25). Only the aggregate is extracted, so a clean 6.1-6.4 split is not available",4.0,P2,True,
-wjp_f6_5_no_expropriation,WJP,+,,sub-component pulled specifically for C17; full Factor 6 stays in C6,17.0,P1,True,
-wjp_f7_civil_justice,WJP,+,,,15.0,P1,True,
-wjp_f8_criminal_justice,WJP,+,,,15.0,P1,True,
-wdi_health_index,WDI,+,"mean of z-normalized wdi_immunization_dpt, wdi_immunization_measles, wdi_life_expectancy, wdi_uhc_coverage_index, wdi_hospital_beds_per_1000, wdi_nurses_per_1000, wdi_physicians_per_1000, wdi_maternal_mortality, wdi_mortality_under5 (maternal_mortality and mortality_under5 sign-flipped)",9 components; equal-weighting these raw would give health 41% of C5,5.0,P1,True,
-wdi_education_index,WDI,+,"mean of z-normalized wdi_primary_completion_rate, wdi_primary_enrollment_gross, wdi_secondary_enrollment_gross, wdi_pupil_teacher_ratio_secondary (pupil_teacher_ratio_secondary sign-flipped)",pupil_teacher_ratio_PRIMARY excluded separately: 0.0% current coverage,5.0,P1,True,
-wdi_infrastructure_index,WDI,+,"mean of z-normalized wdi_basic_water_access, wdi_basic_sanitation_access, wdi_electricity_access","ceiling-piled at ~100%; S5 keeps these on z-score, NOT percentile - the pile is informative and z preserves distance-from-universal",5.0,P1,True,
-wdi_social_protection_index,WDI,+,"mean of z-normalized wdi_safety_net_coverage, wdi_social_insurance_coverage, wdi_social_protection_coverage","thinnest sub-composite: components at 61-68% coverage, all irregular cadence",5.0,P1,True,
-wdi_tariff_rate_simple_mean,WDI,-,,"higher tariffs = less open; direction is a D3 item (policy stance vs governance quality, same question as FARI). 84.9% coverage",11.0,P1,True,
+wjp_f2_absence_corruption,WJP,+,,,18,P1,True,
+wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,14,P1,True,
+wjp_f3_open_government,WJP,+,,P1 in both C14 and C25 per master; repetition tracked under principle 5,25,P1,True,
+wjp_f4_fundamental_rights,WJP,+,,,14,P1,True,
+wjp_f5_order_security,WJP,+,,,16,P1,True,
+wjp_f5_order_security,WJP,+,,,2,P2,True,
+wjp_f6_regulatory_enforcement,WJP,+,,"C4 disambiguation resolved: P1 in C6 (tightest construct fit - the factor IS regulatory enforcement), P2 in C4 (sub-factors 6.3/6.4 cover administrative-procedure quality). Follows the established WJP pattern (F5 = P1 C16 / P2 C2; F3 = P1 both C14 and C25). Only the aggregate is extracted, so a clean 6.1-6.4 split is not available",6,P1,True,
+wjp_f6_regulatory_enforcement,WJP,+,,"C4 disambiguation resolved: P1 in C6 (tightest construct fit - the factor IS regulatory enforcement), P2 in C4 (sub-factors 6.3/6.4 cover administrative-procedure quality). Follows the established WJP pattern (F5 = P1 C16 / P2 C2; F3 = P1 both C14 and C25). Only the aggregate is extracted, so a clean 6.1-6.4 split is not available",4,P2,True,
+wjp_f6_5_no_expropriation,WJP,+,,sub-component pulled specifically for C17; full Factor 6 stays in C6,17,P1,True,
+wjp_f7_civil_justice,WJP,+,,,15,P1,True,
+wjp_f8_criminal_justice,WJP,+,,,15,P1,True,
+wdi_health_index,WDI,+,"mean of z-normalized wdi_immunization_dpt, wdi_immunization_measles, wdi_life_expectancy, wdi_uhc_coverage_index, wdi_hospital_beds_per_1000, wdi_nurses_per_1000, wdi_physicians_per_1000, wdi_maternal_mortality, wdi_mortality_under5 (maternal_mortality and mortality_under5 sign-flipped)",9 components; equal-weighting these raw would give health 41% of C5,5,P1,True,
+wdi_education_index,WDI,+,"mean of z-normalized wdi_primary_completion_rate, wdi_primary_enrollment_gross, wdi_secondary_enrollment_gross, wdi_pupil_teacher_ratio_secondary (pupil_teacher_ratio_secondary sign-flipped)",pupil_teacher_ratio_PRIMARY excluded separately: 0.0% current coverage,5,P1,True,
+wdi_infrastructure_index,WDI,+,"mean of z-normalized wdi_basic_water_access, wdi_basic_sanitation_access, wdi_electricity_access","ceiling-piled at ~100%; S5 keeps these on z-score, NOT percentile - the pile is informative and z preserves distance-from-universal",5,P1,True,
+wdi_social_protection_index,WDI,+,"mean of z-normalized wdi_safety_net_coverage, wdi_social_insurance_coverage, wdi_social_protection_coverage","thinnest sub-composite: components at 61-68% coverage, all irregular cadence",5,P1,True,
+wdi_tariff_rate_simple_mean,WDI,-,,"higher tariffs = less open; direction is a D3 item (policy stance vs governance quality, same question as FARI). 84.9% coverage",11,P1,True,
 wdi_tariff_rate_weighted_mean,WDI,,,,,,False,same construct as simple mean; trade-weighting is endogenous to trade patterns (prohibitive tariffs suppress the trade that would weight them)
 wdi_ip_nonresident_per_gdp,WB_WDI,,,,,,False,"DROPPED v1 2026-07-24: per-GDP ratio pathological at small economies (Sao Tome ~6720, ~100x real innovation hubs - small IP count over tiny GDP explodes, measuring economy size not IP-regime quality). C17 well-carried without it (V-Dem x3 + Heritage + Fraser + WJP 6.5). Non-resident-share-of-total-filings is the correct construction if an IP signal is wanted in v2"
 wdi_patent_applications_resident,WDI,,,,,,False,"measures domestic innovation activity, not IP protection quality; also 57.8% coverage, below the 60% bar"
@@ -230,10 +230,10 @@ wdi_electricity_access,WDI,+,,,,,False,component of a C5 sub-composite
 wdi_safety_net_coverage,WDI,+,,,,,False,component of a C5 sub-composite
 wdi_social_insurance_coverage,WDI,+,,,,,False,component of a C5 sub-composite
 wdi_social_protection_coverage,WDI,+,,,,,False,component of a C5 sub-composite
-epi_agr,YALE_EPI,+,,"Agriculture issue category - sustainable nitrogen management etc. 180 countries, biennial",12.0,P1,True,
-epi_wrs,YALE_EPI,+,,"Water Resources issue category (wastewater treatment). PLACEMENT FLAG: capital-infrastructure content, arguably closer to C5 service delivery than C12 environmental governance - revisit at Step 4",12.0,P1,True,
-epi_bdh,YALE_EPI,+,,"Biodiversity & Habitat. P2 not P1 on INTERNAL COMPARABILITY: its marine components are absent for ~27% of countries (mkp 48, mpe 49, mhp 36 of 180 NaN), so Yale renormalizes BDH over a terrestrial-only question set for landlocked countries and a fuller set for coastal ones - the ASCOR non-comparability pattern occurring inside one metric",12.0,P2,True,
-epi_cch,YALE_EPI,+,,"Climate Change issue category. INCLUDED despite overlapping ASCOR EP.1: different provider, different method (Yale scores continuous emissions-reduction rates and net-zero proximity; ASCOR asks 3 binaries) - triangulation under the repetition rule. CAVEAT: error is CORRELATED not independent - both measure emissions trajectory, confounded by industrial structure, growth rate and energy endowment. Two sources give more precision on a partly-confounded quantity, they do not neutralise the confound",12.0,P2,True,
+epi_agr,YALE_EPI,+,,"Agriculture issue category - sustainable nitrogen management etc. 180 countries, biennial",12,P1,True,
+epi_wrs,YALE_EPI,+,,"Water Resources issue category (wastewater treatment). PLACEMENT FLAG: capital-infrastructure content, arguably closer to C5 service delivery than C12 environmental governance - revisit at Step 4",12,P1,True,
+epi_bdh,YALE_EPI,+,,"Biodiversity & Habitat. P2 not P1 on INTERNAL COMPARABILITY: its marine components are absent for ~27% of countries (mkp 48, mpe 49, mhp 36 of 180 NaN), so Yale renormalizes BDH over a terrestrial-only question set for landlocked countries and a fuller set for coastal ones - the ASCOR non-comparability pattern occurring inside one metric",12,P2,True,
+epi_cch,YALE_EPI,+,,"Climate Change issue category. INCLUDED despite overlapping ASCOR EP.1: different provider, different method (Yale scores continuous emissions-reduction rates and net-zero proximity; ASCOR asks 3 binaries) - triangulation under the repetition rule. CAVEAT: error is CORRELATED not independent - both measure emissions trajectory, confounded by industrial structure, growth rate and energy endowment. Two sources give more precision on a partly-confounded quantity, they do not neutralise the confound",12,P2,True,
 epi_epi,YALE_EPI,,,,,,False,"headline composite - master says 'use sub-components selectively, not headline composite'. Scoring it adopts Yale's cross-objective weighting, and it contains epi_hlt (sanitation, drinking water) which is already in wdi_infrastructure_index for C5 - cross-concept leakage"
 epi_eco,YALE_EPI,,,,,,False,policy-objective parent of bdh/agr/fsh/wrs (r=+0.899 with bdh). Scoring it outsources sub-dimension weighting to Yale and compounds opaquely with the children
 epi_hlt,YALE_EPI,,,,,,False,"policy-objective parent; its content (air quality, sanitation, drinking water, heavy metals, waste) is development/service-delivery outcome and duplicates wdi_infrastructure_index in C5"
@@ -242,13 +242,13 @@ epi_mkp,YALE_EPI,,,,,,False,"one of BDH's twelve components; only 3 of the 12 we
 epi_mhp,YALE_EPI,,,,,,False,BDH component - see epi_mkp
 epi_mpe,YALE_EPI,,,,,,False,BDH component (Marine Protection Stringency) - see epi_mkp
 country_code_epi,YALE_EPI,,,,,,False,"numeric UN country code - identifier, not a metric"
-ascor_climate_governance,ASCOR,+,,"TIER P2 CONFIRMED at Step 1 (was provisional): 85 countries = 44% of the sovereign core, below the 60% bar, so flagged-not-dropped per S4 - retained because it is the only investor-oriented sovereign climate-governance assessment and covers the major EMs. Fixed 0-1 anchor, S5 fixed-anchor family, passed through UNNORMALIZED. Momentum available for only 25 of 85. Full spec: framework_decisions.md 'ASCOR composite specification'",12.0,P2,True,
+ascor_climate_governance,ASCOR,+,,"TIER P2 CONFIRMED at Step 1 (was provisional): 85 countries = 44% of the sovereign core, below the 60% bar, so flagged-not-dropped per S4 - retained because it is the only investor-oriented sovereign climate-governance assessment and covers the major EMs. Fixed 0-1 anchor, S5 fixed-anchor family, passed through UNNORMALIZED. Momentum available for only 25 of 85. Full spec: framework_decisions.md 'ASCOR composite specification'",12,P2,True,
 ascor_full_diagnostic,ASCOR,,,,,,False,9-area version retained in the evidentiary layer only - includes the income-conditional areas that make cross-income comparison invalid (see ASCOR spec)
-fh_a_electoral_process,FH_FIW,+,,"sub-category A: free/fair elections, honest administration, electoral laws",20.0,P1,True,
-fh_e_associational_rights,FH_FIW,+,,"sub-category E: assembly, civic/NGO freedom, trade unions",24.0,P1,True,
-fh_g_personal_autonomy,FH_FIW,+,,"sub-category G: movement, property, personal social freedoms, equality of opportunity - fills C22's residual-autonomy scope with an independent method",22.0,P1,True,
-fh_d_expression_belief,FH_FIW,+,,"sub-category D: media, religious, academic freedom + private discussion. P2 in C23 Media freedom (behind V-Dem media + CPJ). P2 (not P1) in C22 Civil liberties deliberately: C22 already holds 7 V-Dem CL metrics + Pew religious-freedom, so D's content largely overlaps - triangulation without diluting the core, which a P1 placement into an already-13-metric concept would do",23.0,P2,True,
-fh_d_expression_belief,FH_FIW,+,,"sub-category D: media, religious, academic freedom + private discussion. P2 in C23 Media freedom (behind V-Dem media + CPJ). P2 (not P1) in C22 Civil liberties deliberately: C22 already holds 7 V-Dem CL metrics + Pew religious-freedom, so D's content largely overlaps - triangulation without diluting the core, which a P1 placement into an already-13-metric concept would do",22.0,P2,True,
+fh_a_electoral_process,FH_FIW,+,,"sub-category A: free/fair elections, honest administration, electoral laws",20,P1,True,
+fh_e_associational_rights,FH_FIW,+,,"sub-category E: assembly, civic/NGO freedom, trade unions",24,P1,True,
+fh_g_personal_autonomy,FH_FIW,+,,"sub-category G: movement, property, personal social freedoms, equality of opportunity - fills C22's residual-autonomy scope with an independent method",22,P1,True,
+fh_d_expression_belief,FH_FIW,+,,"sub-category D: media, religious, academic freedom + private discussion. P2 in C23 Media freedom (behind V-Dem media + CPJ). P2 (not P1) in C22 Civil liberties deliberately: C22 already holds 7 V-Dem CL metrics + Pew religious-freedom, so D's content largely overlaps - triangulation without diluting the core, which a P1 placement into an already-13-metric concept would do",23,P2,True,
+fh_d_expression_belief,FH_FIW,+,,"sub-category D: media, religious, academic freedom + private discussion. P2 in C23 Media freedom (behind V-Dem media + CPJ). P2 (not P1) in C22 Civil liberties deliberately: C22 already holds 7 V-Dem CL metrics + Pew religious-freedom, so D's content largely overlaps - triangulation without diluting the core, which a P1 placement into an already-13-metric concept would do",22,P2,True,
 fh_a1,FH_FIW,+,,,,,False,component of a FH sub-category total (A electoral) - scored via the total
 fh_a2,FH_FIW,+,,,,,False,component of a FH sub-category total (A) - scored via the total
 fh_a3,FH_FIW,+,,,,,False,component of a FH sub-category total (A) - scored via the total
@@ -263,7 +263,7 @@ fh_g1,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via t
 fh_g2,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
 fh_g3,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
 fh_g4,FH_FIW,+,,,,,False,component of a FH sub-category total (G) - scored via the total
-ucdp_sb_intrastate_deaths_best,UCDP,-,"per-capita (/ wdi_population_total), log1p","civil-war/insurgency battle deaths - the observed-fatality leg of C2. Zero-filled census, 41 nonzero of 196 in 2024",2.0,P1,True,
+ucdp_sb_intrastate_deaths_best,UCDP,-,"log1p(deaths per 100k population): deaths / wdi_population_total * 100000, then log1p","civil-war/insurgency battle deaths - the observed-fatality leg of C2. Built in derive_metrics.derive_ucdp_percapita. Spec corrected from literal per-capita+log1p, which was a no-op (log1p of a ~1e-4 fraction is ~1e-4); per-100k puts the rate on an O(1-100) scale where log1p meaningfully compresses the heavy tail (Syria 2024 = 8.9/100k -> 2.29). Census zero-fill for absent countries, capped at real data year. 41 nonzero of 196 in 2024",2,P1,True,
 ucdp_sb_interstate_deaths_best,UCDP,,,,,,False,"interstate war = external aggression, not internal regime instability; scoring it in C2 would mark the victim of invasion as unstable (Ukraine is the file max). Inverts the construct"
 ucdp_sb_interstate_exists,UCDP,,,,,,False,interstate existence flag - see interstate_deaths
 ucdp_sb_deaths_best,UCDP,,,,,,False,combined state-based deaths; superseded by the intrastate split (removes interstate contamination)
@@ -277,8 +277,8 @@ ucdp_os_deaths_best,UCDP,,,,,,False,"one-sided violence against civilians overla
 ucdp_os_violence_exists,UCDP,,,,,,False,one-sided existence flag - see os_deaths
 ucdp_os_govt_killings_best,UCDP,,,,,,False,"government killings of civilians - a distinct state-violence signal, but the master routed UCDP away from C16; left on the table rather than overriding that placement"
 ucdp_total_orgvio_deaths_best,UCDP,,,,,,False,"rollup summing all three violence types, incl. the interstate/one-sided/non-state content excluded above on construct grounds"
-rti_total,RTI_RATING,+,,"de jure FOI legal-framework strength, 0-150. P1 in C25 Government transparency (home concept), P2 in C23 Media freedom. Fixed-anchor candidate. DE JURE ONLY - Afghanistan 139/150 illustrates rules-on-paper vs practice",25.0,P1,True,
-rti_total,RTI_RATING,+,,"de jure FOI legal-framework strength, 0-150. P1 in C25 Government transparency (home concept), P2 in C23 Media freedom. Fixed-anchor candidate. DE JURE ONLY - Afghanistan 139/150 illustrates rules-on-paper vs practice",23.0,P2,True,
+rti_total,RTI_RATING,+,,"de jure FOI legal-framework strength, 0-150. P1 in C25 Government transparency (home concept), P2 in C23 Media freedom. Fixed-anchor candidate. DE JURE ONLY - Afghanistan 139/150 illustrates rules-on-paper vs practice",25,P1,True,
+rti_total,RTI_RATING,+,,"de jure FOI legal-framework strength, 0-150. P1 in C25 Government transparency (home concept), P2 in C23 Media freedom. Fixed-anchor candidate. DE JURE ONLY - Afghanistan 139/150 illustrates rules-on-paper vs practice",23,P2,True,
 Right of Access,RTI_RATING,,,,,,False,component of rti_total (one coherent legal-quality construct; scored via the total)
 Scope,RTI_RATING,,,,,,False,component of rti_total
 Requesting Procedure,RTI_RATING,,,,,,False,component of rti_total
@@ -288,8 +288,8 @@ Sanctions & Protections,RTI_RATING,,,,,,False,component of rti_total
 Promotional Measures,RTI_RATING,,,,,,False,component of rti_total
 has_rti_law,RTI_RATING,,,,,,False,"metadata flag (142 law / 54 floored), not a score - feeds the S8 reliability layer so a floored no-law country carries that context rather than reading as measured-and-failed"
 rti_law_year,RTI_RATING,,,,,,False,"metadata - year the FOI law was enacted, not a governance score"
-fatf_effectiveness,FATF,+,"mean of the 11 Immediate Outcome numeric scores (IO1_num..IO11_num), 0-3","DE FACTO AML/CFT effectiveness - rare cross-country effectiveness measure. P1 (overweighted vs compliance): scarcer signal AND better discrimination (SD 0.58). Weakest globally on IO7 (ML prosecution), IO5 (legal-persons transparency), IO11 (TF sanctions) - the enforcement leg",9.0,P1,True,
-fatf_technical_compliance,FATF,+,"mean of the 40 Recommendation numeric scores (R1_num..R40_num), 0-3","DE JURE framework quality (FATF-standard compliance = laws on the books, not real-world compliance). P2 not P1: de jure discount + near-constant (mean 2.05, SD 0.37) so low discrimination. Corr 0.547 with effectiveness",9.0,P2,True,
+fatf_effectiveness,FATF,+,"mean of the 11 Immediate Outcome numeric scores (IO1_num..IO11_num), 0-3","DE FACTO AML/CFT effectiveness - rare cross-country effectiveness measure. P1 (overweighted vs compliance): scarcer signal AND better discrimination (SD 0.58). Weakest globally on IO7 (ML prosecution), IO5 (legal-persons transparency), IO11 (TF sanctions) - the enforcement leg",9,P1,True,
+fatf_technical_compliance,FATF,+,"mean of the 40 Recommendation numeric scores (R1_num..R40_num), 0-3","DE JURE framework quality (FATF-standard compliance = laws on the books, not real-world compliance). P2 not P1: de jure discount + near-constant (mean 2.05, SD 0.37) so low discrimination. Corr 0.547 with effectiveness",9,P2,True,
 R1_num,FATF,+,,,,,False,component of fatf_technical_compliance
 R2_num,FATF,+,,,,,False,component of fatf_technical_compliance
 R3_num,FATF,+,,,,,False,component of fatf_technical_compliance
@@ -400,7 +400,7 @@ report_date,FATF,,,,,,False,"identifier/metadata, not a governance score"
 assessment_body,FATF,,,,,,False,"identifier/metadata, not a governance score"
 n_upgrades,FATF,,,,,,False,"identifier/metadata, not a governance score"
 n_downgrades,FATF,,,,,,False,"identifier/metadata, not a governance score"
-brss_regstringency,WB_BRSS,+,,"de jure banking regulatory stringency, 0-1, weighted mean of 9 sub-constructs. Supplementary on STALENESS (2016 vintage) NOT peripherality - it is C9's only prudential-banking signal. Would be P2 if current. Fixed-anchor candidate",9.0,Sp,True,
+brss_regstringency,WB_BRSS,+,,"de jure banking regulatory stringency, 0-1, weighted mean of 9 sub-constructs. Supplementary on STALENESS (2016 vintage) NOT peripherality - it is C9's only prudential-banking signal. Would be P2 if current. Fixed-anchor candidate",9,Sp,True,
 supervisory_power,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
 supervisory_independence,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
 capital_stringency,WB_BRSS,+,,,,,False,component of brss_regstringency (one de jure banking-stringency construct; scored via the overall index)
@@ -413,10 +413,10 @@ supervisory_capacity,WB_BRSS,+,,,,,False,component of brss_regstringency (one de
 brss_coverage,WB_BRSS,,,,,,False,"metadata - per-country survey-question coverage fraction, not a score"
 brss_reliable,WB_BRSS,,,,,,False,"metadata reliability flag (coverage >=70%) - GATES whether a country's BRSS score is used (excludes sparse entries), does NOT attenuate the value (score-deflation-by-coverage was rejected as incoherent). Feeds S8"
 country_code,WB_BRSS,,,,,,False,identifier
-fr_num_rule_types,IMF_FISCAL_RULES,+,,breadth 0-4 (count of ER/RR/BBR/DR in force). De jure. Fills C8 fiscal-framework leg,8.0,P1,True,
-fr_max_legal_basis,IMF_FISCAL_RULES,+,,"strength: strongest legal footing among a country's rules, ordinal 1-5 (5=constitutional). MAX not mean - mean penalizes breadth",8.0,P1,True,
-fr_any_enforcement,IMF_FISCAL_RULES,+,,"teeth: any rule carries formal enforcement, binary. P2 - lower discrimination, partly implied by legal basis",8.0,P2,True,
-fr_compliance_mean,IMF_FISCAL_RULES,+,,"de facto adherence: mean over present rule types of compliance {0/0.5/1}, 2=partial->0.5 (2024 manual). COVERAGE-FLAGGED 54 ctry (~28pct). ENDOGENEITY: compliance partly reflects rule laxity - direction weaker than de jure legs, hence P2",8.0,P2,True,
+fr_num_rule_types,IMF_FISCAL_RULES,+,,breadth 0-4 (count of ER/RR/BBR/DR in force). De jure. Fills C8 fiscal-framework leg,8,P1,True,
+fr_max_legal_basis,IMF_FISCAL_RULES,+,,"strength: strongest legal footing among a country's rules, ordinal 1-5 (5=constitutional). MAX not mean - mean penalizes breadth",8,P1,True,
+fr_any_enforcement,IMF_FISCAL_RULES,+,,"teeth: any rule carries formal enforcement, binary. P2 - lower discrimination, partly implied by legal basis",8,P2,True,
+fr_compliance_mean,IMF_FISCAL_RULES,+,,"de facto adherence: mean over present rule types of compliance {0/0.5/1}, 2=partial->0.5 (2024 manual). COVERAGE-FLAGGED 54 ctry (~28pct). ENDOGENEITY: compliance partly reflects rule laxity - direction weaker than de jure legs, hence P2",8,P2,True,
 fr_mean_legal_basis,IMF_FISCAL_RULES,,,,,,False,"mean legal basis PENALIZES BREADTH: adding a weak rule lowers the mean, so a country with a strong rule scores lower for having a second weaker one. fr_max_legal_basis (firmest footing) + fr_num_rule_types (breadth) capture what mean muddles"
 fr_legal_basis_er,IMF_FISCAL_RULES,,,,,,False,"per-rule-type / feature component; scored via the derived cross-rule metrics (num_rule_types, max_legal_basis, any_enforcement, compliance_mean). Self-selected reference class if scored directly"
 fr_legal_basis_rr,IMF_FISCAL_RULES,,,,,,False,"per-rule-type / feature component; scored via the derived cross-rule metrics (num_rule_types, max_legal_basis, any_enforcement, compliance_mean). Self-selected reference class if scored directly"

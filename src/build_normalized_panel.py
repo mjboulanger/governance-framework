@@ -40,8 +40,17 @@ PROC = PROCESSED_DIR
 ZFAMILY = {"zscore", "log_zscore", "log1p_zscore"}
 # pre-transform label per method, for Tier-3 params (reconstructs raw -> transformed)
 PRE_TRANSFORM = {"zscore": "identity", "log_zscore": "log", "log1p_zscore": "log1p"}
-# census metrics whose absent spine country-years are a REAL 0 (D5a build note):
-CENSUS_ZEROFILL = {"climate_laws_cumulative", "wb_carbon_pricing_exists"}
+# census metrics whose absent spine country-years are a REAL 0 (D5a): absence =
+# event-did-not-occur / arrangement-does-not-exist, so spine-zero-fill them before
+# normalization. DERIVED from the missingness tags (single source of truth) rather
+# than hardcoded, so a metric tagged census cannot silently miss zero-fill (the
+# cpj_imprisoned bug: tagged census, but the old hardcoded literal omitted it, so
+# peaceful/incident-free countries were DROPPED instead of scored at their real 0).
+def _census_zerofill_set():
+    import os as _os
+    t = pd.read_csv(_os.path.join(PROCESSED_DIR, "metric_missingness_tags.csv"))
+    return set(t.loc[t["missingness_tag"] == "census", "metric"])
+CENSUS_ZEROFILL = _census_zerofill_set()
 
 
 def _load_vintage_years():
@@ -100,10 +109,24 @@ def _load_metric(metric, fname, spine, source_id):
     # 20yr window regardless; this just trims the emitted panel to 1990+)
     out = out[out["year"] >= FRAMEWORK_START_YEAR]
 
-    if metric in CENSUS_ZEROFILL:
-        # full spine x year grid, fill absent country-years with 0, KEEP present
-        # values (correct for cumulative: 0 before first law, actual after)
-        yrs = range(FRAMEWORK_START_YEAR, CURRENT_YEAR + 1)
+    if metric in CENSUS_ZEROFILL and len(out):
+        # Spine x year grid, fill absent country-years with 0 (census: absence = real 0).
+        # CRITICAL: cap the grid at the SOURCE'S real latest year, NOT CURRENT_YEAR. The
+        # grid must not fabricate zeros for years the source has not yet reported - doing
+        # so overwrites the latest-slice with a fake 0 (the UCDP bug: real conflict data
+        # ends 2024, fabricated 2025-26 zeros then won tail(1), scoring Syria as peaceful).
+        # A snapshot source (CPJ, real=2026) caps at 2026 and is unaffected; a lagging
+        # annual source (UCDP, real=2024) caps at 2024 so its true latest value survives.
+        # cap at the latest year this metric actually has a REAL (non-null) value.
+        # NOT out["year"].max(): derived_metrics.csv is a wide shared-index file, so a
+        # metric's rows carry OTHER metrics' years (where this metric is NaN); using the
+        # raw max would re-admit fabricated future zeros (coups real=2025 but wide index
+        # reaches 2026; UCDP real=2024 but index reaches 2026).
+        real = out[out["value"].notna()]
+        if not len(real):
+            return out
+        max_real_year = int(real["year"].max())
+        yrs = range(FRAMEWORK_START_YEAR, max_real_year + 1)
         grid = pd.MultiIndex.from_product([sorted(spine), yrs], names=["iso3", "year"]).to_frame(index=False)
         out = grid.merge(out, on=["iso3", "year"], how="left")
         out["value"] = out["value"].fillna(0.0)

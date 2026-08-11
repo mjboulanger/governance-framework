@@ -19,6 +19,9 @@ The 4 C5 composite indices are NOT built here - they need a composition decision
 import os
 import numpy as np
 import pandas as pd
+import sys
+sys.path.insert(0, os.path.dirname(__file__))
+from country_harmonization import add_iso3
 
 PROC = "data/processed"
 
@@ -255,6 +258,63 @@ def derive_wdi_indices():
     out["year"] = out["year"].astype(int)
     return out
 
+COUP_WINDOW = 10   # years; trailing-window count of coups (Step-4 parameter, metric_selection)
+
+
+def derive_pt_coups():
+    """pt_coup_successful / pt_coup_failed as 10-YEAR TRAILING WINDOW COUNTS per
+    country-year (metric_selection spec). Powell-Thyne stores one row per country-year
+    with per-year event counts; a single latest year is nearly always 0 for everyone
+    (coups are rare), so the raw per-year value carries almost no cross-country signal.
+    The trailing window is what discriminates coup-proneness (Mali 2024 window=4: the
+    2020+2021 coups). Powell-Thyne uses COW/GW codes, NOT iso3 - must harmonize.
+    Each country reindexed to a continuous year range so the window is a true 10-calendar-
+    year lookback (not last-10-rows, which would miscount across gaps)."""
+    d = pd.read_csv(os.path.join(PROC, "powell_thyne_clean.csv"))
+    d = add_iso3(d, filename_hint="powell_thyne_clean.csv")   # COW/GW -> iso3
+    d = d[d["iso3"].notna()][["iso3", "year", "pt_coup_successful", "pt_coup_failed"]].copy()
+    d["year"] = pd.to_numeric(d["year"], errors="coerce")
+    d = d.dropna(subset=["year"]).astype({"year": int})
+
+    def _window(df, col):
+        out = []
+        for iso, g in df.groupby("iso3", sort=False):
+            g = g.groupby("year")[col].sum()            # collapse any dup rows
+            full = pd.Series(0.0, index=range(int(g.index.min()), int(g.index.max()) + 1))
+            full.loc[g.index] = g.values
+            roll = full.rolling(window=COUP_WINDOW, min_periods=1).sum()
+            out.append(pd.DataFrame({"iso3": iso, "year": roll.index.astype(int),
+                                     col: roll.values}))
+        return pd.concat(out, ignore_index=True)
+
+    succ = _window(d, "pt_coup_successful")
+    fail = _window(d, "pt_coup_failed")
+    return succ.merge(fail, on=["iso3", "year"], how="outer")
+
+
+def derive_ucdp_percapita():
+    """ucdp_sb_intrastate_deaths_best as log1p(deaths per 100k population)
+    (metric_selection spec, corrected: the original 'per-capita, log1p' was a no-op
+    because log1p of a ~1e-4 fraction leaves it unchanged; per-100k puts the rate on an
+    O(1-100) scale where log1p meaningfully compresses the heavy tail - Syria 2024 =
+    8.9/100k -> 2.29, peaceful countries = 0). Size-normalizes (small-country conflict
+    is not dwarfed by a large country's) then tail-compresses. Needs WDI population."""
+    u = pd.read_csv(os.path.join(PROC, "ucdp_clean.csv"), low_memory=False)
+    u = add_iso3(u, filename_hint="ucdp_clean.csv")
+    u = u[u["iso3"].notna()][["iso3", "year", "ucdp_sb_intrastate_deaths_best"]].copy()
+    u["year"] = pd.to_numeric(u["year"], errors="coerce")
+    u = u.dropna(subset=["year"]).astype({"year": int})
+    w = pd.read_csv(os.path.join(PROC, "wdi_clean.csv"), low_memory=False)
+    w = add_iso3(w, filename_hint="wdi_clean.csv")
+    pop = w[w["iso3"].notna() & w["wdi_population_total"].notna()][
+        ["iso3", "year", "wdi_population_total"]].copy()
+    pop["year"] = pd.to_numeric(pop["year"], errors="coerce")
+    m = u.merge(pop, on=["iso3", "year"], how="left")
+    per100k = m["ucdp_sb_intrastate_deaths_best"] / m["wdi_population_total"] * 100000.0
+    m["ucdp_sb_intrastate_deaths_best"] = np.log1p(per100k)
+    # rows where population is missing -> per100k NaN -> drop (can't size-normalize)
+    return m[["iso3", "year", "ucdp_sb_intrastate_deaths_best"]].dropna(
+        subset=["ucdp_sb_intrastate_deaths_best"])
 
 def build_and_write():
     """Assemble all derived metrics onto the spine and write derived_metrics.csv.
@@ -262,7 +322,7 @@ def build_and_write():
     pefa_core_management + pefa_accountability, fatf_effectiveness + fatf_technical_compliance."""
     sp = _spine()  # iso3 + country_name, 213 rows
 
-    parts = [derive_vdem_regime_duration(), derive_pts_index(), derive_wb_carbon_revenue_pct_gdp(), derive_pefa_composites(), derive_fatf_composites(), derive_wdi_indices()]   # each: [iso3, year, <metric>...]
+    parts = [derive_vdem_regime_duration(), derive_pts_index(), derive_wb_carbon_revenue_pct_gdp(), derive_pefa_composites(), derive_fatf_composites(), derive_wdi_indices(), derive_pt_coups(), derive_ucdp_percapita()]   # each: [iso3, year, <metric>...]
 
     # outer-merge all derived parts on iso3+year, then left-join onto the spine's iso3
     from functools import reduce
