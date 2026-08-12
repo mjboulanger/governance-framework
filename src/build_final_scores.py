@@ -42,19 +42,8 @@ PENALTY_RELEVANT = {"endogenous", "ambiguous"}
 CATEGORY_WEIGHT_RULE = "equal"     # categories equal-weighted at the headline (explicit, locked)
 
 
-def build():
-    scores = pd.read_csv(os.path.join(PROC, "concept_scores.csv"))
-    contrib = pd.read_csv(os.path.join(PROC, "concept_contributions.csv"))
-    weights = pd.read_csv(os.path.join(PROC, "concept_weights.csv")).set_index("concept_id")
-    tags = pd.read_csv(os.path.join(PROC, "metric_missingness_tags.csv")).set_index(
-        "metric")["missingness_tag"].to_dict()
-    sel = pd.read_csv(os.path.join(PROC, "metric_selection.csv"))
-    # concept->category from the single source-of-truth (concept_sources.py), not a
-    # regenerable CSV copy: reading the .py directly makes drift structurally impossible.
-    from concept_sources import to_rows
-    csrc = pd.DataFrame(to_rows()).drop_duplicates("concept_id")
-    c2cat = csrc.set_index("concept_id")["category"].to_dict()
-
+def score_categories(scores, contrib, weights, tags, sel, c2cat):
+    """Category roll-up for one slice; year-agnostic given inputs. Returns (ca,cats,wide,contrib)."""
     # included metrics per concept (the penalty universe: all assigned scored metrics)
     sc = sel[sel["tier"].isin(["P1", "P2", "Sp"])].dropna(subset=["concept_id"]).copy()
     sc["concept_id"] = sc["concept_id"].astype(int)
@@ -123,7 +112,6 @@ def build():
             # carried context so the row is self-contained
             low_confidence=lc_map.get((iso, cid), False)))
     ca = pd.DataFrame(rows)
-    ca.to_csv(os.path.join(PROC, "concept_attribution.csv"), index=False)
 
     # category roll-up: weighted mean of penalized concept scores, weights = effective_weight
     cat_rows = []
@@ -135,16 +123,34 @@ def build():
             n_concepts=len(g), sum_effective_weight=wsum,
             category_weight_rule=CATEGORY_WEIGHT_RULE))
     cats = pd.DataFrame(cat_rows)
-    cats.to_csv(os.path.join(PROC, "category_scores.csv"), index=False)
 
     # WIDE headline
     wide = cats.pivot(index="iso3", columns="category", values="category_score").reset_index()
-    wide.to_csv(os.path.join(PROC, "final_scores.csv"), index=False)
 
     # re-emit contributions with the missingness tag on each metric row
     contrib["missingness_tag"] = contrib["metric"].map(tags)
-    contrib.to_csv(os.path.join(PROC, "concept_contributions.csv"), index=False)
 
+    return ca, cats, wide, contrib
+
+
+def build():
+    scores = pd.read_csv(os.path.join(PROC, "concept_scores.csv"))
+    contrib = pd.read_csv(os.path.join(PROC, "concept_contributions.csv"))
+    weights = pd.read_csv(os.path.join(PROC, "concept_weights.csv")).set_index("concept_id")
+    tags = pd.read_csv(os.path.join(PROC, "metric_missingness_tags.csv")).set_index(
+        "metric")["missingness_tag"].to_dict()
+    sel = pd.read_csv(os.path.join(PROC, "metric_selection.csv"))
+    # concept->category from the single source-of-truth (concept_sources.py), not a
+    # regenerable CSV copy: reading the .py directly makes drift structurally impossible.
+    from concept_sources import to_rows
+    csrc = pd.DataFrame(to_rows()).drop_duplicates("concept_id")
+    c2cat = csrc.set_index("concept_id")["category"].to_dict()
+
+    ca, cats, wide, contrib = score_categories(scores, contrib, weights, tags, sel, c2cat)
+    ca.to_csv(os.path.join(PROC, "concept_attribution.csv"), index=False)
+    cats.to_csv(os.path.join(PROC, "category_scores.csv"), index=False)
+    wide.to_csv(os.path.join(PROC, "final_scores.csv"), index=False)
+    contrib.to_csv(os.path.join(PROC, "concept_contributions.csv"), index=False)
     return ca, cats, wide
 
 
