@@ -18,7 +18,7 @@ CONCEPTS = {
  4:  dict(name="Government effectiveness and administrative quality", cats=[2], built=["WGI","VDEM"], outstanding=[], closed=[]),
  5:  dict(name="Service delivery and provision of public goods", cats=[2], built=["WDI","WB_HCI","FSI"], outstanding=[], closed=["WHO_GHO","UNESCO_UIS","UNDP_HDI"]),
  6:  dict(name="Regulatory quality", cats=[3,2], built=["WGI","WJP","FRASER_REG"], outstanding=[], closed=[]),
- 7:  dict(name="Public financial management", cats=[3], built=["PEFA","OBS"], outstanding=[], closed=[]),
+ # 7: RETIRED 2026-07-24 - "Public financial management" folded into Concept 8 (Macroeconomic and financial policy framework); PEFA+OBS now score under C8. ID permanently vacant, do NOT reuse (stable-ID rule).
  8:  dict(name="Macroeconomic and financial policy framework", cats=[3], built=["ROMELLI_CBI","IMF_FISCAL_RULES","IMF_AREAER","CHINN_ITO","IMF_IMAPP","IMF_AREAER_ERREGIME"], outstanding=[], closed=["DINCER_CB","REINHART_ROGOFF"]),
  9:  dict(name="Financial sector regulatory and supervisory quality", cats=[3], built=["FATF","WB_BRSS"], outstanding=["FSAP","BASEL_AML"], closed=[]),
  10: dict(name="State control over the economy", cats=[3], built=["VDEM"], outstanding=[], closed=[]),
