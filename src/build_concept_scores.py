@@ -107,16 +107,16 @@ def _score_bucketed(rows, buckets):
     return score, bucket_detail, metric_renorm
 
 
-def build():
-    panel = pd.read_csv(os.path.join(PROC, "normalized_panel.csv"))
-    sel = pd.read_csv(os.path.join(PROC, "metric_selection.csv"))
-    scored = sel[sel["tier"].isin(["P1", "P2", "Sp"])][
-        ["metric", "concept_id", "tier"]].dropna(subset=["concept_id"]).copy()
-    scored["concept_id"] = scored["concept_id"].astype(int)
-
+def score_slice(panel, sel, scored, as_of_year):
+    """Score one as-of-year slice: each metric's latest value at or before as_of_year,
+    rolled up to concept scores + contributions. Baseline is fixed (panel harmonized is
+    pre-normalized on the current baseline), so this gives fixed-baseline historical scores.
+    Returns (scores_df, contribs_df). Called by build() with CURRENT_YEAR for the live slice,
+    and by build_score_history.py per year."""
     # latest-available value per iso3 x metric (no recency-drop)
-    latest = panel.sort_values("year").groupby(["iso3", "metric"]).tail(1).copy()
-    latest["stale"] = (CURRENT_YEAR - latest["year"]) >= STALE_YEARS
+    latest = (panel[panel["year"] <= as_of_year]
+              .sort_values("year").groupby(["iso3", "metric"]).tail(1).copy())
+    latest["stale"] = (as_of_year - latest["year"]) >= STALE_YEARS
 
     # attach concept + tier (a metric can feed several concepts -> merge expands)
     lm = latest.merge(scored, on="metric", how="inner")
@@ -161,6 +161,16 @@ def build():
     scores = pd.DataFrame(score_rows).sort_values(["iso3", "concept_id"]).reset_index(drop=True)
     contribs = pd.DataFrame(contrib_rows).sort_values(
         ["iso3", "concept_id", "metric"]).reset_index(drop=True)
+    return scores, contribs, bucket_rows
+
+
+def build():
+    panel = pd.read_csv(os.path.join(PROC, "normalized_panel.csv"))
+    sel = pd.read_csv(os.path.join(PROC, "metric_selection.csv"))
+    scored = sel[sel["tier"].isin(["P1", "P2", "Sp"])][
+        ["metric", "concept_id", "tier"]].dropna(subset=["concept_id"]).copy()
+    scored["concept_id"] = scored["concept_id"].astype(int)
+    scores, contribs, bucket_rows = score_slice(panel, sel, scored, CURRENT_YEAR)
     buckets_df = pd.DataFrame(bucket_rows).sort_values(
         ["iso3", "concept_id", "bucket"]).reset_index(drop=True)
 

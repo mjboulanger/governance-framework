@@ -334,6 +334,13 @@ def build_and_write():
     dropped = sorted(set(merged.iso3) - set(sp.iso3))
 
     out_path = os.path.join(PROC, "derived_metrics.csv")
+    # drop exact-duplicate (iso3,year) rows from the outer-merge of derived parts
+    # (e.g. YEM 1990 unification-year: a predecessor polity produced an identical second row)
+    in_scope = in_scope.drop_duplicates().reset_index(drop=True)
+    _dup = in_scope.duplicated(subset=["iso3", "year"], keep=False)
+    if _dup.any():
+        raise ValueError("conflicting duplicate iso3-year rows in derived_metrics: %s"
+                         % in_scope[_dup][["iso3", "year"]].drop_duplicates().to_dict("records"))
     in_scope = in_scope.sort_values(["iso3", "year"]).reset_index(drop=True)
     try:
         in_scope.to_csv(out_path, index=False, lineterminator="\n")

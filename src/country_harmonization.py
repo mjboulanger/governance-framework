@@ -42,7 +42,7 @@ TERRITORIES = {"HKG","MAC","PRI","BMU","CYM","ABW","CUW","SXM","MAF","TCA","VGB"
 
 # Live-country codes that diverge from ISO3 (COW/GW alpha; legacy ISO) — verified
 CODE_OVERRIDES = {
-    "KOS": "XKX", "OWID_KOS": "XKX", "ROM": "ROU", "PSG": "PSE",
+    "KOS": "XKX", "OWID_KOS": "XKX", "ROM": "ROU",
     # Powell-Thyne COW/GW alpha (verified vs file's country_name, 2026-07-10):
     "CDI": "CIV", "TAZ": "TZA", "SRI": "LKA", "CAM": "KHM", "BFO": "BFA",
     "RUM": "ROU", "BOS": "BIH", "DRC": "COD", "DRV": "VNM", "GFR": "DEU",
@@ -52,7 +52,7 @@ CODE_OVERRIDES = {
 # Deliberate drops: defunct states, quasi-states, aggregates (verified legitimate)
 DROP_TOKENS = {
     "_EA", "CHI", "ANT", "DDR", "GDR", "CSK", "SUN", "YUG", "SCG", "YMD", "YPR",
-    "ZZB", "SML", "SOT", "HIC", "LIC", "LMC", "UMC",
+    "ZZB", "SML", "PSG", "SOT", "HIC", "LIC", "LMC", "UMC",
     # WDI regional/income aggregates:
     "AFE","AFW","ARB","CEB","CSS","EAP","EAR","EAS","ECA","ECS","EMU","EUU",
     "FCS","HPC","IBD","IBT","IDA","IDB","IDX","INX","LAC","LCN","LDC","LIE_X",
@@ -145,9 +145,16 @@ def resolve_iso3_code(token):
     return t if t in VALID else None
 
 
+DROP_NAMES = {"zanzibar", "somaliland", "south yemen",
+              "german democratic republic", "palestine/gaza",
+              "africa", "africa (un)"}
+
+
 def resolve_iso3_name(name):
     """Country name -> ISO3 or None. Overrides -> exact -> fuzzy -> strip-().-retry."""
     if not isinstance(name, str) or not name.strip():
+        return None
+    if name.strip().lower() in DROP_NAMES:
         return None
     k = name.strip().lower()
     if k in NAME_OVERRIDES:

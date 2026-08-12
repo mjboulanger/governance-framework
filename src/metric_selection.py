@@ -117,7 +117,7 @@ D = [
  dict(m="spi_pillar3_data_products",      s="IMF_SPI", d="", at=[], why="decomposition of spi_overall"),
  dict(m="spi_pillar4_data_sources",       s="IMF_SPI", d="", at=[], why="decomposition of spi_overall"),
  dict(m="spi_pillar5_data_infrastructure",s="IMF_SPI", d="", at=[], why="decomposition of spi_overall"),
- dict(m="imapp_breadth_total", s="IMF_IMAPP", d="+", at=[(8,"P1")],
+ dict(m="imapp_breadth_total", s="IMF_IMAPP", d="+", at=[(8,"P2")],
       note="cumulative-ever ratchet: breadth not quality (docs: Pakistan 15/16). Diluted - C8 is well populated"),
  dict(m="imapp_breadth_borrower_based",      s="IMF_IMAPP", d="", at=[], why="decomposition of imapp_breadth_total"),
  dict(m="imapp_breadth_capital_based",       s="IMF_IMAPP", d="", at=[], why="decomposition of imapp_breadth_total"),
