@@ -75,6 +75,33 @@ This document contains instructions for setting up the project on a new machine,
 
 ---
 
+## Building the dashboard
+
+The HTML dashboard is generated from the processed data and a template. Two build
+artifacts are **gitignored** (regenerable, large): `dashboard/dashboard_data.json`
+(~6MB) and `dashboard/dashboard.html` (~11MB). Everything needed to regenerate them
+is tracked. From a fresh clone, run two commands in order:
+
+```bash
+python src/build_dashboard_data.py    # reads data/processed/*.csv -> dashboard/dashboard_data.json
+python src/build_dashboard.py         # inlines the JSON + Plotly into the template -> dashboard/dashboard.html
+```
+
+- **`src/build_dashboard_data.py`** reads the current score/history/momentum/contribution/
+  coverage CSVs plus labels (`concept_sources.py`, `metric_dictionary.py`) and writes one
+  compact `dashboard_data.json`. Re-run it after any score/data regeneration.
+- **`src/build_dashboard.py`** reads `dashboard/dashboard_template.html` (tracked - the UI),
+  inlines the real `dashboard_data.json` and the Plotly JS bundle, and writes the
+  self-contained `dashboard/dashboard.html`. It opens offline on `file://` (no internet),
+  which is the target for restricted environments.
+- **Dependency:** the `plotly` Python package supplies the inlined JS
+  (`plotly.offline.get_plotlyjs()`); it is in the `governance-framework` conda env. No
+  separate Plotly download is needed.
+- To change the UI, edit `dashboard/dashboard_template.html` (tracked) and re-run
+  `build_dashboard.py`. The template carries a small embedded sample dataset so it can be
+  opened directly during development (with internet, for the CDN Plotly); the build step
+  replaces that sample with the full data and inlines Plotly for the shippable file.
+
 ## Data Update Instructions
 
 Run `print_stale_sources()` from `src/download_log.py` to identify sources needing refresh.
