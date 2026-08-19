@@ -55,6 +55,17 @@ def build():
     scored_cids = sorted(int(c[1:-6]) for c in cs.columns if c.endswith("_score"))
 
     countries = {}
+    # distinct-metric counts per country (total + per category) for the panel header.
+    # (country_coverage.metrics_present over-counts; use distinct metrics actually scoring.)
+    _con = pd.read_csv(os.path.join(PROC, "concept_contributions.csv"))
+    _con = _con[_con["present"] == True] if "present" in _con.columns else _con
+    _con = _con.copy()
+    _con["_cat"] = _con["concept_id"].map({cid: concept_cat.get(cid) for cid in scored_cids})
+    metric_counts = {}
+    for _iso, _g in _con.groupby("iso3"):
+        _by = {c: int(gg["metric"].nunique()) for c, gg in _g.groupby("_cat") if c}
+        metric_counts[_iso] = {"total": int(_g["metric"].nunique()), "by_cat": _by}
+
     for iso in fs.index:
         cats = {cat: _n(fs.loc[iso, cat]) for cat in CATEGORIES if cat in fs.columns}
         concepts = {}
@@ -76,6 +87,7 @@ def build():
             "name": cov.loc[iso, "country_name"] if iso in cov.index else iso,
             "terr": _b(cov.loc[iso, "is_territory"]) if iso in cov.index else False,
             "np": int(cov.loc[iso, "metrics_present"]) if iso in cov.index else 0,
+            "mc": metric_counts.get(iso, {"total": 0, "by_cat": {}}),
             "cat": cats,
             "con": concepts,
         }
@@ -135,10 +147,26 @@ def build():
             by_c[int(cid)] = rows
         contributions[iso] = by_c
 
+    # percentile bands (p25/p50/p75) for the radar, over SOVEREIGNS ONLY (exclude territories)
+    sov = cov[~cov["is_territory"].astype(bool)].index
+    pct = {"categories": {}, "concepts": {}}
+    for cat in CATEGORIES:
+        if cat in fs.columns:
+            v = fs.loc[fs.index.isin(sov), cat].dropna()
+            if len(v):
+                pct["categories"][cat] = {"p25": _n(v.quantile(.25)), "p50": _n(v.quantile(.50)), "p75": _n(v.quantile(.75))}
+    for cid in scored_cids:
+        col = "C%d_score" % cid
+        if col in cs.columns:
+            v = cs.loc[cs.index.isin(sov), col].dropna()
+            if len(v):
+                pct["concepts"][cid] = {"p25": _n(v.quantile(.25)), "p50": _n(v.quantile(.50)), "p75": _n(v.quantile(.75))}
+
     meta = {
         "concepts": {cid: {"name": concept_name.get(cid, "C%d" % cid),
                            "cat": concept_cat.get(cid, "")} for cid in scored_cids},
         "categories": CATEGORIES,
+        "percentiles": pct,
         "metrics": metrics_meta,
         "generated": pd.Timestamp.today().strftime("%Y-%m-%d"),
         "n_countries": len(countries),

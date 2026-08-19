@@ -22,7 +22,7 @@ import sys
 import numpy as np
 import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
-from config import PROCESSED_DIR, CURRENT_YEAR
+from config import PROCESSED_DIR, CURRENT_YEAR, write_csv
 
 PROC = PROCESSED_DIR
 DEAD_BAND = 0.010
@@ -94,7 +94,7 @@ def build_momentum():
 
 def write_momentum():
     m = build_momentum()
-    m.to_csv(os.path.join(PROC, "momentum.csv"), index=False)
+    write_csv(m, os.path.join(PROC, "momentum.csv"))
     return m
 
 

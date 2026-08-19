@@ -33,7 +33,7 @@ import numpy as np
 import pandas as pd
 import sys
 sys.path.insert(0, os.path.dirname(__file__))
-from config import PROCESSED_DIR
+from config import PROCESSED_DIR, write_csv
 
 PROC = PROCESSED_DIR
 PENALTY_THRESHOLD = 0.5
@@ -147,10 +147,10 @@ def build():
     c2cat = csrc.set_index("concept_id")["category"].to_dict()
 
     ca, cats, wide, contrib = score_categories(scores, contrib, weights, tags, sel, c2cat)
-    ca.to_csv(os.path.join(PROC, "concept_attribution.csv"), index=False)
-    cats.to_csv(os.path.join(PROC, "category_scores.csv"), index=False)
-    wide.to_csv(os.path.join(PROC, "final_scores.csv"), index=False)
-    contrib.to_csv(os.path.join(PROC, "concept_contributions.csv"), index=False)
+    write_csv(ca, os.path.join(PROC, "concept_attribution.csv"))
+    write_csv(cats, os.path.join(PROC, "category_scores.csv"))
+    write_csv(wide, os.path.join(PROC, "final_scores.csv"))
+    write_csv(contrib, os.path.join(PROC, "concept_contributions.csv"))
     return ca, cats, wide
 
 

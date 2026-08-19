@@ -30,7 +30,7 @@ import numpy as np
 import pandas as pd
 import sys
 sys.path.insert(0, os.path.dirname(__file__))
-from config import PROCESSED_DIR, CURRENT_YEAR
+from config import PROCESSED_DIR, CURRENT_YEAR, write_csv
 
 PROC = PROCESSED_DIR
 TIER_W = {"P1": 1.0, "P2": 0.5, "Sp": 0.0}
@@ -181,9 +181,9 @@ def build():
     lc.columns = ["C%d_lowconf" % c for c in lc.columns]
     wide = wide.join(lc).reset_index()
 
-    wide.to_csv(os.path.join(PROC, "concept_scores.csv"), index=False)
-    contribs.to_csv(os.path.join(PROC, "concept_contributions.csv"), index=False)
-    buckets_df.to_csv(os.path.join(PROC, "bucket_attribution.csv"), index=False)
+    write_csv(wide, os.path.join(PROC, "concept_scores.csv"))
+    write_csv(contribs, os.path.join(PROC, "concept_contributions.csv"))
+    write_csv(buckets_df, os.path.join(PROC, "bucket_attribution.csv"))
     return scores, contribs, wide, buckets_df
 
 

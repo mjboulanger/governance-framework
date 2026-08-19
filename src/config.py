@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -60,3 +61,16 @@ BROWSER_HEADERS = {
 # ============================================================
 ACLED_EMAIL = os.environ.get('ACLED_EMAIL', '')
 ACLED_PASSWORD = os.environ.get('ACLED_PASSWORD', '')
+
+
+# ============================================================
+# Deterministic CSV writer - byte-identical across machines.
+# %.10g strips float-repr noise (0.4913740000001 -> 0.491374), preserves precision,
+# no trailing-zero padding; LF endings. Route ALL processed-data writes through this.
+# ============================================================
+def write_csv(df, path, index=False):
+    """Write df to CSV deterministically (%.10g floats, LF endings)."""
+    try:
+        df.to_csv(path, index=index, float_format="%.10g", lineterminator="\n")
+    except TypeError:
+        df.to_csv(path, index=index, float_format="%.10g", line_terminator="\n")

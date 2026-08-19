@@ -1,1063 +1,1063 @@
 iso3,category,category_score,n_concepts,sum_effective_weight,category_weight_rule
-ABW,Accountability,0.503755868544601,1,1.0,equal
-ABW,Economic and fiscal governance,0.4972567196278448,5,3.75,equal
-ABW,Political foundations,0.5903148155673088,1,1.0,equal
-ABW,Rule of law,0.5931964573268922,1,1.0,equal
-ABW,State capacity,0.5254101987027181,3,3.0,equal
-AFG,Accountability,0.20404102871562693,7,7.0,equal
-AFG,Economic and fiscal governance,0.29403993451551375,5,4.0,equal
-AFG,Political foundations,0.19108457877571938,2,2.0,equal
-AFG,Rule of law,0.207293445500944,5,5.0,equal
-AFG,State capacity,0.24923009424012732,4,4.0,equal
-AGO,Accountability,0.3792951353603194,7,7.0,equal
-AGO,Economic and fiscal governance,0.3830512588080099,6,4.75,equal
-AGO,Political foundations,0.37667628757236604,2,2.0,equal
-AGO,Rule of law,0.39299884163182813,5,5.0,equal
-AGO,State capacity,0.3933933712820836,4,4.0,equal
-ALB,Accountability,0.5128518282274752,7,7.0,equal
-ALB,Economic and fiscal governance,0.5891247662501109,6,4.75,equal
-ALB,Political foundations,0.5109816904256211,2,2.0,equal
-ALB,Rule of law,0.4929860290841761,5,5.0,equal
-ALB,State capacity,0.528346454566265,4,4.0,equal
-AND,Accountability,0.6365565538136538,6,6.0,equal
-AND,Economic and fiscal governance,0.6234484294514631,4,3.25,equal
-AND,Political foundations,0.5993057658027088,1,1.0,equal
-AND,Rule of law,0.5974056768698753,3,3.0,equal
-AND,State capacity,0.5524716574889016,3,3.0,equal
-ARE,Accountability,0.2990105163260588,7,7.0,equal
-ARE,Economic and fiscal governance,0.5088983155178377,6,4.75,equal
-ARE,Political foundations,0.5118525092496942,2,2.0,equal
-ARE,Rule of law,0.5278307802204477,5,5.0,equal
-ARE,State capacity,0.635504600626823,4,4.0,equal
-ARG,Accountability,0.5482208723019386,7,7.0,equal
-ARG,Economic and fiscal governance,0.5027586118622759,6,4.75,equal
-ARG,Political foundations,0.5890635143221065,2,2.0,equal
-ARG,Rule of law,0.490128470432146,5,5.0,equal
-ARG,State capacity,0.5257892750238674,4,4.0,equal
-ARM,Accountability,0.5313608837410067,7,7.0,equal
-ARM,Economic and fiscal governance,0.5831432526504355,6,4.75,equal
-ARM,Political foundations,0.5278924294489085,2,2.0,equal
-ARM,Rule of law,0.47538876633674426,5,5.0,equal
-ARM,State capacity,0.5162635333224027,4,4.0,equal
-ASM,Accountability,0.503755868544601,1,1.0,equal
-ASM,Economic and fiscal governance,0.4281186394461512,2,1.5,equal
-ASM,Political foundations,0.587065867226459,1,1.0,equal
-ASM,Rule of law,0.9913446054750402,1,1.0,equal
-ASM,State capacity,0.56785110553655,2,2.0,equal
-ATG,Accountability,0.5939277480304886,6,6.0,equal
-ATG,Economic and fiscal governance,0.47059199480556396,5,3.75,equal
-ATG,Political foundations,0.6305909055351564,2,2.0,equal
-ATG,Rule of law,0.581693403139903,5,5.0,equal
-ATG,State capacity,0.5365661660224981,4,4.0,equal
-AUS,Accountability,0.6624752326770833,7,7.0,equal
-AUS,Economic and fiscal governance,0.6440704051112439,6,4.75,equal
-AUS,Political foundations,0.651281456318128,2,2.0,equal
-AUS,Rule of law,0.7202081616229075,5,5.0,equal
-AUS,State capacity,0.6852795001654793,4,4.0,equal
-AUT,Accountability,0.6389616364957769,7,7.0,equal
-AUT,Economic and fiscal governance,0.6533351346039947,6,4.75,equal
-AUT,Political foundations,0.6423441939904063,2,2.0,equal
-AUT,Rule of law,0.7027591722469002,5,5.0,equal
-AUT,State capacity,0.6682615017581763,4,4.0,equal
-AZE,Accountability,0.2563012093332624,7,7.0,equal
-AZE,Economic and fiscal governance,0.44588691159484456,6,4.75,equal
-AZE,Political foundations,0.422414143808968,2,2.0,equal
-AZE,Rule of law,0.32337776004545243,5,5.0,equal
-AZE,State capacity,0.48642765115930076,4,4.0,equal
-BDI,Accountability,0.28465624199933615,7,7.0,equal
-BDI,Economic and fiscal governance,0.3834427906408492,5,4.0,equal
-BDI,Political foundations,0.37611048192323693,2,2.0,equal
-BDI,Rule of law,0.3370405876973356,5,5.0,equal
-BDI,State capacity,0.36930257584025006,4,4.0,equal
-BEL,Accountability,0.6775922361283556,7,7.0,equal
-BEL,Economic and fiscal governance,0.6872769115855725,6,4.75,equal
-BEL,Political foundations,0.6435973784090698,2,2.0,equal
-BEL,Rule of law,0.7087680620396727,5,5.0,equal
-BEL,State capacity,0.6569427134911293,4,4.0,equal
-BEN,Accountability,0.4698806668613024,7,7.0,equal
-BEN,Economic and fiscal governance,0.49861412363880875,6,4.75,equal
-BEN,Political foundations,0.44334834897766207,2,2.0,equal
-BEN,Rule of law,0.5200916074035494,5,5.0,equal
-BEN,State capacity,0.4440032184802375,4,4.0,equal
-BFA,Accountability,0.35944085540305093,7,7.0,equal
-BFA,Economic and fiscal governance,0.43965330168872374,6,4.75,equal
-BFA,Political foundations,0.305263403867134,2,2.0,equal
-BFA,Rule of law,0.4285108107156872,5,5.0,equal
-BFA,State capacity,0.3936992045715444,4,4.0,equal
-BGD,Accountability,0.38987709048646785,7,7.0,equal
-BGD,Economic and fiscal governance,0.4385652121154373,6,4.75,equal
-BGD,Political foundations,0.303813454084219,2,2.0,equal
-BGD,Rule of law,0.401509324866287,5,5.0,equal
-BGD,State capacity,0.45346867792946466,4,4.0,equal
-BGR,Accountability,0.571274608997982,7,7.0,equal
-BGR,Economic and fiscal governance,0.572126080910329,6,4.75,equal
-BGR,Political foundations,0.5806205813912608,2,2.0,equal
-BGR,Rule of law,0.5144470299028312,5,5.0,equal
-BGR,State capacity,0.5690185242693399,4,4.0,equal
-BHR,Accountability,0.286262790328886,7,7.0,equal
-BHR,Economic and fiscal governance,0.4924632588651209,6,4.75,equal
-BHR,Political foundations,0.40678235319062983,2,2.0,equal
-BHR,Rule of law,0.4874033095899115,5,5.0,equal
-BHR,State capacity,0.4733446304221509,4,4.0,equal
-BHS,Accountability,0.594192943587816,6,6.0,equal
-BHS,Economic and fiscal governance,0.4662045227169024,5,3.75,equal
-BHS,Political foundations,0.6372285439914007,2,2.0,equal
-BHS,Rule of law,0.48241400853549676,5,5.0,equal
-BHS,State capacity,0.4970205120451935,4,4.0,equal
-BIH,Accountability,0.4874776714841223,7,7.0,equal
-BIH,Economic and fiscal governance,0.49063873946877207,6,4.75,equal
-BIH,Political foundations,0.47284243611095367,2,2.0,equal
-BIH,Rule of law,0.5141598149775061,5,5.0,equal
-BIH,State capacity,0.4411186530886604,4,4.0,equal
-BLR,Accountability,0.23720550475221747,7,7.0,equal
-BLR,Economic and fiscal governance,0.4021908665398846,6,4.75,equal
-BLR,Political foundations,0.465485784577067,2,2.0,equal
-BLR,Rule of law,0.3817873488978056,5,5.0,equal
-BLR,State capacity,0.5166599341061655,4,4.0,equal
-BLZ,Accountability,0.5832820167355447,6,6.0,equal
-BLZ,Economic and fiscal governance,0.4243582448896829,5,3.75,equal
-BLZ,Political foundations,0.5878239394905516,2,2.0,equal
-BLZ,Rule of law,0.4632121788049373,5,5.0,equal
-BLZ,State capacity,0.4458365556590884,4,4.0,equal
-BMU,Accountability,0.503755868544601,1,1.0,equal
-BMU,Economic and fiscal governance,0.4614462382540218,4,2.75,equal
-BMU,Political foundations,0.5752009693809541,1,1.0,equal
-BMU,Rule of law,0.3230676328502415,1,1.0,equal
-BMU,State capacity,0.6693540042990729,2,2.0,equal
-BOL,Accountability,0.5184002576719206,7,7.0,equal
-BOL,Economic and fiscal governance,0.4391192197399647,6,4.75,equal
-BOL,Political foundations,0.4464194002944025,2,2.0,equal
-BOL,Rule of law,0.3795922949648517,5,5.0,equal
-BOL,State capacity,0.463174729092673,4,4.0,equal
-BRA,Accountability,0.6203918918110848,7,7.0,equal
-BRA,Economic and fiscal governance,0.5575551982884519,6,4.75,equal
-BRA,Political foundations,0.527333204854457,2,2.0,equal
-BRA,Rule of law,0.48294310517932537,5,5.0,equal
-BRA,State capacity,0.5148072982141083,4,4.0,equal
-BRB,Accountability,0.5880046501922599,7,7.0,equal
-BRB,Economic and fiscal governance,0.4075318149543845,6,4.75,equal
-BRB,Political foundations,0.605785783446195,2,2.0,equal
-BRB,Rule of law,0.5981150966824511,5,5.0,equal
-BRB,State capacity,0.5282221794467028,4,4.0,equal
-BRN,Accountability,0.32676575847291045,6,6.0,equal
-BRN,Economic and fiscal governance,0.5488680988236235,5,3.75,equal
-BRN,Political foundations,0.5010805882655625,2,2.0,equal
-BRN,Rule of law,0.6654660196217975,4,4.0,equal
-BRN,State capacity,0.5784553955926737,4,4.0,equal
-BTN,Accountability,0.5397020440889456,7,7.0,equal
-BTN,Economic and fiscal governance,0.44350508220000384,6,4.75,equal
-BTN,Political foundations,0.522295677016511,2,2.0,equal
-BTN,Rule of law,0.5532061223160096,5,5.0,equal
-BTN,State capacity,0.5046776961028284,4,4.0,equal
-BWA,Accountability,0.531246977334568,7,7.0,equal
-BWA,Economic and fiscal governance,0.5060071117828847,6,4.75,equal
-BWA,Political foundations,0.5656968455218864,2,2.0,equal
-BWA,Rule of law,0.5623354867821527,5,5.0,equal
-BWA,State capacity,0.5437168542147405,4,4.0,equal
-CAF,Accountability,0.31152040460188024,7,7.0,equal
-CAF,Economic and fiscal governance,0.3928394743970402,6,4.75,equal
-CAF,Political foundations,0.34097281988153444,2,2.0,equal
-CAF,Rule of law,0.2859152537002941,5,5.0,equal
-CAF,State capacity,0.24103230018421745,4,4.0,equal
-CAN,Accountability,0.6473970273943727,7,7.0,equal
-CAN,Economic and fiscal governance,0.6124985123227354,6,4.75,equal
-CAN,Political foundations,0.6003178147548847,2,2.0,equal
-CAN,Rule of law,0.6729285243835913,5,5.0,equal
-CAN,State capacity,0.6610399038537788,4,4.0,equal
-CHE,Accountability,0.6923931169652865,7,7.0,equal
-CHE,Economic and fiscal governance,0.7122235490993297,6,4.75,equal
-CHE,Political foundations,0.68199841382289,2,2.0,equal
-CHE,Rule of law,0.7399324149527201,5,5.0,equal
-CHE,State capacity,0.66984064979864,4,4.0,equal
-CHL,Accountability,0.6588935259800481,7,7.0,equal
-CHL,Economic and fiscal governance,0.6252118371947595,6,4.75,equal
-CHL,Political foundations,0.5741632519867041,2,2.0,equal
-CHL,Rule of law,0.6027510221194194,5,5.0,equal
-CHL,State capacity,0.5889768196844478,4,4.0,equal
-CHN,Accountability,0.2594895143071751,7,7.0,equal
-CHN,Economic and fiscal governance,0.43545197968002486,6,4.75,equal
-CHN,Political foundations,0.42066462195514304,2,2.0,equal
-CHN,Rule of law,0.37898491287236025,5,5.0,equal
-CHN,State capacity,0.5046443800434988,4,4.0,equal
-CIV,Accountability,0.4579660883999201,7,7.0,equal
-CIV,Economic and fiscal governance,0.47240361155284577,6,4.75,equal
-CIV,Political foundations,0.43380661019434835,2,2.0,equal
-CIV,Rule of law,0.43745643604421575,5,5.0,equal
-CIV,State capacity,0.4153689933546578,4,4.0,equal
-CMR,Accountability,0.3232067078391959,7,7.0,equal
-CMR,Economic and fiscal governance,0.4244422879428682,6,4.75,equal
-CMR,Political foundations,0.35556935034098014,2,2.0,equal
-CMR,Rule of law,0.35329849372092015,5,5.0,equal
-CMR,State capacity,0.3857638057880813,4,4.0,equal
-COD,Accountability,0.36902677788261856,7,7.0,equal
-COD,Economic and fiscal governance,0.3587896081218817,6,4.75,equal
-COD,Political foundations,0.3203108138578661,2,2.0,equal
-COD,Rule of law,0.2752220927741565,5,5.0,equal
-COD,State capacity,0.2596022011518457,4,4.0,equal
-COG,Accountability,0.3281510065390702,7,7.0,equal
-COG,Economic and fiscal governance,0.31305810281306024,6,4.75,equal
-COG,Political foundations,0.43903936086113465,2,2.0,equal
-COG,Rule of law,0.34500552902432685,5,5.0,equal
-COG,State capacity,0.3269414226224608,4,4.0,equal
-COL,Accountability,0.5511795019992471,7,7.0,equal
-COL,Economic and fiscal governance,0.560133814881093,6,4.75,equal
-COL,Political foundations,0.44632056894535155,2,2.0,equal
-COL,Rule of law,0.45788296283678714,5,5.0,equal
-COL,State capacity,0.4986715682335275,4,4.0,equal
-COM,Accountability,0.37296729473752344,7,7.0,equal
-COM,Economic and fiscal governance,0.3559331234749077,6,4.75,equal
-COM,Political foundations,0.5325478937372268,2,2.0,equal
-COM,Rule of law,0.3323025455014543,5,5.0,equal
-COM,State capacity,0.3512106053952273,4,4.0,equal
-CPV,Accountability,0.5836995749087796,7,7.0,equal
-CPV,Economic and fiscal governance,0.4695205724910158,6,4.75,equal
-CPV,Political foundations,0.623443044014649,2,2.0,equal
-CPV,Rule of law,0.5633327245804356,5,5.0,equal
-CPV,State capacity,0.5027562477269315,4,4.0,equal
-CRI,Accountability,0.6545539272740861,7,7.0,equal
-CRI,Economic and fiscal governance,0.5964474593846005,6,4.75,equal
-CRI,Political foundations,0.6305976212482914,2,2.0,equal
-CRI,Rule of law,0.6100452367803183,5,5.0,equal
-CRI,State capacity,0.6104192762687024,4,4.0,equal
-CUB,Accountability,0.2617566176528708,7,7.0,equal
-CUB,Economic and fiscal governance,0.29190382777370466,6,4.75,equal
-CUB,Political foundations,0.5427843460008721,2,2.0,equal
-CUB,Rule of law,0.37873185475674404,5,5.0,equal
-CUB,State capacity,0.4632256229776204,4,4.0,equal
-CUW,Accountability,0.503755868544601,1,1.0,equal
-CUW,Economic and fiscal governance,0.3316489736953015,3,2.25,equal
-CUW,Political foundations,0.5457746478873239,1,1.0,equal
-CUW,Rule of law,0.1439210950080515,1,1.0,equal
-CUW,State capacity,0.5213092213533851,1,1.0,equal
-CYM,Accountability,0.503755868544601,1,1.0,equal
-CYM,Economic and fiscal governance,0.4251500507754926,4,2.75,equal
-CYM,Political foundations,0.5958116130192442,1,1.0,equal
-CYM,Rule of law,0.4015700483091787,1,1.0,equal
-CYM,State capacity,0.6491747611138591,2,2.0,equal
-CYP,Accountability,0.6017236999549246,7,7.0,equal
-CYP,Economic and fiscal governance,0.6402305677204397,6,4.75,equal
-CYP,Political foundations,0.5850957223107006,2,2.0,equal
-CYP,Rule of law,0.6304266081943667,5,5.0,equal
-CYP,State capacity,0.5571776999670877,4,4.0,equal
-CZE,Accountability,0.64757059599905,7,7.0,equal
-CZE,Economic and fiscal governance,0.6540627438220061,6,4.75,equal
-CZE,Political foundations,0.6059516886783609,2,2.0,equal
-CZE,Rule of law,0.6781085899803945,5,5.0,equal
-CZE,State capacity,0.6493719049324655,4,4.0,equal
-DEU,Accountability,0.692932843679442,7,7.0,equal
-DEU,Economic and fiscal governance,0.7271789637522423,6,4.75,equal
-DEU,Political foundations,0.6614467625205773,2,2.0,equal
-DEU,Rule of law,0.742105703111212,5,5.0,equal
-DEU,State capacity,0.69610918413728,4,4.0,equal
-DJI,Accountability,0.3428519205469162,7,7.0,equal
-DJI,Economic and fiscal governance,0.3753598411846125,6,4.75,equal
-DJI,Political foundations,0.4899512598761265,2,2.0,equal
-DJI,Rule of law,0.41188504367088424,5,5.0,equal
-DJI,State capacity,0.3645945065982762,4,4.0,equal
-DMA,Accountability,0.5503906760241927,6,6.0,equal
-DMA,Economic and fiscal governance,0.4577883312443951,5,3.75,equal
-DMA,Political foundations,0.5756430553719594,1,1.0,equal
-DMA,Rule of law,0.5286260236177138,5,5.0,equal
-DMA,State capacity,0.41839186601879247,3,3.0,equal
-DNK,Accountability,0.7159664491552481,7,7.0,equal
-DNK,Economic and fiscal governance,0.6757761637675801,6,4.75,equal
-DNK,Political foundations,0.6942828527324222,2,2.0,equal
-DNK,Rule of law,0.7859005782063075,5,5.0,equal
-DNK,State capacity,0.7080519426110311,4,4.0,equal
-DOM,Accountability,0.5429073167961799,7,7.0,equal
-DOM,Economic and fiscal governance,0.5488335155868683,6,4.75,equal
-DOM,Political foundations,0.5351925132675545,2,2.0,equal
-DOM,Rule of law,0.46918619218698837,5,5.0,equal
-DOM,State capacity,0.5167783061989363,4,4.0,equal
-DZA,Accountability,0.3315464770365426,7,7.0,equal
-DZA,Economic and fiscal governance,0.3177532724528631,6,4.75,equal
-DZA,Political foundations,0.47859592884992896,2,2.0,equal
-DZA,Rule of law,0.41193635600770023,5,5.0,equal
-DZA,State capacity,0.4562242731147651,4,4.0,equal
-ECU,Accountability,0.5037540994703226,7,7.0,equal
-ECU,Economic and fiscal governance,0.4988100598571754,6,4.75,equal
-ECU,Political foundations,0.46006396117019255,2,2.0,equal
-ECU,Rule of law,0.4021958357050619,5,5.0,equal
-ECU,State capacity,0.4678287172546898,4,4.0,equal
-EGY,Accountability,0.2835389472107622,7,7.0,equal
-EGY,Economic and fiscal governance,0.41043630786384994,6,4.75,equal
-EGY,Political foundations,0.4022618195534703,2,2.0,equal
-EGY,Rule of law,0.3593485329666301,5,5.0,equal
-EGY,State capacity,0.4956399158866438,4,4.0,equal
-ESP,Accountability,0.6266054752338099,7,7.0,equal
-ESP,Economic and fiscal governance,0.6818671937360458,6,4.75,equal
-ESP,Political foundations,0.5808147932120256,2,2.0,equal
-ESP,Rule of law,0.6706417328556027,5,5.0,equal
-ESP,State capacity,0.6481799128600486,4,4.0,equal
-EST,Accountability,0.6862833817457243,7,7.0,equal
-EST,Economic and fiscal governance,0.6775013436731816,6,4.75,equal
-EST,Political foundations,0.6163675527002228,2,2.0,equal
-EST,Rule of law,0.7099602045002167,5,5.0,equal
-EST,State capacity,0.6795072448701652,4,4.0,equal
-ETH,Accountability,0.3527316104360222,7,7.0,equal
-ETH,Economic and fiscal governance,0.34295117910926276,6,4.75,equal
-ETH,Political foundations,0.3520592444428719,2,2.0,equal
-ETH,Rule of law,0.34803121066850695,5,5.0,equal
-ETH,State capacity,0.31548241713716824,4,4.0,equal
-FIN,Accountability,0.6912802805145156,7,7.0,equal
-FIN,Economic and fiscal governance,0.6615286504373562,6,4.75,equal
-FIN,Political foundations,0.6786378163511705,2,2.0,equal
-FIN,Rule of law,0.7336323358007406,5,5.0,equal
-FIN,State capacity,0.7016104625122613,4,4.0,equal
-FJI,Accountability,0.5321571325587348,7,7.0,equal
-FJI,Economic and fiscal governance,0.5071085100714123,6,4.75,equal
-FJI,Political foundations,0.5058385774965355,2,2.0,equal
-FJI,Rule of law,0.48887212677457387,5,5.0,equal
-FJI,State capacity,0.512063196223874,4,4.0,equal
-FRA,Accountability,0.6430604561937352,7,7.0,equal
-FRA,Economic and fiscal governance,0.6992781030641256,6,4.75,equal
-FRA,Political foundations,0.6056079487099313,2,2.0,equal
-FRA,Rule of law,0.6852264282302792,5,5.0,equal
-FRA,State capacity,0.651173133929633,4,4.0,equal
-FRO,Accountability,0.503755868544601,1,1.0,equal
-FRO,Economic and fiscal governance,0.2407932090154351,1,0.5,equal
-FRO,Political foundations,0.5457746478873239,1,1.0,equal
-FRO,State capacity,0.6965532260527731,1,1.0,equal
-FSM,Accountability,0.558757124994682,6,6.0,equal
-FSM,Economic and fiscal governance,0.33466143376010776,4,3.0,equal
-FSM,Political foundations,0.6046834394252749,2,2.0,equal
-FSM,Rule of law,0.6662061418205772,3,3.0,equal
-FSM,State capacity,0.44028947381450584,4,4.0,equal
-GAB,Accountability,0.43404739670319453,7,7.0,equal
-GAB,Economic and fiscal governance,0.36462671139125985,6,4.75,equal
-GAB,Political foundations,0.4295236578143823,2,2.0,equal
-GAB,Rule of law,0.4619148389071889,5,5.0,equal
-GAB,State capacity,0.4203959069403192,4,4.0,equal
-GBR,Accountability,0.6250831337257142,7,7.0,equal
-GBR,Economic and fiscal governance,0.6698283315297011,6,4.75,equal
-GBR,Political foundations,0.545191615984544,2,2.0,equal
-GBR,Rule of law,0.6778685626494361,5,5.0,equal
-GBR,State capacity,0.644596894730686,4,4.0,equal
-GEO,Accountability,0.46590101376324006,7,7.0,equal
-GEO,Economic and fiscal governance,0.5815624271147977,6,4.75,equal
-GEO,Political foundations,0.4601411003794706,2,2.0,equal
-GEO,Rule of law,0.5080381833313518,5,5.0,equal
-GEO,State capacity,0.5201727861053222,4,4.0,equal
-GHA,Accountability,0.5993660256748268,7,7.0,equal
-GHA,Economic and fiscal governance,0.505869300379221,6,4.75,equal
-GHA,Political foundations,0.5463971143809974,2,2.0,equal
-GHA,Rule of law,0.5279119499889968,5,5.0,equal
-GHA,State capacity,0.4772019439619596,4,4.0,equal
-GIB,Accountability,0.503755868544601,1,1.0,equal
-GIB,Economic and fiscal governance,0.40542667494749807,2,1.25,equal
-GIB,Political foundations,0.5457746478873239,1,1.0,equal
-GIB,Rule of law,0.9913446054750402,1,1.0,equal
-GIB,State capacity,0.6386361018682248,1,1.0,equal
-GIN,Accountability,0.37444678771683215,7,7.0,equal
-GIN,Economic and fiscal governance,0.3920675394552833,6,4.75,equal
-GIN,Political foundations,0.3795822484918633,2,2.0,equal
-GIN,Rule of law,0.3278638278366704,5,5.0,equal
-GIN,State capacity,0.31807569694897775,4,4.0,equal
-GMB,Accountability,0.5367408842780811,7,7.0,equal
-GMB,Economic and fiscal governance,0.4186341371367914,6,4.75,equal
-GMB,Political foundations,0.5137427447092305,2,2.0,equal
-GMB,Rule of law,0.5416522803583694,5,5.0,equal
-GMB,State capacity,0.44104484668031285,4,4.0,equal
-GNB,Accountability,0.42083358145679023,7,7.0,equal
-GNB,Economic and fiscal governance,0.38883690369267565,6,4.75,equal
-GNB,Political foundations,0.38786334947816065,2,2.0,equal
-GNB,Rule of law,0.38002134703951806,5,5.0,equal
-GNB,State capacity,0.324299373668122,4,4.0,equal
-GNQ,Accountability,0.24927008650393925,7,7.0,equal
-GNQ,Economic and fiscal governance,0.2813983707444786,6,4.75,equal
-GNQ,Political foundations,0.4269472424440801,2,2.0,equal
-GNQ,Rule of law,0.29943708456764134,5,5.0,equal
-GNQ,State capacity,0.3483052552475593,4,4.0,equal
-GRC,Accountability,0.580007778894646,7,7.0,equal
-GRC,Economic and fiscal governance,0.6345216840749287,6,4.75,equal
-GRC,Political foundations,0.5919711239101846,2,2.0,equal
-GRC,Rule of law,0.5817020803098337,5,5.0,equal
-GRC,State capacity,0.58144006787573,4,4.0,equal
-GRD,Accountability,0.5651640859600363,6,6.0,equal
-GRD,Economic and fiscal governance,0.43930999756495387,5,3.75,equal
-GRD,Political foundations,0.599715566745015,2,2.0,equal
-GRD,Rule of law,0.5248702961576156,5,5.0,equal
-GRD,State capacity,0.48822539969431616,4,4.0,equal
-GRL,Accountability,0.503755868544601,1,1.0,equal
-GRL,Economic and fiscal governance,0.5574132101140787,3,2.5,equal
-GRL,Political foundations,0.586539264902644,1,1.0,equal
-GRL,Rule of law,0.3540660225442834,1,1.0,equal
-GRL,State capacity,0.5747565214897543,3,3.0,equal
-GTM,Accountability,0.5241741005553283,7,7.0,equal
-GTM,Economic and fiscal governance,0.5654799561797046,6,4.75,equal
-GTM,Political foundations,0.4902258100404584,2,2.0,equal
-GTM,Rule of law,0.4141404291855088,5,5.0,equal
-GTM,State capacity,0.4651644422534602,4,4.0,equal
-GUM,Accountability,0.503755868544601,1,1.0,equal
-GUM,Economic and fiscal governance,0.43019052917864276,2,1.5,equal
-GUM,Political foundations,0.5761093413409857,1,1.0,equal
-GUM,Rule of law,0.4047906602254428,1,1.0,equal
-GUM,State capacity,0.6663624508253556,2,2.0,equal
-GUY,Accountability,0.49203224891414926,7,7.0,equal
-GUY,Economic and fiscal governance,0.4672646418829645,6,4.75,equal
-GUY,Political foundations,0.5070873112350098,2,2.0,equal
-GUY,Rule of law,0.48814143392814274,5,5.0,equal
-GUY,State capacity,0.4511879709463675,4,4.0,equal
-HKG,Accountability,0.36700116256649135,7,7.0,equal
-HKG,Economic and fiscal governance,0.6231657649426172,6,4.75,equal
-HKG,Political foundations,0.5187265784366585,2,2.0,equal
-HKG,Rule of law,0.6412949303114897,5,5.0,equal
-HKG,State capacity,0.4649877469022561,4,4.0,equal
-HND,Accountability,0.4845008781176361,7,7.0,equal
-HND,Economic and fiscal governance,0.5045382396840646,6,4.75,equal
-HND,Political foundations,0.4691209696939548,2,2.0,equal
-HND,Rule of law,0.41505543763626723,5,5.0,equal
-HND,State capacity,0.41035490781144357,4,4.0,equal
-HRV,Accountability,0.5912613919346724,7,7.0,equal
-HRV,Economic and fiscal governance,0.5585266475228472,6,4.75,equal
-HRV,Political foundations,0.5876120785273647,2,2.0,equal
-HRV,Rule of law,0.6078282212426709,5,5.0,equal
-HRV,State capacity,0.58211193124543,4,4.0,equal
-HTI,Accountability,0.4017400489692386,7,7.0,equal
-HTI,Economic and fiscal governance,0.4021327204197984,6,4.75,equal
-HTI,Political foundations,0.3169013856074663,2,2.0,equal
-HTI,Rule of law,0.3136411452973759,5,5.0,equal
-HTI,State capacity,0.263869668653839,4,4.0,equal
-HUN,Accountability,0.4567719513503653,7,7.0,equal
-HUN,Economic and fiscal governance,0.5347240562634162,6,4.75,equal
-HUN,Political foundations,0.5334941330892504,2,2.0,equal
-HUN,Rule of law,0.5114210637680594,5,5.0,equal
-HUN,State capacity,0.6168730319572941,4,4.0,equal
-IDN,Accountability,0.48585229579958583,7,7.0,equal
-IDN,Economic and fiscal governance,0.5077382644125721,6,4.75,equal
-IDN,Political foundations,0.4048498827307479,2,2.0,equal
-IDN,Rule of law,0.44011025994786496,5,5.0,equal
-IDN,State capacity,0.5204189667383692,4,4.0,equal
-IMN,Accountability,0.503755868544601,1,1.0,equal
-IMN,Economic and fiscal governance,0.3566610148329325,2,1.25,equal
-IMN,Political foundations,0.5457746478873239,1,1.0,equal
-IMN,Rule of law,0.9913446054750402,1,1.0,equal
-IMN,State capacity,0.6779748782335475,1,1.0,equal
-IND,Accountability,0.4400143924290347,7,7.0,equal
-IND,Economic and fiscal governance,0.47963569360367175,6,4.75,equal
-IND,Political foundations,0.4087596169063833,2,2.0,equal
-IND,Rule of law,0.44341910083361463,5,5.0,equal
-IND,State capacity,0.5002748104322025,4,4.0,equal
-IRL,Accountability,0.6942615637971994,7,7.0,equal
-IRL,Economic and fiscal governance,0.6874082214200969,6,4.75,equal
-IRL,Political foundations,0.6883016238103892,2,2.0,equal
-IRL,Rule of law,0.7453262492865259,5,5.0,equal
-IRL,State capacity,0.6714592045035632,4,4.0,equal
-IRN,Accountability,0.3071210354409077,7,7.0,equal
-IRN,Economic and fiscal governance,0.2884696800257397,5,4.0,equal
-IRN,Political foundations,0.3163865640275215,2,2.0,equal
-IRN,Rule of law,0.3564593969692601,5,5.0,equal
-IRN,State capacity,0.47336723491821714,4,4.0,equal
-IRQ,Accountability,0.4070693995914774,7,7.0,equal
-IRQ,Economic and fiscal governance,0.3823378364434465,6,4.75,equal
-IRQ,Political foundations,0.347692521730611,2,2.0,equal
-IRQ,Rule of law,0.36806344903424143,5,5.0,equal
-IRQ,State capacity,0.38805501482781635,4,4.0,equal
-ISL,Accountability,0.6487249856308511,7,7.0,equal
-ISL,Economic and fiscal governance,0.5659743303044485,6,4.75,equal
-ISL,Political foundations,0.6906753076799752,2,2.0,equal
-ISL,Rule of law,0.7273089336731008,5,5.0,equal
-ISL,State capacity,0.6863090754241367,4,4.0,equal
-ISR,Accountability,0.5536671367059409,7,7.0,equal
-ISR,Economic and fiscal governance,0.639025772120907,6,4.75,equal
-ISR,Political foundations,0.4121908003919009,2,2.0,equal
-ISR,Rule of law,0.6043324703526897,5,5.0,equal
-ISR,State capacity,0.6364897289359545,4,4.0,equal
-ITA,Accountability,0.6261284909250631,7,7.0,equal
-ITA,Economic and fiscal governance,0.6574238092320055,6,4.75,equal
-ITA,Political foundations,0.6301897816948148,2,2.0,equal
-ITA,Rule of law,0.6079684372177793,5,5.0,equal
-ITA,State capacity,0.5963382272991341,4,4.0,equal
-JAM,Accountability,0.6033607798395914,7,7.0,equal
-JAM,Economic and fiscal governance,0.48559960879366315,6,4.75,equal
-JAM,Political foundations,0.5808410148525872,2,2.0,equal
-JAM,Rule of law,0.557002990438264,5,5.0,equal
-JAM,State capacity,0.5282639908861473,4,4.0,equal
-JOR,Accountability,0.45536894457796123,7,7.0,equal
-JOR,Economic and fiscal governance,0.5586418863836167,6,4.75,equal
-JOR,Political foundations,0.4847914545249038,2,2.0,equal
-JOR,Rule of law,0.5433606561839703,5,5.0,equal
-JOR,State capacity,0.5440460322347644,4,4.0,equal
-JPN,Accountability,0.6468277384992451,7,7.0,equal
-JPN,Economic and fiscal governance,0.6666750734712359,6,4.75,equal
-JPN,Political foundations,0.6809284064998575,2,2.0,equal
-JPN,Rule of law,0.7127523863995713,5,5.0,equal
-JPN,State capacity,0.671607530274374,4,4.0,equal
-KAZ,Accountability,0.38176119319254403,7,7.0,equal
-KAZ,Economic and fiscal governance,0.5258166686314799,6,4.75,equal
-KAZ,Political foundations,0.465756290166131,2,2.0,equal
-KAZ,Rule of law,0.42189026883572306,5,5.0,equal
-KAZ,State capacity,0.5431190052579993,4,4.0,equal
-KEN,Accountability,0.5349427788746632,7,7.0,equal
-KEN,Economic and fiscal governance,0.47991267677171523,6,4.75,equal
-KEN,Political foundations,0.38912041299823996,2,2.0,equal
-KEN,Rule of law,0.44707716133881786,5,5.0,equal
-KEN,State capacity,0.4474287744641494,4,4.0,equal
-KGZ,Accountability,0.40179352105026006,7,7.0,equal
-KGZ,Economic and fiscal governance,0.46119565896755366,6,4.75,equal
-KGZ,Political foundations,0.4769362451798882,2,2.0,equal
-KGZ,Rule of law,0.39668840109818004,5,5.0,equal
-KGZ,State capacity,0.4992161482209874,4,4.0,equal
-KHM,Accountability,0.2711071078419714,7,7.0,equal
-KHM,Economic and fiscal governance,0.4485870833875617,6,4.75,equal
-KHM,Political foundations,0.4419545050083701,2,2.0,equal
-KHM,Rule of law,0.31160562832735117,5,5.0,equal
-KHM,State capacity,0.3828461233201824,4,4.0,equal
-KIR,Accountability,0.5851879564858942,6,6.0,equal
-KIR,Economic and fiscal governance,0.3248142231313747,4,3.0,equal
-KIR,Political foundations,0.5864401349555344,1,1.0,equal
-KIR,Rule of law,0.5288095629342832,3,3.0,equal
-KIR,State capacity,0.39723728342145564,3,3.0,equal
-KNA,Accountability,0.6198807173362775,6,6.0,equal
-KNA,Economic and fiscal governance,0.41381477294299807,5,3.75,equal
-KNA,Political foundations,0.5704827996190082,1,1.0,equal
-KNA,Rule of law,0.5627077546839715,5,5.0,equal
-KNA,State capacity,0.5298780588220806,3,3.0,equal
-KOR,Accountability,0.6431330664351923,7,7.0,equal
-KOR,Economic and fiscal governance,0.638743506394951,6,4.75,equal
-KOR,Political foundations,0.6124171881603757,2,2.0,equal
-KOR,Rule of law,0.6691128199794563,5,5.0,equal
-KOR,State capacity,0.6796583737124136,4,4.0,equal
-KWT,Accountability,0.41246287353836236,7,7.0,equal
-KWT,Economic and fiscal governance,0.4696076738149952,6,4.75,equal
-KWT,Political foundations,0.5036042724827151,2,2.0,equal
-KWT,Rule of law,0.5483755883445156,5,5.0,equal
-KWT,State capacity,0.5481625615806686,4,4.0,equal
-LAO,Accountability,0.29290924649385736,7,7.0,equal
-LAO,Economic and fiscal governance,0.35250769928305126,6,4.75,equal
-LAO,Political foundations,0.44380110325640904,2,2.0,equal
-LAO,Rule of law,0.37044866414252875,5,5.0,equal
-LAO,State capacity,0.4273795406621399,4,4.0,equal
-LBN,Accountability,0.45595864747978065,7,7.0,equal
-LBN,Economic and fiscal governance,0.44311077759250317,6,4.75,equal
-LBN,Political foundations,0.3829387766882963,2,2.0,equal
-LBN,Rule of law,0.39199573101018725,5,5.0,equal
-LBN,State capacity,0.342908944227255,4,4.0,equal
-LBR,Accountability,0.5207543868287958,7,7.0,equal
-LBR,Economic and fiscal governance,0.4093234850378186,6,4.75,equal
-LBR,Political foundations,0.5269805067468056,2,2.0,equal
-LBR,Rule of law,0.4334370766202403,5,5.0,equal
-LBR,State capacity,0.35129027583311595,4,4.0,equal
-LBY,Accountability,0.3993664989627206,7,7.0,equal
-LBY,Economic and fiscal governance,0.2656296175228663,5,4.0,equal
-LBY,Political foundations,0.35910544904523733,2,2.0,equal
-LBY,Rule of law,0.3618874340685109,5,5.0,equal
-LBY,State capacity,0.26158169979120893,4,4.0,equal
-LCA,Accountability,0.5694915295033253,6,6.0,equal
-LCA,Economic and fiscal governance,0.4222890629153995,5,3.75,equal
-LCA,Political foundations,0.5706637148254443,1,1.0,equal
-LCA,Rule of law,0.5593268570641424,5,5.0,equal
-LCA,State capacity,0.5100764230765789,3,3.0,equal
-LIE,Accountability,0.6025844458801669,6,6.0,equal
-LIE,Economic and fiscal governance,0.741908308217222,3,2.25,equal
-LIE,Political foundations,0.6009288760891954,1,1.0,equal
-LIE,Rule of law,0.6793424909803946,3,3.0,equal
-LIE,State capacity,0.6437363099099919,3,3.0,equal
-LKA,Accountability,0.5491632384220465,7,7.0,equal
-LKA,Economic and fiscal governance,0.46558297210192007,6,4.75,equal
-LKA,Political foundations,0.491162083570563,2,2.0,equal
-LKA,Rule of law,0.5068775015508786,5,5.0,equal
-LKA,State capacity,0.4942750838925726,4,4.0,equal
-LSO,Accountability,0.5296352738662032,7,7.0,equal
-LSO,Economic and fiscal governance,0.4428711765539091,6,4.75,equal
-LSO,Political foundations,0.5607331531848072,2,2.0,equal
-LSO,Rule of law,0.5190602329690954,5,5.0,equal
-LSO,State capacity,0.4167233170902518,4,4.0,equal
-LTU,Accountability,0.6344229658305609,7,7.0,equal
-LTU,Economic and fiscal governance,0.7019007014073518,6,4.75,equal
-LTU,Political foundations,0.6301977147543698,2,2.0,equal
-LTU,Rule of law,0.6582971684739342,5,5.0,equal
-LTU,State capacity,0.6366446247523525,4,4.0,equal
-LUX,Accountability,0.6939198500095747,7,7.0,equal
-LUX,Economic and fiscal governance,0.7464789692633149,6,4.75,equal
-LUX,Political foundations,0.6760093425555096,2,2.0,equal
-LUX,Rule of law,0.7368144373681911,5,5.0,equal
-LUX,State capacity,0.6864937333802948,4,4.0,equal
-LVA,Accountability,0.6405383751908433,7,7.0,equal
-LVA,Economic and fiscal governance,0.736397035954203,6,4.75,equal
-LVA,Political foundations,0.578709037295112,2,2.0,equal
-LVA,Rule of law,0.6734577756740526,5,5.0,equal
-LVA,State capacity,0.6567108333561141,4,4.0,equal
-MAC,Accountability,0.5921216559109634,2,2.0,equal
-MAC,Economic and fiscal governance,0.5586807813382768,5,3.75,equal
-MAC,Political foundations,0.578682337857256,1,1.0,equal
-MAC,Rule of law,0.9160628019323672,1,1.0,equal
-MAC,State capacity,0.5649107042535618,3,3.0,equal
-MAF,Accountability,0.503755868544601,1,1.0,equal
-MAF,Economic and fiscal governance,0.0205399061032863,1,0.5,equal
-MAF,Political foundations,0.5457746478873239,1,1.0,equal
-MAF,Rule of law,0.0847423510466989,1,1.0,equal
-MAF,State capacity,0.6699282193236638,1,1.0,equal
-MAR,Accountability,0.4533981108809123,7,7.0,equal
-MAR,Economic and fiscal governance,0.49327849662703277,6,4.75,equal
-MAR,Political foundations,0.4493078786607594,2,2.0,equal
-MAR,Rule of law,0.4627270833563692,5,5.0,equal
-MAR,State capacity,0.49053590390231533,4,4.0,equal
-MCO,Accountability,0.5928593324282754,6,6.0,equal
-MCO,Economic and fiscal governance,0.5040128396207961,3,2.25,equal
-MCO,Political foundations,0.5864630263162028,1,1.0,equal
-MCO,Rule of law,0.8245052052277292,2,2.0,equal
-MCO,State capacity,0.5941964727054477,3,3.0,equal
-MDA,Accountability,0.5331009371355815,7,7.0,equal
-MDA,Economic and fiscal governance,0.5363262168749158,6,4.75,equal
-MDA,Political foundations,0.5443612990773457,2,2.0,equal
-MDA,Rule of law,0.5172823057046501,5,5.0,equal
-MDA,State capacity,0.5453961263804317,4,4.0,equal
-MDG,Accountability,0.4270866348435443,7,7.0,equal
-MDG,Economic and fiscal governance,0.40254587788038915,6,4.75,equal
-MDG,Political foundations,0.45001787304929625,2,2.0,equal
-MDG,Rule of law,0.3677444899503312,5,5.0,equal
-MDG,State capacity,0.32269814386022927,4,4.0,equal
-MDV,Accountability,0.49836331500046344,7,7.0,equal
-MDV,Economic and fiscal governance,0.40374832744030975,6,4.75,equal
-MDV,Political foundations,0.49306973087023154,2,2.0,equal
-MDV,Rule of law,0.5180013414159627,5,5.0,equal
-MDV,State capacity,0.5224395232039615,4,4.0,equal
-MEX,Accountability,0.46371201622137,7,7.0,equal
-MEX,Economic and fiscal governance,0.5336856122788527,6,4.75,equal
-MEX,Political foundations,0.45108612260449343,2,2.0,equal
-MEX,Rule of law,0.35505568039353363,5,5.0,equal
-MEX,State capacity,0.499683232758512,4,4.0,equal
-MHL,Accountability,0.5728011421140512,6,6.0,equal
-MHL,Economic and fiscal governance,0.444932681843626,4,3.25,equal
-MHL,Political foundations,0.5880841581290752,1,1.0,equal
-MHL,Rule of law,0.561239930360346,3,3.0,equal
-MHL,State capacity,0.41377284281819265,3,3.0,equal
-MKD,Accountability,0.5188969937232869,7,7.0,equal
-MKD,Economic and fiscal governance,0.5467340840294569,6,4.75,equal
-MKD,Political foundations,0.49291318239372706,2,2.0,equal
-MKD,Rule of law,0.47424182996932895,5,5.0,equal
-MKD,State capacity,0.5343785445640985,4,4.0,equal
-MLI,Accountability,0.37376191574661277,7,7.0,equal
-MLI,Economic and fiscal governance,0.4519234254630922,6,4.75,equal
-MLI,Political foundations,0.31973975627670564,2,2.0,equal
-MLI,Rule of law,0.43462309673972255,5,5.0,equal
-MLI,State capacity,0.35832371635442395,4,4.0,equal
-MLT,Accountability,0.6025831697189284,7,7.0,equal
-MLT,Economic and fiscal governance,0.6128597187680171,6,4.75,equal
-MLT,Political foundations,0.6648320975914918,2,2.0,equal
-MLT,Rule of law,0.6365832712175766,5,5.0,equal
-MLT,State capacity,0.6149039710277318,4,4.0,equal
-MMR,Accountability,0.22318879566627964,7,7.0,equal
-MMR,Economic and fiscal governance,0.3361141969729128,6,4.75,equal
-MMR,Political foundations,0.21179323253632534,2,2.0,equal
-MMR,Rule of law,0.2801025141069172,5,5.0,equal
-MMR,State capacity,0.3406159839771502,4,4.0,equal
-MNE,Accountability,0.5618997527754018,7,7.0,equal
-MNE,Economic and fiscal governance,0.5754500479294844,6,4.75,equal
-MNE,Political foundations,0.5261225464528896,2,2.0,equal
-MNE,Rule of law,0.5471820253530986,5,5.0,equal
-MNE,State capacity,0.5443802049026178,4,4.0,equal
-MNG,Accountability,0.5437784179280561,7,7.0,equal
-MNG,Economic and fiscal governance,0.48793439625471463,6,4.75,equal
-MNG,Political foundations,0.5227915133300151,2,2.0,equal
-MNG,Rule of law,0.47482680769070446,5,5.0,equal
-MNG,State capacity,0.5595705966874479,4,4.0,equal
-MNP,Accountability,0.503755868544601,1,1.0,equal
-MNP,Economic and fiscal governance,0.0205399061032863,1,0.5,equal
-MNP,Political foundations,0.5457746478873239,1,1.0,equal
-MNP,State capacity,0.651845638810598,1,1.0,equal
-MOZ,Accountability,0.3953685861677627,7,7.0,equal
-MOZ,Economic and fiscal governance,0.3987155060710923,6,4.75,equal
-MOZ,Political foundations,0.436291839760939,2,2.0,equal
-MOZ,Rule of law,0.36333351665428454,5,5.0,equal
-MOZ,State capacity,0.3664078906790428,4,4.0,equal
-MRT,Accountability,0.4025630828040091,7,7.0,equal
-MRT,Economic and fiscal governance,0.40214219873769325,6,4.75,equal
-MRT,Political foundations,0.36096884555856357,2,2.0,equal
-MRT,Rule of law,0.3484371909761866,5,5.0,equal
-MRT,State capacity,0.3916635099022923,4,4.0,equal
-MUS,Accountability,0.5937909842292599,7,7.0,equal
-MUS,Economic and fiscal governance,0.5498612280005892,6,4.75,equal
-MUS,Political foundations,0.5443399497286032,2,2.0,equal
-MUS,Rule of law,0.5813318830331154,5,5.0,equal
-MUS,State capacity,0.570487664724098,4,4.0,equal
-MWI,Accountability,0.5464217034887676,7,7.0,equal
-MWI,Economic and fiscal governance,0.4865292555872029,6,4.75,equal
-MWI,Political foundations,0.4767606343721553,2,2.0,equal
-MWI,Rule of law,0.5001208683137176,5,5.0,equal
-MWI,State capacity,0.45474104596822856,4,4.0,equal
-MYS,Accountability,0.4635678934979876,7,7.0,equal
-MYS,Economic and fiscal governance,0.5342152662531562,6,4.75,equal
-MYS,Political foundations,0.5262417316153353,2,2.0,equal
-MYS,Rule of law,0.5449940045622343,5,5.0,equal
-MYS,State capacity,0.5444494653792875,4,4.0,equal
-NAM,Accountability,0.5682047569271437,7,7.0,equal
-NAM,Economic and fiscal governance,0.44952892312413,6,4.75,equal
-NAM,Political foundations,0.5680783439580562,2,2.0,equal
-NAM,Rule of law,0.5662525901727167,5,5.0,equal
-NAM,State capacity,0.49930909073880136,4,4.0,equal
-NCL,Accountability,0.503755868544601,1,1.0,equal
-NCL,Economic and fiscal governance,0.2914144828716322,2,1.5,equal
-NCL,Political foundations,0.5805239053069002,1,1.0,equal
-NCL,Rule of law,0.4736312399355877,1,1.0,equal
-NCL,State capacity,0.6294275537490247,1,1.0,equal
-NER,Accountability,0.43564031568155287,7,7.0,equal
-NER,Economic and fiscal governance,0.4239301690125661,6,4.75,equal
-NER,Political foundations,0.3595097212268118,2,2.0,equal
-NER,Rule of law,0.42422919752600663,5,5.0,equal
-NER,State capacity,0.3845808981018305,4,4.0,equal
-NGA,Accountability,0.46872251312150637,7,7.0,equal
-NGA,Economic and fiscal governance,0.45861761153695263,6,4.75,equal
-NGA,Political foundations,0.34106562959102693,2,2.0,equal
-NGA,Rule of law,0.39012226228182656,5,5.0,equal
-NGA,State capacity,0.35158377806205987,4,4.0,equal
-NIC,Accountability,0.22066304394258204,7,7.0,equal
-NIC,Economic and fiscal governance,0.4455626664015444,6,4.75,equal
-NIC,Political foundations,0.38223632829722465,2,2.0,equal
-NIC,Rule of law,0.22237468790267947,5,5.0,equal
-NIC,State capacity,0.36581716632336636,4,4.0,equal
-NLD,Accountability,0.6542371223682798,7,7.0,equal
-NLD,Economic and fiscal governance,0.718859866937283,6,4.75,equal
-NLD,Political foundations,0.6423754228940739,2,2.0,equal
-NLD,Rule of law,0.7355535920820941,5,5.0,equal
-NLD,State capacity,0.6813876392619206,4,4.0,equal
-NOR,Accountability,0.7170131807112636,7,7.0,equal
-NOR,Economic and fiscal governance,0.6684060404051763,6,4.75,equal
-NOR,Political foundations,0.6849887915805235,2,2.0,equal
-NOR,Rule of law,0.769826666899594,5,5.0,equal
-NOR,State capacity,0.6965125487668722,4,4.0,equal
-NPL,Accountability,0.5392811956563761,7,7.0,equal
-NPL,Economic and fiscal governance,0.45752476347749027,6,4.75,equal
-NPL,Political foundations,0.49517848492020555,2,2.0,equal
-NPL,Rule of law,0.47151819944937995,5,5.0,equal
-NPL,State capacity,0.48011586819405017,4,4.0,equal
-NRU,Accountability,0.514668094223319,6,6.0,equal
-NRU,Economic and fiscal governance,0.3862147444807082,5,3.75,equal
-NRU,Political foundations,0.5808221707280414,1,1.0,equal
-NRU,Rule of law,0.5522499144780869,3,3.0,equal
-NRU,State capacity,0.42746103420696224,3,3.0,equal
-NZL,Accountability,0.6425086986421439,7,7.0,equal
-NZL,Economic and fiscal governance,0.6357453707700184,6,4.75,equal
-NZL,Political foundations,0.6585846361090468,2,2.0,equal
-NZL,Rule of law,0.7599996635650093,5,5.0,equal
-NZL,State capacity,0.69304855585921,4,4.0,equal
-OMN,Accountability,0.33423623618124776,7,7.0,equal
-OMN,Economic and fiscal governance,0.5146547216990034,6,4.75,equal
-OMN,Political foundations,0.5025547419385572,2,2.0,equal
-OMN,Rule of law,0.526129859327477,5,5.0,equal
-OMN,State capacity,0.5661476929870771,4,4.0,equal
-PAK,Accountability,0.3971948361710072,7,7.0,equal
-PAK,Economic and fiscal governance,0.4291270498079561,6,4.75,equal
-PAK,Political foundations,0.3270735998323032,2,2.0,equal
-PAK,Rule of law,0.34377924021740597,5,5.0,equal
-PAK,State capacity,0.3446945406449685,4,4.0,equal
-PAN,Accountability,0.5676730939492768,7,7.0,equal
-PAN,Economic and fiscal governance,0.5193475516895875,6,4.75,equal
-PAN,Political foundations,0.5422081171023814,2,2.0,equal
-PAN,Rule of law,0.4981107306969118,5,5.0,equal
-PAN,State capacity,0.5321987989316275,4,4.0,equal
-PER,Accountability,0.5183048615978088,7,7.0,equal
-PER,Economic and fiscal governance,0.6077975817662387,6,4.75,equal
-PER,Political foundations,0.4782831186554187,2,2.0,equal
-PER,Rule of law,0.4599384553083781,5,5.0,equal
-PER,State capacity,0.49292104777044193,4,4.0,equal
-PHL,Accountability,0.45323818850190484,7,7.0,equal
-PHL,Economic and fiscal governance,0.5220544646482158,6,4.75,equal
-PHL,Political foundations,0.37083864028087987,2,2.0,equal
-PHL,Rule of law,0.3943749598300622,5,5.0,equal
-PHL,State capacity,0.4722548091728375,4,4.0,equal
-PLW,Accountability,0.5896163175379517,6,6.0,equal
-PLW,Economic and fiscal governance,0.4325526509883345,5,3.75,equal
-PLW,Political foundations,0.5864630263162028,1,1.0,equal
-PLW,Rule of law,0.370269990060865,3,3.0,equal
-PLW,State capacity,0.48384159336588556,3,3.0,equal
-PNG,Accountability,0.4915658139528258,7,7.0,equal
-PNG,Economic and fiscal governance,0.45744869896438584,6,4.75,equal
-PNG,Political foundations,0.5085078529456946,2,2.0,equal
-PNG,Rule of law,0.44630210714754986,5,5.0,equal
-PNG,State capacity,0.3286464543374722,4,4.0,equal
-POL,Accountability,0.6170940554166636,7,7.0,equal
-POL,Economic and fiscal governance,0.6129577894598677,6,4.75,equal
-POL,Political foundations,0.602431488290827,2,2.0,equal
-POL,Rule of law,0.6162392125453112,5,5.0,equal
-POL,State capacity,0.6368305037042563,4,4.0,equal
-PRI,Accountability,0.5518576759767495,2,2.0,equal
-PRI,Economic and fiscal governance,0.45906634928742834,2,1.5,equal
-PRI,Political foundations,0.5527676421922396,1,1.0,equal
-PRI,Rule of law,0.4132848696190814,2,2.0,equal
-PRI,State capacity,0.5171687447842744,2,2.0,equal
-PRT,Accountability,0.6285594294598177,7,7.0,equal
-PRT,Economic and fiscal governance,0.6496491843480054,6,4.75,equal
-PRT,Political foundations,0.5871869340914646,2,2.0,equal
-PRT,Rule of law,0.5919265595808388,5,5.0,equal
-PRT,State capacity,0.6582219904914982,4,4.0,equal
-PRY,Accountability,0.48078854304681345,7,7.0,equal
-PRY,Economic and fiscal governance,0.5386410385350806,6,4.75,equal
-PRY,Political foundations,0.4885659000815449,2,2.0,equal
-PRY,Rule of law,0.4068021384174877,5,5.0,equal
-PRY,State capacity,0.4538938148484768,4,4.0,equal
-PSE,Accountability,0.35024807078602,7,7.0,equal
-PSE,Economic and fiscal governance,0.4773289471793244,5,4.0,equal
-PSE,Political foundations,0.44568043958297643,2,2.0,equal
-PSE,Rule of law,0.46433564435864455,5,5.0,equal
-PSE,State capacity,0.37694703183014494,4,4.0,equal
-PYF,Accountability,0.503755868544601,1,1.0,equal
-PYF,Economic and fiscal governance,0.3350371857122697,3,2.0,equal
-PYF,Political foundations,0.5776917413757207,1,1.0,equal
-PYF,Rule of law,0.9486714975845412,1,1.0,equal
-PYF,State capacity,0.673283455648305,1,1.0,equal
-QAT,Accountability,0.2736823494331339,7,7.0,equal
-QAT,Economic and fiscal governance,0.4633589447405805,6,4.75,equal
-QAT,Political foundations,0.49054888440349076,2,2.0,equal
-QAT,Rule of law,0.5216141975240116,5,5.0,equal
-QAT,State capacity,0.5752458080361079,4,4.0,equal
-ROU,Accountability,0.5247518665569446,7,7.0,equal
-ROU,Economic and fiscal governance,0.5840899481085959,6,4.75,equal
-ROU,Political foundations,0.576245879636946,2,2.0,equal
-ROU,Rule of law,0.5625791623961305,5,5.0,equal
-ROU,State capacity,0.5885686734481642,4,4.0,equal
-RUS,Accountability,0.2687068431993964,7,7.0,equal
-RUS,Economic and fiscal governance,0.4311417629998816,6,4.75,equal
-RUS,Political foundations,0.35187395600155136,2,2.0,equal
-RUS,Rule of law,0.33063123796256766,5,5.0,equal
-RUS,State capacity,0.5121143224360217,4,4.0,equal
-RWA,Accountability,0.3608415479267583,7,7.0,equal
-RWA,Economic and fiscal governance,0.3958563546905484,6,4.75,equal
-RWA,Political foundations,0.38768368982276846,2,2.0,equal
-RWA,Rule of law,0.4597943590376821,5,5.0,equal
-RWA,State capacity,0.4916318966617823,4,4.0,equal
-SAU,Accountability,0.23866165524621033,7,7.0,equal
-SAU,Economic and fiscal governance,0.44088652601955386,6,4.75,equal
-SAU,Political foundations,0.40565776347880295,2,2.0,equal
-SAU,Rule of law,0.44409070953213436,5,5.0,equal
-SAU,State capacity,0.5552987018834565,4,4.0,equal
-SDN,Accountability,0.2681620874257465,7,7.0,equal
-SDN,Economic and fiscal governance,0.3003475044663244,5,4.0,equal
-SDN,Political foundations,0.22209739103552995,2,2.0,equal
-SDN,Rule of law,0.24707886188250444,5,5.0,equal
-SDN,State capacity,0.23596670739712197,4,4.0,equal
-SEN,Accountability,0.5493351307427554,7,7.0,equal
-SEN,Economic and fiscal governance,0.4570226243276267,6,4.75,equal
-SEN,Political foundations,0.5563841221391796,2,2.0,equal
-SEN,Rule of law,0.5422031133519679,5,5.0,equal
-SEN,State capacity,0.5036444961352475,4,4.0,equal
-SGP,Accountability,0.45924851244143977,7,7.0,equal
-SGP,Economic and fiscal governance,0.6458179956398055,6,4.75,equal
-SGP,Political foundations,0.621128867403662,2,2.0,equal
-SGP,Rule of law,0.7021247279608366,5,5.0,equal
-SGP,State capacity,0.709777986498618,4,4.0,equal
-SLB,Accountability,0.5187696201343627,7,7.0,equal
-SLB,Economic and fiscal governance,0.38302504335125565,6,4.75,equal
-SLB,Political foundations,0.5359048017185541,2,2.0,equal
-SLB,Rule of law,0.5424662536792518,5,5.0,equal
-SLB,State capacity,0.3900269459603513,4,4.0,equal
-SLE,Accountability,0.5309591864430664,7,7.0,equal
-SLE,Economic and fiscal governance,0.41942545876792087,6,4.75,equal
-SLE,Political foundations,0.5030809922137098,2,2.0,equal
-SLE,Rule of law,0.4437270800469527,5,5.0,equal
-SLE,State capacity,0.4478873249835787,4,4.0,equal
-SLV,Accountability,0.37698253631517453,7,7.0,equal
-SLV,Economic and fiscal governance,0.47249113553593053,6,4.75,equal
-SLV,Political foundations,0.4624791390524729,2,2.0,equal
-SLV,Rule of law,0.3537306674847862,5,5.0,equal
-SLV,State capacity,0.4738616384080768,4,4.0,equal
-SMR,Accountability,0.6348421609561556,6,6.0,equal
-SMR,Economic and fiscal governance,0.4990641331520597,4,3.25,equal
-SMR,Political foundations,0.592103890323401,1,1.0,equal
-SMR,Rule of law,0.84669914130885,1,1.0,equal
-SMR,State capacity,0.4907981029386285,3,3.0,equal
-SOM,Accountability,0.35374017980600525,7,7.0,equal
-SOM,Economic and fiscal governance,0.42075722031784973,5,4.0,equal
-SOM,Political foundations,0.3693511754638331,2,2.0,equal
-SOM,Rule of law,0.2899413413814433,5,5.0,equal
-SOM,State capacity,0.2835149099513898,4,4.0,equal
-SRB,Accountability,0.4423202379790162,7,7.0,equal
-SRB,Economic and fiscal governance,0.5707215168284606,6,4.75,equal
-SRB,Political foundations,0.4823826432135242,2,2.0,equal
-SRB,Rule of law,0.4699398672704923,5,5.0,equal
-SRB,State capacity,0.5527369712271502,4,4.0,equal
-SSD,Accountability,0.2770757692821664,7,7.0,equal
-SSD,Economic and fiscal governance,0.2246914504755209,4,3.5,equal
-SSD,Political foundations,0.2695653357954452,2,2.0,equal
-SSD,Rule of law,0.2090195736750736,5,5.0,equal
-SSD,State capacity,0.1733913062297212,4,4.0,equal
-STP,Accountability,0.5406739239749829,7,7.0,equal
-STP,Economic and fiscal governance,0.36868104878241287,6,4.75,equal
-STP,Political foundations,0.5128896639909778,2,2.0,equal
-STP,Rule of law,0.5534596316818033,5,5.0,equal
-STP,State capacity,0.46941664378044123,4,4.0,equal
-SUR,Accountability,0.5572252652657718,7,7.0,equal
-SUR,Economic and fiscal governance,0.36386415589449095,6,4.75,equal
-SUR,Political foundations,0.5215618153612778,2,2.0,equal
-SUR,Rule of law,0.5419031454237608,5,5.0,equal
-SUR,State capacity,0.44948606212546105,4,4.0,equal
-SVK,Accountability,0.5611682887382667,7,7.0,equal
-SVK,Economic and fiscal governance,0.6348754947818586,6,4.75,equal
-SVK,Political foundations,0.5614242675725464,2,2.0,equal
-SVK,Rule of law,0.5978679698922528,5,5.0,equal
-SVK,State capacity,0.6236613367555163,4,4.0,equal
-SVN,Accountability,0.6252525894092203,7,7.0,equal
-SVN,Economic and fiscal governance,0.6084363821610922,6,4.75,equal
-SVN,Political foundations,0.6108682696949297,2,2.0,equal
-SVN,Rule of law,0.6115811555530597,5,5.0,equal
-SVN,State capacity,0.643081924670862,4,4.0,equal
-SWE,Accountability,0.7111352246591949,7,7.0,equal
-SWE,Economic and fiscal governance,0.6943735571819554,6,4.75,equal
-SWE,Political foundations,0.6643138873075689,2,2.0,equal
-SWE,Rule of law,0.7465560190909728,5,5.0,equal
-SWE,State capacity,0.7021972956468862,4,4.0,equal
-SWZ,Accountability,0.3051080564060937,7,7.0,equal
-SWZ,Economic and fiscal governance,0.34265290317282243,6,4.75,equal
-SWZ,Political foundations,0.4535035263829536,2,2.0,equal
-SWZ,Rule of law,0.34542682704634836,5,5.0,equal
-SWZ,State capacity,0.4343803370309477,4,4.0,equal
-SXM,Accountability,0.503755868544601,1,1.0,equal
-SXM,Economic and fiscal governance,0.20608750239567586,2,1.25,equal
-SXM,Political foundations,0.5457746478873239,1,1.0,equal
-SXM,State capacity,0.7378373413127247,1,1.0,equal
-SYC,Accountability,0.6091692784755807,7,7.0,equal
-SYC,Economic and fiscal governance,0.4848953487573035,6,4.75,equal
-SYC,Political foundations,0.5628230167691806,2,2.0,equal
-SYC,Rule of law,0.6143965500510524,5,5.0,equal
-SYC,State capacity,0.5670742180066568,4,4.0,equal
-SYR,Accountability,0.2668315545070456,7,7.0,equal
-SYR,Economic and fiscal governance,0.276165368606274,5,4.0,equal
-SYR,Political foundations,0.32631611763549917,2,2.0,equal
-SYR,Rule of law,0.3264973713366517,5,5.0,equal
-SYR,State capacity,0.26389073157546933,4,4.0,equal
-TCA,Accountability,0.503755868544601,1,1.0,equal
-TCA,Economic and fiscal governance,0.3674037447072337,2,1.25,equal
-TCA,Political foundations,0.5457746478873239,1,1.0,equal
-TCA,Rule of law,0.0018115942028985,1,1.0,equal
-TCA,State capacity,0.719069984824846,1,1.0,equal
-TCD,Accountability,0.303946071339445,7,7.0,equal
-TCD,Economic and fiscal governance,0.3641123361567981,6,4.75,equal
-TCD,Political foundations,0.235108695371442,2,2.0,equal
-TCD,Rule of law,0.2891431963919053,5,5.0,equal
-TCD,State capacity,0.2596239718208563,4,4.0,equal
-TGO,Accountability,0.41098389899418064,7,7.0,equal
-TGO,Economic and fiscal governance,0.4289548249399181,6,4.75,equal
-TGO,Political foundations,0.43120678178655825,2,2.0,equal
-TGO,Rule of law,0.42763570015420116,5,5.0,equal
-TGO,State capacity,0.4166508082617316,4,4.0,equal
-THA,Accountability,0.4599078363108992,7,7.0,equal
-THA,Economic and fiscal governance,0.49432690315355204,6,4.75,equal
-THA,Political foundations,0.39550276540419593,2,2.0,equal
-THA,Rule of law,0.4210689709419705,5,5.0,equal
-THA,State capacity,0.5324033011126765,4,4.0,equal
-TJK,Accountability,0.253691405411726,7,7.0,equal
-TJK,Economic and fiscal governance,0.40014047295075744,6,4.75,equal
-TJK,Political foundations,0.39613438846908106,2,2.0,equal
-TJK,Rule of law,0.32313567695375583,5,5.0,equal
-TJK,State capacity,0.42084312152180625,4,4.0,equal
-TLS,Accountability,0.5571675015285771,7,7.0,equal
-TLS,Economic and fiscal governance,0.4153234159287069,6,4.75,equal
-TLS,Political foundations,0.5410285151988472,2,2.0,equal
-TLS,Rule of law,0.5172067381850678,5,5.0,equal
-TLS,State capacity,0.4500590845193081,4,4.0,equal
-TON,Accountability,0.5004231446520113,6,6.0,equal
-TON,Economic and fiscal governance,0.36611636197116293,5,3.75,equal
-TON,Political foundations,0.5871396390351598,1,1.0,equal
-TON,Rule of law,0.6445295648219934,3,3.0,equal
-TON,State capacity,0.4914698346427815,3,3.0,equal
-TTO,Accountability,0.6010495257526339,7,7.0,equal
-TTO,Economic and fiscal governance,0.4557101313176513,6,4.75,equal
-TTO,Political foundations,0.5531968894779093,2,2.0,equal
-TTO,Rule of law,0.5499272329113882,5,5.0,equal
-TTO,State capacity,0.4738909697086986,4,4.0,equal
-TUN,Accountability,0.4347608353533837,7,7.0,equal
-TUN,Economic and fiscal governance,0.43419894121374975,6,4.75,equal
-TUN,Political foundations,0.5006597063905723,2,2.0,equal
-TUN,Rule of law,0.5041784535616098,5,5.0,equal
-TUN,State capacity,0.49441108424457236,4,4.0,equal
-TUR,Accountability,0.34815753092562257,7,7.0,equal
-TUR,Economic and fiscal governance,0.5364719030041605,6,4.75,equal
-TUR,Political foundations,0.3586216824234259,2,2.0,equal
-TUR,Rule of law,0.37020593763924303,5,5.0,equal
-TUR,State capacity,0.49287662965877266,4,4.0,equal
-TUV,Accountability,0.5829601596551078,6,6.0,equal
-TUV,Economic and fiscal governance,0.3993266238055355,4,3.0,equal
-TUV,Political foundations,0.5961473515725426,1,1.0,equal
-TUV,Rule of law,0.6840494202966966,3,3.0,equal
-TUV,State capacity,0.3993839115749947,3,3.0,equal
-TZA,Accountability,0.45824951645965184,7,7.0,equal
-TZA,Economic and fiscal governance,0.43356180152492385,6,4.75,equal
-TZA,Political foundations,0.5675272038704436,2,2.0,equal
-TZA,Rule of law,0.48587809687252975,5,5.0,equal
-TZA,State capacity,0.45675405706643524,4,4.0,equal
-UGA,Accountability,0.408387942125481,7,7.0,equal
-UGA,Economic and fiscal governance,0.44513682536933297,6,4.75,equal
-UGA,Political foundations,0.42886122385642916,2,2.0,equal
-UGA,Rule of law,0.3520532298373297,5,5.0,equal
-UGA,State capacity,0.4168055327374325,4,4.0,equal
-UKR,Accountability,0.47900745584844684,7,7.0,equal
-UKR,Economic and fiscal governance,0.5395257642578725,6,4.75,equal
-UKR,Political foundations,0.43192056065612866,2,2.0,equal
-UKR,Rule of law,0.42562805522229274,5,5.0,equal
-UKR,State capacity,0.4153223853004881,4,4.0,equal
-URY,Accountability,0.6637433794740206,7,7.0,equal
-URY,Economic and fiscal governance,0.5966220105546993,6,4.75,equal
-URY,Political foundations,0.6463792166785279,2,2.0,equal
-URY,Rule of law,0.6606206974959373,5,5.0,equal
-URY,State capacity,0.6063950560204112,4,4.0,equal
-USA,Accountability,0.5837253441762206,7,7.0,equal
-USA,Economic and fiscal governance,0.6492037228358754,6,4.75,equal
-USA,Political foundations,0.480364184940379,2,2.0,equal
-USA,Rule of law,0.5982213447478558,5,5.0,equal
-USA,State capacity,0.6320860700017379,4,4.0,equal
-UZB,Accountability,0.3268761934138914,7,7.0,equal
-UZB,Economic and fiscal governance,0.47486593458506093,6,4.75,equal
-UZB,Political foundations,0.4244556172675529,2,2.0,equal
-UZB,Rule of law,0.3749288201010826,5,5.0,equal
-UZB,State capacity,0.5257350241002569,4,4.0,equal
-VCT,Accountability,0.5748080932182912,6,6.0,equal
-VCT,Economic and fiscal governance,0.45586241185008725,5,3.75,equal
-VCT,Political foundations,0.5723971878080262,1,1.0,equal
-VCT,Rule of law,0.5527430766530389,5,5.0,equal
-VCT,State capacity,0.5012906834126122,3,3.0,equal
-VEN,Accountability,0.2831087630488842,7,7.0,equal
-VEN,Economic and fiscal governance,0.24832357582358083,6,4.75,equal
-VEN,Political foundations,0.3796296558234671,2,2.0,equal
-VEN,Rule of law,0.23824507445747117,5,5.0,equal
-VEN,State capacity,0.29838602867999364,4,4.0,equal
-VGB,Accountability,0.503755868544601,1,1.0,equal
-VGB,Economic and fiscal governance,0.32911009359682614,2,1.25,equal
-VGB,Political foundations,0.5457746478873239,1,1.0,equal
-VGB,Rule of law,0.2602657004830918,1,1.0,equal
-VGB,State capacity,0.4527765849693471,1,1.0,equal
-VIR,Accountability,0.503755868544601,1,1.0,equal
-VIR,Economic and fiscal governance,0.5090580325197224,2,1.5,equal
-VIR,Political foundations,0.5752009693809541,1,1.0,equal
-VIR,Rule of law,0.0163043478260869,1,1.0,equal
-VIR,State capacity,0.6084509181524028,2,2.0,equal
-VNM,Accountability,0.383709197402618,7,7.0,equal
-VNM,Economic and fiscal governance,0.41256398610161954,6,4.75,equal
-VNM,Political foundations,0.4420249188370914,2,2.0,equal
-VNM,Rule of law,0.4346189023488046,5,5.0,equal
-VNM,State capacity,0.512947203857547,4,4.0,equal
-VUT,Accountability,0.5730650727150933,7,7.0,equal
-VUT,Economic and fiscal governance,0.46183566625443884,6,4.75,equal
-VUT,Political foundations,0.6063351003636237,2,2.0,equal
-VUT,Rule of law,0.6015345138155637,5,5.0,equal
-VUT,State capacity,0.45383846145700124,4,4.0,equal
-WSM,Accountability,0.5294190082578629,6,6.0,equal
-WSM,Economic and fiscal governance,0.37851080338183657,5,3.75,equal
-WSM,Political foundations,0.5802094039210384,2,2.0,equal
-WSM,Rule of law,0.6066582164392457,3,3.0,equal
-WSM,State capacity,0.5325471127918016,4,4.0,equal
-XKX,Accountability,0.5159752186746761,7,7.0,equal
-XKX,Economic and fiscal governance,0.5170393306955297,4,3.5,equal
-XKX,Political foundations,0.5423859448586335,2,2.0,equal
-XKX,Rule of law,0.5141652216057306,5,5.0,equal
-XKX,State capacity,0.4633035587940429,4,4.0,equal
-YEM,Accountability,0.2928902328087491,7,7.0,equal
-YEM,Economic and fiscal governance,0.2736661391751197,5,4.0,equal
-YEM,Political foundations,0.25555995979491863,2,2.0,equal
-YEM,Rule of law,0.2507545488057485,5,5.0,equal
-YEM,State capacity,0.1856815112548491,4,4.0,equal
-ZAF,Accountability,0.6025221225057322,7,7.0,equal
-ZAF,Economic and fiscal governance,0.5581366333968919,6,4.75,equal
-ZAF,Political foundations,0.488007099921648,2,2.0,equal
-ZAF,Rule of law,0.5083959691137736,5,5.0,equal
-ZAF,State capacity,0.5039995968316633,4,4.0,equal
-ZMB,Accountability,0.5309501020153266,7,7.0,equal
-ZMB,Economic and fiscal governance,0.4824862473019041,6,4.75,equal
-ZMB,Political foundations,0.4740055325032405,2,2.0,equal
-ZMB,Rule of law,0.44715289069456504,5,5.0,equal
-ZMB,State capacity,0.43092512086875623,4,4.0,equal
-ZWE,Accountability,0.3960801020538582,7,7.0,equal
-ZWE,Economic and fiscal governance,0.346875342361389,6,4.75,equal
-ZWE,Political foundations,0.36510215185805034,2,2.0,equal
-ZWE,Rule of law,0.32691435342540265,5,5.0,equal
-ZWE,State capacity,0.3958588327578432,4,4.0,equal
+ABW,Accountability,0.5037558685,1,1,equal
+ABW,Economic and fiscal governance,0.4972567196,5,3.75,equal
+ABW,Political foundations,0.5903148156,1,1,equal
+ABW,Rule of law,0.5931964573,1,1,equal
+ABW,State capacity,0.5254101987,3,3,equal
+AFG,Accountability,0.2040410287,7,7,equal
+AFG,Economic and fiscal governance,0.2940399345,5,4,equal
+AFG,Political foundations,0.1910845788,2,2,equal
+AFG,Rule of law,0.2072934455,5,5,equal
+AFG,State capacity,0.2492300943,4,4,equal
+AGO,Accountability,0.3792951354,7,7,equal
+AGO,Economic and fiscal governance,0.3830512588,6,4.75,equal
+AGO,Political foundations,0.3766762875,2,2,equal
+AGO,Rule of law,0.3929988416,5,5,equal
+AGO,State capacity,0.3933933713,4,4,equal
+ALB,Accountability,0.5128518282,7,7,equal
+ALB,Economic and fiscal governance,0.5891247663,6,4.75,equal
+ALB,Political foundations,0.5109816904,2,2,equal
+ALB,Rule of law,0.4929860291,5,5,equal
+ALB,State capacity,0.5283464545,4,4,equal
+AND,Accountability,0.6365565538,6,6,equal
+AND,Economic and fiscal governance,0.6234484295,4,3.25,equal
+AND,Political foundations,0.5993057658,1,1,equal
+AND,Rule of law,0.5974056769,3,3,equal
+AND,State capacity,0.5524716575,3,3,equal
+ARE,Accountability,0.2990105163,7,7,equal
+ARE,Economic and fiscal governance,0.5088983155,6,4.75,equal
+ARE,Political foundations,0.5118525093,2,2,equal
+ARE,Rule of law,0.5278307802,5,5,equal
+ARE,State capacity,0.6355046007,4,4,equal
+ARG,Accountability,0.5482208723,7,7,equal
+ARG,Economic and fiscal governance,0.5027586119,6,4.75,equal
+ARG,Political foundations,0.5890635144,2,2,equal
+ARG,Rule of law,0.4901284704,5,5,equal
+ARG,State capacity,0.525789275,4,4,equal
+ARM,Accountability,0.5313608837,7,7,equal
+ARM,Economic and fiscal governance,0.5831432526,6,4.75,equal
+ARM,Political foundations,0.5278924295,2,2,equal
+ARM,Rule of law,0.4753887663,5,5,equal
+ARM,State capacity,0.5162635333,4,4,equal
+ASM,Accountability,0.5037558685,1,1,equal
+ASM,Economic and fiscal governance,0.4281186394,2,1.5,equal
+ASM,Political foundations,0.5870658672,1,1,equal
+ASM,Rule of law,0.9913446055,1,1,equal
+ASM,State capacity,0.5678511055,2,2,equal
+ATG,Accountability,0.593927748,6,6,equal
+ATG,Economic and fiscal governance,0.4705919948,5,3.75,equal
+ATG,Political foundations,0.6305909056,2,2,equal
+ATG,Rule of law,0.5816934031,5,5,equal
+ATG,State capacity,0.536566166,4,4,equal
+AUS,Accountability,0.6624752327,7,7,equal
+AUS,Economic and fiscal governance,0.6440704051,6,4.75,equal
+AUS,Political foundations,0.6512814563,2,2,equal
+AUS,Rule of law,0.7202081616,5,5,equal
+AUS,State capacity,0.6852795002,4,4,equal
+AUT,Accountability,0.6389616365,7,7,equal
+AUT,Economic and fiscal governance,0.6533351346,6,4.75,equal
+AUT,Political foundations,0.642344194,2,2,equal
+AUT,Rule of law,0.7027591723,5,5,equal
+AUT,State capacity,0.6682615017,4,4,equal
+AZE,Accountability,0.2563012093,7,7,equal
+AZE,Economic and fiscal governance,0.4458869116,6,4.75,equal
+AZE,Political foundations,0.4224141438,2,2,equal
+AZE,Rule of law,0.32337776,5,5,equal
+AZE,State capacity,0.4864276511,4,4,equal
+BDI,Accountability,0.284656242,7,7,equal
+BDI,Economic and fiscal governance,0.3834427906,5,4,equal
+BDI,Political foundations,0.3761104819,2,2,equal
+BDI,Rule of law,0.3370405877,5,5,equal
+BDI,State capacity,0.3693025758,4,4,equal
+BEL,Accountability,0.6775922361,7,7,equal
+BEL,Economic and fiscal governance,0.6872769116,6,4.75,equal
+BEL,Political foundations,0.6435973784,2,2,equal
+BEL,Rule of law,0.708768062,5,5,equal
+BEL,State capacity,0.6569427135,4,4,equal
+BEN,Accountability,0.4698806668,7,7,equal
+BEN,Economic and fiscal governance,0.4986141237,6,4.75,equal
+BEN,Political foundations,0.4433483489,2,2,equal
+BEN,Rule of law,0.5200916074,5,5,equal
+BEN,State capacity,0.4440032185,4,4,equal
+BFA,Accountability,0.3594408554,7,7,equal
+BFA,Economic and fiscal governance,0.4396533017,6,4.75,equal
+BFA,Political foundations,0.3052634039,2,2,equal
+BFA,Rule of law,0.4285108107,5,5,equal
+BFA,State capacity,0.3936992046,4,4,equal
+BGD,Accountability,0.3898770905,7,7,equal
+BGD,Economic and fiscal governance,0.4385652121,6,4.75,equal
+BGD,Political foundations,0.3038134541,2,2,equal
+BGD,Rule of law,0.4015093249,5,5,equal
+BGD,State capacity,0.4534686779,4,4,equal
+BGR,Accountability,0.571274609,7,7,equal
+BGR,Economic and fiscal governance,0.5721260809,6,4.75,equal
+BGR,Political foundations,0.5806205814,2,2,equal
+BGR,Rule of law,0.5144470299,5,5,equal
+BGR,State capacity,0.5690185243,4,4,equal
+BHR,Accountability,0.2862627903,7,7,equal
+BHR,Economic and fiscal governance,0.4924632589,6,4.75,equal
+BHR,Political foundations,0.4067823532,2,2,equal
+BHR,Rule of law,0.4874033096,5,5,equal
+BHR,State capacity,0.4733446304,4,4,equal
+BHS,Accountability,0.5941929436,6,6,equal
+BHS,Economic and fiscal governance,0.4662045227,5,3.75,equal
+BHS,Political foundations,0.637228544,2,2,equal
+BHS,Rule of law,0.4824140085,5,5,equal
+BHS,State capacity,0.497020512,4,4,equal
+BIH,Accountability,0.4874776715,7,7,equal
+BIH,Economic and fiscal governance,0.4906387395,6,4.75,equal
+BIH,Political foundations,0.4728424361,2,2,equal
+BIH,Rule of law,0.514159815,5,5,equal
+BIH,State capacity,0.4411186531,4,4,equal
+BLR,Accountability,0.2372055048,7,7,equal
+BLR,Economic and fiscal governance,0.4021908665,6,4.75,equal
+BLR,Political foundations,0.4654857846,2,2,equal
+BLR,Rule of law,0.3817873489,5,5,equal
+BLR,State capacity,0.5166599341,4,4,equal
+BLZ,Accountability,0.5832820167,6,6,equal
+BLZ,Economic and fiscal governance,0.4243582449,5,3.75,equal
+BLZ,Political foundations,0.5878239394,2,2,equal
+BLZ,Rule of law,0.4632121788,5,5,equal
+BLZ,State capacity,0.4458365557,4,4,equal
+BMU,Accountability,0.5037558685,1,1,equal
+BMU,Economic and fiscal governance,0.4614462383,4,2.75,equal
+BMU,Political foundations,0.5752009694,1,1,equal
+BMU,Rule of law,0.3230676329,1,1,equal
+BMU,State capacity,0.6693540043,2,2,equal
+BOL,Accountability,0.5184002577,7,7,equal
+BOL,Economic and fiscal governance,0.4391192197,6,4.75,equal
+BOL,Political foundations,0.4464194003,2,2,equal
+BOL,Rule of law,0.379592295,5,5,equal
+BOL,State capacity,0.4631747291,4,4,equal
+BRA,Accountability,0.6203918918,7,7,equal
+BRA,Economic and fiscal governance,0.5575551983,6,4.75,equal
+BRA,Political foundations,0.5273332049,2,2,equal
+BRA,Rule of law,0.4829431052,5,5,equal
+BRA,State capacity,0.5148072982,4,4,equal
+BRB,Accountability,0.5880046502,7,7,equal
+BRB,Economic and fiscal governance,0.407531815,6,4.75,equal
+BRB,Political foundations,0.6057857835,2,2,equal
+BRB,Rule of law,0.5981150967,5,5,equal
+BRB,State capacity,0.5282221795,4,4,equal
+BRN,Accountability,0.3267657585,6,6,equal
+BRN,Economic and fiscal governance,0.5488680988,5,3.75,equal
+BRN,Political foundations,0.5010805883,2,2,equal
+BRN,Rule of law,0.6654660196,4,4,equal
+BRN,State capacity,0.5784553956,4,4,equal
+BTN,Accountability,0.5397020441,7,7,equal
+BTN,Economic and fiscal governance,0.4435050822,6,4.75,equal
+BTN,Political foundations,0.522295677,2,2,equal
+BTN,Rule of law,0.5532061223,5,5,equal
+BTN,State capacity,0.5046776961,4,4,equal
+BWA,Accountability,0.5312469773,7,7,equal
+BWA,Economic and fiscal governance,0.5060071117,6,4.75,equal
+BWA,Political foundations,0.5656968455,2,2,equal
+BWA,Rule of law,0.5623354868,5,5,equal
+BWA,State capacity,0.5437168542,4,4,equal
+CAF,Accountability,0.3115204046,7,7,equal
+CAF,Economic and fiscal governance,0.3928394744,6,4.75,equal
+CAF,Political foundations,0.3409728199,2,2,equal
+CAF,Rule of law,0.2859152537,5,5,equal
+CAF,State capacity,0.2410323002,4,4,equal
+CAN,Accountability,0.6473970274,7,7,equal
+CAN,Economic and fiscal governance,0.6124985123,6,4.75,equal
+CAN,Political foundations,0.6003178148,2,2,equal
+CAN,Rule of law,0.6729285244,5,5,equal
+CAN,State capacity,0.6610399038,4,4,equal
+CHE,Accountability,0.692393117,7,7,equal
+CHE,Economic and fiscal governance,0.7122235491,6,4.75,equal
+CHE,Political foundations,0.6819984138,2,2,equal
+CHE,Rule of law,0.7399324149,5,5,equal
+CHE,State capacity,0.6698406498,4,4,equal
+CHL,Accountability,0.658893526,7,7,equal
+CHL,Economic and fiscal governance,0.6252118372,6,4.75,equal
+CHL,Political foundations,0.574163252,2,2,equal
+CHL,Rule of law,0.6027510221,5,5,equal
+CHL,State capacity,0.5889768197,4,4,equal
+CHN,Accountability,0.2594895143,7,7,equal
+CHN,Economic and fiscal governance,0.4354519797,6,4.75,equal
+CHN,Political foundations,0.4206646219,2,2,equal
+CHN,Rule of law,0.3789849129,5,5,equal
+CHN,State capacity,0.5046443801,4,4,equal
+CIV,Accountability,0.4579660884,7,7,equal
+CIV,Economic and fiscal governance,0.4724036116,6,4.75,equal
+CIV,Political foundations,0.4338066102,2,2,equal
+CIV,Rule of law,0.437456436,5,5,equal
+CIV,State capacity,0.4153689934,4,4,equal
+CMR,Accountability,0.3232067078,7,7,equal
+CMR,Economic and fiscal governance,0.4244422879,6,4.75,equal
+CMR,Political foundations,0.3555693503,2,2,equal
+CMR,Rule of law,0.3532984937,5,5,equal
+CMR,State capacity,0.3857638058,4,4,equal
+COD,Accountability,0.3690267779,7,7,equal
+COD,Economic and fiscal governance,0.3587896081,6,4.75,equal
+COD,Political foundations,0.3203108139,2,2,equal
+COD,Rule of law,0.2752220928,5,5,equal
+COD,State capacity,0.2596022012,4,4,equal
+COG,Accountability,0.3281510066,7,7,equal
+COG,Economic and fiscal governance,0.3130581028,6,4.75,equal
+COG,Political foundations,0.4390393608,2,2,equal
+COG,Rule of law,0.3450055291,5,5,equal
+COG,State capacity,0.3269414226,4,4,equal
+COL,Accountability,0.551179502,7,7,equal
+COL,Economic and fiscal governance,0.5601338149,6,4.75,equal
+COL,Political foundations,0.446320569,2,2,equal
+COL,Rule of law,0.4578829628,5,5,equal
+COL,State capacity,0.4986715682,4,4,equal
+COM,Accountability,0.3729672948,7,7,equal
+COM,Economic and fiscal governance,0.3559331235,6,4.75,equal
+COM,Political foundations,0.5325478938,2,2,equal
+COM,Rule of law,0.3323025455,5,5,equal
+COM,State capacity,0.3512106054,4,4,equal
+CPV,Accountability,0.5836995749,7,7,equal
+CPV,Economic and fiscal governance,0.4695205725,6,4.75,equal
+CPV,Political foundations,0.623443044,2,2,equal
+CPV,Rule of law,0.5633327246,5,5,equal
+CPV,State capacity,0.5027562477,4,4,equal
+CRI,Accountability,0.6545539273,7,7,equal
+CRI,Economic and fiscal governance,0.5964474594,6,4.75,equal
+CRI,Political foundations,0.6305976212,2,2,equal
+CRI,Rule of law,0.6100452368,5,5,equal
+CRI,State capacity,0.6104192763,4,4,equal
+CUB,Accountability,0.2617566177,7,7,equal
+CUB,Economic and fiscal governance,0.2919038278,6,4.75,equal
+CUB,Political foundations,0.542784346,2,2,equal
+CUB,Rule of law,0.3787318548,5,5,equal
+CUB,State capacity,0.463225623,4,4,equal
+CUW,Accountability,0.5037558685,1,1,equal
+CUW,Economic and fiscal governance,0.3316489737,3,2.25,equal
+CUW,Political foundations,0.5457746479,1,1,equal
+CUW,Rule of law,0.143921095,1,1,equal
+CUW,State capacity,0.5213092214,1,1,equal
+CYM,Accountability,0.5037558685,1,1,equal
+CYM,Economic and fiscal governance,0.4251500508,4,2.75,equal
+CYM,Political foundations,0.595811613,1,1,equal
+CYM,Rule of law,0.4015700483,1,1,equal
+CYM,State capacity,0.6491747611,2,2,equal
+CYP,Accountability,0.6017237,7,7,equal
+CYP,Economic and fiscal governance,0.6402305677,6,4.75,equal
+CYP,Political foundations,0.5850957223,2,2,equal
+CYP,Rule of law,0.6304266082,5,5,equal
+CYP,State capacity,0.5571777,4,4,equal
+CZE,Accountability,0.647570596,7,7,equal
+CZE,Economic and fiscal governance,0.6540627438,6,4.75,equal
+CZE,Political foundations,0.6059516887,2,2,equal
+CZE,Rule of law,0.67810859,5,5,equal
+CZE,State capacity,0.6493719049,4,4,equal
+DEU,Accountability,0.6929328437,7,7,equal
+DEU,Economic and fiscal governance,0.7271789638,6,4.75,equal
+DEU,Political foundations,0.6614467625,2,2,equal
+DEU,Rule of law,0.7421057031,5,5,equal
+DEU,State capacity,0.6961091842,4,4,equal
+DJI,Accountability,0.3428519205,7,7,equal
+DJI,Economic and fiscal governance,0.3753598412,6,4.75,equal
+DJI,Political foundations,0.4899512598,2,2,equal
+DJI,Rule of law,0.4118850437,5,5,equal
+DJI,State capacity,0.3645945066,4,4,equal
+DMA,Accountability,0.550390676,6,6,equal
+DMA,Economic and fiscal governance,0.4577883312,5,3.75,equal
+DMA,Political foundations,0.5756430554,1,1,equal
+DMA,Rule of law,0.5286260236,5,5,equal
+DMA,State capacity,0.418391866,3,3,equal
+DNK,Accountability,0.7159664492,7,7,equal
+DNK,Economic and fiscal governance,0.6757761638,6,4.75,equal
+DNK,Political foundations,0.6942828527,2,2,equal
+DNK,Rule of law,0.7859005782,5,5,equal
+DNK,State capacity,0.7080519426,4,4,equal
+DOM,Accountability,0.5429073168,7,7,equal
+DOM,Economic and fiscal governance,0.5488335156,6,4.75,equal
+DOM,Political foundations,0.5351925132,2,2,equal
+DOM,Rule of law,0.4691861922,5,5,equal
+DOM,State capacity,0.5167783062,4,4,equal
+DZA,Accountability,0.331546477,7,7,equal
+DZA,Economic and fiscal governance,0.3177532725,6,4.75,equal
+DZA,Political foundations,0.4785959289,2,2,equal
+DZA,Rule of law,0.411936356,5,5,equal
+DZA,State capacity,0.4562242731,4,4,equal
+ECU,Accountability,0.5037540995,7,7,equal
+ECU,Economic and fiscal governance,0.4988100599,6,4.75,equal
+ECU,Political foundations,0.4600639612,2,2,equal
+ECU,Rule of law,0.4021958357,5,5,equal
+ECU,State capacity,0.4678287173,4,4,equal
+EGY,Accountability,0.2835389472,7,7,equal
+EGY,Economic and fiscal governance,0.4104363079,6,4.75,equal
+EGY,Political foundations,0.4022618196,2,2,equal
+EGY,Rule of law,0.359348533,5,5,equal
+EGY,State capacity,0.4956399159,4,4,equal
+ESP,Accountability,0.6266054753,7,7,equal
+ESP,Economic and fiscal governance,0.6818671938,6,4.75,equal
+ESP,Political foundations,0.5808147933,2,2,equal
+ESP,Rule of law,0.6706417328,5,5,equal
+ESP,State capacity,0.6481799128,4,4,equal
+EST,Accountability,0.6862833818,7,7,equal
+EST,Economic and fiscal governance,0.6775013436,6,4.75,equal
+EST,Political foundations,0.6163675527,2,2,equal
+EST,Rule of law,0.7099602045,5,5,equal
+EST,State capacity,0.6795072449,4,4,equal
+ETH,Accountability,0.3527316104,7,7,equal
+ETH,Economic and fiscal governance,0.3429511791,6,4.75,equal
+ETH,Political foundations,0.3520592444,2,2,equal
+ETH,Rule of law,0.3480312107,5,5,equal
+ETH,State capacity,0.3154824171,4,4,equal
+FIN,Accountability,0.6912802805,7,7,equal
+FIN,Economic and fiscal governance,0.6615286504,6,4.75,equal
+FIN,Political foundations,0.6786378163,2,2,equal
+FIN,Rule of law,0.7336323358,5,5,equal
+FIN,State capacity,0.7016104625,4,4,equal
+FJI,Accountability,0.5321571326,7,7,equal
+FJI,Economic and fiscal governance,0.5071085101,6,4.75,equal
+FJI,Political foundations,0.5058385775,2,2,equal
+FJI,Rule of law,0.4888721268,5,5,equal
+FJI,State capacity,0.5120631962,4,4,equal
+FRA,Accountability,0.6430604562,7,7,equal
+FRA,Economic and fiscal governance,0.6992781031,6,4.75,equal
+FRA,Political foundations,0.6056079487,2,2,equal
+FRA,Rule of law,0.6852264282,5,5,equal
+FRA,State capacity,0.6511731339,4,4,equal
+FRO,Accountability,0.5037558685,1,1,equal
+FRO,Economic and fiscal governance,0.240793209,1,0.5,equal
+FRO,Political foundations,0.5457746479,1,1,equal
+FRO,State capacity,0.6965532261,1,1,equal
+FSM,Accountability,0.558757125,6,6,equal
+FSM,Economic and fiscal governance,0.3346614338,4,3,equal
+FSM,Political foundations,0.6046834394,2,2,equal
+FSM,Rule of law,0.6662061418,3,3,equal
+FSM,State capacity,0.4402894738,4,4,equal
+GAB,Accountability,0.4340473967,7,7,equal
+GAB,Economic and fiscal governance,0.3646267114,6,4.75,equal
+GAB,Political foundations,0.4295236578,2,2,equal
+GAB,Rule of law,0.4619148389,5,5,equal
+GAB,State capacity,0.420395907,4,4,equal
+GBR,Accountability,0.6250831337,7,7,equal
+GBR,Economic and fiscal governance,0.6698283315,6,4.75,equal
+GBR,Political foundations,0.5451916159,2,2,equal
+GBR,Rule of law,0.6778685626,5,5,equal
+GBR,State capacity,0.6445968947,4,4,equal
+GEO,Accountability,0.4659010138,7,7,equal
+GEO,Economic and fiscal governance,0.5815624271,6,4.75,equal
+GEO,Political foundations,0.4601411003,2,2,equal
+GEO,Rule of law,0.5080381833,5,5,equal
+GEO,State capacity,0.5201727861,4,4,equal
+GHA,Accountability,0.5993660257,7,7,equal
+GHA,Economic and fiscal governance,0.5058693004,6,4.75,equal
+GHA,Political foundations,0.5463971143,2,2,equal
+GHA,Rule of law,0.52791195,5,5,equal
+GHA,State capacity,0.477201944,4,4,equal
+GIB,Accountability,0.5037558685,1,1,equal
+GIB,Economic and fiscal governance,0.405426675,2,1.25,equal
+GIB,Political foundations,0.5457746479,1,1,equal
+GIB,Rule of law,0.9913446055,1,1,equal
+GIB,State capacity,0.6386361019,1,1,equal
+GIN,Accountability,0.3744467877,7,7,equal
+GIN,Economic and fiscal governance,0.3920675394,6,4.75,equal
+GIN,Political foundations,0.3795822485,2,2,equal
+GIN,Rule of law,0.3278638278,5,5,equal
+GIN,State capacity,0.3180756969,4,4,equal
+GMB,Accountability,0.5367408843,7,7,equal
+GMB,Economic and fiscal governance,0.4186341371,6,4.75,equal
+GMB,Political foundations,0.5137427447,2,2,equal
+GMB,Rule of law,0.5416522804,5,5,equal
+GMB,State capacity,0.4410448467,4,4,equal
+GNB,Accountability,0.4208335814,7,7,equal
+GNB,Economic and fiscal governance,0.3888369037,6,4.75,equal
+GNB,Political foundations,0.3878633495,2,2,equal
+GNB,Rule of law,0.380021347,5,5,equal
+GNB,State capacity,0.3242993737,4,4,equal
+GNQ,Accountability,0.2492700865,7,7,equal
+GNQ,Economic and fiscal governance,0.2813983707,6,4.75,equal
+GNQ,Political foundations,0.4269472425,2,2,equal
+GNQ,Rule of law,0.2994370846,5,5,equal
+GNQ,State capacity,0.3483052553,4,4,equal
+GRC,Accountability,0.5800077789,7,7,equal
+GRC,Economic and fiscal governance,0.6345216841,6,4.75,equal
+GRC,Political foundations,0.5919711239,2,2,equal
+GRC,Rule of law,0.5817020803,5,5,equal
+GRC,State capacity,0.5814400679,4,4,equal
+GRD,Accountability,0.5651640859,6,6,equal
+GRD,Economic and fiscal governance,0.4393099976,5,3.75,equal
+GRD,Political foundations,0.5997155668,2,2,equal
+GRD,Rule of law,0.5248702962,5,5,equal
+GRD,State capacity,0.4882253997,4,4,equal
+GRL,Accountability,0.5037558685,1,1,equal
+GRL,Economic and fiscal governance,0.5574132101,3,2.5,equal
+GRL,Political foundations,0.5865392649,1,1,equal
+GRL,Rule of law,0.3540660225,1,1,equal
+GRL,State capacity,0.5747565215,3,3,equal
+GTM,Accountability,0.5241741006,7,7,equal
+GTM,Economic and fiscal governance,0.5654799562,6,4.75,equal
+GTM,Political foundations,0.49022581,2,2,equal
+GTM,Rule of law,0.4141404292,5,5,equal
+GTM,State capacity,0.4651644422,4,4,equal
+GUM,Accountability,0.5037558685,1,1,equal
+GUM,Economic and fiscal governance,0.4301905292,2,1.5,equal
+GUM,Political foundations,0.5761093413,1,1,equal
+GUM,Rule of law,0.4047906602,1,1,equal
+GUM,State capacity,0.6663624508,2,2,equal
+GUY,Accountability,0.4920322489,7,7,equal
+GUY,Economic and fiscal governance,0.4672646419,6,4.75,equal
+GUY,Political foundations,0.5070873112,2,2,equal
+GUY,Rule of law,0.4881414339,5,5,equal
+GUY,State capacity,0.451187971,4,4,equal
+HKG,Accountability,0.3670011626,7,7,equal
+HKG,Economic and fiscal governance,0.623165765,6,4.75,equal
+HKG,Political foundations,0.5187265784,2,2,equal
+HKG,Rule of law,0.6412949303,5,5,equal
+HKG,State capacity,0.4649877469,4,4,equal
+HND,Accountability,0.4845008781,7,7,equal
+HND,Economic and fiscal governance,0.5045382397,6,4.75,equal
+HND,Political foundations,0.4691209696,2,2,equal
+HND,Rule of law,0.4150554376,5,5,equal
+HND,State capacity,0.4103549078,4,4,equal
+HRV,Accountability,0.5912613919,7,7,equal
+HRV,Economic and fiscal governance,0.5585266475,6,4.75,equal
+HRV,Political foundations,0.5876120785,2,2,equal
+HRV,Rule of law,0.6078282212,5,5,equal
+HRV,State capacity,0.5821119313,4,4,equal
+HTI,Accountability,0.401740049,7,7,equal
+HTI,Economic and fiscal governance,0.4021327204,6,4.75,equal
+HTI,Political foundations,0.3169013856,2,2,equal
+HTI,Rule of law,0.3136411453,5,5,equal
+HTI,State capacity,0.2638696686,4,4,equal
+HUN,Accountability,0.4567719514,7,7,equal
+HUN,Economic and fiscal governance,0.5347240563,6,4.75,equal
+HUN,Political foundations,0.5334941331,2,2,equal
+HUN,Rule of law,0.5114210638,5,5,equal
+HUN,State capacity,0.6168730319,4,4,equal
+IDN,Accountability,0.4858522958,7,7,equal
+IDN,Economic and fiscal governance,0.5077382644,6,4.75,equal
+IDN,Political foundations,0.4048498828,2,2,equal
+IDN,Rule of law,0.44011026,5,5,equal
+IDN,State capacity,0.5204189667,4,4,equal
+IMN,Accountability,0.5037558685,1,1,equal
+IMN,Economic and fiscal governance,0.3566610148,2,1.25,equal
+IMN,Political foundations,0.5457746479,1,1,equal
+IMN,Rule of law,0.9913446055,1,1,equal
+IMN,State capacity,0.6779748782,1,1,equal
+IND,Accountability,0.4400143924,7,7,equal
+IND,Economic and fiscal governance,0.4796356936,6,4.75,equal
+IND,Political foundations,0.4087596169,2,2,equal
+IND,Rule of law,0.4434191008,5,5,equal
+IND,State capacity,0.5002748104,4,4,equal
+IRL,Accountability,0.6942615638,7,7,equal
+IRL,Economic and fiscal governance,0.6874082214,6,4.75,equal
+IRL,Political foundations,0.6883016238,2,2,equal
+IRL,Rule of law,0.7453262493,5,5,equal
+IRL,State capacity,0.6714592045,4,4,equal
+IRN,Accountability,0.3071210354,7,7,equal
+IRN,Economic and fiscal governance,0.28846968,5,4,equal
+IRN,Political foundations,0.316386564,2,2,equal
+IRN,Rule of law,0.356459397,5,5,equal
+IRN,State capacity,0.4733672349,4,4,equal
+IRQ,Accountability,0.4070693996,7,7,equal
+IRQ,Economic and fiscal governance,0.3823378364,6,4.75,equal
+IRQ,Political foundations,0.3476925217,2,2,equal
+IRQ,Rule of law,0.368063449,5,5,equal
+IRQ,State capacity,0.3880550148,4,4,equal
+ISL,Accountability,0.6487249856,7,7,equal
+ISL,Economic and fiscal governance,0.5659743303,6,4.75,equal
+ISL,Political foundations,0.6906753077,2,2,equal
+ISL,Rule of law,0.7273089337,5,5,equal
+ISL,State capacity,0.6863090754,4,4,equal
+ISR,Accountability,0.5536671367,7,7,equal
+ISR,Economic and fiscal governance,0.6390257721,6,4.75,equal
+ISR,Political foundations,0.4121908003,2,2,equal
+ISR,Rule of law,0.6043324704,5,5,equal
+ISR,State capacity,0.6364897289,4,4,equal
+ITA,Accountability,0.6261284909,7,7,equal
+ITA,Economic and fiscal governance,0.6574238092,6,4.75,equal
+ITA,Political foundations,0.6301897816,2,2,equal
+ITA,Rule of law,0.6079684372,5,5,equal
+ITA,State capacity,0.5963382273,4,4,equal
+JAM,Accountability,0.6033607799,7,7,equal
+JAM,Economic and fiscal governance,0.4855996088,6,4.75,equal
+JAM,Political foundations,0.5808410148,2,2,equal
+JAM,Rule of law,0.5570029905,5,5,equal
+JAM,State capacity,0.5282639909,4,4,equal
+JOR,Accountability,0.4553689446,7,7,equal
+JOR,Economic and fiscal governance,0.5586418864,6,4.75,equal
+JOR,Political foundations,0.4847914545,2,2,equal
+JOR,Rule of law,0.5433606562,5,5,equal
+JOR,State capacity,0.5440460323,4,4,equal
+JPN,Accountability,0.6468277385,7,7,equal
+JPN,Economic and fiscal governance,0.6666750735,6,4.75,equal
+JPN,Political foundations,0.6809284065,2,2,equal
+JPN,Rule of law,0.7127523864,5,5,equal
+JPN,State capacity,0.6716075303,4,4,equal
+KAZ,Accountability,0.3817611932,7,7,equal
+KAZ,Economic and fiscal governance,0.5258166686,6,4.75,equal
+KAZ,Political foundations,0.4657562901,2,2,equal
+KAZ,Rule of law,0.4218902688,5,5,equal
+KAZ,State capacity,0.5431190052,4,4,equal
+KEN,Accountability,0.5349427789,7,7,equal
+KEN,Economic and fiscal governance,0.4799126767,6,4.75,equal
+KEN,Political foundations,0.389120413,2,2,equal
+KEN,Rule of law,0.4470771613,5,5,equal
+KEN,State capacity,0.4474287744,4,4,equal
+KGZ,Accountability,0.401793521,7,7,equal
+KGZ,Economic and fiscal governance,0.461195659,6,4.75,equal
+KGZ,Political foundations,0.4769362451,2,2,equal
+KGZ,Rule of law,0.3966884011,5,5,equal
+KGZ,State capacity,0.4992161482,4,4,equal
+KHM,Accountability,0.2711071078,7,7,equal
+KHM,Economic and fiscal governance,0.4485870834,6,4.75,equal
+KHM,Political foundations,0.441954505,2,2,equal
+KHM,Rule of law,0.3116056283,5,5,equal
+KHM,State capacity,0.3828461233,4,4,equal
+KIR,Accountability,0.5851879565,6,6,equal
+KIR,Economic and fiscal governance,0.3248142231,4,3,equal
+KIR,Political foundations,0.586440135,1,1,equal
+KIR,Rule of law,0.5288095629,3,3,equal
+KIR,State capacity,0.3972372834,3,3,equal
+KNA,Accountability,0.6198807173,6,6,equal
+KNA,Economic and fiscal governance,0.4138147729,5,3.75,equal
+KNA,Political foundations,0.5704827996,1,1,equal
+KNA,Rule of law,0.5627077547,5,5,equal
+KNA,State capacity,0.5298780588,3,3,equal
+KOR,Accountability,0.6431330664,7,7,equal
+KOR,Economic and fiscal governance,0.6387435064,6,4.75,equal
+KOR,Political foundations,0.6124171882,2,2,equal
+KOR,Rule of law,0.66911282,5,5,equal
+KOR,State capacity,0.6796583737,4,4,equal
+KWT,Accountability,0.4124628735,7,7,equal
+KWT,Economic and fiscal governance,0.4696076738,6,4.75,equal
+KWT,Political foundations,0.5036042725,2,2,equal
+KWT,Rule of law,0.5483755883,5,5,equal
+KWT,State capacity,0.5481625616,4,4,equal
+LAO,Accountability,0.2929092465,7,7,equal
+LAO,Economic and fiscal governance,0.3525076993,6,4.75,equal
+LAO,Political foundations,0.4438011032,2,2,equal
+LAO,Rule of law,0.3704486641,5,5,equal
+LAO,State capacity,0.4273795407,4,4,equal
+LBN,Accountability,0.4559586475,7,7,equal
+LBN,Economic and fiscal governance,0.4431107776,6,4.75,equal
+LBN,Political foundations,0.3829387767,2,2,equal
+LBN,Rule of law,0.391995731,5,5,equal
+LBN,State capacity,0.3429089442,4,4,equal
+LBR,Accountability,0.5207543868,7,7,equal
+LBR,Economic and fiscal governance,0.409323485,6,4.75,equal
+LBR,Political foundations,0.5269805067,2,2,equal
+LBR,Rule of law,0.4334370767,5,5,equal
+LBR,State capacity,0.3512902758,4,4,equal
+LBY,Accountability,0.399366499,7,7,equal
+LBY,Economic and fiscal governance,0.2656296175,5,4,equal
+LBY,Political foundations,0.359105449,2,2,equal
+LBY,Rule of law,0.3618874341,5,5,equal
+LBY,State capacity,0.2615816998,4,4,equal
+LCA,Accountability,0.5694915295,6,6,equal
+LCA,Economic and fiscal governance,0.4222890629,5,3.75,equal
+LCA,Political foundations,0.5706637148,1,1,equal
+LCA,Rule of law,0.5593268571,5,5,equal
+LCA,State capacity,0.5100764231,3,3,equal
+LIE,Accountability,0.6025844459,6,6,equal
+LIE,Economic and fiscal governance,0.7419083082,3,2.25,equal
+LIE,Political foundations,0.6009288761,1,1,equal
+LIE,Rule of law,0.679342491,3,3,equal
+LIE,State capacity,0.6437363099,3,3,equal
+LKA,Accountability,0.5491632384,7,7,equal
+LKA,Economic and fiscal governance,0.4655829721,6,4.75,equal
+LKA,Political foundations,0.4911620836,2,2,equal
+LKA,Rule of law,0.5068775015,5,5,equal
+LKA,State capacity,0.4942750839,4,4,equal
+LSO,Accountability,0.5296352739,7,7,equal
+LSO,Economic and fiscal governance,0.4428711766,6,4.75,equal
+LSO,Political foundations,0.5607331532,2,2,equal
+LSO,Rule of law,0.519060233,5,5,equal
+LSO,State capacity,0.4167233171,4,4,equal
+LTU,Accountability,0.6344229658,7,7,equal
+LTU,Economic and fiscal governance,0.7019007014,6,4.75,equal
+LTU,Political foundations,0.6301977147,2,2,equal
+LTU,Rule of law,0.6582971685,5,5,equal
+LTU,State capacity,0.6366446247,4,4,equal
+LUX,Accountability,0.69391985,7,7,equal
+LUX,Economic and fiscal governance,0.7464789693,6,4.75,equal
+LUX,Political foundations,0.6760093426,2,2,equal
+LUX,Rule of law,0.7368144374,5,5,equal
+LUX,State capacity,0.6864937334,4,4,equal
+LVA,Accountability,0.6405383752,7,7,equal
+LVA,Economic and fiscal governance,0.7363970359,6,4.75,equal
+LVA,Political foundations,0.5787090373,2,2,equal
+LVA,Rule of law,0.6734577757,5,5,equal
+LVA,State capacity,0.6567108334,4,4,equal
+MAC,Accountability,0.5921216559,2,2,equal
+MAC,Economic and fiscal governance,0.5586807813,5,3.75,equal
+MAC,Political foundations,0.5786823379,1,1,equal
+MAC,Rule of law,0.9160628019,1,1,equal
+MAC,State capacity,0.5649107042,3,3,equal
+MAF,Accountability,0.5037558685,1,1,equal
+MAF,Economic and fiscal governance,0.0205399061,1,0.5,equal
+MAF,Political foundations,0.5457746479,1,1,equal
+MAF,Rule of law,0.08474235105,1,1,equal
+MAF,State capacity,0.6699282193,1,1,equal
+MAR,Accountability,0.4533981109,7,7,equal
+MAR,Economic and fiscal governance,0.4932784966,6,4.75,equal
+MAR,Political foundations,0.4493078786,2,2,equal
+MAR,Rule of law,0.4627270834,5,5,equal
+MAR,State capacity,0.4905359039,4,4,equal
+MCO,Accountability,0.5928593324,6,6,equal
+MCO,Economic and fiscal governance,0.5040128396,3,2.25,equal
+MCO,Political foundations,0.5864630263,1,1,equal
+MCO,Rule of law,0.8245052052,2,2,equal
+MCO,State capacity,0.5941964727,3,3,equal
+MDA,Accountability,0.5331009371,7,7,equal
+MDA,Economic and fiscal governance,0.5363262169,6,4.75,equal
+MDA,Political foundations,0.5443612991,2,2,equal
+MDA,Rule of law,0.5172823057,5,5,equal
+MDA,State capacity,0.5453961264,4,4,equal
+MDG,Accountability,0.4270866348,7,7,equal
+MDG,Economic and fiscal governance,0.4025458779,6,4.75,equal
+MDG,Political foundations,0.4500178731,2,2,equal
+MDG,Rule of law,0.3677444899,5,5,equal
+MDG,State capacity,0.3226981439,4,4,equal
+MDV,Accountability,0.498363315,7,7,equal
+MDV,Economic and fiscal governance,0.4037483274,6,4.75,equal
+MDV,Political foundations,0.4930697308,2,2,equal
+MDV,Rule of law,0.5180013414,5,5,equal
+MDV,State capacity,0.5224395232,4,4,equal
+MEX,Accountability,0.4637120162,7,7,equal
+MEX,Economic and fiscal governance,0.5336856123,6,4.75,equal
+MEX,Political foundations,0.4510861226,2,2,equal
+MEX,Rule of law,0.3550556804,5,5,equal
+MEX,State capacity,0.4996832328,4,4,equal
+MHL,Accountability,0.5728011421,6,6,equal
+MHL,Economic and fiscal governance,0.4449326819,4,3.25,equal
+MHL,Political foundations,0.5880841581,1,1,equal
+MHL,Rule of law,0.5612399304,3,3,equal
+MHL,State capacity,0.4137728428,3,3,equal
+MKD,Accountability,0.5188969937,7,7,equal
+MKD,Economic and fiscal governance,0.546734084,6,4.75,equal
+MKD,Political foundations,0.4929131824,2,2,equal
+MKD,Rule of law,0.47424183,5,5,equal
+MKD,State capacity,0.5343785446,4,4,equal
+MLI,Accountability,0.3737619158,7,7,equal
+MLI,Economic and fiscal governance,0.4519234255,6,4.75,equal
+MLI,Political foundations,0.3197397563,2,2,equal
+MLI,Rule of law,0.4346230967,5,5,equal
+MLI,State capacity,0.3583237164,4,4,equal
+MLT,Accountability,0.6025831697,7,7,equal
+MLT,Economic and fiscal governance,0.6128597188,6,4.75,equal
+MLT,Political foundations,0.6648320976,2,2,equal
+MLT,Rule of law,0.6365832712,5,5,equal
+MLT,State capacity,0.614903971,4,4,equal
+MMR,Accountability,0.2231887957,7,7,equal
+MMR,Economic and fiscal governance,0.336114197,6,4.75,equal
+MMR,Political foundations,0.2117932325,2,2,equal
+MMR,Rule of law,0.2801025141,5,5,equal
+MMR,State capacity,0.340615984,4,4,equal
+MNE,Accountability,0.5618997528,7,7,equal
+MNE,Economic and fiscal governance,0.5754500479,6,4.75,equal
+MNE,Political foundations,0.5261225465,2,2,equal
+MNE,Rule of law,0.5471820253,5,5,equal
+MNE,State capacity,0.5443802049,4,4,equal
+MNG,Accountability,0.5437784179,7,7,equal
+MNG,Economic and fiscal governance,0.4879343963,6,4.75,equal
+MNG,Political foundations,0.5227915133,2,2,equal
+MNG,Rule of law,0.4748268077,5,5,equal
+MNG,State capacity,0.5595705967,4,4,equal
+MNP,Accountability,0.5037558685,1,1,equal
+MNP,Economic and fiscal governance,0.0205399061,1,0.5,equal
+MNP,Political foundations,0.5457746479,1,1,equal
+MNP,State capacity,0.6518456388,1,1,equal
+MOZ,Accountability,0.3953685862,7,7,equal
+MOZ,Economic and fiscal governance,0.3987155061,6,4.75,equal
+MOZ,Political foundations,0.4362918397,2,2,equal
+MOZ,Rule of law,0.3633335167,5,5,equal
+MOZ,State capacity,0.3664078907,4,4,equal
+MRT,Accountability,0.4025630828,7,7,equal
+MRT,Economic and fiscal governance,0.4021421987,6,4.75,equal
+MRT,Political foundations,0.3609688455,2,2,equal
+MRT,Rule of law,0.348437191,5,5,equal
+MRT,State capacity,0.3916635099,4,4,equal
+MUS,Accountability,0.5937909842,7,7,equal
+MUS,Economic and fiscal governance,0.549861228,6,4.75,equal
+MUS,Political foundations,0.5443399497,2,2,equal
+MUS,Rule of law,0.581331883,5,5,equal
+MUS,State capacity,0.5704876647,4,4,equal
+MWI,Accountability,0.5464217035,7,7,equal
+MWI,Economic and fiscal governance,0.4865292556,6,4.75,equal
+MWI,Political foundations,0.4767606344,2,2,equal
+MWI,Rule of law,0.5001208683,5,5,equal
+MWI,State capacity,0.454741046,4,4,equal
+MYS,Accountability,0.4635678935,7,7,equal
+MYS,Economic and fiscal governance,0.5342152662,6,4.75,equal
+MYS,Political foundations,0.5262417316,2,2,equal
+MYS,Rule of law,0.5449940046,5,5,equal
+MYS,State capacity,0.5444494654,4,4,equal
+NAM,Accountability,0.5682047569,7,7,equal
+NAM,Economic and fiscal governance,0.4495289231,6,4.75,equal
+NAM,Political foundations,0.568078344,2,2,equal
+NAM,Rule of law,0.5662525902,5,5,equal
+NAM,State capacity,0.4993090907,4,4,equal
+NCL,Accountability,0.5037558685,1,1,equal
+NCL,Economic and fiscal governance,0.2914144829,2,1.5,equal
+NCL,Political foundations,0.5805239053,1,1,equal
+NCL,Rule of law,0.4736312399,1,1,equal
+NCL,State capacity,0.6294275537,1,1,equal
+NER,Accountability,0.4356403157,7,7,equal
+NER,Economic and fiscal governance,0.423930169,6,4.75,equal
+NER,Political foundations,0.3595097213,2,2,equal
+NER,Rule of law,0.4242291975,5,5,equal
+NER,State capacity,0.3845808981,4,4,equal
+NGA,Accountability,0.4687225131,7,7,equal
+NGA,Economic and fiscal governance,0.4586176115,6,4.75,equal
+NGA,Political foundations,0.3410656296,2,2,equal
+NGA,Rule of law,0.3901222623,5,5,equal
+NGA,State capacity,0.3515837781,4,4,equal
+NIC,Accountability,0.2206630439,7,7,equal
+NIC,Economic and fiscal governance,0.4455626664,6,4.75,equal
+NIC,Political foundations,0.3822363283,2,2,equal
+NIC,Rule of law,0.2223746879,5,5,equal
+NIC,State capacity,0.3658171663,4,4,equal
+NLD,Accountability,0.6542371224,7,7,equal
+NLD,Economic and fiscal governance,0.7188598669,6,4.75,equal
+NLD,Political foundations,0.6423754229,2,2,equal
+NLD,Rule of law,0.7355535921,5,5,equal
+NLD,State capacity,0.6813876393,4,4,equal
+NOR,Accountability,0.7170131807,7,7,equal
+NOR,Economic and fiscal governance,0.6684060404,6,4.75,equal
+NOR,Political foundations,0.6849887916,2,2,equal
+NOR,Rule of law,0.7698266669,5,5,equal
+NOR,State capacity,0.6965125487,4,4,equal
+NPL,Accountability,0.5392811956,7,7,equal
+NPL,Economic and fiscal governance,0.4575247635,6,4.75,equal
+NPL,Political foundations,0.4951784849,2,2,equal
+NPL,Rule of law,0.4715181994,5,5,equal
+NPL,State capacity,0.4801158682,4,4,equal
+NRU,Accountability,0.5146680942,6,6,equal
+NRU,Economic and fiscal governance,0.3862147445,5,3.75,equal
+NRU,Political foundations,0.5808221707,1,1,equal
+NRU,Rule of law,0.5522499145,3,3,equal
+NRU,State capacity,0.4274610342,3,3,equal
+NZL,Accountability,0.6425086986,7,7,equal
+NZL,Economic and fiscal governance,0.6357453708,6,4.75,equal
+NZL,Political foundations,0.6585846361,2,2,equal
+NZL,Rule of law,0.7599996636,5,5,equal
+NZL,State capacity,0.6930485558,4,4,equal
+OMN,Accountability,0.3342362362,7,7,equal
+OMN,Economic and fiscal governance,0.5146547217,6,4.75,equal
+OMN,Political foundations,0.5025547419,2,2,equal
+OMN,Rule of law,0.5261298593,5,5,equal
+OMN,State capacity,0.566147693,4,4,equal
+PAK,Accountability,0.3971948362,7,7,equal
+PAK,Economic and fiscal governance,0.4291270498,6,4.75,equal
+PAK,Political foundations,0.3270735999,2,2,equal
+PAK,Rule of law,0.3437792402,5,5,equal
+PAK,State capacity,0.3446945407,4,4,equal
+PAN,Accountability,0.5676730939,7,7,equal
+PAN,Economic and fiscal governance,0.5193475517,6,4.75,equal
+PAN,Political foundations,0.5422081171,2,2,equal
+PAN,Rule of law,0.4981107307,5,5,equal
+PAN,State capacity,0.5321987989,4,4,equal
+PER,Accountability,0.5183048616,7,7,equal
+PER,Economic and fiscal governance,0.6077975818,6,4.75,equal
+PER,Political foundations,0.4782831187,2,2,equal
+PER,Rule of law,0.4599384553,5,5,equal
+PER,State capacity,0.4929210478,4,4,equal
+PHL,Accountability,0.4532381885,7,7,equal
+PHL,Economic and fiscal governance,0.5220544646,6,4.75,equal
+PHL,Political foundations,0.3708386403,2,2,equal
+PHL,Rule of law,0.3943749598,5,5,equal
+PHL,State capacity,0.4722548092,4,4,equal
+PLW,Accountability,0.5896163176,6,6,equal
+PLW,Economic and fiscal governance,0.432552651,5,3.75,equal
+PLW,Political foundations,0.5864630263,1,1,equal
+PLW,Rule of law,0.3702699901,3,3,equal
+PLW,State capacity,0.4838415934,3,3,equal
+PNG,Accountability,0.4915658139,7,7,equal
+PNG,Economic and fiscal governance,0.457448699,6,4.75,equal
+PNG,Political foundations,0.508507853,2,2,equal
+PNG,Rule of law,0.4463021072,5,5,equal
+PNG,State capacity,0.3286464543,4,4,equal
+POL,Accountability,0.6170940554,7,7,equal
+POL,Economic and fiscal governance,0.6129577895,6,4.75,equal
+POL,Political foundations,0.6024314883,2,2,equal
+POL,Rule of law,0.6162392125,5,5,equal
+POL,State capacity,0.6368305037,4,4,equal
+PRI,Accountability,0.551857676,2,2,equal
+PRI,Economic and fiscal governance,0.4590663493,2,1.5,equal
+PRI,Political foundations,0.5527676422,1,1,equal
+PRI,Rule of law,0.4132848696,2,2,equal
+PRI,State capacity,0.5171687448,2,2,equal
+PRT,Accountability,0.6285594295,7,7,equal
+PRT,Economic and fiscal governance,0.6496491843,6,4.75,equal
+PRT,Political foundations,0.5871869341,2,2,equal
+PRT,Rule of law,0.5919265596,5,5,equal
+PRT,State capacity,0.6582219905,4,4,equal
+PRY,Accountability,0.480788543,7,7,equal
+PRY,Economic and fiscal governance,0.5386410385,6,4.75,equal
+PRY,Political foundations,0.4885659001,2,2,equal
+PRY,Rule of law,0.4068021384,5,5,equal
+PRY,State capacity,0.4538938149,4,4,equal
+PSE,Accountability,0.3502480708,7,7,equal
+PSE,Economic and fiscal governance,0.4773289472,5,4,equal
+PSE,Political foundations,0.4456804396,2,2,equal
+PSE,Rule of law,0.4643356444,5,5,equal
+PSE,State capacity,0.3769470318,4,4,equal
+PYF,Accountability,0.5037558685,1,1,equal
+PYF,Economic and fiscal governance,0.3350371857,3,2,equal
+PYF,Political foundations,0.5776917414,1,1,equal
+PYF,Rule of law,0.9486714976,1,1,equal
+PYF,State capacity,0.6732834556,1,1,equal
+QAT,Accountability,0.2736823494,7,7,equal
+QAT,Economic and fiscal governance,0.4633589447,6,4.75,equal
+QAT,Political foundations,0.4905488844,2,2,equal
+QAT,Rule of law,0.5216141975,5,5,equal
+QAT,State capacity,0.5752458081,4,4,equal
+ROU,Accountability,0.5247518666,7,7,equal
+ROU,Economic and fiscal governance,0.5840899481,6,4.75,equal
+ROU,Political foundations,0.5762458796,2,2,equal
+ROU,Rule of law,0.5625791624,5,5,equal
+ROU,State capacity,0.5885686734,4,4,equal
+RUS,Accountability,0.2687068432,7,7,equal
+RUS,Economic and fiscal governance,0.431141763,6,4.75,equal
+RUS,Political foundations,0.351873956,2,2,equal
+RUS,Rule of law,0.330631238,5,5,equal
+RUS,State capacity,0.5121143224,4,4,equal
+RWA,Accountability,0.3608415479,7,7,equal
+RWA,Economic and fiscal governance,0.3958563547,6,4.75,equal
+RWA,Political foundations,0.3876836899,2,2,equal
+RWA,Rule of law,0.459794359,5,5,equal
+RWA,State capacity,0.4916318967,4,4,equal
+SAU,Accountability,0.2386616553,7,7,equal
+SAU,Economic and fiscal governance,0.440886526,6,4.75,equal
+SAU,Political foundations,0.4056577635,2,2,equal
+SAU,Rule of law,0.4440907095,5,5,equal
+SAU,State capacity,0.5552987019,4,4,equal
+SDN,Accountability,0.2681620874,7,7,equal
+SDN,Economic and fiscal governance,0.3003475045,5,4,equal
+SDN,Political foundations,0.222097391,2,2,equal
+SDN,Rule of law,0.2470788619,5,5,equal
+SDN,State capacity,0.2359667074,4,4,equal
+SEN,Accountability,0.5493351307,7,7,equal
+SEN,Economic and fiscal governance,0.4570226243,6,4.75,equal
+SEN,Political foundations,0.5563841222,2,2,equal
+SEN,Rule of law,0.5422031133,5,5,equal
+SEN,State capacity,0.5036444961,4,4,equal
+SGP,Accountability,0.4592485124,7,7,equal
+SGP,Economic and fiscal governance,0.6458179956,6,4.75,equal
+SGP,Political foundations,0.6211288674,2,2,equal
+SGP,Rule of law,0.702124728,5,5,equal
+SGP,State capacity,0.7097779865,4,4,equal
+SLB,Accountability,0.5187696201,7,7,equal
+SLB,Economic and fiscal governance,0.3830250433,6,4.75,equal
+SLB,Political foundations,0.5359048017,2,2,equal
+SLB,Rule of law,0.5424662537,5,5,equal
+SLB,State capacity,0.390026946,4,4,equal
+SLE,Accountability,0.5309591864,7,7,equal
+SLE,Economic and fiscal governance,0.4194254587,6,4.75,equal
+SLE,Political foundations,0.5030809922,2,2,equal
+SLE,Rule of law,0.44372708,5,5,equal
+SLE,State capacity,0.447887325,4,4,equal
+SLV,Accountability,0.3769825363,7,7,equal
+SLV,Economic and fiscal governance,0.4724911355,6,4.75,equal
+SLV,Political foundations,0.462479139,2,2,equal
+SLV,Rule of law,0.3537306675,5,5,equal
+SLV,State capacity,0.4738616384,4,4,equal
+SMR,Accountability,0.634842161,6,6,equal
+SMR,Economic and fiscal governance,0.4990641331,4,3.25,equal
+SMR,Political foundations,0.5921038903,1,1,equal
+SMR,Rule of law,0.8466991413,1,1,equal
+SMR,State capacity,0.490798103,3,3,equal
+SOM,Accountability,0.3537401798,7,7,equal
+SOM,Economic and fiscal governance,0.4207572203,5,4,equal
+SOM,Political foundations,0.3693511755,2,2,equal
+SOM,Rule of law,0.2899413414,5,5,equal
+SOM,State capacity,0.28351491,4,4,equal
+SRB,Accountability,0.442320238,7,7,equal
+SRB,Economic and fiscal governance,0.5707215168,6,4.75,equal
+SRB,Political foundations,0.4823826432,2,2,equal
+SRB,Rule of law,0.4699398673,5,5,equal
+SRB,State capacity,0.5527369712,4,4,equal
+SSD,Accountability,0.2770757693,7,7,equal
+SSD,Economic and fiscal governance,0.2246914505,4,3.5,equal
+SSD,Political foundations,0.2695653358,2,2,equal
+SSD,Rule of law,0.2090195737,5,5,equal
+SSD,State capacity,0.1733913062,4,4,equal
+STP,Accountability,0.540673924,7,7,equal
+STP,Economic and fiscal governance,0.3686810488,6,4.75,equal
+STP,Political foundations,0.512889664,2,2,equal
+STP,Rule of law,0.5534596317,5,5,equal
+STP,State capacity,0.4694166438,4,4,equal
+SUR,Accountability,0.5572252653,7,7,equal
+SUR,Economic and fiscal governance,0.3638641559,6,4.75,equal
+SUR,Political foundations,0.5215618154,2,2,equal
+SUR,Rule of law,0.5419031454,5,5,equal
+SUR,State capacity,0.4494860621,4,4,equal
+SVK,Accountability,0.5611682887,7,7,equal
+SVK,Economic and fiscal governance,0.6348754948,6,4.75,equal
+SVK,Political foundations,0.5614242676,2,2,equal
+SVK,Rule of law,0.5978679699,5,5,equal
+SVK,State capacity,0.6236613367,4,4,equal
+SVN,Accountability,0.6252525894,7,7,equal
+SVN,Economic and fiscal governance,0.6084363822,6,4.75,equal
+SVN,Political foundations,0.6108682697,2,2,equal
+SVN,Rule of law,0.6115811556,5,5,equal
+SVN,State capacity,0.6430819247,4,4,equal
+SWE,Accountability,0.7111352247,7,7,equal
+SWE,Economic and fiscal governance,0.6943735572,6,4.75,equal
+SWE,Political foundations,0.6643138873,2,2,equal
+SWE,Rule of law,0.7465560191,5,5,equal
+SWE,State capacity,0.7021972956,4,4,equal
+SWZ,Accountability,0.3051080564,7,7,equal
+SWZ,Economic and fiscal governance,0.3426529032,6,4.75,equal
+SWZ,Political foundations,0.4535035264,2,2,equal
+SWZ,Rule of law,0.3454268271,5,5,equal
+SWZ,State capacity,0.434380337,4,4,equal
+SXM,Accountability,0.5037558685,1,1,equal
+SXM,Economic and fiscal governance,0.2060875024,2,1.25,equal
+SXM,Political foundations,0.5457746479,1,1,equal
+SXM,State capacity,0.7378373413,1,1,equal
+SYC,Accountability,0.6091692785,7,7,equal
+SYC,Economic and fiscal governance,0.4848953488,6,4.75,equal
+SYC,Political foundations,0.5628230168,2,2,equal
+SYC,Rule of law,0.6143965501,5,5,equal
+SYC,State capacity,0.567074218,4,4,equal
+SYR,Accountability,0.2668315545,7,7,equal
+SYR,Economic and fiscal governance,0.2761653686,5,4,equal
+SYR,Political foundations,0.3263161177,2,2,equal
+SYR,Rule of law,0.3264973713,5,5,equal
+SYR,State capacity,0.2638907316,4,4,equal
+TCA,Accountability,0.5037558685,1,1,equal
+TCA,Economic and fiscal governance,0.3674037447,2,1.25,equal
+TCA,Political foundations,0.5457746479,1,1,equal
+TCA,Rule of law,0.001811594203,1,1,equal
+TCA,State capacity,0.7190699848,1,1,equal
+TCD,Accountability,0.3039460713,7,7,equal
+TCD,Economic and fiscal governance,0.3641123361,6,4.75,equal
+TCD,Political foundations,0.2351086954,2,2,equal
+TCD,Rule of law,0.2891431964,5,5,equal
+TCD,State capacity,0.2596239718,4,4,equal
+TGO,Accountability,0.410983899,7,7,equal
+TGO,Economic and fiscal governance,0.4289548249,6,4.75,equal
+TGO,Political foundations,0.4312067818,2,2,equal
+TGO,Rule of law,0.4276357002,5,5,equal
+TGO,State capacity,0.4166508083,4,4,equal
+THA,Accountability,0.4599078363,7,7,equal
+THA,Economic and fiscal governance,0.4943269032,6,4.75,equal
+THA,Political foundations,0.3955027654,2,2,equal
+THA,Rule of law,0.4210689709,5,5,equal
+THA,State capacity,0.5324033011,4,4,equal
+TJK,Accountability,0.2536914054,7,7,equal
+TJK,Economic and fiscal governance,0.4001404729,6,4.75,equal
+TJK,Political foundations,0.3961343884,2,2,equal
+TJK,Rule of law,0.323135677,5,5,equal
+TJK,State capacity,0.4208431215,4,4,equal
+TLS,Accountability,0.5571675015,7,7,equal
+TLS,Economic and fiscal governance,0.4153234159,6,4.75,equal
+TLS,Political foundations,0.5410285152,2,2,equal
+TLS,Rule of law,0.5172067382,5,5,equal
+TLS,State capacity,0.4500590845,4,4,equal
+TON,Accountability,0.5004231447,6,6,equal
+TON,Economic and fiscal governance,0.366116362,5,3.75,equal
+TON,Political foundations,0.587139639,1,1,equal
+TON,Rule of law,0.6445295648,3,3,equal
+TON,State capacity,0.4914698347,3,3,equal
+TTO,Accountability,0.6010495257,7,7,equal
+TTO,Economic and fiscal governance,0.4557101313,6,4.75,equal
+TTO,Political foundations,0.5531968895,2,2,equal
+TTO,Rule of law,0.5499272329,5,5,equal
+TTO,State capacity,0.4738909697,4,4,equal
+TUN,Accountability,0.4347608354,7,7,equal
+TUN,Economic and fiscal governance,0.4341989412,6,4.75,equal
+TUN,Political foundations,0.5006597064,2,2,equal
+TUN,Rule of law,0.5041784535,5,5,equal
+TUN,State capacity,0.4944110842,4,4,equal
+TUR,Accountability,0.3481575309,7,7,equal
+TUR,Economic and fiscal governance,0.536471903,6,4.75,equal
+TUR,Political foundations,0.3586216825,2,2,equal
+TUR,Rule of law,0.3702059376,5,5,equal
+TUR,State capacity,0.4928766296,4,4,equal
+TUV,Accountability,0.5829601597,6,6,equal
+TUV,Economic and fiscal governance,0.3993266238,4,3,equal
+TUV,Political foundations,0.5961473516,1,1,equal
+TUV,Rule of law,0.6840494203,3,3,equal
+TUV,State capacity,0.3993839116,3,3,equal
+TZA,Accountability,0.4582495165,7,7,equal
+TZA,Economic and fiscal governance,0.4335618015,6,4.75,equal
+TZA,Political foundations,0.5675272039,2,2,equal
+TZA,Rule of law,0.4858780969,5,5,equal
+TZA,State capacity,0.4567540571,4,4,equal
+UGA,Accountability,0.4083879421,7,7,equal
+UGA,Economic and fiscal governance,0.4451368254,6,4.75,equal
+UGA,Political foundations,0.4288612239,2,2,equal
+UGA,Rule of law,0.3520532298,5,5,equal
+UGA,State capacity,0.4168055327,4,4,equal
+UKR,Accountability,0.4790074558,7,7,equal
+UKR,Economic and fiscal governance,0.5395257642,6,4.75,equal
+UKR,Political foundations,0.4319205607,2,2,equal
+UKR,Rule of law,0.4256280552,5,5,equal
+UKR,State capacity,0.4153223853,4,4,equal
+URY,Accountability,0.6637433795,7,7,equal
+URY,Economic and fiscal governance,0.5966220106,6,4.75,equal
+URY,Political foundations,0.6463792166,2,2,equal
+URY,Rule of law,0.6606206975,5,5,equal
+URY,State capacity,0.606395056,4,4,equal
+USA,Accountability,0.5837253442,7,7,equal
+USA,Economic and fiscal governance,0.6492037228,6,4.75,equal
+USA,Political foundations,0.4803641849,2,2,equal
+USA,Rule of law,0.5982213447,5,5,equal
+USA,State capacity,0.63208607,4,4,equal
+UZB,Accountability,0.3268761934,7,7,equal
+UZB,Economic and fiscal governance,0.4748659346,6,4.75,equal
+UZB,Political foundations,0.4244556172,2,2,equal
+UZB,Rule of law,0.3749288201,5,5,equal
+UZB,State capacity,0.5257350241,4,4,equal
+VCT,Accountability,0.5748080932,6,6,equal
+VCT,Economic and fiscal governance,0.4558624118,5,3.75,equal
+VCT,Political foundations,0.5723971878,1,1,equal
+VCT,Rule of law,0.5527430767,5,5,equal
+VCT,State capacity,0.5012906834,3,3,equal
+VEN,Accountability,0.283108763,7,7,equal
+VEN,Economic and fiscal governance,0.2483235758,6,4.75,equal
+VEN,Political foundations,0.3796296558,2,2,equal
+VEN,Rule of law,0.2382450744,5,5,equal
+VEN,State capacity,0.2983860287,4,4,equal
+VGB,Accountability,0.5037558685,1,1,equal
+VGB,Economic and fiscal governance,0.3291100936,2,1.25,equal
+VGB,Political foundations,0.5457746479,1,1,equal
+VGB,Rule of law,0.2602657005,1,1,equal
+VGB,State capacity,0.452776585,1,1,equal
+VIR,Accountability,0.5037558685,1,1,equal
+VIR,Economic and fiscal governance,0.5090580325,2,1.5,equal
+VIR,Political foundations,0.5752009694,1,1,equal
+VIR,Rule of law,0.01630434783,1,1,equal
+VIR,State capacity,0.6084509182,2,2,equal
+VNM,Accountability,0.3837091974,7,7,equal
+VNM,Economic and fiscal governance,0.4125639861,6,4.75,equal
+VNM,Political foundations,0.4420249189,2,2,equal
+VNM,Rule of law,0.4346189023,5,5,equal
+VNM,State capacity,0.5129472038,4,4,equal
+VUT,Accountability,0.5730650727,7,7,equal
+VUT,Economic and fiscal governance,0.4618356662,6,4.75,equal
+VUT,Political foundations,0.6063351003,2,2,equal
+VUT,Rule of law,0.6015345138,5,5,equal
+VUT,State capacity,0.4538384615,4,4,equal
+WSM,Accountability,0.5294190083,6,6,equal
+WSM,Economic and fiscal governance,0.3785108034,5,3.75,equal
+WSM,Political foundations,0.5802094039,2,2,equal
+WSM,Rule of law,0.6066582164,3,3,equal
+WSM,State capacity,0.5325471128,4,4,equal
+XKX,Accountability,0.5159752187,7,7,equal
+XKX,Economic and fiscal governance,0.5170393307,4,3.5,equal
+XKX,Political foundations,0.5423859449,2,2,equal
+XKX,Rule of law,0.5141652216,5,5,equal
+XKX,State capacity,0.4633035588,4,4,equal
+YEM,Accountability,0.2928902328,7,7,equal
+YEM,Economic and fiscal governance,0.2736661392,5,4,equal
+YEM,Political foundations,0.2555599598,2,2,equal
+YEM,Rule of law,0.2507545488,5,5,equal
+YEM,State capacity,0.1856815113,4,4,equal
+ZAF,Accountability,0.6025221225,7,7,equal
+ZAF,Economic and fiscal governance,0.5581366334,6,4.75,equal
+ZAF,Political foundations,0.4880070999,2,2,equal
+ZAF,Rule of law,0.5083959691,5,5,equal
+ZAF,State capacity,0.5039995968,4,4,equal
+ZMB,Accountability,0.530950102,7,7,equal
+ZMB,Economic and fiscal governance,0.4824862473,6,4.75,equal
+ZMB,Political foundations,0.4740055325,2,2,equal
+ZMB,Rule of law,0.4471528907,5,5,equal
+ZMB,State capacity,0.4309251209,4,4,equal
+ZWE,Accountability,0.3960801021,7,7,equal
+ZWE,Economic and fiscal governance,0.3468753424,6,4.75,equal
+ZWE,Political foundations,0.3651021519,2,2,equal
+ZWE,Rule of law,0.3269143534,5,5,equal
+ZWE,State capacity,0.3958588328,4,4,equal

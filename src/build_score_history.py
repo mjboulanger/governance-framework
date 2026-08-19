@@ -30,7 +30,7 @@ import os
 import sys
 import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
-from config import PROCESSED_DIR, CURRENT_YEAR
+from config import PROCESSED_DIR, CURRENT_YEAR, write_csv
 from build_concept_scores import score_slice
 from build_final_scores import score_categories
 from concept_sources import to_rows
@@ -119,8 +119,8 @@ def build_history():
 
 def write_history():
     ch, cath = build_history()
-    ch.to_csv(os.path.join(PROC, "score_history.csv"), index=False)
-    cath.to_csv(os.path.join(PROC, "category_history.csv"), index=False)
+    write_csv(ch, os.path.join(PROC, "score_history.csv"))
+    write_csv(cath, os.path.join(PROC, "category_history.csv"))
     return ch, cath
 
 

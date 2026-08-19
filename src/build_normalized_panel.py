@@ -31,7 +31,7 @@ import pandas as pd
 import sys
 sys.path.insert(0, os.path.dirname(__file__))
 import re
-from config import PROCESSED_DIR, RAW_DIR, FRAMEWORK_START_YEAR, CURRENT_YEAR
+from config import PROCESSED_DIR, RAW_DIR, FRAMEWORK_START_YEAR, CURRENT_YEAR, write_csv
 from country_harmonization import add_iso3
 from normalize import (normalize_zfamily, normalize_percentile,
                        normalize_binary, normalize_fixed_anchor, WINSOR)
@@ -223,11 +223,11 @@ def build():
 
     # Tier-3 param tables
     params = pd.DataFrame(param_rows).sort_values("metric").reset_index(drop=True)
-    params.to_csv(os.path.join(PROC, "metric_normalization_params.csv"), index=False)
+    write_csv(params, os.path.join(PROC, "metric_normalization_params.csv"))
     pctbase = pd.DataFrame(pct_baseline_rows,
                            columns=["metric", "position", "value"]).sort_values(
         ["metric", "position"]).reset_index(drop=True)
-    pctbase.to_csv(os.path.join(PROC, "percentile_baselines.csv"), index=False)
+    write_csv(pctbase, os.path.join(PROC, "percentile_baselines.csv"))
 
     return panel, skipped, params, pctbase
 
