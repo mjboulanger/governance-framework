@@ -25,8 +25,10 @@ PROC = PROCESSED_DIR
 N_PEERS = 10
 COV_FLOOR = 110
 POP_FLOOR = 1_000_000
-SIZE_SCALE = 0.08
-SIZE_CAP = 0.35
+SIZE_SCALE = 0.13
+SIZE_CAP = 0.55
+INCOME_DEADZONE = 1.15   # income within +/-15% treated as equal
+INCOME_SQRT_SCALE = 0.55  # concave compression of income distance beyond the deadzone
 
 # ---- region mapping (ISO3 -> broad region) + near-region adjacency ----
 REGION = {}
@@ -86,11 +88,13 @@ def peers_for(df, focus, n=N_PEERS):
     cand = cand[cand["gdppc"].notna()]
     cand = cand[cand["pop"].fillna(0) >= POP_FLOOR]
     lf = math.log(f["gdppc"])
-    cand["ldist"] = (np.log(cand["gdppc"]) - lf).abs()
+    _raw = (np.log(cand["gdppc"]) - lf).abs()
+    _thr = math.log(INCOME_DEADZONE)
+    cand["ldist"] = np.sqrt((_raw - _thr).clip(lower=0)) * INCOME_SQRT_SCALE  # deadzone then concave
     def rbonus(r):
         if r == freg: return 0.0
-        if r in NEAR.get(freg, set()): return 0.15
-        return 0.40
+        if r in NEAR.get(freg, set()): return 0.10
+        return 0.22
     cand["rpen"] = [rbonus(r) for r in cand["region"]]
     lpf = math.log(f["pop"]) if pd.notna(f["pop"]) and f["pop"] > 0 else None
     if lpf is not None:
