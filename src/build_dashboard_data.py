@@ -66,6 +66,16 @@ def build():
         _by = {c: int(gg["metric"].nunique()) for c, gg in _g.groupby("_cat") if c}
         metric_counts[_iso] = {"total": int(_g["metric"].nunique()), "by_cat": _by}
 
+    # default peer groups (from build_peers.py); iso3 -> list of peer iso3
+    import os as _os
+    _peers_path = _os.path.join(PROC, "country_peers.csv")
+    peers_map = {}
+    if _os.path.exists(_peers_path):
+        _pf = pd.read_csv(_peers_path)
+        for _, _r in _pf.iterrows():
+            _pl = str(_r["peers"]).split(",") if pd.notna(_r["peers"]) and str(_r["peers"]).strip() else []
+            peers_map[_r["iso3"]] = [x for x in _pl if x]
+
     for iso in fs.index:
         cats = {cat: _n(fs.loc[iso, cat]) for cat in CATEGORIES if cat in fs.columns}
         concepts = {}
@@ -88,6 +98,7 @@ def build():
             "terr": _b(cov.loc[iso, "is_territory"]) if iso in cov.index else False,
             "np": int(cov.loc[iso, "metrics_present"]) if iso in cov.index else 0,
             "mc": metric_counts.get(iso, {"total": 0, "by_cat": {}}),
+            "peers": peers_map.get(iso, []),
             "cat": cats,
             "con": concepts,
         }
