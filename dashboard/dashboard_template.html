@@ -69,7 +69,7 @@ header .sub{color:var(--muted);font-size:12px;margin-left:auto;font-family:var(-
 .main{flex:1 1 auto;display:flex;min-height:0}
 .map-wrap{flex:1 1 auto;position:relative;min-width:0;background:var(--bg)}
 #map{width:100%;height:100%}
-.side{flex:0 0 340px;border-left:1px solid var(--border);
+.side{flex:0 0 clamp(340px,26vw,520px);border-left:1px solid var(--border);
   background:var(--panel);overflow-y:auto;display:flex;flex-direction:column}
 
 .controls{position:sticky;top:0;z-index:6;background:var(--bg);padding-bottom:10px;padding:16px 20px;border-bottom:1px solid var(--border)}
@@ -155,6 +155,15 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .pl-sw.warm{background:rgb(201,106,74)}
 .pl-sw.cool{background:rgb(47,143,158)}
 .pl-note{margin-top:3px;font-style:italic}
+.tabs{display:flex;gap:2px;padding:0 24px;border-bottom:1px solid var(--border);background:var(--bg);flex:0 0 auto}
+.tab{appearance:none;border:none;background:none;font-family:var(--font);font-size:13px;
+  color:var(--muted);padding:11px 16px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+.view{display:none;min-height:0}
+.view.active{display:flex;flex:1 1 auto;flex-direction:column;min-height:0}
+#view-map.view.active{flex-direction:row}
+.drill-wrap,.ts-wrap{padding:24px 28px;max-width:1100px;margin:0 auto;overflow-y:auto;flex:1 1 auto;min-height:0;width:100%}
 .insufficient{color:var(--muted);font-style:italic;font-size:12px;margin-top:8px}
 .hint{font-size:11px;color:var(--muted);margin-top:16px;font-family:var(--mono);line-height:1.5}
 </style>
@@ -165,6 +174,12 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
   <h1>Sovereign Governance Framework</h1>
   <span class="sub" id="genstamp"></span>
 </header>
+<nav class="tabs">
+  <button class="tab active" data-view="map">Map</button>
+  <button class="tab" data-view="drilldown">Drill-down</button>
+  <button class="tab" data-view="timeseries">Time series</button>
+</nav>
+<div id="view-map" class="view active">
 <div class="main">
   <div class="map-wrap"><div id="map"></div><div id="simlist" style="display:none"></div></div>
   <aside class="side">
@@ -181,12 +196,22 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
     <div class="profile" id="profile">
       <div class="empty" id="emptymsg">Select a country on the map<br>to see its governance profile.</div>
       <div id="profilehead" style="display:none"></div>
-      <div id="radar" style="width:100%;height:300px;display:none"></div>
+      <div id="radar" style="width:100%;height:344px;display:none"></div>
       <div id="radarlegend" style="display:none"></div>
       <div id="comparectl"></div>
       <div id="valuelist"></div>
     </div>
   </aside>
+</div>
+</div><!-- /view-map -->
+<div id="view-drilldown" class="view">
+  <div class="drill-wrap" id="drillwrap">
+    <div class="empty" id="drillempty">Select a country and a concept to dig into its underlying metrics.</div>
+    <div id="drillbody" style="display:none"></div>
+  </div>
+</div>
+<div id="view-timeseries" class="view">
+  <div class="ts-wrap"><div class="empty">Time series view coming soon.</div></div>
 </div>
 
 <script>
@@ -440,11 +465,11 @@ function drawCompare(c, axes){
     hovertemplate:'<b>'+c.name+'</b><br>%{theta}: %{r:.2f}<extra></extra>'});
 
   const layout={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
-    margin:{t:20,b:20,l:70,r:70},showlegend:false,
+    margin:{t:54,b:54,l:70,r:70},showlegend:false,
     polar:{bgcolor:'rgba(0,0,0,0)',
       radialaxis:{range:[0,RMAX],showticklabels:false,ticks:'',tickmode:'array',tickvals:RTICKS,
         gridcolor:cv('--border'),linecolor:cv('--border')},
-      angularaxis:{tickfont:{size:9,color:cv('--ink')},gridcolor:cv('--border'),linecolor:cv('--border')}}};
+      angularaxis:{tickfont:{size:radarLabelSize(),color:cv('--ink')},gridcolor:cv('--border'),linecolor:cv('--border')}}};
   const rdiv=document.getElementById('radar'); rdiv.style.display='block';
   Plotly.react('radar',traces,layout,{responsive:true,displayModeBar:false});
 
@@ -583,6 +608,14 @@ function _devColor(dev, span){
   else { const k=t; c=[lerp(mid[0],above[0],k),lerp(mid[1],above[1],k),lerp(mid[2],above[2],k)]; }
   return 'rgb('+c[0]+','+c[1]+','+c[2]+')';
 }
+// adaptive radar label font: scales with the radar container width (10..15px)
+function radarLabelSize(){
+  const el=document.getElementById('radar');
+  const w = el ? el.clientWidth : 340;
+  // map ~300px -> 10px, ~520px -> 13px (cap at concept-bar label size), clamped
+  const s = Math.round(10 + (w-300)/(520-300)*(13-10));
+  return Math.max(10, Math.min(13, s));
+}
 function positionBar(v, centerMed, worldBand){
   // centre = centerMed (peer median in compare, world median otherwise);
   // colour/direction = deviation vs centerMed; LENGTH scaled to the WORLD p25-p75;
@@ -692,11 +725,11 @@ function showProfile(){
     hovertemplate:'%{theta}<br>%{r:.2f}<extra></extra>'};
 
   const layout={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
-    margin:{t:20,b:20,l:70,r:70},showlegend:false,
+    margin:{t:54,b:54,l:70,r:70},showlegend:false,
     polar:{bgcolor:'rgba(0,0,0,0)',
       radialaxis:{range:[0,RMAX],showticklabels:false,ticks:'',tickmode:'array',tickvals:RTICKS,
         gridcolor:cv('--border'),linecolor:cv('--border')},
-      angularaxis:{tickfont:{size:9,color:cv('--ink')},gridcolor:cv('--border'),linecolor:cv('--border')}}};
+      angularaxis:{tickfont:{size:radarLabelSize(),color:cv('--ink')},gridcolor:cv('--border'),linecolor:cv('--border')}}};
   const rdiv=document.getElementById('radar'); rdiv.style.display='block';
   Plotly.react('radar',[traceP25,traceP75,traceMed,traceVal],layout,{responsive:true,displayModeBar:false});
 
@@ -737,6 +770,31 @@ function selectCategory(cat){
   setCaveat(next); drawMap(next);
   if(currentIso) showProfile();
 }
+// drill-down state + renderer (filled in the next build step)
+let drillConcept = null;   // concept_id currently drilled into (null = none yet)
+function renderDrill(){
+  const body=document.getElementById('drillbody');
+  const empty=document.getElementById('drillempty');
+  if(!currentIso || drillConcept==null){ if(body)body.style.display='none'; if(empty)empty.style.display='block'; return; }
+  // real rendering added in the next step
+}
+// ---- view tabs (Map / Drill-down / Time series) ----
+let currentTab='map';
+function showView(name){
+  currentTab=name;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.getAttribute('data-view')===name));
+  if(name==='map'){ setTimeout(()=>{ try{Plotly.Plots.resize(document.getElementById('map'));}catch(e){} }, 30); }
+  if(name==='drilldown'){ renderDrill(); }
+}
+window.addEventListener('resize', ()=>{
+  try{ if(currentIso && currentTab==='map'){ showProfile(); } }catch(e){}
+});
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>showView(t.getAttribute('data-view'));
+});
+
 // populate the country dropdown (sorted by name, sovereigns + territories), wire selection
 (function(){
   const sel=document.getElementById('countrysel');

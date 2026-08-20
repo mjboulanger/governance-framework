@@ -175,11 +175,25 @@ def build():
             if len(v):
                 pct["concepts"][cid] = {"p25": _n(v.quantile(.25)), "p50": _n(v.quantile(.50)), "p75": _n(v.quantile(.75))}
 
+    # per-metric world percentiles (p25/p50/p75 of the harmonized value across sovereigns),
+    # for the drill-down value-vs-universe bars. Dedup (metric, iso3) since a metric can appear
+    # under multiple concepts with the same harmonized value.
+    _cc = pd.read_csv(os.path.join(PROC, "concept_contributions.csv"))
+    _cc = _cc[_cc["present"] == True] if "present" in _cc.columns else _cc
+    _cc = _cc[_cc["iso3"].isin(sov)]
+    _mv = _cc[["metric", "iso3", "harmonized"]].dropna(subset=["harmonized"]).drop_duplicates(["metric", "iso3"])
+    metric_pct = {}
+    for _m, _g in _mv.groupby("metric"):
+        _v = _g["harmonized"]
+        if len(_v):
+            metric_pct[_m] = {"p25": _n(_v.quantile(.25)), "p50": _n(_v.quantile(.50)), "p75": _n(_v.quantile(.75))}
+
     meta = {
         "concepts": {cid: {"name": concept_name.get(cid, "C%d" % cid),
                            "cat": concept_cat.get(cid, "")} for cid in scored_cids},
         "categories": CATEGORIES,
         "percentiles": pct,
+        "metric_percentiles": metric_pct,
         "metrics": metrics_meta,
         "generated": pd.Timestamp.today().strftime("%Y-%m-%d"),
         "n_countries": len(countries),
