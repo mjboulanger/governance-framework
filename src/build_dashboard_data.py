@@ -50,6 +50,7 @@ def build():
     fs = pd.read_csv(os.path.join(PROC, "final_scores.csv")).set_index("iso3")
     cs = pd.read_csv(os.path.join(PROC, "concept_scores.csv")).set_index("iso3")
     cov = pd.read_csv(os.path.join(PROC, "country_coverage.csv")).set_index("iso3")
+    spine = pd.read_csv(os.path.join(PROC, "country_spine.csv")).set_index("iso3")
     mom = pd.read_csv(os.path.join(PROC, "momentum.csv"))
     mom_by = {(r.iso3, int(r.concept_id)): r for r in mom.itertuples()}
     scored_cids = sorted(int(c[1:-6]) for c in cs.columns if c.endswith("_score"))
@@ -99,6 +100,7 @@ def build():
             "np": int(cov.loc[iso, "metrics_present"]) if iso in cov.index else 0,
             "mc": metric_counts.get(iso, {"total": 0, "by_cat": {}}),
             "peers": peers_map.get(iso, []),
+            "pop": (int(spine.loc[iso, "population"]) if (iso in spine.index and pd.notna(spine.loc[iso, "population"])) else None),
             "cat": cats,
             "con": concepts,
         }
