@@ -73,6 +73,7 @@ header .sub{color:var(--muted);font-size:12px;margin-left:auto;font-family:var(-
   background:var(--panel);overflow-y:auto;display:flex;flex-direction:column}
 
 .controls{position:sticky;top:0;z-index:6;background:var(--bg);padding-bottom:10px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.controls-notes{padding:12px 20px 0}
 .controls label{display:block;font-size:11px;letter-spacing:.09em;
   text-transform:uppercase;color:var(--muted);margin-bottom:7px;font-weight:600}
 select{width:100%;background:var(--panel-2);color:var(--ink);
@@ -141,6 +142,19 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .simrow.focus .d,.simrow .d{color:inherit;opacity:.8;font-family:var(--mono);font-size:10px}
 .simrow .sc{font-family:var(--mono);white-space:nowrap}
 .map-wrap{position:relative}
+.posbar{position:relative;height:8px;margin-top:5px;background:var(--panel-2);border-radius:4px;width:100%}
+.posbar .mid{position:absolute;left:50%;top:-2px;height:12px;width:1px;background:var(--muted);transform:translateX(-0.5px)}
+.posbar .fill{position:absolute;top:0;height:100%;border-radius:3px;opacity:.9}
+.posbar .ref{position:absolute;top:0;height:100%;width:1px;background:var(--border)}
+.posbar-legend{margin-top:14px;padding-top:10px;border-top:1px solid var(--border);
+  font-size:10px;color:var(--muted);line-height:1.7;font-family:var(--mono);display:flex;flex-direction:column;gap:1px}
+.pl-row{display:flex;align-items:center;gap:6px}
+.pl-mid{display:inline-block;width:1px;height:11px;background:var(--muted)}
+.pl-tick{display:inline-block;width:1px;height:11px;background:var(--border)}
+.pl-sw{display:inline-block;width:11px;height:8px;border-radius:2px}
+.pl-sw.warm{background:rgb(201,106,74)}
+.pl-sw.cool{background:rgb(47,143,158)}
+.pl-note{margin-top:3px;font-style:italic}
 .insufficient{color:var(--muted);font-style:italic;font-size:12px;margin-top:8px}
 .hint{font-size:11px;color:var(--muted);margin-top:16px;font-family:var(--mono);line-height:1.5}
 </style>
@@ -159,6 +173,8 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
       <select id="countrysel"></select>
       <label for="viewsel" style="margin-top:10px">Map view</label>
       <select id="viewsel"></select>
+    </div>
+    <div class="controls-notes">
       <div class="caveat" id="caveat"></div>
       <div class="caveat" style="margin-top:10px">What the 0–1 scale means<span class="linktodo" title="Future link to methodology">LINK [TODO]</span><br><span id="scalenote"></span></div>
     </div>
@@ -454,6 +470,19 @@ function drawCompare(c, axes){
   h+='<span class="chip addchip" id="addpeer">+ Add</span>';
   h+='<div id="peersearch" style="display:none;margin-top:8px"></div>';
   h+='</div>';
+  // position bars vs the PEER distribution (peer median centre, peer p25/p75 marks)
+  h+='<div class="section-label" style="margin-top:16px">'+(currentView===OVERALL?'Categories':currentView+' \u2014 concepts')+'</div>';
+  axes.forEach((a,i)=>{
+    const v=axisValue(c,a);
+    const worldBand=axisBand(a);
+    h+='<div class="catrow"><div style="flex:1"><div class="nm">'+a.label+'</div>'+
+       positionBar(v, pP50[i], worldBand)+'</div>'+
+       '<div class="val">'+(v!=null?v.toFixed(2):'\u2014')+'</div></div>';
+  });
+  h+='<div class="posbar-legend">'+
+     '<span class="pl-row"><span class="pl-sw warm"></span> Below peer median &nbsp; <span class="pl-sw cool"></span> Above peer median</span>'+
+     '<span class="pl-note">Bar length shows distance from the peer median, scaled to the peer 25\u201375th range.</span>'+
+     '</div>';
   document.getElementById('valuelist').innerHTML=h;
   // wire chip remove
   document.querySelectorAll('#valuelist .x').forEach(x=>{
@@ -537,6 +566,52 @@ function axisValue(c,ax){
   if(ax.type==='cat') return c.cat[ax.key]!=null?c.cat[ax.key]:null;
   const cc=c.con[ax.key]; return cc?cc.s:null;
 }
+// position bar: centre = median (p50); p25/p75 are reference marks. The bar fills from
+// centre toward the country's value; colour encodes the signed deviation (warm below,
+// cool above). Length is scaled so p25<->p75 spans a fixed portion of the track, with
+// room for tail values beyond the band.
+function _devColor(dev, span){
+  // map deviation to a warm(neg)->neutral->cool(pos) colour. span ~ (p75-p25)/2 sets intensity.
+  if(dev==null) return cv('--muted');
+  const s = span && span>0 ? span : 0.15;
+  const t = Math.max(-1, Math.min(1, dev/(2*s)));   // -1..1 across ~2 IQR-halves
+  // interpolate: below -> coral/orange, above -> teal/blue
+  const below=[201,106,74], mid=[180,180,175], above=[47,143,158];  // rgb
+  const lerp=(a,b,k)=>Math.round(a+(b-a)*k);
+  let c;
+  if(t<0){ const k=-t; c=[lerp(mid[0],below[0],k),lerp(mid[1],below[1],k),lerp(mid[2],below[2],k)]; }
+  else { const k=t; c=[lerp(mid[0],above[0],k),lerp(mid[1],above[1],k),lerp(mid[2],above[2],k)]; }
+  return 'rgb('+c[0]+','+c[1]+','+c[2]+')';
+}
+function positionBar(v, centerMed, worldBand){
+  // centre = centerMed (peer median in compare, world median otherwise);
+  // colour/direction = deviation vs centerMed; LENGTH scaled to the WORLD p25-p75;
+  // tick marks at WORLD p25/p75 (positioned relative to centre, using world scaling).
+  if(v==null || centerMed==null) return '<div class="posbar"><span class="mid"></span></div>';
+  const wb = worldBand || {};
+  const wP25=wb.p25, wP75=wb.p75, wP50=wb.p50;
+  const worldIqrHalf = ((wP75!=null&&wP25!=null)?(wP75-wP25):0.2)/2 || 0.1;
+  const dev = v - centerMed;
+  const EDGE=0.46, REF=0.38;
+  // fill: from centre toward value, scaled by WORLD iqr
+  const frac = Math.max(-EDGE, Math.min(EDGE, (dev/worldIqrHalf)*REF));
+  const pct = Math.abs(frac)*100;
+  const col = _devColor(dev, worldIqrHalf);
+  const side = frac>=0 ? 'left:50%' : 'right:50%';
+  // world p25/p75 tick positions relative to the CENTRE (centerMed), using world scaling
+  let marks='';
+  if(wP25!=null && wP75!=null){
+    const mk=(pv)=>{ const f=Math.max(-EDGE,Math.min(EDGE,((pv-centerMed)/worldIqrHalf)*REF));
+      return 50 + f*100; };
+    marks='<span class="ref" style="left:'+mk(wP25)+'%"></span>'+
+          '<span class="ref" style="left:'+mk(wP75)+'%"></span>';
+  }
+  return '<div class="posbar" title="'+(dev>=0?'+':'')+dev.toFixed(2)+' vs median">'+
+    marks+
+    '<span class="fill" style="'+side+';width:'+pct+'%;background:'+col+'"></span>'+
+    '<span class="mid"></span></div>';
+}
+
 function axisBand(ax){
   const P=DATA.meta.percentiles;
   if(ax.type==='cat') return P.categories[ax.key];
@@ -641,12 +716,14 @@ function showProfile(){
   axes.forEach(a=>{
     const v=axisValue(c,a); const b=axisBand(a);
     const med=b?b.p50:null;
-    const delta=(v!=null&&med!=null)?(v-med):null;
-    const dstr=delta!=null?((delta>=0?'+':'')+delta.toFixed(2)+' vs median'):'';
     h+='<div class="catrow"><div style="flex:1"><div class="nm">'+a.label+'</div>'+
-       '<div style="font-size:10px;color:var(--muted);font-family:var(--mono)">'+dstr+'</div></div>'+
+       positionBar(v, b?b.p50:null, b)+'</div>'+
        '<div class="val">'+(v!=null?v.toFixed(2):'\u2014')+'</div></div>';
   });
+  h+='<div class="posbar-legend">'+
+     '<span class="pl-row"><span class="pl-sw warm"></span> Below median &nbsp; <span class="pl-sw cool"></span> Above median</span>'+
+     '<span class="pl-note">Bar length shows distance from the median, scaled to the 25\u201375th range.</span>'+
+     '</div>';
   document.getElementById('valuelist').innerHTML=h;
 }
 
