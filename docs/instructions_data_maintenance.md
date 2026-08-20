@@ -112,12 +112,12 @@ each country's peer list to the JSON, so regenerate the data layer after changin
 
 The HTML dashboard is generated from the processed data and a template. Two build
 artifacts are **gitignored** (regenerable, large): `dashboard/dashboard_data.json`
-(~6MB) and `dashboard/dashboard.html` (~11MB). Everything needed to regenerate them
+(~6MB) and `dashboard/governance_map.html` (~11MB). Everything needed to regenerate them
 is tracked. From a fresh clone, run two commands in order:
 
 ```bash
 python src/build_dashboard_data.py    # reads data/processed/*.csv -> dashboard/dashboard_data.json
-python src/build_dashboard.py         # inlines the JSON + Plotly into the template -> dashboard/dashboard.html
+python src/build_dashboard.py         # inlines the JSON + Plotly into the template -> dashboard/governance_map.html
 ```
 
 - **`src/build_dashboard_data.py`** reads the current score/history/momentum/contribution/
@@ -125,7 +125,7 @@ python src/build_dashboard.py         # inlines the JSON + Plotly into the templ
   compact `dashboard_data.json`. Re-run it after any score/data regeneration.
 - **`src/build_dashboard.py`** reads `dashboard/dashboard_template.html` (tracked - the UI),
   inlines the real `dashboard_data.json` and the Plotly JS bundle, and writes the
-  self-contained `dashboard/dashboard.html`. It opens offline on `file://` (no internet),
+  self-contained `dashboard/governance_map.html`. It opens offline on `file://` (no internet),
   which is the target for restricted environments.
 - **Dependency:** the `plotly` Python package supplies the inlined JS
   (`plotly.offline.get_plotlyjs()`); it is in the `governance-framework` conda env. No
