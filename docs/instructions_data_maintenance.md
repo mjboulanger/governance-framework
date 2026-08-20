@@ -108,6 +108,15 @@ parameters at the top of `build_peers.py` (N_PEERS, COV_FLOOR, POP_FLOOR, size w
 The dashboard data layer (`build_dashboard_data.py`) reads `country_peers.csv` and attaches
 each country's peer list to the JSON, so regenerate the data layer after changing peers.
 
+## Metric display names
+
+Human-readable metric names live in `data/reference/metric_labels.csv` (columns: `metric`,
+`source_label`, `metric_name`). The dashboard data layer joins this in and shows each metric as
+`Metric name (Source)` (e.g. "Homicide rate (UNODC)"). This file is the canonical source of
+metric display names - edit it to rename a metric or change a source label, then rebuild the
+dashboard data layer. It is hand-maintained (not generated); every metric in
+`concept_contributions.csv` should have a row here.
+
 ## Building the dashboard
 
 The HTML dashboard is generated from the processed data and a template. Two build

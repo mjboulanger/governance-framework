@@ -133,13 +133,25 @@ def build():
                         for r in gg.sort_values("year").itertuples()]
         history.setdefault(iso, {})["cat"] = cbc
 
+    # readable metric labels (canonical reference): metric -> {name, source_label, label="Name (Source)"}
+    _refdir = os.path.join(os.path.dirname(PROC), "reference")
+    _lab = pd.read_csv(os.path.join(_refdir, "metric_labels.csv"))
+    metric_labels = {}
+    for _r in _lab.to_dict("records"):
+        _nm = str(_r.get("metric_name", "") or "").strip()
+        _sl = str(_r.get("source_label", "") or "").strip()
+        _full = (_nm + " (" + _sl + ")") if (_nm and _sl) else (_nm or str(_r["metric"]))
+        metric_labels[_r["metric"]] = {"name": _nm, "source_label": _sl, "label": _full}
+
     # metric label lookup ONCE (dedup the 5.3MB of repeated strings)
     metrics_meta = {}
     con = pd.read_csv(os.path.join(PROC, "concept_contributions.csv"))
     con = con[con["present"] == True] if "present" in con.columns else con
     for m in con.metric.unique():
         d = METRIC_DICT.get(m, {})
-        metrics_meta[m] = {"def": d.get("definition", ""), "src": d.get("source_reports", "")}
+        _lb = metric_labels.get(m, {})
+        metrics_meta[m] = {"def": d.get("definition", ""), "src": d.get("source_reports", ""),
+                           "name": _lb.get("name", ""), "label": _lb.get("label", m)}
 
     contributions = {}
     for iso, g in con.groupby("iso3"):

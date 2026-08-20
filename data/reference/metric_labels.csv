@@ -1,0 +1,145 @@
+metric,source_label,metric_name
+ascor_climate_governance,ASCOR,Climate transition governance
+bci_corruption_index,Bayesian Corruption Index,Corruption (pooled index)
+brss_regstringency,World Bank BRSS,"Banking regulation stringency, de jure"
+ccp_civil_rights_provisions,Comparative Constitutions Project,Constitutional civil-rights provisions
+ccp_information_access,Comparative Constitutions Project,Constitutional right to information
+civicus_score,CIVICUS,Civic space openness
+climate_laws_cumulative,Climate Change Laws,Climate laws in force (cumulative)
+cpj_imprisoned,Committee to Protect Journalists,Journalists imprisoned
+cpj_murders_unsolved,Committee to Protect Journalists,Unsolved journalist murders (impunity)
+epi_agr,Yale EPI,Agricultural sustainability
+epi_bdh,Yale EPI,Biodiversity and habitat protection
+epi_cch,Yale EPI,Climate change mitigation
+epi_wrs,Yale EPI,Water resource management
+fari_aggregate,IMF AREAER,"Capital-account restrictiveness, de jure"
+fari_fdi_aggregate,IMF AREAER,"FDI restrictiveness, de jure"
+fari_fdi_inflow,IMF AREAER,"Inbound FDI restrictiveness, de jure"
+fatf_effectiveness,FATF,"AML/CFT effectiveness, de facto"
+fatf_technical_compliance,FATF,"AML/CFT technical compliance, de jure"
+fh_a_electoral_process,Freedom House,Electoral process
+fh_d_expression_belief,Freedom House,Freedom of expression and belief
+fh_e_associational_rights,Freedom House,Associational and organizational rights
+fh_g_personal_autonomy,Freedom House,Personal autonomy and individual rights
+fr_any_enforcement,IMF Fiscal Rules,Fiscal rule enforcement procedure
+fr_compliance_mean,IMF Fiscal Rules,Fiscal rule compliance (mean)
+fr_max_legal_basis,IMF Fiscal Rules,Fiscal rule legal basis (strongest)
+fr_num_rule_types,IMF Fiscal Rules,Fiscal rule types in force
+fraser_legal_system,Fraser Institute,Legal system and property rights
+fraser_regulation,Fraser Institute,Regulatory burden (light-touch)
+fraser_trade_freedom,Heritage Foundation,Freedom to trade internationally
+fsi_c1_security_apparatus,Fragile States Index,Security apparatus integrity
+fsi_c2_factionalized_elites,Fragile States Index,Elite factionalization
+fsi_c3_group_grievance,Fragile States Index,Group grievance
+fsi_p2_public_services,Fragile States Index,Public services provision
+gpi_peace_index,Global Peace Index,Peacefulness
+idea_local_democracy,International IDEA,Local democracy
+idea_participation,International IDEA,Political participation
+imapp_breadth_total,IMF,Macroprudential toolkit breadth
+irena_renewables_share_pct,IRENA,Renewable electricity share
+kaopen_norm,Chinn-Ito,"Capital-account openness, de jure"
+nelda_concerns_not_free_fair,NELDA,Pre-election free-and-fair concerns
+nelda_media_bias_incumbent,NELDA,Campaign media bias toward incumbent
+nelda_opposition_allowed,NELDA,Opposition allowed to run
+nelda_riots_protests_after,NELDA,Post-election riots and protests
+nelda_violence_deaths_before,NELDA,Pre-election lethal violence
+obs_open_budget_index,Open Budget Survey,Budget transparency
+odin_openness,ODIN,Statistical data openness
+odin_overall,ODIN,Open data performance (overall)
+pefa_accountability,PEFA,"Accounting, audit and scrutiny"
+pefa_core_management,PEFA,Core public financial management
+pei_electoral_integrity_index,Electoral Integrity (PEI),Electoral integrity
+pew_gov_restrictions_index,Pew,Government restrictions on religion
+pew_social_hostilities_index,Pew,Social hostilities over religion
+polfin_transparency_integrity,Transparency International,Political finance transparency
+pt_coup_failed,Powell-Thyne,Failed coup attempts
+pt_coup_successful,Powell-Thyne,Successful coups
+pts_index,Political Terror Scale,State physical-integrity violations
+romelli_cbi_index,Romelli CBI,"Central bank independence, de jure"
+rti_total,RTI Rating,"Right-to-information law strength, de jure"
+spi_overall,IMF SPI,Statistical system performance
+tfi_avg,OECD,Trade facilitation efficiency
+ti_cpi_score,Transparency International,Corruption perceptions
+ucdp_sb_intrastate_deaths_best,UCDP,Intrastate conflict deaths
+unodc_homicide_rate,UNODC,Homicide rate
+v2clacjstw,V-Dem,Women's access to justice
+v2cldmovem,V-Dem,Freedom of movement (men)
+v2cldmovew,V-Dem,Freedom of movement (women)
+v2clkill,V-Dem,Freedom from political killings
+v2clrelig,V-Dem,Freedom of religion
+v2clrgunev,V-Dem,Evenness of civil liberties
+v2clrspct,V-Dem,Rigorous and impartial administration
+v2clslavef,V-Dem,Freedom from forced labor
+v2clsocgrp,V-Dem,Social-group equality in liberties
+v2clstown,V-Dem,State control of the economy
+v2cltort,V-Dem,Freedom from torture
+v2cltrnslw,V-Dem,"Transparent, predictable laws"
+v2cscnsult,V-Dem,Civil society consultation
+v2cseeorgs,V-Dem,Civil society entry and operation
+v2csprtcpt,V-Dem,Civil society participation
+v2csreprss,V-Dem,Freedom from civil-society repression
+v2dlconslt,V-Dem,Public consultation in policymaking
+v2elaccept,V-Dem,Acceptance of election results
+v2elembaut,V-Dem,Election management body autonomy
+v2elembcap,V-Dem,Election management body capacity
+v2elfrfair,V-Dem,Free and fair elections
+v2elintim,V-Dem,Freedom from voter intimidation
+v2elirreg,V-Dem,Freedom from election irregularities
+v2elvotbuy,V-Dem,Freedom from vote-buying
+v2jucomp,V-Dem,Compliance with judiciary
+v2jucorrdc,V-Dem,Freedom from judicial corruption
+v2juhcind,V-Dem,High-court independence
+v2juncind,V-Dem,Lower-court independence
+v2jupack,V-Dem,Freedom from court-packing
+v2jupurge,V-Dem,Freedom from judicial purges
+v2lgcrrpt,V-Dem,Freedom from legislative corruption
+v2lginvstp,V-Dem,Legislative investigation of executive
+v2lgoppart,V-Dem,Legislative opposition power
+v2lgotovst,V-Dem,Executive oversight body
+v2lgqstexp,V-Dem,Legislative questioning of executive
+v2mebias,V-Dem,Freedom from media bias
+v2mecenefm,V-Dem,Freedom from media censorship
+v2mecorrpt,V-Dem,Freedom from media corruption
+v2merange,V-Dem,Range of media perspectives
+v2pepwrses,V-Dem,Power distribution by socioeconomic position
+v2pepwrsoc,V-Dem,Power distribution by social group
+v2pscohesv,V-Dem,Party cohesion
+v2psoppaut,V-Dem,Opposition party autonomy
+v2psprlnks,V-Dem,Party-citizen linkages
+v2svdomaut,V-Dem,Freedom from foreign policy control
+v2svstterr,V-Dem,State control over territory
+v2x_civlib,V-Dem,Civil liberties (index)
+v2x_corr,V-Dem,Political corruption (index)
+v2x_egal,V-Dem,Egalitarian democracy (index)
+v2x_freexp_altinf,V-Dem,Freedom of expression (index)
+v2x_partip,V-Dem,Participatory democracy (index)
+v2x_polyarchy,V-Dem,Electoral democracy / polyarchy (index)
+v2xcl_prpty,V-Dem,Property rights (index)
+v2xeg_eqaccess,V-Dem,Equal access to power (index)
+v2xlg_legcon,V-Dem,Legislative constraints on executive (index)
+vdem_regime_duration,V-Dem,Regime duration
+wb_carbon_coverage_pct,World Bank,Carbon price emissions coverage
+wb_carbon_price_usd,World Bank,Carbon price level
+wb_carbon_pricing_exists,World Bank,Carbon pricing in force
+wb_carbon_revenue_pct_gdp,World Bank,Carbon revenue (% of GDP)
+wbl_enforcement_perceptions,World Bank WBL,"Gender-equality law enforcement, de facto"
+wbl_legal_framework,World Bank WBL,"Gender-equality legal framework, de jure"
+wbl_supportive_framework,World Bank WBL,Gender-equality supportive frameworks
+wdi_education_index,World Bank WDI,Education outcomes (index)
+wdi_hci_plus_overall,World Bank HCI,Human capital
+wdi_health_index,World Bank WDI,Health outcomes (index)
+wdi_infrastructure_index,World Bank WDI,Infrastructure quality (index)
+wdi_lpi_overall,World Bank LPI,Logistics performance
+wdi_social_protection_index,World Bank WDI,Social protection coverage (index)
+wdi_tariff_rate_simple_mean,World Bank WDI,Average import tariff
+wgi_government_effectiveness,WGI,Government effectiveness
+wgi_political_stability,WGI,Political stability and absence of violence
+wgi_regulatory_quality,WGI,Regulatory quality
+wjp_f2_absence_corruption,World Justice Project,Absence of corruption
+wjp_f3_open_government,World Justice Project,Open government
+wjp_f4_fundamental_rights,World Justice Project,Fundamental rights
+wjp_f5_order_security,World Justice Project,Order and security
+wjp_f6_5_no_expropriation,World Justice Project,Freedom from unlawful expropriation
+wjp_f6_regulatory_enforcement,World Justice Project,Regulatory enforcement
+wjp_f7_civil_justice,World Justice Project,Civil justice
+wjp_f8_criminal_justice,World Justice Project,Criminal justice

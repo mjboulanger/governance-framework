@@ -163,7 +163,26 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .view{display:none;min-height:0}
 .view.active{display:flex;flex:1 1 auto;flex-direction:column;min-height:0}
 #view-map.view.active{flex-direction:row}
-.drill-wrap,.ts-wrap{padding:24px 28px;max-width:1100px;margin:0 auto;overflow-y:auto;flex:1 1 auto;min-height:0;width:100%}
+.drill-controls{margin-bottom:18px}
+.drill-controls label{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);font-family:var(--mono);margin-bottom:5px}
+.drill-controls select{width:280px;max-width:100%}
+.drill-cols{display:flex;gap:0;align-items:flex-start;min-width:min-content}
+.drill-col{flex:0 0 360px;max-width:360px;border-right:1px solid var(--border);padding:0 16px}
+.drill-col:first-child{padding-left:0}
+.drill-col-head{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);
+  font-family:var(--mono);margin-bottom:14px;font-weight:600}
+.drill-row{padding:10px 10px;border-radius:8px;cursor:pointer;margin-bottom:4px;border:1px solid transparent}
+.drill-row:hover{background:var(--panel-2)}
+.drill-row.selected{background:var(--panel-2);border-color:var(--border)}
+.drill-row-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.drill-name{font-size:13px;font-weight:600;color:var(--ink);line-height:1.25}
+.drill-val{font-family:var(--mono);font-size:13px;color:var(--ink)}
+.drill-sub{margin-top:7px;display:flex;flex-direction:column;gap:2px;font-size:10.5px;font-family:var(--mono)}
+.drill-sub .up{color:rgb(47,143,158)}
+.drill-sub .dn{color:rgb(201,106,74)}
+.ts-wrap{padding:24px 28px;max-width:1100px;margin:0 auto;overflow-y:auto;flex:1 1 auto;min-height:0;width:100%}
+.drill-wrap{padding:20px 24px;overflow:auto;flex:1 1 auto;min-height:0;width:100%}
 .insufficient{color:var(--muted);font-style:italic;font-size:12px;margin-top:8px}
 .hint{font-size:11px;color:var(--muted);margin-top:16px;font-family:var(--mono);line-height:1.5}
 </style>
@@ -206,7 +225,11 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 </div><!-- /view-map -->
 <div id="view-drilldown" class="view">
   <div class="drill-wrap" id="drillwrap">
-    <div class="empty" id="drillempty">Select a country and a concept to dig into its underlying metrics.</div>
+    <div class="drill-controls">
+      <label for="drillcountrysel">Country</label>
+      <select id="drillcountrysel"></select>
+    </div>
+    <div class="empty" id="drillempty">Select a country to dig into its governance profile.</div>
     <div id="drillbody" style="display:none"></div>
   </div>
 </div>
@@ -770,13 +793,140 @@ function selectCategory(cat){
   setCaveat(next); drawMap(next);
   if(currentIso) showProfile();
 }
-// drill-down state + renderer (filled in the next build step)
-let drillConcept = null;   // concept_id currently drilled into (null = none yet)
+// ---- Drill-down (Miller columns: Category -> Concept -> Metric) ----
+let drillCategory = null;   // selected category (level 2 opens when set)
+let drillConcept  = null;   // selected concept_id (level 3 opens when set)
+
+// concepts belonging to a category, with the country's score, the world band, and deviation
+function conceptsInCategory(cat){
+  const out=[];
+  const cmeta=DATA.meta.concepts;
+  const cpct=DATA.meta.percentiles.concepts||{};
+  const con=(DATA.countries[currentIso]||{}).con||{};
+  for(const cid in cmeta){
+    if(cmeta[cid].cat!==cat) continue;
+    const s=con[cid]?con[cid].s:null;
+    const band=cpct[cid]||null;
+    const med=band?band.p50:null;
+    out.push({cid, name:cmeta[cid].name, s, band, dev:(s!=null&&med!=null)?(s-med):null});
+  }
+  return out;
+}
+// up to 4 MATERIAL child drivers by |deviation from median|, shown in their true direction.
+// Materiality threshold avoids flagging near-median children as if they were drivers;
+// if fewer than 4 are material, show fewer; if none, show none.
+const DRIVER_MIN = 0.05;   // |deviation| below this is treated as at-median (not a driver)
+function topDrivers(items){
+  return items
+    .filter(x=>x.dev!=null && Math.abs(x.dev)>=DRIVER_MIN)
+    .sort((a,b)=>Math.abs(b.dev)-Math.abs(a.dev))   // most significant first
+    .slice(0,4)
+    .sort((a,b)=>b.dev-a.dev);                       // then display strong->weak (pos to neg)
+}
+
+// metrics within a concept for the current country, with value / world band / deviation / label
+function metricsInConcept(cid){
+  const contr=(DATA.contributions[currentIso]||{})[cid]||[];
+  const mpct=DATA.meta.metric_percentiles||{};
+  const mmeta=DATA.meta.metrics||{};
+  const out=[];
+  contr.forEach(row=>{
+    const key=row.m;
+    const band=mpct[key]||null;
+    const med=band?band.p50:null;
+    const v=row.v;
+    const mlabel=(mmeta[key]&&mmeta[key].label)? mmeta[key].label : key;
+    out.push({key, name:mlabel,
+      v, band, med, dev:(v!=null&&med!=null)?(v-med):null,
+      tier:row.t, weight:row.w, contrib:row.c, year:row.y, stale:row.st, bucket:row.b});
+  });
+  return out;
+}
 function renderDrill(){
-  const body=document.getElementById('drillbody');
+  syncDrillCountrySel();
+  const wrap=document.getElementById('drillwrap');
   const empty=document.getElementById('drillempty');
-  if(!currentIso || drillConcept==null){ if(body)body.style.display='none'; if(empty)empty.style.display='block'; return; }
-  // real rendering added in the next step
+  const body=document.getElementById('drillbody');
+  if(!currentIso){ if(body)body.style.display='none'; if(empty)empty.style.display='block'; return; }
+  if(empty) empty.style.display='none';
+  if(body) body.style.display='block';
+
+  const c=DATA.countries[currentIso];
+  const catPct=DATA.meta.percentiles.categories||{};
+
+  // ----- Column 1: Categories -----
+  let col1='<div class="drill-col"><div class="drill-col-head">Categories</div>';
+  DATA.meta.categories.forEach(cat=>{
+    const s=(c.cat&&c.cat[cat]!=null)?c.cat[cat]:null;
+    const band=catPct[cat]||null;
+    const med=band?band.p50:null;
+    // up to 4 material driver concepts within this category (true direction)
+    const drivers=topDrivers(conceptsInCategory(cat));
+    const sel=(cat===drillCategory)?' selected':'';
+    let sub='';
+    if(drivers.length){
+      sub='<div class="drill-sub">';
+      drivers.forEach(dv=>{
+        const cls=dv.dev>=0?'up':'dn';
+        const arr=dv.dev>=0?'\u25b2':'\u25bc';
+        sub+='<span class="'+cls+'">'+arr+' '+dv.name+'</span>';
+      });
+      sub+='</div>';
+    }
+    col1+='<div class="drill-row'+sel+'" data-cat="'+cat.replace(/"/g,'&quot;')+'">'+
+      '<div class="drill-row-top"><span class="drill-name">'+cat+'</span>'+
+      '<span class="drill-val">'+(s!=null?s.toFixed(2):'\u2014')+'</span></div>'+
+      positionBar(s, med, band)+
+      sub+
+      '</div>';
+  });
+  col1+='</div>';
+
+  let cols=col1;
+
+  // ----- Column 2: Concepts in the selected category -----
+  if(drillCategory){
+    const cpct=DATA.meta.percentiles.concepts||{};
+    const concepts=conceptsInCategory(drillCategory);
+    let col2='<div class="drill-col" id="drillcol2"><div class="drill-col-head">'+drillCategory+' \u00b7 Concepts</div>';
+    // order concepts by score desc for readability
+    concepts.sort((a,b)=>((b.s==null?-1:b.s)-(a.s==null?-1:a.s)));
+    concepts.forEach(cn=>{
+      const band=cn.band; const med=band?band.p50:null;
+      const drivers=topDrivers(metricsInConcept(cn.cid));
+      const sel=(String(cn.cid)===String(drillConcept))?' selected':'';
+      let sub='';
+      if(drivers.length){
+        sub='<div class="drill-sub">';
+        drivers.forEach(dv=>{ const cls=dv.dev>=0?'up':'dn'; const arr=dv.dev>=0?'\u25b2':'\u25bc';
+          sub+='<span class="'+cls+'">'+arr+' '+dv.name+'</span>'; });
+        sub+='</div>';
+      }
+      col2+='<div class="drill-row'+sel+'" data-cid="'+cn.cid+'">'+
+        '<div class="drill-row-top"><span class="drill-name">'+cn.name+'</span>'+
+        '<span class="drill-val">'+(cn.s!=null?cn.s.toFixed(2):'\u2014')+'</span></div>'+
+        positionBar(cn.s, med, band)+ sub +'</div>';
+    });
+    col2+='</div>';
+    cols+=col2;
+  }
+
+  body.innerHTML='<div class="drill-cols">'+cols+'</div>';
+
+  // wire category clicks -> open concept column
+  body.querySelectorAll('.drill-row[data-cat]').forEach(el=>{
+    el.onclick=()=>{ drillCategory=el.getAttribute('data-cat'); drillConcept=null; renderDrill();
+      scrollDrillRight(); };
+  });
+  // wire concept clicks (metric column added next step)
+  body.querySelectorAll('.drill-row[data-cid]').forEach(el=>{
+    el.onclick=()=>{ drillConcept=el.getAttribute('data-cid'); renderDrill(); scrollDrillRight(); };
+  });
+}
+// auto-scroll the drill area to reveal the rightmost (newest) column
+function scrollDrillRight(){
+  const w=document.getElementById('drillwrap');
+  if(w) setTimeout(()=>{ w.scrollLeft = w.scrollWidth; }, 40);
 }
 // ---- view tabs (Map / Drill-down / Time series) ----
 let currentTab='map';
@@ -812,8 +962,24 @@ document.querySelectorAll('.tab').forEach(t=>{
     drawMap(currentView);
     if(simMode) renderSimilar();
     showProfile();
+    syncDrillCountrySel();
   };
+  // drill-down country selector (same options, synced)
+  const dsel=document.getElementById('drillcountrysel');
+  if(dsel){
+    dsel.innerHTML=html2;
+    dsel.onchange=()=>{
+      const iso=dsel.value; if(!iso) return;
+      currentIso=iso;
+      const nc=DATA.countries[iso];
+      if(compareMode){ if(nc&&nc.peers&&nc.peers.length){ activePeers=nc.peers.slice(); } else { compareMode=false; } }
+      drillCategory=null; drillConcept=null;
+      syncCountrySel();
+      renderDrill();
+    };
+  }
 })();
+function syncDrillCountrySel(){ const s=document.getElementById('drillcountrysel'); if(s&&currentIso) s.value=currentIso; }
 setCaveat(OVERALL);
 drawMap(OVERALL);
 sel.addEventListener('change',e=>{
