@@ -144,6 +144,47 @@ python src/build_dashboard.py         # inlines the JSON + Plotly into the templ
   opened directly during development (with internet, for the CDN Plotly); the build step
   replaces that sample with the full data and inlines Plotly for the shippable file.
 
+## Drill-down contribution decomposition
+
+The drill-down shows two kinds of bar per row, which use **different references on purpose**:
+
+- **Position bars ("vs universe" / "vs median")** show where the country sits in the sovereign
+  distribution. They are scaled to the **p05-p95** span (so tail values stay distinguishable
+  rather than clamping at the quartiles) with tick marks at **p25/p50/p75**. Reference = the
+  sovereign **median**. This answers "where does this country rank".
+
+- **Contribution bars ("contribution to category")** show each item's signed contribution to
+  the category score, defined as:
+
+  > contribution = (canonical weight) x (item value - sovereign **mean** for that item)
+
+  Metric bars use `renormalized_weight` (from `concept_contributions.csv`); concept bars use the
+  concept's **weight share** of its category, derived from `effective_weight`
+  (`concept_attribution.csv`). **Weights are read from the pipeline outputs, never redefined in
+  the dashboard layer.** Both columns are shown on **one shared scale** (contribution to
+  category), so a metric bar and a concept bar are directly comparable across the screen. Warm
+  bars pull the category score down; cool bars lift it.
+
+**Why the mean (not the median) for contributions.** The mean chains additively
+(metric -> concept -> category): a concept's contribution equals the sum of its metrics'
+contributions, so the levels reconcile on one scale. The median does not chain (a country at the
+concept median is not the sum of metrics at their metric medians), which is why position bars
+(rank) use the median but contribution bars (decomposition) use the mean.
+
+**Known limitation.** The additive chaining is exact for most (country, concept) pairs (median
+residual ~0.001, 95th percentile ~0.007) but has a thin tail (up to ~0.1) concentrated where a
+concept has heavy **per-country metric missingness** (renormalized weights then diverge from the
+sovereign-mean profile). This residual is accepted for the drill-down as a visual aid.
+
+**Reference is swappable.** The reference profile is the sovereign **mean** by default. A
+peer-group reference (contribution vs the selected peer set) is a planned option; because the
+decomposition is `weight x (focus - reference profile)`, swapping the reference profile keeps the
+chaining intact.
+
+**Rebuild reminder.** Percentile/contribution changes live in `build_dashboard_data.py`, so after
+editing it you must re-run **both** steps (`build_dashboard_data.py` then `build_dashboard.py`) -
+rebuilding only the second step reuses the stale JSON.
+
 ## Data Update Instructions
 
 Run `print_stale_sources()` from `src/download_log.py` to identify sources needing refresh.

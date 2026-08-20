@@ -49,7 +49,19 @@ def build():
 
     fs = pd.read_csv(os.path.join(PROC, "final_scores.csv")).set_index("iso3")
     cs = pd.read_csv(os.path.join(PROC, "concept_scores.csv")).set_index("iso3")
+    # concept effective_weights (canonical, from the scoring pipeline) for concept->category contribution
+    _ca = pd.read_csv(os.path.join(PROC, "concept_attribution.csv"))
+    concept_eff_weight = {(r.iso3, int(r.concept_id)): r.effective_weight for r in _ca.itertuples()}
+    # concept weight SHARE of its category (canonical): eff_weight / sum(eff_weight) within (iso, category).
+    _catsum = _ca.groupby(["iso3", "category"])["effective_weight"].sum().to_dict()
+    concept_weight_share = {}
+    for r in _ca.itertuples():
+        _tot = _catsum.get((r.iso3, r.category))
+        concept_weight_share[(r.iso3, int(r.concept_id))] = (r.effective_weight / _tot) if _tot else None
+    # map concept_id -> category (for the metric->category chain)
+    concept_to_cat = {int(r.concept_id): r.category for r in _ca.itertuples()}
     cov = pd.read_csv(os.path.join(PROC, "country_coverage.csv")).set_index("iso3")
+    sov = cov[~cov["is_territory"].astype(bool)].index  # sovereigns (hoisted: used by concept medians + percentiles)
     spine = pd.read_csv(os.path.join(PROC, "country_spine.csv")).set_index("iso3")
     mom = pd.read_csv(os.path.join(PROC, "momentum.csv"))
     mom_by = {(r.iso3, int(r.concept_id)): r for r in mom.itertuples()}
@@ -77,6 +89,25 @@ def build():
             _pl = str(_r["peers"]).split(",") if pd.notna(_r["peers"]) and str(_r["peers"]).strip() else []
             peers_map[_r["iso3"]] = [x for x in _pl if x]
 
+    # concept medians across sovereigns (same basis as the concept position bars), computed once
+
+    concept_median = {}
+    concept_ref_mean = {}
+
+    for _cid in scored_cids:
+
+        _col = 'C%d_score' % _cid
+
+        if _col in cs.columns:
+
+            _vv = cs.loc[cs.index.isin(sov), _col].dropna()
+
+            if len(_vv):
+
+                concept_median[_cid] = float(_vv.quantile(.50))
+            concept_ref_mean[_cid] = float(_vv.mean())
+
+
     for iso in fs.index:
         cats = {cat: _n(fs.loc[iso, cat]) for cat in CATEGORIES if cat in fs.columns}
         concepts = {}
@@ -88,11 +119,20 @@ def build():
             if _n(sc) is None:
                 continue
             m = mom_by.get((iso, cid))
+            # concept->category signed contribution: canonical effective_weight x deviation from
+            # the concept's sovereign median. effective_weight is a pipeline output (concept_attribution.csv);
+            # nothing weight-related is defined here.
+            _ew = concept_eff_weight.get((iso, cid))
+            _cmed = concept_median.get(cid)
+            _cshare = concept_weight_share.get((iso, cid))
+            _crefm = concept_ref_mean.get(cid)
+            _cc = _n(_cshare * (sc - _crefm)) if (_cshare is not None and _crefm is not None and sc == sc) else None
             concepts[cid] = {
                 "s": _n(sc),
                 "lc": _b(cs.loc[iso, "C%d_lowconf" % cid]) if "C%d_lowconf" % cid in cs.columns else False,
                 "mag": None if m is None else _n(m.magnitude, 4),
                 "brd": None if m is None else _n(m.breadth, 2),
+                "cc": _cc,
             }
         countries[iso] = {
             "name": cov.loc[iso, "country_name"] if iso in cov.index else iso,
@@ -153,40 +193,6 @@ def build():
         metrics_meta[m] = {"def": d.get("definition", ""), "src": d.get("source_reports", ""),
                            "name": _lb.get("name", ""), "label": _lb.get("label", m)}
 
-    contributions = {}
-    for iso, g in con.groupby("iso3"):
-        by_c = {}
-        for cid, gg in g.groupby("concept_id"):
-            rows = []
-            for r in gg.sort_values("metric_contribution", ascending=False).itertuples():
-                rows.append({
-                    "m": r.metric,
-                    "t": r.tier,
-                    "v": _n(r.harmonized),
-                    "w": _n(r.renormalized_weight),
-                    "c": _n(r.metric_contribution),
-                    "y": int(r.latest_year) if r.latest_year == r.latest_year else None,
-                    "st": 1 if _b(r.stale) else 0,
-                    "b": (r.bucket if isinstance(r.bucket, str) else None),
-                })
-            by_c[int(cid)] = rows
-        contributions[iso] = by_c
-
-    # percentile bands (p25/p50/p75) for the radar, over SOVEREIGNS ONLY (exclude territories)
-    sov = cov[~cov["is_territory"].astype(bool)].index
-    pct = {"categories": {}, "concepts": {}}
-    for cat in CATEGORIES:
-        if cat in fs.columns:
-            v = fs.loc[fs.index.isin(sov), cat].dropna()
-            if len(v):
-                pct["categories"][cat] = {"p25": _n(v.quantile(.25)), "p50": _n(v.quantile(.50)), "p75": _n(v.quantile(.75))}
-    for cid in scored_cids:
-        col = "C%d_score" % cid
-        if col in cs.columns:
-            v = cs.loc[cs.index.isin(sov), col].dropna()
-            if len(v):
-                pct["concepts"][cid] = {"p25": _n(v.quantile(.25)), "p50": _n(v.quantile(.50)), "p75": _n(v.quantile(.75))}
-
     # per-metric world percentiles (p25/p50/p75 of the harmonized value across sovereigns),
     # for the drill-down value-vs-universe bars. Dedup (metric, iso3) since a metric can appear
     # under multiple concepts with the same harmonized value.
@@ -195,10 +201,58 @@ def build():
     _cc = _cc[_cc["iso3"].isin(sov)]
     _mv = _cc[["metric", "iso3", "harmonized"]].dropna(subset=["harmonized"]).drop_duplicates(["metric", "iso3"])
     metric_pct = {}
+    metric_ref_mean = {}
     for _m, _g in _mv.groupby("metric"):
         _v = _g["harmonized"]
         if len(_v):
-            metric_pct[_m] = {"p25": _n(_v.quantile(.25)), "p50": _n(_v.quantile(.50)), "p75": _n(_v.quantile(.75))}
+            metric_pct[_m] = {"p05": _n(_v.quantile(.05)), "p25": _n(_v.quantile(.25)), "p50": _n(_v.quantile(.50)), "p75": _n(_v.quantile(.75)), "p95": _n(_v.quantile(.95))}
+            metric_ref_mean[_m] = float(_v.mean())
+
+    contributions = {}
+    for iso, g in con.groupby("iso3"):
+        by_c = {}
+        for cid, gg in g.groupby("concept_id"):
+            rows = []
+            for r in gg.sort_values("metric_contribution", ascending=False).itertuples():
+                # signed contribution: canonical weight x deviation from the metric's world median.
+                # weight (renormalized_weight) and value (harmonized) are canonical pipeline outputs;
+                # median comes from metric_pct (computed once above). Not recomputed anywhere else.
+                _rm = metric_ref_mean.get(r.metric)
+                _sc = None
+                if _rm is not None and r.harmonized == r.harmonized and r.renormalized_weight == r.renormalized_weight:
+                    _sc = _n(r.renormalized_weight * (r.harmonized - _rm))
+                # metric -> category contribution: sc x concept's weight share of the category (canonical).
+                _share = concept_weight_share.get((iso, int(cid)))
+                _scat = _n(_sc * _share) if (_sc is not None and _share is not None) else None
+                rows.append({
+                    "m": r.metric,
+                    "t": r.tier,
+                    "v": _n(r.harmonized),
+                    "w": _n(r.renormalized_weight),
+                    "c": _n(r.metric_contribution),
+                    "sc": _sc,
+                    "scat": _scat,
+                    "y": int(r.latest_year) if r.latest_year == r.latest_year else None,
+                    "st": 1 if _b(r.stale) else 0,
+                    "b": (r.bucket if isinstance(r.bucket, str) else None),
+                })
+            by_c[int(cid)] = rows
+        contributions[iso] = by_c
+
+    # percentile bands (p25/p50/p75) for the radar, over SOVEREIGNS ONLY (exclude territories)
+    pct = {"categories": {}, "concepts": {}}
+    for cat in CATEGORIES:
+        if cat in fs.columns:
+            v = fs.loc[fs.index.isin(sov), cat].dropna()
+            if len(v):
+                pct["categories"][cat] = {"p05": _n(v.quantile(.05)), "p25": _n(v.quantile(.25)), "p50": _n(v.quantile(.50)), "p75": _n(v.quantile(.75)), "p95": _n(v.quantile(.95))}
+    for cid in scored_cids:
+        col = "C%d_score" % cid
+        if col in cs.columns:
+            v = cs.loc[cs.index.isin(sov), col].dropna()
+            if len(v):
+                pct["concepts"][cid] = {"p05": _n(v.quantile(.05)), "p25": _n(v.quantile(.25)), "p50": _n(v.quantile(.50)), "p75": _n(v.quantile(.75)), "p95": _n(v.quantile(.95))}
+
 
     meta = {
         "concepts": {cid: {"name": concept_name.get(cid, "C%d" % cid),

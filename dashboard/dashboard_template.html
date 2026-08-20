@@ -168,6 +168,7 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
   color:var(--muted);font-family:var(--mono);margin-bottom:5px}
 .drill-controls select{width:280px;max-width:100%}
 .drill-cols{display:flex;gap:0;align-items:flex-start;min-width:min-content}
+.drill-note{max-width:900px;margin:18px 4px 4px;font-size:11px;line-height:1.5;color:var(--muted)}
 .drill-col{flex:0 0 360px;max-width:360px;border-right:1px solid var(--border);padding:0 16px}
 .drill-col:first-child{padding-left:0}
 .drill-col-head{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);
@@ -181,6 +182,23 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .drill-sub{margin-top:7px;display:flex;flex-direction:column;gap:2px;font-size:10.5px;font-family:var(--mono)}
 .drill-sub .up{color:rgb(47,143,158)}
 .drill-sub .dn{color:rgb(201,106,74)}
+.drill-col-metrics{flex:0 0 360px;max-width:360px}
+.metric-row{padding:9px 8px;border-bottom:1px solid var(--border)}
+.metric-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.metric-name{font-size:12px;font-weight:600;color:var(--ink);line-height:1.25}
+.metric-val{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.metric-tags{display:flex;gap:5px;margin-top:3px;align-items:center}
+.mtag{font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:3px;letter-spacing:.02em}
+.mtag.tier{background:var(--panel-2);color:var(--muted)}
+.mtag.stale{background:rgba(201,106,74,.15);color:rgb(201,106,74)}
+.myr{font-family:var(--mono);font-size:9px;color:var(--muted)}
+.metric-bars{display:flex;gap:10px;margin-top:6px}
+.mbar-cell{flex:1;min-width:0}
+.mbar-cap{font-size:9px;color:var(--muted);font-family:var(--mono);margin-bottom:3px;letter-spacing:.02em}
+.contribbar{position:relative;height:8px;background:var(--panel-2);border-radius:4px;overflow:hidden}
+.contribbar .fill{position:absolute;left:0;top:0;height:100%;background:var(--accent);opacity:.55;border-radius:4px}
+.drill-bucket{font-size:10px;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);margin:12px 0 6px;padding-top:6px}
 .ts-wrap{padding:24px 28px;max-width:1100px;margin:0 auto;overflow-y:auto;flex:1 1 auto;min-height:0;width:100%}
 .drill-wrap{padding:20px 24px;overflow:auto;flex:1 1 auto;min-height:0;width:100%}
 .insufficient{color:var(--muted);font-style:italic;font-size:12px;margin-top:8px}
@@ -639,29 +657,45 @@ function radarLabelSize(){
   const s = Math.round(10 + (w-300)/(520-300)*(13-10));
   return Math.max(10, Math.min(13, s));
 }
+// signed contribution bar: centre = zero; fills left (negative = drags score down, warm)
+// or right (positive = lifts score, cool); length scaled to the largest |contribution| in the concept.
+function contribBar(signed, maxAbs){
+  if(signed==null||!maxAbs) return '<div class="posbar"><span class="mid"></span></div>';
+  const EDGE=0.46;
+  const frac=Math.max(-EDGE,Math.min(EDGE,(signed/maxAbs)*EDGE));
+  const pct=Math.abs(frac)*100;
+  const col=_devColor(signed, maxAbs/2);   // reuse warm/cool ramp
+  const side=frac>=0?'left:50%':'right:50%';
+  return '<div class="posbar" title="'+(signed>=0?'+':'')+signed.toFixed(3)+' vs median contribution">'+
+    '<span class="fill" style="'+side+';width:'+pct+'%;background:'+col+'"></span>'+
+    '<span class="mid"></span></div>';
+}
 function positionBar(v, centerMed, worldBand){
-  // centre = centerMed (peer median in compare, world median otherwise);
-  // colour/direction = deviation vs centerMed; LENGTH scaled to the WORLD p25-p75;
-  // tick marks at WORLD p25/p75 (positioned relative to centre, using world scaling).
+  // centre = centerMed (peer median in compare, world median otherwise).
+  // LENGTH is scaled to the WORLD p05-p95 span (wider than the IQR) so tail values stay
+  // distinguishable instead of clamping at the quartiles; tick marks sit at WORLD p25/p50/p75.
   if(v==null || centerMed==null) return '<div class="posbar"><span class="mid"></span></div>';
   const wb = worldBand || {};
-  const wP25=wb.p25, wP75=wb.p75, wP50=wb.p50;
-  const worldIqrHalf = ((wP75!=null&&wP25!=null)?(wP75-wP25):0.2)/2 || 0.1;
+  const wP05=wb.p05, wP25=wb.p25, wP75=wb.p75, wP95=wb.p95;
+  // half-span of the p05-p95 range (fallback to IQR, then to a constant)
+  let halfSpan;
+  if(wP05!=null && wP95!=null) halfSpan=(wP95-wP05)/2;
+  else if(wP25!=null && wP75!=null) halfSpan=(wP75-wP25);
+  else halfSpan=0.2;
+  if(!halfSpan) halfSpan=0.1;
   const dev = v - centerMed;
-  const EDGE=0.46, REF=0.38;
-  // fill: from centre toward value, scaled by WORLD iqr
-  const frac = Math.max(-EDGE, Math.min(EDGE, (dev/worldIqrHalf)*REF));
+  const EDGE=0.46, REF=0.42;
+  // position mapping: deviation from centre, scaled by the p05-p95 half-span
+  const posOf=(pv)=>Math.max(-EDGE,Math.min(EDGE,((pv-centerMed)/halfSpan)*REF));
+  const frac = posOf(v);
   const pct = Math.abs(frac)*100;
-  const col = _devColor(dev, worldIqrHalf);
+  const col = _devColor(dev, halfSpan);
   const side = frac>=0 ? 'left:50%' : 'right:50%';
-  // world p25/p75 tick positions relative to the CENTRE (centerMed), using world scaling
+  // quartile tick positions (p25/p50/p75) within the p05-p95 scale
   let marks='';
-  if(wP25!=null && wP75!=null){
-    const mk=(pv)=>{ const f=Math.max(-EDGE,Math.min(EDGE,((pv-centerMed)/worldIqrHalf)*REF));
-      return 50 + f*100; };
-    marks='<span class="ref" style="left:'+mk(wP25)+'%"></span>'+
-          '<span class="ref" style="left:'+mk(wP75)+'%"></span>';
-  }
+  const mk=(pv)=> 50 + posOf(pv)*100;
+  if(wP25!=null) marks+='<span class="ref" style="left:'+mk(wP25)+'%"></span>';
+  if(wP75!=null) marks+='<span class="ref" style="left:'+mk(wP75)+'%"></span>';
   return '<div class="posbar" title="'+(dev>=0?'+':'')+dev.toFixed(2)+' vs median">'+
     marks+
     '<span class="fill" style="'+side+';width:'+pct+'%;background:'+col+'"></span>'+
@@ -806,9 +840,10 @@ function conceptsInCategory(cat){
   for(const cid in cmeta){
     if(cmeta[cid].cat!==cat) continue;
     const s=con[cid]?con[cid].s:null;
+    const cc=con[cid]?(con[cid].cc!=null?con[cid].cc:null):null;
     const band=cpct[cid]||null;
     const med=band?band.p50:null;
-    out.push({cid, name:cmeta[cid].name, s, band, dev:(s!=null&&med!=null)?(s-med):null});
+    out.push({cid, name:cmeta[cid].name, s, cc, band, dev:(s!=null&&med!=null)?(s-med):null});
   }
   return out;
 }
@@ -838,7 +873,7 @@ function metricsInConcept(cid){
     const mlabel=(mmeta[key]&&mmeta[key].label)? mmeta[key].label : key;
     out.push({key, name:mlabel,
       v, band, med, dev:(v!=null&&med!=null)?(v-med):null,
-      tier:row.t, weight:row.w, contrib:row.c, year:row.y, stale:row.st, bucket:row.b});
+      tier:row.t, weight:row.w, contrib:row.c, sc:row.sc, scat:row.scat, year:row.y, stale:row.st, bucket:row.b});
   });
   return out;
 }
@@ -884,6 +919,17 @@ function renderDrill(){
 
   let cols=col1;
 
+  // Shared contribution scale across columns 2 & 3: max |contribution to category|
+  // over this category's concepts (cc) and, when a concept is open, its metrics (scat).
+  let sharedMax=0.0001;
+  if(drillCategory){
+    const _cs=conceptsInCategory(drillCategory);
+    _cs.forEach(x=>{ if(x.cc!=null) sharedMax=Math.max(sharedMax,Math.abs(x.cc)); });
+    if(drillConcept!=null){
+      metricsInConcept(drillConcept).forEach(x=>{ if(x.scat!=null) sharedMax=Math.max(sharedMax,Math.abs(x.scat)); });
+    }
+  }
+
   // ----- Column 2: Concepts in the selected category -----
   if(drillCategory){
     const cpct=DATA.meta.percentiles.concepts||{};
@@ -891,27 +937,68 @@ function renderDrill(){
     let col2='<div class="drill-col" id="drillcol2"><div class="drill-col-head">'+drillCategory+' \u00b7 Concepts</div>';
     // order concepts by score desc for readability
     concepts.sort((a,b)=>((b.s==null?-1:b.s)-(a.s==null?-1:a.s)));
+    // scale the contribution bars to the largest |cc| in this category
+    const maxCC=sharedMax;  // shared scale across columns 2 & 3
     concepts.forEach(cn=>{
       const band=cn.band; const med=band?band.p50:null;
-      const drivers=topDrivers(metricsInConcept(cn.cid));
       const sel=(String(cn.cid)===String(drillConcept))?' selected':'';
-      let sub='';
-      if(drivers.length){
-        sub='<div class="drill-sub">';
-        drivers.forEach(dv=>{ const cls=dv.dev>=0?'up':'dn'; const arr=dv.dev>=0?'\u25b2':'\u25bc';
-          sub+='<span class="'+cls+'">'+arr+' '+dv.name+'</span>'; });
-        sub+='</div>';
-      }
       col2+='<div class="drill-row'+sel+'" data-cid="'+cn.cid+'">'+
         '<div class="drill-row-top"><span class="drill-name">'+cn.name+'</span>'+
         '<span class="drill-val">'+(cn.s!=null?cn.s.toFixed(2):'\u2014')+'</span></div>'+
-        positionBar(cn.s, med, band)+ sub +'</div>';
+        '<div class="metric-bars">'+
+          '<div class="mbar-cell"><div class="mbar-cap">vs median</div>'+positionBar(cn.s, med, band)+'</div>'+
+          '<div class="mbar-cell"><div class="mbar-cap">contribution to category</div>'+contribBar(cn.cc, maxCC)+'</div>'+
+        '</div>'+
+      '</div>';
     });
     col2+='</div>';
     cols+=col2;
   }
 
-  body.innerHTML='<div class="drill-cols">'+cols+'</div>';
+  // ----- Column 3: Metrics in the selected concept -----
+  if(drillCategory && drillConcept!=null){
+    const cmeta=DATA.meta.concepts[drillConcept];
+    const mets=metricsInConcept(drillConcept);
+    // order by contribution desc; find max contribution for scaling the contribution bars
+    // signed contribution = weight * (value - metric median); scale to the largest |signed| in the concept
+    mets.forEach(x=>{ x.signed=(x.scat!=null)?x.scat:null; });  // contribution to CATEGORY (shared scale with concept column)
+    const maxC=sharedMax;  // shared scale across columns 2 & 3
+    // group by bucket (b); null bucket -> flat
+    const buckets={}; const order=[];
+    mets.forEach(mt=>{ const bk=(mt.bucket==null||mt.bucket==='')?'':String(mt.bucket);
+      if(!(bk in buckets)){ buckets[bk]=[]; order.push(bk);} buckets[bk].push(mt); });
+    let col3='<div class="drill-col drill-col-metrics" id="drillcol3"><div class="drill-col-head">'+
+      (cmeta?cmeta.name:'')+' \u00b7 Metrics</div>';
+    order.forEach(bk=>{
+      if(bk!=='') col3+='<div class="drill-bucket">'+bk+'</div>';
+      buckets[bk].slice().sort((a,b)=>Math.abs(b.signed||0)-Math.abs(a.signed||0)).forEach(mt=>{
+        const stale=mt.stale?'<span class="mtag stale" title="stale (older data year)">stale</span>':'';
+        const tier=mt.tier?'<span class="mtag tier">'+mt.tier+'</span>':'';
+        const yr=mt.year?('<span class="myr">'+mt.year+'</span>'):'';
+        // signed contribution bar: centred, fills left(neg)/right(pos), scaled to max |signed| in concept
+        col3+='<div class="metric-row">'+
+          '<div class="metric-head"><span class="metric-name">'+mt.name+'</span>'+
+            '<span class="metric-val">'+(mt.v!=null?mt.v.toFixed(2):'\u2014')+'</span></div>'+
+          '<div class="metric-tags">'+tier+yr+stale+'</div>'+
+          '<div class="metric-bars">'+
+            '<div class="mbar-cell"><div class="mbar-cap">vs universe</div>'+positionBar(mt.v, mt.med, mt.band)+'</div>'+
+            '<div class="mbar-cell"><div class="mbar-cap">contribution to category</div>'+contribBar(mt.signed, maxC)+'</div>'+
+          '</div>'+
+        '</div>';
+      });
+    });
+    if(!mets.length) col3+='<div class="insufficient">No metric detail available.</div>';
+    col3+='</div>';
+    cols+=col3;
+  }
+
+  const drillNote='<div class="drill-note">'+
+    'Position bars show where the country sits in the sovereign distribution (center = median, ticks = 25th/75th percentiles). '+
+    'Contribution bars show each item\u2019s signed contribution to the category score, measured as its weight \u00d7 the gap from the sovereign mean, '+
+    'so metric and concept bars share one scale and are comparable across both columns. '+
+    'Warm bars pull the category score down; cool bars lift it.'+
+  '</div>';
+  body.innerHTML='<div class="drill-cols">'+cols+'</div>'+drillNote;
 
   // wire category clicks -> open concept column
   body.querySelectorAll('.drill-row[data-cat]').forEach(el=>{
