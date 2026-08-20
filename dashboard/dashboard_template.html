@@ -946,7 +946,7 @@ function renderDrill(){
         '<div class="drill-row-top"><span class="drill-name">'+cn.name+'</span>'+
         '<span class="drill-val">'+(cn.s!=null?cn.s.toFixed(2):'\u2014')+'</span></div>'+
         '<div class="metric-bars">'+
-          '<div class="mbar-cell"><div class="mbar-cap">vs median</div>'+positionBar(cn.s, med, band)+'</div>'+
+          '<div class="mbar-cell"><div class="mbar-cap">vs world median</div>'+positionBar(cn.s, med, band)+'</div>'+
           '<div class="mbar-cell"><div class="mbar-cap">contribution to category</div>'+contribBar(cn.cc, maxCC)+'</div>'+
         '</div>'+
       '</div>';
@@ -981,7 +981,7 @@ function renderDrill(){
             '<span class="metric-val">'+(mt.v!=null?mt.v.toFixed(2):'\u2014')+'</span></div>'+
           '<div class="metric-tags">'+tier+yr+stale+'</div>'+
           '<div class="metric-bars">'+
-            '<div class="mbar-cell"><div class="mbar-cap">vs universe</div>'+positionBar(mt.v, mt.med, mt.band)+'</div>'+
+            '<div class="mbar-cell"><div class="mbar-cap">vs world median</div>'+positionBar(mt.v, mt.med, mt.band)+'</div>'+
             '<div class="mbar-cell"><div class="mbar-cap">contribution to category</div>'+contribBar(mt.signed, maxC)+'</div>'+
           '</div>'+
         '</div>';
