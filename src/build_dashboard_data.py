@@ -89,6 +89,7 @@ def build():
             _pl = str(_r["peers"]).split(",") if pd.notna(_r["peers"]) and str(_r["peers"]).strip() else []
             peers_map[_r["iso3"]] = [x for x in _pl if x]
 
+
     # concept medians across sovereigns (same basis as the concept position bars), computed once
 
     concept_median = {}
@@ -101,11 +102,9 @@ def build():
         if _col in cs.columns:
 
             _vv = cs.loc[cs.index.isin(sov), _col].dropna()
-
             if len(_vv):
-
                 concept_median[_cid] = float(_vv.quantile(.50))
-            concept_ref_mean[_cid] = float(_vv.mean())
+                concept_ref_mean[_cid] = float(_vv.mean())
 
 
     for iso in fs.index:
@@ -133,6 +132,7 @@ def build():
                 "mag": None if m is None else _n(m.magnitude, 4),
                 "brd": None if m is None else _n(m.breadth, 2),
                 "cc": _cc,
+                "ws": _n(_cshare, 4),
             }
         countries[iso] = {
             "name": cov.loc[iso, "country_name"] if iso in cov.index else iso,

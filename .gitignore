@@ -46,4 +46,5 @@ data/processed/step0_metric_inventory.csv
 # a convenience copy for spreadsheet review. Regenerate: python src/concept_sources.py
 data/processed/concept_sources.csv
 dashboard/governance_map.html
+dashboard/dashboard.html
 dashboard/dashboard_data.json

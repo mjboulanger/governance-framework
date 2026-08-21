@@ -163,10 +163,22 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .view{display:none;min-height:0}
 .view.active{display:flex;flex:1 1 auto;flex-direction:column;min-height:0}
 #view-map.view.active{flex-direction:row}
-.drill-controls{margin-bottom:18px}
+.drill-controls{margin-bottom:18px;display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap}
 .drill-controls label{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--muted);font-family:var(--mono);margin-bottom:5px}
 .drill-controls select{width:280px;max-width:100%}
+.drill-refwrap{margin-top:0}
+.drill-countrywrap{display:flex;flex-direction:column}
+.drill-reftoggle{display:inline-flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.drill-reftoggle .refbtn{background:var(--panel);border:none;padding:5px 14px;font-size:12px;
+  color:var(--muted);cursor:pointer;font-family:inherit}
+.drill-reftoggle .refbtn.active{background:var(--accent);color:#fff}
+.drill-reftoggle .refbtn:not(.active):hover{background:var(--panel-2)}
+.drill-reftoggle .refbtn:disabled{opacity:.4;cursor:not-allowed}
+.drill-refnote{font-size:11px;color:rgb(201,106,74);margin-top:6px;max-width:280px;line-height:1.4}
+#drillpeerchipwrap{margin:6px 4px 26px}
+#drillpeerchipwrap:empty{margin:0}
+#drillpeerchipwrap .peerchips{margin-top:0}
 .drill-cols{display:flex;gap:0;align-items:flex-start;min-width:min-content}
 .drill-note{max-width:900px;margin:18px 4px 4px;font-size:11px;line-height:1.5;color:var(--muted)}
 .drill-col{flex:0 0 360px;max-width:360px;border-right:1px solid var(--border);padding:0 16px}
@@ -244,9 +256,20 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 <div id="view-drilldown" class="view">
   <div class="drill-wrap" id="drillwrap">
     <div class="drill-controls">
-      <label for="drillcountrysel">Country</label>
-      <select id="drillcountrysel"></select>
+      <div class="drill-countrywrap">
+        <label for="drillcountrysel">Country</label>
+        <select id="drillcountrysel"></select>
+      </div>
+      <div class="drill-refwrap">
+        <label>Reference</label>
+        <div class="drill-reftoggle" id="drillreftoggle">
+          <button type="button" class="refbtn active" data-ref="world">World</button>
+          <button type="button" class="refbtn" data-ref="peers">Peers</button>
+        </div>
+        <div class="drill-refnote" id="drillrefpeernote"></div>
+      </div>
     </div>
+    <div id="drillpeerchipwrap"></div>
     <div class="empty" id="drillempty">Select a country to dig into its governance profile.</div>
     <div id="drillbody" style="display:none"></div>
   </div>
@@ -830,6 +853,10 @@ function selectCategory(cat){
 // ---- Drill-down (Miller columns: Category -> Concept -> Metric) ----
 let drillCategory = null;   // selected category (level 2 opens when set)
 let drillConcept  = null;   // selected concept_id (level 3 opens when set)
+let drillRef = 'world';     // contribution/position REFERENCE: 'world' (sovereign mean/median) or 'peers'
+// whether the current country has a peer set (peer mode requires it)
+function hasPeers(){ const c=DATA.countries[currentIso]; return !!(c && c.peers && c.peers.length); }
+function activePeer(){ return drillRef==='peers' && hasPeers(); }  // peer mode active? (global helper, any scope)
 
 // concepts belonging to a category, with the country's score, the world band, and deviation
 function conceptsInCategory(cat){
@@ -841,9 +868,15 @@ function conceptsInCategory(cat){
     if(cmeta[cid].cat!==cat) continue;
     const s=con[cid]?con[cid].s:null;
     const cc=con[cid]?(con[cid].cc!=null?con[cid].cc:null):null;
+    const ws=con[cid]?(con[cid].ws!=null?con[cid].ws:null):null;   // canonical concept weight share
+    const _pp=peerProfile().con[cid]||null;                        // live peer profile for this concept
+    const pm=_pp?_pp.med:null;                                     // peer median (position center)
+    const cc_p=(ws!=null&&_pp&&s!=null)?(ws*(s-_pp.mean)):null;    // peer contribution = ws x (focus - peer mean)
     const band=cpct[cid]||null;
-    const med=band?band.p50:null;
-    out.push({cid, name:cmeta[cid].name, s, cc, band, dev:(s!=null&&med!=null)?(s-med):null});
+    const wmed=band?band.p50:null;
+    const refmed = activePeer() ? (pm!=null?pm:wmed) : wmed;   // active reference (peer or world)
+    out.push({cid, name:cmeta[cid].name, s, cc, cc_p, pm, ws, band,
+      dev:(s!=null&&refmed!=null)?(s-refmed):null});
   }
   return out;
 }
@@ -873,10 +906,68 @@ function metricsInConcept(cid){
     const mlabel=(mmeta[key]&&mmeta[key].label)? mmeta[key].label : key;
     out.push({key, name:mlabel,
       v, band, med, dev:(v!=null&&med!=null)?(v-med):null,
-      tier:row.t, weight:row.w, contrib:row.c, sc:row.sc, scat:row.scat, year:row.y, stale:row.st, bucket:row.b});
+      tier:row.t, weight:row.w, contrib:row.c, sc:row.sc, scat:row.scat,
+      w:row.w, year:row.y, stale:row.st, bucket:row.b});
   });
   return out;
 }
+
+// ---- LIVE peer reference profiles (computed from the active peer set, not precomputed) ----
+// Peers contribute ONLY their averaged scores/values as reference points. All attribution is a
+// FOCUS-country operation using FOCUS weights (ws per concept, w per metric). This mirrors the
+// map screen's drawCompare(), which also aggregates activePeers live. One code path for the
+// default peer set OR any user-edited set, so there is no divergence between precomputed and live.
+function drillPeers(){
+  // the active peer set for the drill-down = the shared activePeers when populated for this focus,
+  // else the focus country's default peers from the data.
+  const c=DATA.countries[currentIso]||{};
+  let ps=(activePeers&&activePeers.length)?activePeers.slice():((c.peers||[]).slice());
+  // only real countries with data
+  return ps.filter(p=>DATA.countries[p]);
+}
+function _median(arr){
+  if(!arr.length) return null;
+  const a=arr.slice().sort((x,y)=>x-y), n=a.length, m=Math.floor(n/2);
+  return (n%2)? a[m] : (a[m-1]+a[m])/2;
+}
+function _mean(arr){ return arr.length? arr.reduce((p,q)=>p+q,0)/arr.length : null; }
+// Build the peer reference profile once per render: concept mean/median, category mean/median,
+// metric mean/median, over the active peer set. Cached on a token so repeated calls in one render
+// don't re-aggregate.
+let _peerCache={tok:null, prof:null};
+function peerProfile(){
+  const ps=drillPeers();
+  const tok=currentIso+'|'+ps.join(',');
+  if(_peerCache.tok===tok) return _peerCache.prof;
+  const con={}, cat={}, met={};       // each: {key: {mean, med}}
+  // concept scores
+  const cmeta=DATA.meta.concepts;
+  for(const cid in cmeta){
+    const vals=[];
+    ps.forEach(p=>{ const e=(DATA.countries[p].con||{})[cid]; if(e&&e.s!=null) vals.push(e.s); });
+    if(vals.length) con[cid]={mean:_mean(vals), med:_median(vals)};
+  }
+  // category scores
+  (DATA.meta.categories||[]).forEach(k=>{
+    const vals=[];
+    ps.forEach(p=>{ const cc=DATA.countries[p].cat; if(cc&&cc[k]!=null) vals.push(cc[k]); });
+    if(vals.length) cat[k]={mean:_mean(vals), med:_median(vals)};
+  });
+  // metric values: pull each peer's metric value from THEIR contributions block
+  ps.forEach(p=>{
+    const pc=DATA.contributions[p]||{};
+    for(const cid in pc){ pc[cid].forEach(r=>{
+      if(r.v==null) return;
+      (met[r.m]=met[r.m]||[]).push(r.v);
+    });}
+  });
+  const metOut={};
+  for(const k in met){ metOut[k]={mean:_mean(met[k]), med:_median(met[k])}; }
+  const prof={con, cat, met:metOut};
+  _peerCache={tok, prof};
+  return prof;
+}
+
 function renderDrill(){
   syncDrillCountrySel();
   const wrap=document.getElementById('drillwrap');
@@ -888,14 +979,24 @@ function renderDrill(){
 
   const c=DATA.countries[currentIso];
   const catPct=DATA.meta.percentiles.categories||{};
+  const useP = activePeer();
+  // ensure the shared active peer set is populated for THIS focus when in peer mode, so edits
+  // mutate a real list (not the empty->default fallback). Only seed when empty to preserve edits.
+  if(useP && (!activePeers || !activePeers.length)){
+    const _c=DATA.countries[currentIso];
+    if(_c && _c.peers && _c.peers.length) activePeers=_c.peers.slice();
+  }   // peer reference active (hoisted for all columns)
 
   // ----- Column 1: Categories -----
   let col1='<div class="drill-col"><div class="drill-col-head">Categories</div>';
   DATA.meta.categories.forEach(cat=>{
     const s=(c.cat&&c.cat[cat]!=null)?c.cat[cat]:null;
     const band=catPct[cat]||null;
-    const med=band?band.p50:null;
-    // up to 4 material driver concepts within this category (true direction)
+    const wmed=band?band.p50:null;
+    const _catpp=peerProfile().cat[cat]||null;
+    const catpeer=_catpp?_catpp.med:null;   // live category peer median
+    const med = useP ? (catpeer!=null?catpeer:wmed) : wmed;   // peer or world category median
+    // up to 4 material driver concepts within this category (deviation vs the ACTIVE reference)
     const drivers=topDrivers(conceptsInCategory(cat));
     const sel=(cat===drillCategory)?' selected':'';
     let sub='';
@@ -921,6 +1022,9 @@ function renderDrill(){
 
   // Shared contribution scale across columns 2 & 3: max |contribution to category|
   // over this category's concepts (cc) and, when a concept is open, its metrics (scat).
+  // Universe-anchored scale: ALWAYS the max |WORLD contribution| in view, even in peer mode.
+  // This keeps bar LENGTHS on the same ruler; peer mode only shifts the reference point, so
+  // small peer gaps are not amplified.
   let sharedMax=0.0001;
   if(drillCategory){
     const _cs=conceptsInCategory(drillCategory);
@@ -940,14 +1044,17 @@ function renderDrill(){
     // scale the contribution bars to the largest |cc| in this category
     const maxCC=sharedMax;  // shared scale across columns 2 & 3
     concepts.forEach(cn=>{
-      const band=cn.band; const med=band?band.p50:null;
+      const band=cn.band; const wmed=band?band.p50:null;
+      const center = useP ? (cn.pm!=null?cn.pm:wmed) : wmed;     // peer median or world median
+      const contrib = useP ? cn.cc_p : cn.cc;                    // peer or world contribution
+      const posCap = useP ? 'vs peer median' : 'vs world median';
       const sel=(String(cn.cid)===String(drillConcept))?' selected':'';
       col2+='<div class="drill-row'+sel+'" data-cid="'+cn.cid+'">'+
         '<div class="drill-row-top"><span class="drill-name">'+cn.name+'</span>'+
         '<span class="drill-val">'+(cn.s!=null?cn.s.toFixed(2):'\u2014')+'</span></div>'+
         '<div class="metric-bars">'+
-          '<div class="mbar-cell"><div class="mbar-cap">vs world median</div>'+positionBar(cn.s, med, band)+'</div>'+
-          '<div class="mbar-cell"><div class="mbar-cap">contribution to category</div>'+contribBar(cn.cc, maxCC)+'</div>'+
+          '<div class="mbar-cell"><div class="mbar-cap">'+posCap+'</div>'+positionBar(cn.s, center, band)+'</div>'+
+          '<div class="mbar-cell"><div class="mbar-cap">contribution to category</div>'+contribBar(contrib, maxCC)+'</div>'+
         '</div>'+
       '</div>';
     });
@@ -961,7 +1068,20 @@ function renderDrill(){
     const mets=metricsInConcept(drillConcept);
     // order by contribution desc; find max contribution for scaling the contribution bars
     // signed contribution = weight * (value - metric median); scale to the largest |signed| in the concept
-    mets.forEach(x=>{ x.signed=(x.scat!=null)?x.scat:null; });  // contribution to CATEGORY (shared scale with concept column)
+    // concept weight share for the open concept (canonical), for metric->category peer contribution
+    const _cws=((DATA.countries[currentIso]||{}).con||{})[drillConcept];
+    const _wsConcept=_cws&&_cws.ws!=null?_cws.ws:null;
+    const _mprof=peerProfile().met;
+    mets.forEach(x=>{
+      if(useP){
+        const pm=_mprof[x.key]?_mprof[x.key].mean:null;   // peer mean of this metric value
+        x.signed=(pm!=null&&x.w!=null&&_wsConcept!=null&&x.v!=null)?(x.w*(x.v-pm)*_wsConcept):null;
+        x.pmed=_mprof[x.key]?_mprof[x.key].med:null;      // peer median (position center)
+      } else {
+        x.signed=(x.scat!=null)?x.scat:null;
+        x.pmed=null;
+      }
+    });
     const maxC=sharedMax;  // shared scale across columns 2 & 3
     // group by bucket (b); null bucket -> flat
     const buckets={}; const order=[];
@@ -981,7 +1101,7 @@ function renderDrill(){
             '<span class="metric-val">'+(mt.v!=null?mt.v.toFixed(2):'\u2014')+'</span></div>'+
           '<div class="metric-tags">'+tier+yr+stale+'</div>'+
           '<div class="metric-bars">'+
-            '<div class="mbar-cell"><div class="mbar-cap">vs world median</div>'+positionBar(mt.v, mt.med, mt.band)+'</div>'+
+            '<div class="mbar-cell"><div class="mbar-cap">'+(useP?'vs peer median':'vs world median')+'</div>'+positionBar(mt.v, (useP&&mt.pmed!=null?mt.pmed:mt.med), mt.band)+'</div>'+
             '<div class="mbar-cell"><div class="mbar-cap">contribution to category</div>'+contribBar(mt.signed, maxC)+'</div>'+
           '</div>'+
         '</div>';
@@ -992,13 +1112,47 @@ function renderDrill(){
     cols+=col3;
   }
 
-  const drillNote='<div class="drill-note">'+
-    'Position bars show where the country sits in the sovereign distribution (center = median, ticks = 25th/75th percentiles). '+
-    'Contribution bars show each item\u2019s signed contribution to the category score, measured as its weight \u00d7 the gap from the sovereign mean, '+
-    'so metric and concept bars share one scale and are comparable across both columns. '+
-    'Warm bars pull the category score down; cool bars lift it.'+
-  '</div>';
+  let drillNote;
+  if(useP){
+    drillNote='<div class="drill-note">'+
+      '<strong>Reference: peer group.</strong> Bars are measured against this country\u2019s peer group, not the world. '+
+      'Position bars center on the <strong>peer median</strong>; contribution bars show weight \u00d7 the gap from the <strong>peer mean</strong>. '+
+      '<strong>Bar length still uses the overall-universe scale, not the peer spread</strong> \u2014 so a small gap versus similar peers stays a short bar and is not amplified. '+
+      'Warm bars pull the category score down (vs peers); cool bars lift it. Contribution bars remain comparable across both columns.'+
+    '</div>';
+  } else {
+    drillNote='<div class="drill-note">'+
+      'Position bars show where the country sits in the sovereign distribution (center = median, ticks = 25th/75th percentiles). '+
+      'Contribution bars show each item\u2019s signed contribution to the category score, measured as its weight \u00d7 the gap from the sovereign mean, '+
+      'so metric and concept bars share one scale and are comparable across both columns. '+
+      'Warm bars pull the category score down; cool bars lift it.'+
+    '</div>';
+  }
+  // editable peer chips (peer mode only): shared with the map screen via activePeers
   body.innerHTML='<div class="drill-cols">'+cols+'</div>'+drillNote;
+  // editable peer chips render UNDER the toggle (in drillpeerchipwrap), peer mode only.
+  const chipWrap=document.getElementById('drillpeerchipwrap');
+  if(chipWrap){
+    if(useP){
+      const ps=drillPeers();
+      let ch='<div class="peerchips" id="drillpeerchips">';
+      ps.forEach(p=>{ const pc=DATA.countries[p]; if(!pc) return;
+        ch+='<span class="chip" data-iso="'+p+'">'+pc.name+
+          '<span class="x" data-iso="'+p+'">\u00d7</span></span>'; });
+      ch+='<span class="chip addchip" id="drilladdpeer">+ Add</span></div>'+
+        '<div id="drillpeersearch" style="display:none;margin-top:8px;max-width:280px"></div>';
+      chipWrap.innerHTML=ch;
+      chipWrap.querySelectorAll('#drillpeerchips .x').forEach(x=>{
+        x.onclick=(e)=>{ const iso=e.target.getAttribute('data-iso');
+          activePeers=activePeers.filter(p=>p!==iso); _peerCache.tok=null; renderDrill();
+          e.stopPropagation(); };
+      });
+      const addb=document.getElementById('drilladdpeer');
+      if(addb) addb.onclick=()=>openDrillAddPeer();
+    } else {
+      chipWrap.innerHTML='';
+    }
+  }
 
   // wire category clicks -> open concept column
   body.querySelectorAll('.drill-row[data-cat]').forEach(el=>{
@@ -1009,8 +1163,56 @@ function renderDrill(){
   body.querySelectorAll('.drill-row[data-cid]').forEach(el=>{
     el.onclick=()=>{ drillConcept=el.getAttribute('data-cid'); renderDrill(); scrollDrillRight(); };
   });
+  syncRefToggle();
+}
+// reflect drillRef + peer availability on the toggle, and show a warning when peers are unavailable
+function syncRefToggle(){
+  const tog=document.getElementById('drillreftoggle'); if(!tog) return;
+  const peersOK=hasPeers();
+  tog.querySelectorAll('.refbtn').forEach(b=>{
+    const r=b.getAttribute('data-ref');
+    b.classList.toggle('active', r===drillRef);
+    if(r==='peers') b.disabled=!peersOK;
+  });
+  const note=document.getElementById('drillrefpeernote');
+  if(note){
+    if(!peersOK && drillRef==='peers'){
+      note.textContent='This country has no peer group (too small or a territory), so peer reference is unavailable. Showing world reference.';
+    } else if(!peersOK){
+      note.textContent='No peer group available for this country.';
+    } else {
+      note.textContent='';
+    }
+  }
 }
 // auto-scroll the drill area to reveal the rightmost (newest) column
+function openDrillAddPeer(){
+  const box=document.getElementById('drillpeersearch'); if(!box) return;
+  box.style.display='block';
+  box.innerHTML='<input id="drillpeerq" type="text" placeholder="Type a country name\u2026" '+
+    'style="width:100%;padding:6px 9px;font-size:12px;border:1px solid var(--border);'+
+    'border-radius:6px;background:var(--panel);color:var(--ink)"><div id="drillpeerhits" '+
+    'style="margin-top:4px;max-height:180px;overflow-y:auto"></div>';
+  const q=document.getElementById('drillpeerq'); q.focus();
+  const render=()=>{
+    const term=q.value.trim().toLowerCase();
+    const hits=Object.keys(DATA.countries)
+      .filter(iso=>!DATA.countries[iso].terr && iso!==currentIso && !activePeers.includes(iso))
+      .filter(iso=> term.length>=1 && DATA.countries[iso].name.toLowerCase().includes(term))
+      .sort((a,b)=>DATA.countries[a].name.localeCompare(DATA.countries[b].name))
+      .slice(0,8);
+    let hh='';
+    hits.forEach(iso=>{ hh+='<div class="peerhit" data-iso="'+iso+'">'+DATA.countries[iso].name+
+      ' <span style="color:var(--muted);font-family:var(--mono);font-size:10px">'+iso+'</span></div>'; });
+    document.getElementById('drillpeerhits').innerHTML=hh;
+    document.querySelectorAll('#drillpeerhits .peerhit').forEach(el=>{
+      el.onclick=()=>{ const iso=el.getAttribute('data-iso');
+        if(!activePeers.includes(iso)) activePeers.push(iso);
+        _peerCache.tok=null; renderDrill(); };
+    });
+  };
+  q.oninput=render;
+}
 function scrollDrillRight(){
   const w=document.getElementById('drillwrap');
   if(w) setTimeout(()=>{ w.scrollLeft = w.scrollWidth; }, 40);
@@ -1030,6 +1232,16 @@ window.addEventListener('resize', ()=>{
 });
 document.querySelectorAll('.tab').forEach(t=>{
   t.onclick=()=>showView(t.getAttribute('data-view'));
+});
+// reference toggle (World / Peers) in the drill-down
+document.addEventListener('click', function(ev){
+  const b=ev.target.closest && ev.target.closest('.drill-reftoggle .refbtn');
+  if(!b || b.disabled) return;
+  const r=b.getAttribute('data-ref');
+  if(r===drillRef) return;
+  // if peers requested but unavailable, fall back to world
+  drillRef = (r==='peers' && !hasPeers()) ? 'world' : r;
+  renderDrill();
 });
 
 // populate the country dropdown (sorted by name, sovereigns + territories), wire selection

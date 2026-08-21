@@ -176,10 +176,39 @@ residual ~0.001, 95th percentile ~0.007) but has a thin tail (up to ~0.1) concen
 concept has heavy **per-country metric missingness** (renormalized weights then diverge from the
 sovereign-mean profile). This residual is accepted for the drill-down as a visual aid.
 
-**Reference is swappable.** The reference profile is the sovereign **mean** by default. A
-peer-group reference (contribution vs the selected peer set) is a planned option; because the
-decomposition is `weight x (focus - reference profile)`, swapping the reference profile keeps the
-chaining intact.
+**Reference toggle (World / Peers).** The drill-down has a World/Peers toggle (right of the
+country selector). In **World** mode the reference is the sovereign mean (contributions) and
+sovereign median (position). In **Peers** mode the reference shifts to the country's peer group:
+contribution bars use the **peer mean**, position bars center on the **peer median**, and the
+category-column driver call-outs rank by deviation from the peer reference. Because the
+decomposition is `weight x (focus - reference)`, swapping the reference keeps the chaining intact
+(verified: peer contributions chain metric -> concept -> category with the same residual profile
+as the world reference).
+
+**Scale stays universe-anchored in Peers mode.** Only the *reference point* shifts to the peers;
+the *bar-length scale* remains the overall-universe scale (world contribution range for
+contribution bars, world p05-p95 for position bars). Peers are similar to the focus country, so a
+peer-spread scale would amplify tiny differences into long bars; keeping the universe scale means
+a small gap versus similar peers stays a short bar. The on-screen note states this explicitly.
+
+**Peer contributions are computed live in the display layer, by design.** Fixed-reference
+derivations (scores, weights, world contributions) are computed once in the pipeline. But the peer
+set is **user-editable** (see below), so peer contributions depend on live UI state and *cannot*
+be precomputed. They are therefore computed in JS from **canonical primitives**: the peer
+reference is just the average of the peers' own concept scores / category scores / metric values
+(read from the JSON), and the contribution is `focus weight x (focus value - peer average)` using
+the **focus country's** canonical weights. Peers contribute only their averaged scores as
+reference points; all attribution is a focus-country operation. The one field the pipeline exposes
+for this is the concept **weight share** (`ws` in each concept record of the JSON), so JS never
+recomputes a weight. This is the minimum computation that must live in the display layer; nothing
+else about peers is derived there.
+
+**Editable, cross-screen peer set.** The peer chips shown under the toggle (Peers mode only) are
+editable: remove a peer with its x, add one via "+ Add". Edits mutate the shared `activePeers`
+state, which is the *same* state the map screen's compare mode uses - so a peer edit on either
+screen is reflected on the other. Changing the focus country reseeds `activePeers` to that
+country's default peers. If a country has no peer group (territories, micro-states), the Peers
+button is disabled and a note explains why.
 
 **Rebuild reminder.** Percentile/contribution changes live in `build_dashboard_data.py`, so after
 editing it you must re-run **both** steps (`build_dashboard_data.py` then `build_dashboard.py`) -
