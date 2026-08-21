@@ -131,7 +131,13 @@ python src/build_dashboard.py         # inlines the JSON + Plotly into the templ
 
 - **`src/build_dashboard_data.py`** reads the current score/history/momentum/contribution/
   coverage CSVs plus labels (`concept_sources.py`, `metric_dictionary.py`) and writes one
-  compact `dashboard_data.json`. Re-run it after any score/data regeneration.
+  compact `dashboard_data.json`. Re-run it after any score/data regeneration. It additionally
+  reads `data/processed/metric_normalization_params.csv` (per-metric method, baseline params, and
+  harmonize rule) into `meta.metrics`, and the latest-year `raw_value` per (country, metric) from
+  `data/processed/normalized_panel.csv`, attaching each to the contribution rows. These feed the
+  metric-level calculation breakdown (see below); if either file is missing, those fields are
+  omitted and the metric breakdown shows the method in words without the arithmetic. No new manual
+  input: method, params, and raw values all come from the data.
 - **`src/build_dashboard.py`** reads `dashboard/dashboard_template.html` (tracked - the UI),
   inlines the real `dashboard_data.json` and the Plotly JS bundle, and writes the
   self-contained `dashboard/governance_map.html`. It opens offline on `file://` (no internet),
@@ -208,11 +214,28 @@ editable: remove a peer with its x, add one via "+ Add". Edits mutate the shared
 state, which is the *same* state the map screen's compare mode uses - so a peer edit on either
 screen is reflected on the other. Changing the focus country reseeds `activePeers` to that
 country's default peers. If a country has no peer group (territories, micro-states), the Peers
-button is disabled and a note explains why.
+button is disabled and a note explains why. The reseed fires on every focus-change path (either
+country dropdown, clicking the map, or clicking a "Similar countries" row), and switching to the
+map re-renders its panel so a peer edit made on the drill-down is reflected there; turning on
+Compare no longer resets existing edits.
 
 **Rebuild reminder.** Percentile/contribution changes live in `build_dashboard_data.py`, so after
 editing it you must re-run **both** steps (`build_dashboard_data.py` then `build_dashboard.py`) -
 rebuilding only the second step reuses the stale JSON.
+
+## Distribution panel and calculation breakdown
+
+Clicking any category, concept, or metric row in the drill-down opens a right-hand panel with two parts.
+
+**Distribution histogram.** A real binned histogram (~24 bins, no smoothing) of that item's values across the 192 sovereigns, with the focus country marked (an orange line) and quartile ticks (p25/p50/p75, dotted). In Peers mode the peers are marked as teal lines, each with a clickable dot at the top. Colours are deliberate and shared with the rest of the UI: focus = the negative-callout orange (the `.dn` colour, `rgb(201,106,74)`); peers = teal (`--radar-fill`, `#2f8f9e`).
+
+**Peer identification (screenshot-safe).** Peer lines carry no label by default. Click a peer's dot to pin its country name as a horizontal label at the top (like the focus label); click again to remove it. Hovering a dot previews the name and value. A "Show all peer names" button lists every peer vertically along the bottom axis (the compact way to show ten at once), with a bounded left/right nudge so crowded names stay legible; at high peer density some overlap remains by design. The panel height is content-sized: it grows only enough to fit the longest visible name, so there is no empty band when names are hidden.
+
+**Calculation breakdown ("how this score is built").** Drills exactly one level down. Category -> a weighted table of its concepts (score, weight share, contribution). Concept -> a weighted table of its metrics (harmonized value, weight, contribution). Metric -> a "Metric definition" header, the definition and scale/source, then the raw -> harmonized arithmetic for the metric's method family (z-score, log1p z-score, percentile, or binary), reproducing the harmonized value from the raw value. This is what the two extra data-layer reads (under "Building the dashboard") exist for. Concepts have no definition field in the data, so the definition header appears only at the metric level.
+
+**Screenshot-standalone principle (project-wide).** Charts are built to be lifted out and dropped into other materials. The chart plus its caption note is the exportable artifact; anything purely tool UI (buttons, click/hover hints, interaction affordances) is kept OUTSIDE that region so it never lands in a screenshot. Data that a click pins (a peer name, the focus label) is part of the chart and belongs in the shot; the control that produces it does not. The "Show all peer names" button and its hint therefore sit below the caption note, between the note and the methodology section. Apply this rule to any new chart or panel.
+
+---
 
 ## Data Update Instructions
 

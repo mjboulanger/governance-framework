@@ -195,7 +195,9 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .drill-sub .up{color:rgb(47,143,158)}
 .drill-sub .dn{color:rgb(201,106,74)}
 .drill-col-metrics{flex:0 0 360px;max-width:360px}
-.metric-row{padding:9px 8px;border-bottom:1px solid var(--border)}
+.metric-row{padding:9px 8px;border-bottom:1px solid var(--border);cursor:pointer;border-radius:6px}
+.metric-row:hover{background:var(--panel-2)}
+.metric-row.distsel{background:var(--panel-2)}
 .metric-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .metric-name{font-size:12px;font-weight:600;color:var(--ink);line-height:1.25}
 .metric-val{font-family:var(--mono);font-size:12px;color:var(--ink)}
@@ -213,6 +215,31 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
   color:var(--muted);margin:12px 0 6px;padding-top:6px}
 .ts-wrap{padding:24px 28px;max-width:1100px;margin:0 auto;overflow-y:auto;flex:1 1 auto;min-height:0;width:100%}
 .drill-wrap{padding:20px 24px;overflow:auto;flex:1 1 auto;min-height:0;width:100%}
+.drill-split{display:flex;gap:0;align-items:stretch;min-height:calc(100vh - 150px)}
+.drill-left{flex:1 1 auto;min-width:0;padding-right:22px;display:flex;flex-direction:column}
+.drill-dist{flex:0 0 clamp(384px,30vw,528px);border-left:1px solid var(--border);
+  padding:20px 22px 20px 22px;margin-top:-20px;margin-bottom:-20px;background:var(--panel);align-self:stretch}
+.drill-dist-empty{font-size:12px;color:var(--muted);line-height:1.5;padding:8px 2px}
+.drill-dist-head{font-size:13px;color:var(--ink);font-weight:600;margin-bottom:2px}
+.drill-dist-head .lvl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  font-weight:600;display:block;margin-bottom:3px}
+.drill-dist-note{font-size:12px;color:var(--muted);line-height:1.45;margin-top:8px}
+.drill-calc{margin-top:16px;border-top:1px solid var(--border);padding-top:12px}
+.drill-calc h4{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  margin:0 0 8px;font-weight:600}
+.calc-meta-def{font-size:12px;color:var(--ink);line-height:1.55;margin-bottom:8px}
+.calc-meta-src{font-size:12px;color:var(--ink);line-height:1.5;margin-bottom:4px}
+.drill-calc .desc{font-size:12px;color:var(--ink);line-height:1.5;margin-bottom:10px}
+.calc-tbl{width:100%;border-collapse:collapse;font-size:11.5px}
+.calc-tbl th{text-align:right;color:var(--muted);font-weight:600;padding:3px 6px;border-bottom:1px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.calc-tbl th:first-child{text-align:left}
+.calc-tbl td{text-align:right;padding:4px 6px;border-bottom:1px solid var(--border);color:var(--ink)}
+.calc-tbl td:first-child{text-align:left;color:var(--ink)}
+.calc-tbl tr.sumrow td{border-top:2px solid var(--border);border-bottom:none;font-weight:600;padding-top:6px}
+.calc-tbl .muted{color:var(--muted)}
+.calc-arith{font-family:var(--mono);font-size:11.5px;color:var(--ink);background:transparent;
+  border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-top:8px;line-height:1.7;white-space:normal}
+.calc-arith .r{color:var(--radar-fill);font-weight:600}
 .insufficient{color:var(--muted);font-style:italic;font-size:12px;margin-top:8px}
 .hint{font-size:11px;color:var(--muted);margin-top:16px;font-family:var(--mono);line-height:1.5}
 </style>
@@ -255,23 +282,36 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 </div><!-- /view-map -->
 <div id="view-drilldown" class="view">
   <div class="drill-wrap" id="drillwrap">
-    <div class="drill-controls">
-      <div class="drill-countrywrap">
-        <label for="drillcountrysel">Country</label>
-        <select id="drillcountrysel"></select>
-      </div>
-      <div class="drill-refwrap">
-        <label>Reference</label>
-        <div class="drill-reftoggle" id="drillreftoggle">
-          <button type="button" class="refbtn active" data-ref="world">World</button>
-          <button type="button" class="refbtn" data-ref="peers">Peers</button>
+    <div class="drill-split" id="drillsplit">
+     <div class="drill-left">
+      <div class="drill-controls">
+        <div class="drill-countrywrap">
+          <label for="drillcountrysel">Country</label>
+          <select id="drillcountrysel"></select>
         </div>
-        <div class="drill-refnote" id="drillrefpeernote"></div>
+        <div class="drill-refwrap">
+          <label>Reference</label>
+          <div class="drill-reftoggle" id="drillreftoggle">
+            <button type="button" class="refbtn active" data-ref="world">World</button>
+            <button type="button" class="refbtn" data-ref="peers">Peers</button>
+          </div>
+          <div class="drill-refnote" id="drillrefpeernote"></div>
+        </div>
+      </div>
+      <div id="drillpeerchipwrap"></div>
+      <div class="empty" id="drillempty">Select a country to dig into its governance profile.</div>
+      <div id="drillbody"></div>
+     </div>
+      <div id="drilldist" class="drill-dist">
+        <div class="drill-dist-empty" id="drilldistempty">Click a category, concept, or metric to see where this country sits in its distribution.</div>
+        <div id="drilldistchart" style="display:none">
+          <div class="drill-dist-head" id="drilldisthead"></div>
+          <div id="drilldistplot" style="width:100%;height:220px"></div>
+          <div class="drill-dist-note" id="drilldistnote"></div>
+          <div class="drill-calc" id="drilldistcalc"></div>
+        </div>
       </div>
     </div>
-    <div id="drillpeerchipwrap"></div>
-    <div class="empty" id="drillempty">Select a country to dig into its governance profile.</div>
-    <div id="drillbody" style="display:none"></div>
   </div>
 </div>
 <div id="view-timeseries" class="view">
@@ -411,7 +451,11 @@ function renderSimilar(){
   // clicking a row selects that country
   box.querySelectorAll('.simrow').forEach(el=>{
     el.onclick=()=>{ const iso=el.getAttribute('data-iso');
-      if(iso&&DATA.countries[iso]){ currentIso=iso; renderSimilar(); showProfile(); } };
+      if(iso&&DATA.countries[iso]){ currentIso=iso;
+        const nc=DATA.countries[iso]; activePeers=(nc&&nc.peers)?nc.peers.slice():[];
+        if(compareMode && !(nc&&nc.peers&&nc.peers.length)) compareMode=false;
+        window._distShown=new Set(); window._distShowAll=false;
+        syncCountrySel(); syncDrillCountrySel(); renderSimilar(); showProfile(); } };
   });
   drawMap(currentView);   // redraw with highlight
 }
@@ -436,7 +480,7 @@ function drawMap(view){
   const trace={type:'choropleth',locations:isos,z:z,text:text,
     hovertemplate:'%{text}<extra></extra>',colorscale:SCALE,zmin:0,zmax:1,
     marker:{opacity:opac, line:{color:lineCol,width:lineW}},
-    colorbar:{title:{text:'score',font:{color:cv('--muted'),size:11}},
+    colorbar:{title:{text:'Score',font:{color:cv('--muted'),size:11}},
       tickfont:{color:cv('--muted'),size:10},outlinewidth:0,len:0.55,thickness:10,
       x:0.98,bgcolor:'rgba(0,0,0,0)'}};
   const traces=[trace];
@@ -454,11 +498,10 @@ function drawMap(view){
         currentIso=ev.points[0].location;
         const nc=DATA.countries[currentIso];
         // persist modes across country changes:
-        if(compareMode){
-          // load the new focus country's own peer set; if it has none, exit compare
-          if(nc && nc.peers && nc.peers.length){ activePeers=nc.peers.slice(); }
-          else { compareMode=false; }
-        }
+        // focus changed: reseed the shared peer set to this country's defaults; reset drill labels
+        activePeers=(nc && nc.peers) ? nc.peers.slice() : [];
+        if(compareMode && !(nc && nc.peers && nc.peers.length)) compareMode=false;
+        window._distShown=new Set(); window._distShowAll=false;
         refreshMap();           // update highlight WITHOUT re-binding
         if(simMode) renderSimilar();
         showProfile();
@@ -754,7 +797,7 @@ function showProfile(){
   const _cb=document.getElementById('cmpbtn');
   if(_cb) _cb.onclick=()=>{
     compareMode=!compareMode;
-    if(compareMode){ activePeers=(c.peers||[]).slice(); simMode=false; document.getElementById('simlist').style.display='none'; }
+    if(compareMode){ if(!activePeers.length){ activePeers=(c.peers||[]).slice(); } simMode=false; document.getElementById('simlist').style.display='none'; }
     drawMap(currentView);
     showProfile();
   };
@@ -854,6 +897,7 @@ function selectCategory(cat){
 let drillCategory = null;   // selected category (level 2 opens when set)
 let drillConcept  = null;   // selected concept_id (level 3 opens when set)
 let drillRef = 'world';     // contribution/position REFERENCE: 'world' (sovereign mean/median) or 'peers'
+let drillDist = null;       // {level:'category'|'concept'|'metric', key} - drives the distribution panel
 // whether the current country has a peer set (peer mode requires it)
 function hasPeers(){ const c=DATA.countries[currentIso]; return !!(c && c.peers && c.peers.length); }
 function activePeer(){ return drillRef==='peers' && hasPeers(); }  // peer mode active? (global helper, any scope)
@@ -973,9 +1017,14 @@ function renderDrill(){
   const wrap=document.getElementById('drillwrap');
   const empty=document.getElementById('drillempty');
   const body=document.getElementById('drillbody');
-  if(!currentIso){ if(body)body.style.display='none'; if(empty)empty.style.display='block'; return; }
+  const split=document.getElementById('drillsplit');
+  const distEl=document.getElementById('drilldist');
+  if(split) split.style.display='flex';
+  if(!currentIso){ if(body)body.style.display='none'; if(empty)empty.style.display='block';
+    if(distEl)distEl.style.visibility='hidden'; return; }
   if(empty) empty.style.display='none';
   if(body) body.style.display='block';
+  if(distEl) distEl.style.visibility='visible';
 
   const c=DATA.countries[currentIso];
   const catPct=DATA.meta.percentiles.categories||{};
@@ -1092,11 +1141,11 @@ function renderDrill(){
     order.forEach(bk=>{
       if(bk!=='') col3+='<div class="drill-bucket">'+bk+'</div>';
       buckets[bk].slice().sort((a,b)=>Math.abs(b.signed||0)-Math.abs(a.signed||0)).forEach(mt=>{
-        const stale=mt.stale?'<span class="mtag stale" title="stale (older data year)">stale</span>':'';
+        const stale=mt.stale?'<span class="mtag stale" title="Stale (older data year)">Stale</span>':'';
         const tier=mt.tier?'<span class="mtag tier">'+mt.tier+'</span>':'';
         const yr=mt.year?('<span class="myr">'+mt.year+'</span>'):'';
         // signed contribution bar: centred, fills left(neg)/right(pos), scaled to max |signed| in concept
-        col3+='<div class="metric-row">'+
+        col3+='<div class="metric-row" data-metric="'+mt.key+'">'+
           '<div class="metric-head"><span class="metric-name">'+mt.name+'</span>'+
             '<span class="metric-val">'+(mt.v!=null?mt.v.toFixed(2):'\u2014')+'</span></div>'+
           '<div class="metric-tags">'+tier+yr+stale+'</div>'+
@@ -1154,16 +1203,25 @@ function renderDrill(){
     }
   }
 
-  // wire category clicks -> open concept column
+  // wire category clicks -> open concept column AND show its distribution
   body.querySelectorAll('.drill-row[data-cat]').forEach(el=>{
-    el.onclick=()=>{ drillCategory=el.getAttribute('data-cat'); drillConcept=null; renderDrill();
-      scrollDrillRight(); };
+    el.onclick=()=>{ const cat=el.getAttribute('data-cat');
+      drillCategory=cat; drillConcept=null; drillDist={level:'category', key:cat};
+      renderDrill(); scrollDrillRight(); };
   });
-  // wire concept clicks (metric column added next step)
+  // wire concept clicks -> open metric column AND show its distribution
   body.querySelectorAll('.drill-row[data-cid]').forEach(el=>{
-    el.onclick=()=>{ drillConcept=el.getAttribute('data-cid'); renderDrill(); scrollDrillRight(); };
+    el.onclick=()=>{ const cid=el.getAttribute('data-cid');
+      drillConcept=cid; drillDist={level:'concept', key:cid};
+      renderDrill(); scrollDrillRight(); };
+  });
+  // wire metric clicks -> show its distribution (no further column to open)
+  body.querySelectorAll('.metric-row[data-metric]').forEach(el=>{
+    el.onclick=()=>{ drillDist={level:'metric', key:el.getAttribute('data-metric')};
+      renderDist(); };
   });
   syncRefToggle();
+  renderDist();
 }
 // reflect drillRef + peer availability on the toggle, and show a warning when peers are unavailable
 function syncRefToggle(){
@@ -1213,6 +1271,248 @@ function openDrillAddPeer(){
   };
   q.oninput=render;
 }
+// ---- distribution panel: histogram of the clicked item's value across sovereigns, focus marked ----
+// Gathers ACTUAL values (no smoothing) across sovereigns; bins into a histogram; marks the focus
+// country and quartile ticks. In peer mode, adds uniform hoverable dots for each peer on the SAME
+// world histogram (peers located on the universe distribution, not a rescaled peer distribution).
+function _sovValuesFor(level, key){
+  // returns {vals:[{iso,v}], focus:vOrNull, label, sub}
+  const out=[]; let focus=null, label='', sub='';
+  const isSov=iso=>DATA.countries[iso] && !DATA.countries[iso].terr;
+  if(level==='category'){
+    label=key; sub='Category';
+    for(const iso in DATA.countries){ if(!isSov(iso)) continue;
+      const v=(DATA.countries[iso].cat||{})[key]; if(v!=null) out.push({iso,v}); }
+    focus=(DATA.countries[currentIso].cat||{})[key];
+  } else if(level==='concept'){
+    const cm=DATA.meta.concepts[key]; label=cm?cm.name:('C'+key); sub='Concept';
+    for(const iso in DATA.countries){ if(!isSov(iso)) continue;
+      const e=(DATA.countries[iso].con||{})[key]; if(e&&e.s!=null) out.push({iso,v:e.s}); }
+    const fe=(DATA.countries[currentIso].con||{})[key]; focus=fe?fe.s:null;
+  } else { // metric
+    const mm=(DATA.meta.metrics||{})[key]; label=(mm&&mm.label)?mm.label:key; sub='Metric';
+    // metric values live in each country's contributions block (dedup per iso)
+    for(const iso in DATA.contributions){ if(!isSov(iso)) continue;
+      const by=DATA.contributions[iso]; let v=null;
+      for(const cid in by){ for(const r of by[cid]){ if(r.m===key && r.v!=null){ v=r.v; break; } } if(v!=null) break; }
+      if(v!=null) out.push({iso,v}); }
+    // focus metric value
+    const fby=DATA.contributions[currentIso]||{};
+    for(const cid in fby){ for(const r of fby[cid]){ if(r.m===key && r.v!=null){ focus=r.v; break; } } if(focus!=null) break; }
+  }
+  return {vals:out, focus, label, sub};
+}
+function _quantile(sorted, q){ if(!sorted.length) return null;
+  const p=(sorted.length-1)*q, lo=Math.floor(p), hi=Math.ceil(p);
+  return sorted[lo]+(sorted[hi]-sorted[lo])*(p-lo); }
+function renderDist(){
+  const emptyEl=document.getElementById('drilldistempty');
+  const chartEl=document.getElementById('drilldistchart');
+  if(!emptyEl||!chartEl) return;
+  if(!drillDist){ emptyEl.style.display='block'; chartEl.style.display='none';
+    try{ Plotly.purge('drilldistplot'); }catch(e){} return; }
+  const {vals, focus, label, sub}=_sovValuesFor(drillDist.level, drillDist.key);
+  if(!vals.length){ emptyEl.style.display='block'; chartEl.style.display='none'; return; }
+  emptyEl.style.display='none'; chartEl.style.display='block';
+  document.getElementById('drilldisthead').innerHTML='<span class="lvl">'+sub+' distribution</span>'+label;
+  const xs=vals.map(d=>d.v).sort((a,b)=>a-b);
+  const lo=xs[0], hi=xs[xs.length-1];
+  const p25=_quantile(xs,.25), p50=_quantile(xs,.5), p75=_quantile(xs,.75);
+  const fill=cv('--radar-band')||'#c9d9d6', edge=cv('--border')||'#d9d2c4';
+  const focusC='rgb(201,106,74)', medC=cv('--radar-median')||'#8a8f96';
+  const peerC=cv('--radar-fill')||'#2f8f9e', muted=cv('--muted');
+  const _nb=24, _x0=lo, _x1=hi, _bw=(_x1-_x0)/_nb || 1;
+  const _counts=new Array(_nb).fill(0);
+  xs.forEach(v=>{ let bi=Math.floor((v-_x0)/_bw); if(bi<0)bi=0; if(bi>=_nb)bi=_nb-1; _counts[bi]++; });
+  const yTop=Math.max(1, ..._counts)*1.12;
+  const traces=[{
+    type:'histogram', x:xs, marker:{color:fill, line:{color:edge, width:0.5}},
+    nbinsx:24, hoverinfo:'x+y', name:'Sovereigns', showlegend:false,
+    hovertemplate:'Value %{x:.2f}<br>%{y} countries<extra></extra>'
+  }];
+  const useP=activePeer();
+  let peerLines=[];
+  if(useP){
+    const ps=drillPeers();
+    const byIso={}; vals.forEach(d=>{ byIso[d.iso]=d.v; });
+    ps.forEach(p=>{ if(byIso[p]!=null) peerLines.push({iso:p, v:byIso[p], name:(DATA.countries[p]?DATA.countries[p].name:p)}); });
+    peerLines.sort((a,b)=>a.v-b.v);
+  }
+  const shownSet=(window._distShown=window._distShown||new Set());
+  const showAll=!!window._distShowAll;
+  // shapes: focus line + quartile ticks + thin uniform peer lines
+  const shapes=[];
+  if(focus!=null) shapes.push({type:'line', x0:focus, x1:focus, y0:0, y1:yTop, line:{color:focusC, width:2.5}});
+  [p25,p50,p75].forEach(q=>{ if(q!=null) shapes.push(
+    {type:'line', x0:q, x1:q, y0:0, y1:yTop, line:{color:medC, width:1, dash:'dot'}}); });
+  peerLines.forEach(d=>{ shapes.push({type:'line', x0:d.v, x1:d.v, y0:0, y1:yTop, line:{color:peerC, width:1}}); });
+  // clickable DOT at the top of each peer line: a reliable hit target above the bars (thin lines are
+  // hard to click and bars capture clicks). customdata carries iso for the click handler.
+  if(peerLines.length){
+    traces.push({type:'scatter', mode:'markers',
+      x:peerLines.map(d=>d.v), y:peerLines.map(()=>yTop*0.97),
+      customdata:peerLines.map(d=>d.iso), text:peerLines.map(d=>d.name),
+      marker:{color:peerC, size:8}, hovertemplate:'%{text} %{x:.2f}<extra></extra>', showlegend:false});
+  }
+  if(focus!=null){
+    traces.push({type:'scatter', mode:'markers', x:[focus], y:[yTop*0.97],
+      text:[DATA.countries[currentIso].name], marker:{color:focusC, size:8},
+      hovertemplate:'%{text} '+focus.toFixed(2)+'<extra></extra>', showlegend:false});
+  }
+  // ---- sizing: click labels sit on TOP (horizontal); show-all names sit at the BOTTOM (vertical). ----
+  const barsH=150, tickBand=22;
+  const allNames = showAll ? peerLines : [];
+  const pinned   = showAll ? [] : peerLines.filter(d=>shownSet.has(d.iso));
+  const maxLen = allNames.length ? Math.max.apply(null, allNames.map(d=>d.name.length)) : 0;
+  const nameBand = allNames.length ? Math.round(maxLen*7+10) : 0;
+  const mb = tickBand + nameBand;                 // bottom strip only for show-all
+  const mt = pinned.length ? 44 : 34;             // top room for horizontal click labels
+  const plotH = mt + barsH + mb;
+  // ---- annotations ----
+  const annotations=[];
+  const anchorFor=x=>{ const f=(hi>lo)?(x-lo)/(hi-lo):0.5; return f>0.7?'right':(f<0.3?'left':'center'); };
+  if(focus!=null) annotations.push({x:focus, y:1.03, yref:'paper', xref:'x', xanchor:anchorFor(focus),
+    yanchor:'bottom', showarrow:false, font:{color:focusC, size:12},
+    text:(DATA.countries[currentIso].name)+' '+focus.toFixed(2)});
+  // individually clicked peers: horizontal labels on TOP, like the focus label (no empty bottom strip).
+  pinned.forEach(d=>{ annotations.push({x:d.v, y:1.03, yref:'paper', xref:'x', xanchor:anchorFor(d.v),
+    yanchor:'bottom', showarrow:false, font:{color:peerC, size:11}, text:d.name}); });
+  // show-all: vertical names below the x-tick band.
+  const nameY=-(tickBand/barsH);
+  allNames.forEach(d=>{ annotations.push({x:d.v, y:nameY, yref:'paper', xref:'x', text:d.name,
+    textangle:90, showarrow:false, xanchor:'center', yanchor:'top', font:{color:peerC, size:10}}); });
+  const layout={paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    height:plotH, margin:{l:34,r:14,t:mt,b:mb}, bargap:0.04,
+    xaxis:{range:[lo-(hi-lo)*0.04, hi+(hi-lo)*0.04], tickfont:{color:muted,size:12},
+      gridcolor:'rgba(0,0,0,0)', zeroline:false, linecolor:edge},
+    yaxis:{title:{text:'Countries',font:{color:muted,size:12}}, tickfont:{color:muted,size:12},
+      gridcolor:edge, zeroline:false, range:[0, yTop]},
+    shapes, annotations, showlegend:false, hovermode:'closest'};
+  const gd=document.getElementById('drilldistplot');
+  gd.style.height=plotH+'px';
+  Plotly.react(gd, traces, layout, {responsive:true, displayModeBar:false});
+  // click a peer dot -> toggle its top horizontal label
+  try{
+    if(gd.removeAllListeners) gd.removeAllListeners('plotly_click');
+    gd.on('plotly_click', ev=>{
+      const p=ev&&ev.points&&ev.points[0];
+      const iso=(p&&p.customdata!=null)?p.customdata:null;
+      if(iso==null) return;
+      const S=(window._distShown=window._distShown||new Set());
+      if(S.has(iso)) S.delete(iso); else S.add(iso);
+      renderDist();
+    });
+  }catch(e){}
+  // control row between the note (caption) and the methodology section: tool UI, out of the screenshot.
+  let ctrls=document.getElementById('drilldistctrls');
+  if(!ctrls){ ctrls=document.createElement('div'); ctrls.id='drilldistctrls'; ctrls.style.margin='10px 0';
+    chartEl.insertBefore(ctrls, document.getElementById('drilldistcalc')); }
+  if(useP && peerLines.length){
+    ctrls.style.display='block'; ctrls.innerHTML='';
+    const btn=document.createElement('button'); btn.type='button';
+    btn.style.cssText='background:rgba(47,143,158,0.12);color:'+(cv('--accent')||'#2f8f9e')+';border:1px solid rgba(47,143,158,0.5);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer';
+    btn.textContent= showAll ? 'Hide peer names' : 'Show all peer names';
+    btn.onclick=()=>{ window._distShowAll=!window._distShowAll; renderDist(); };
+    ctrls.appendChild(btn);
+    const hint=document.createElement('span');
+    hint.style.cssText='margin-left:8px;font-size:11px;color:'+muted;
+    hint.textContent='Or click a peer dot to label just that one';
+    ctrls.appendChild(hint);
+  } else if(ctrls){ ctrls.style.display='none'; }
+  const note=document.getElementById('drilldistnote');
+  const nsov=xs.length;
+  let html='Distribution across '+nsov+' sovereigns. The orange line marks '+
+    DATA.countries[currentIso].name+'; dotted lines are the 25th/50th/75th percentiles.';
+  if(useP && peerLines.length){ html+=' The teal lines are its '+peerLines.length+' peers.'; }
+  note.innerHTML=html;
+  renderCalc(drillDist.level, drillDist.key);
+}
+// ---- calculation breakdown: how the focus country's number is built, ONE level down ----
+// category <- concepts (weighted); concept <- metrics (weighted); metric <- data (raw -> harmonized).
+function _fmt(x, dp){ if(x==null||isNaN(x)) return '\u2014'; return Number(x).toFixed(dp==null?3:dp); }
+function renderCalc(level, key){
+  const box=document.getElementById('drilldistcalc'); if(!box) return;
+  const c=DATA.countries[currentIso];
+  if(level==='category'){
+    // concepts in this category with score (s) and weight share (ws)
+    const rows=[];
+    for(const cid in c.con){ if(DATA.meta.concepts[cid] && DATA.meta.concepts[cid].cat===key){
+      const e=c.con[cid]; if(e.s==null||e.ws==null) continue;
+      rows.push({name:DATA.meta.concepts[cid].name, s:e.s, w:e.ws, contrib:e.s*e.ws}); } }
+    rows.sort((a,b)=>b.contrib-a.contrib);
+    const total=rows.reduce((p,q)=>p+q.contrib,0);
+    let h='<h4>How this category score is built</h4>'+
+      '<div class="desc">The category score is the <strong>weighted average of its concept scores</strong>, '+
+      'using each concept\u2019s measurement-quality weight. Weighted contributions sum to the category score.</div>';
+    h+='<table class="calc-tbl"><tr><th>Concept</th><th>Score</th><th>Weight</th><th>Contribution</th></tr>';
+    rows.forEach(r=>{ h+='<tr><td>'+r.name+'</td><td>'+_fmt(r.s,2)+'</td><td class="muted">'+_fmt(r.w,3)+
+      '</td><td>'+_fmt(r.contrib,3)+'</td></tr>'; });
+    h+='<tr class="sumrow"><td>Category score</td><td></td><td></td><td>'+_fmt(total,3)+'</td></tr></table>';
+    box.innerHTML=h;
+  } else if(level==='concept'){
+    // metrics in this concept for the focus country, with harmonized value (v), weight (w), contribution (c)
+    const contr=(DATA.contributions[currentIso]||{})[key]||[];
+    const mm=DATA.meta.metrics||{};
+    const rows=contr.filter(r=>r.v!=null&&r.w!=null).map(r=>({
+      name:(mm[r.m]&&mm[r.m].label)?mm[r.m].label:r.m, v:r.v, w:r.w, contrib:(r.c!=null?r.c:r.w*r.v)}));
+    rows.sort((a,b)=>b.contrib-a.contrib);
+    const total=rows.reduce((p,q)=>p+q.contrib,0);
+    let h='<h4>How this concept score is built</h4>'+
+      '<div class="desc">The concept score is the <strong>weighted average of its metric scores</strong> '+
+      '(each metric harmonized to 0\u20131). Weighted contributions sum to the concept score.</div>';
+    h+='<table class="calc-tbl"><tr><th>Metric</th><th>Score</th><th>Weight</th><th>Contribution</th></tr>';
+    rows.forEach(r=>{ h+='<tr><td>'+r.name+'</td><td>'+_fmt(r.v,2)+'</td><td class="muted">'+_fmt(r.w,3)+
+      '</td><td>'+_fmt(r.contrib,3)+'</td></tr>'; });
+    h+='<tr class="sumrow"><td>Concept score</td><td></td><td></td><td>'+_fmt(total,3)+'</td></tr></table>';
+    box.innerHTML=h;
+  } else { // metric <- data
+    const meta=(DATA.meta.metrics||{})[key]||{};
+    // find the focus country's raw + harmonized for this metric
+    let raw=null, harm=null, yr=null;
+    const fby=DATA.contributions[currentIso]||{};
+    for(const cid in fby){ for(const r of fby[cid]){ if(r.m===key){ raw=(r.raw!=null?r.raw:null); harm=r.v; yr=r.y; break; } } if(harm!=null) break; }
+    const meth=meta.meth, dir=meta.dir, pre=meta.pre, bmean=meta.bmean, bsd=meta.bsd, nobs=meta.nobs, winsor=meta.winsor;
+    let desc='', arith='';
+    const dirTxt=(dir==='+')?'higher = better':(dir==='-'?'lower = better (inverted)':'');
+    if(meth==='zscore'||meth==='log1p_zscore'||meth==='log_zscore'){
+      const preTxt=(pre==='log1p')?'log(1+x) transformed, then ':(pre==='log'?'log transformed, then ':'');
+      desc='Standardized: the raw value is '+preTxt+'compared to a '+(nobs!=null?nobs.toLocaleString()+'-observation ':'')+
+        'trailing-20-year baseline (mean/standard deviation), clipped at \u00b1'+_fmt(winsor,0)+' SD, then rescaled to 0\u20131'+
+        (dirTxt?' ('+dirTxt+')':'')+'.';
+      // arithmetic
+      let x=raw;
+      let preStr='';
+      if(pre==='log1p'){ x=Math.log(1+raw); preStr='log(1+'+_fmt(raw,2)+') = '+_fmt(x,3)+'<br>'; }
+      else if(pre==='log'){ x=Math.log(raw); preStr='log('+_fmt(raw,2)+') = '+_fmt(x,3)+'<br>'; }
+      if(raw!=null&&bmean!=null&&bsd&&bsd!==0){
+        let z=(x-bmean)/bsd; const zc=Math.max(-winsor,Math.min(winsor,z));
+        const out=(zc+winsor)/(2*winsor);
+        arith=preStr+
+          'z = ('+_fmt(x,3)+' \u2212 '+_fmt(bmean,3)+') / '+_fmt(bsd,3)+' = '+_fmt(z,2)+'<br>'+
+          'clip to \u00b1'+_fmt(winsor,0)+' \u2192 '+_fmt(zc,2)+'<br>'+
+          'score = (clip + '+_fmt(winsor,0)+') / '+_fmt(2*winsor,0)+' = <span class="r">'+_fmt(out,3)+'</span>';
+      }
+    } else if(meth==='percentile'){
+      desc='Percentile rank: the raw value is ranked against a '+(nobs!=null?nobs.toLocaleString()+'-observation ':'')+
+        'trailing-20-year baseline pool; its rank position is the 0\u20131 score'+(dirTxt?' ('+dirTxt+')':'')+'.';
+      if(harm!=null) arith='raw '+_fmt(raw,2)+' \u2192 '+_fmt(harm*100,1)+'th percentile of '+
+        (nobs!=null?nobs.toLocaleString():'the')+' baseline observations = <span class="r">'+_fmt(harm,3)+'</span>';
+    } else if(meth==='binary'){
+      desc='Presence / absence indicator: the score is the raw 0/1 value directly'+(dirTxt?' ('+dirTxt+')':'')+'.';
+      arith='raw '+_fmt(raw,0)+' ('+(raw>=0.5?'present':'absent')+') \u2192 <span class="r">'+_fmt(harm,3)+'</span>';
+    } else {
+      desc='This metric\u2019s raw value is harmonized to a 0\u20131 score'+(dirTxt?' ('+dirTxt+')':'')+'.';
+    }
+    let h='';
+    if(meta.def) h+='<h4>Metric definition</h4><div class="calc-meta-def">'+meta.def+'</div>';
+    if(meta.src) h+='<div class="calc-meta-src"><span class="muted">Scale &amp; source:</span> '+meta.src+'</div>';
+    h+='<h4 style="margin-top:14px">How this metric score is built</h4><div class="desc">'+desc+'</div>';
+    if(raw!=null) h+='<div class="desc" style="margin-bottom:4px"><span class="muted">Raw value'+
+      (yr?' ('+yr+')':'')+':</span> <strong>'+_fmt(raw,3)+'</strong> &nbsp;\u2192&nbsp; <span class="muted">score:</span> <strong>'+_fmt(harm,3)+'</strong></div>';
+    if(arith) h+='<div class="calc-arith">'+arith+'</div>';
+    box.innerHTML=h;
+  }
+}
 function scrollDrillRight(){
   const w=document.getElementById('drillwrap');
   if(w) setTimeout(()=>{ w.scrollLeft = w.scrollWidth; }, 40);
@@ -1224,7 +1524,7 @@ function showView(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.getAttribute('data-view')===name));
-  if(name==='map'){ setTimeout(()=>{ try{Plotly.Plots.resize(document.getElementById('map'));}catch(e){} }, 30); }
+  if(name==='map'){ if(currentIso) showProfile(); setTimeout(()=>{ try{Plotly.Plots.resize(document.getElementById('map'));}catch(e){} }, 30); }
   if(name==='drilldown'){ renderDrill(); }
 }
 window.addEventListener('resize', ()=>{
@@ -1257,7 +1557,9 @@ document.addEventListener('click', function(ev){
     const iso=sel.value; if(!iso) return;
     currentIso=iso;
     const nc=DATA.countries[iso];
-    if(compareMode){ if(nc&&nc.peers&&nc.peers.length){ activePeers=nc.peers.slice(); } else { compareMode=false; } }
+    activePeers=(nc&&nc.peers)?nc.peers.slice():[];
+    if(compareMode && !(nc&&nc.peers&&nc.peers.length)) compareMode=false;
+    window._distShown=new Set(); window._distShowAll=false;
     drawMap(currentView);
     if(simMode) renderSimilar();
     showProfile();
@@ -1271,7 +1573,9 @@ document.addEventListener('click', function(ev){
       const iso=dsel.value; if(!iso) return;
       currentIso=iso;
       const nc=DATA.countries[iso];
-      if(compareMode){ if(nc&&nc.peers&&nc.peers.length){ activePeers=nc.peers.slice(); } else { compareMode=false; } }
+      activePeers=(nc&&nc.peers)?nc.peers.slice():[];
+      if(compareMode && !(nc&&nc.peers&&nc.peers.length)) compareMode=false;
+      window._distShown=new Set(); window._distShowAll=false;
       drillCategory=null; drillConcept=null;
       syncCountrySel();
       renderDrill();

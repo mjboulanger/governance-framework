@@ -183,6 +183,38 @@ def build():
         _full = (_nm + " (" + _sl + ")") if (_nm and _sl) else (_nm or str(_r["metric"]))
         metric_labels[_r["metric"]] = {"name": _nm, "source_label": _sl, "label": _full}
 
+    # metric normalization params (per-metric static: method + baseline params + harmonize rule),
+    # from metric_normalization_params.csv. These let the dashboard reconstruct raw -> harmonized.
+    # Stored ONCE per metric in meta.metrics (not per country). The per-(country,metric) RAW value
+    # is read separately below and attached to each contribution row.
+    _params = {}
+    _pp_path = os.path.join(PROC, "metric_normalization_params.csv")
+    if os.path.exists(_pp_path):
+        _pdf = pd.read_csv(_pp_path)
+        for _r in _pdf.itertuples():
+            _params[_r.metric] = {
+                "meth": (_r.final_method if isinstance(_r.final_method, str) else None),
+                "pre": (_r.pre_transform if isinstance(_r.pre_transform, str) else None),
+                "bmean": _n(_r.baseline_mean, 4) if _r.baseline_mean == _r.baseline_mean else None,
+                "bsd": _n(_r.baseline_sd, 4) if _r.baseline_sd == _r.baseline_sd else None,
+                "nobs": int(_r.baseline_n_obs) if _r.baseline_n_obs == _r.baseline_n_obs else None,
+                "winsor": _n(_r.winsor, 2) if _r.winsor == _r.winsor else None,
+                "hrule": (_r.harmonize_rule if isinstance(_r.harmonize_rule, str) else None),
+                "dir": (_r.direction if isinstance(_r.direction, str) else None),
+            }
+    # RAW values per (iso, metric) at the latest available year, from the normalized panel.
+    # The panel is large (~56MB, all years); read only needed columns and keep the latest year
+    # per (iso, metric). This is a build-time read of a regenerable artifact.
+    _raw_by = {}
+    _np_path = os.path.join(PROC, "normalized_panel.csv")
+    if os.path.exists(_np_path):
+        _np = pd.read_csv(_np_path, usecols=["iso3", "year", "metric", "raw_value"])
+        _np = _np.dropna(subset=["raw_value"])
+        # latest year per (iso, metric)
+        _np = _np.sort_values("year").drop_duplicates(["iso3", "metric"], keep="last")
+        for _r in _np.itertuples():
+            _raw_by[(_r.iso3, _r.metric)] = _r.raw_value
+
     # metric label lookup ONCE (dedup the 5.3MB of repeated strings)
     metrics_meta = {}
     con = pd.read_csv(os.path.join(PROC, "concept_contributions.csv"))
@@ -190,8 +222,13 @@ def build():
     for m in con.metric.unique():
         d = METRIC_DICT.get(m, {})
         _lb = metric_labels.get(m, {})
+        _pm = _params.get(m, {})
         metrics_meta[m] = {"def": d.get("definition", ""), "src": d.get("source_reports", ""),
-                           "name": _lb.get("name", ""), "label": _lb.get("label", m)}
+                           "name": _lb.get("name", ""), "label": _lb.get("label", m),
+                           "meth": _pm.get("meth"), "pre": _pm.get("pre"),
+                           "bmean": _pm.get("bmean"), "bsd": _pm.get("bsd"),
+                           "nobs": _pm.get("nobs"), "winsor": _pm.get("winsor"),
+                           "hrule": _pm.get("hrule"), "dir": _pm.get("dir")}
 
     # per-metric world percentiles (p25/p50/p75 of the harmonized value across sovereigns),
     # for the drill-down value-vs-universe bars. Dedup (metric, iso3) since a metric can appear
@@ -235,6 +272,7 @@ def build():
                     "y": int(r.latest_year) if r.latest_year == r.latest_year else None,
                     "st": 1 if _b(r.stale) else 0,
                     "b": (r.bucket if isinstance(r.bucket, str) else None),
+                    "raw": _n(_raw_by.get((iso, r.metric)), 4),
                 })
             by_c[int(cid)] = rows
         contributions[iso] = by_c
