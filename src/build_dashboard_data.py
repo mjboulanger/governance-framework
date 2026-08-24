@@ -47,6 +47,18 @@ def build():
     concept_name = dict(zip(csrc.concept_id, csrc.concept_name))
     concept_cat = dict(zip(csrc.concept_id, csrc.category))
 
+    # concept descriptions: the "Scope" line under each "### Concept N:" heading in the master doc.
+    # Single source (docs/governance_framework_master.md); parsed here, no separate file, no re-authoring.
+    import re as _re
+    concept_desc = {}
+    _master = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs", "governance_framework_master.md")
+    if os.path.exists(_master):
+        _mtxt = open(_master, encoding="utf-8").read()
+        for _cm in _re.finditer(r"^###\s+Concept\s+(\d+):(.*?)(?=^###\s|\Z)", _mtxt, _re.M | _re.S):
+            _sm = _re.search(r"^\*\*Scope:\*\*\s*(.+)$", _cm.group(2), _re.M)
+            if _sm:
+                concept_desc[int(_cm.group(1))] = _sm.group(1).replace("**", "").strip()
+
     fs = pd.read_csv(os.path.join(PROC, "final_scores.csv")).set_index("iso3")
     cs = pd.read_csv(os.path.join(PROC, "concept_scores.csv")).set_index("iso3")
     # concept effective_weights (canonical, from the scoring pipeline) for concept->category contribution
@@ -66,6 +78,14 @@ def build():
     mom = pd.read_csv(os.path.join(PROC, "momentum.csv"))
     mom_by = {(r.iso3, int(r.concept_id)): r for r in mom.itertuples()}
     scored_cids = sorted(int(c[1:-6]) for c in cs.columns if c.endswith("_score"))
+    # canonical concept weight (relevance x measurement-quality), country-invariant, read directly
+    # from the single source data/processed/concept_weights.csv. No calculation here.
+    _cw_path = os.path.join(PROC, "concept_weights.csv")
+    concept_w = {}
+    if os.path.exists(_cw_path):
+        _cw = pd.read_csv(_cw_path)
+        concept_w = {int(r.concept_id): _n(r.effective_weight, 4) for r in _cw.itertuples()
+                     if r.effective_weight == r.effective_weight}
 
     countries = {}
     # distinct-metric counts per country (total + per category) for the panel header.
@@ -294,7 +314,9 @@ def build():
 
     meta = {
         "concepts": {cid: {"name": concept_name.get(cid, "C%d" % cid),
-                           "cat": concept_cat.get(cid, "")} for cid in scored_cids},
+                           "cat": concept_cat.get(cid, ""),
+                           "w": concept_w.get(cid),
+                           "desc": concept_desc.get(cid)} for cid in scored_cids},
         "categories": CATEGORIES,
         "percentiles": pct,
         "metric_percentiles": metric_pct,

@@ -237,6 +237,26 @@ Clicking any category, concept, or metric row in the drill-down opens a right-ha
 
 ---
 
+## Documentation tab
+
+The Documentation tab is a reader-facing summary of the framework, generated from the data so it cannot drift from what is scored. It has no hand-maintained content except where noted below.
+
+**Structure and sources.**
+
+- The Category -> Concept -> Metric hierarchy table, the per-entity sections, the stable anchor ids (`doc-cat-*`, `doc-concept-*`, `doc-metric-*`), the left contents nav, and the scroll-spy highlighting are all built in `renderDocs` from `DATA.meta` and `DATA.contributions`. No entity list is hand-authored.
+- **Concept weights** shown in parentheses next to each concept name are the canonical `effective_weight` (relevance x measurement-quality), read straight from `data/processed/concept_weights.csv` by `build_dashboard_data.py` into `meta.concepts[cid].w`. No share or derived figure is recomputed; the value is emitted as-is (1.0 for 21 of 24 concepts; C9 = 0.75, C11 / C12 = 0.5).
+- **Concept descriptions** are parsed at build time from the master doc: `build_dashboard_data.py` reads each `### Concept N:` section's `**Scope:**` line out of `docs/governance_framework_master.md` and emits it as `meta.concepts[cid].desc` (bold markers stripped). Single source: edit the Scope line in the master, rebuild, and the tab updates. Categories carry no description because the master defines none.
+- **Metric definitions and source labels** come from `meta.metrics[m].def` / `.src`, already emitted for the calculation breakdown.
+- **Metric tiers.** P1 = primary (the workhorse metric, most direct and central), P2 = primary supporting, Sp = supplementary (lowest weight). A legend defining these appears on the Documentation tab, and on the drill-down page whenever a concept is open.
+
+**No new manual input.** Nothing on this tab requires hard-coding for ongoing updates: the hierarchy, weights, descriptions, and definitions all derive from the data and the master doc.
+
+**Layout note.** On the drill-down page the three columns scroll horizontally within their own region (`.drill-cols { overflow-x: auto }`) rather than colliding with the distribution panel when the window is too narrow to fit both.
+
+**Deferred to post-v1** (tracked in `docs/dashboard_worklist.md`): per-metric source links (need a `url` column added to `source_registry.csv` plus a clean metric-to-source join), and human-readable rewrites of the concept descriptions (currently the master's internal `Scope` notes) plus category descriptions.
+
+---
+
 ## Data Update Instructions
 
 Run `print_stale_sources()` from `src/download_log.py` to identify sources needing refresh.
