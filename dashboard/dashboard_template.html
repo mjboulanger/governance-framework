@@ -269,6 +269,7 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .ts-ctrl label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
 .ts-ctrl select{width:260px}
 #tsviewsel{width:340px}
+#tsmetsel{width:320px}
 #tspeerchipwrap{margin:2px 0 18px}
 #tspeerchipwrap:empty{margin:0}
 .peerchips-lab{font-size:12px;color:var(--muted);align-self:center;margin-right:2px}
@@ -393,6 +394,7 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
     <div class="ts-controls">
       <div class="ts-ctrl"><label>Country</label><select id="tscountrysel"></select></div>
       <div class="ts-ctrl"><label>View</label><select id="tsviewsel"></select></div>
+      <div class="ts-ctrl" id="tsmetctrl" style="display:none"><label>Metric</label><select id="tsmetsel"></select></div>
       <div class="ts-ctrl" id="tspeerbtnctrl" style="display:none"><label>Peers</label><button type="button" class="ts-peerbtn" id="tspeerbtn">Show peers</button></div>
     </div>
     <div id="tspeerchipwrap"></div>
@@ -1607,7 +1609,7 @@ function renderCalc(level, key, boxId){
     box.innerHTML=h;
   }
   const _dl = (level==='metric') ? "openDoc('metric','"+key+"')" : (level==='concept') ? "openDoc('concept','"+key+"')" : (level==='category') ? "openDoc('overview')" : null;
-  const _tsv = (level==='category') ? ('cat:'+key) : (level==='concept') ? ('con:'+key) : (level==='metric' && typeof drillConcept!=='undefined' && drillConcept!=null) ? ('con:'+drillConcept) : null;
+  const _tsv = (level==='category') ? ('cat:'+key) : (level==='concept') ? ('con:'+key) : (level==='metric' && typeof drillConcept!=='undefined' && drillConcept!=null) ? ('met:'+drillConcept+':'+key) : null;
   if(box.innerHTML){ var _lk='';
     if(_dl) _lk += '<a class="doc-jump" onclick="'+_dl+'">View in documentation →</a>';
     if(_tsv && boxId!=='tscalc') _lk += '<a class="doc-jump" style="margin-left:18px" onclick="openTimeseries(\''+_tsv+'\')">View time series →</a>';
@@ -1763,8 +1765,15 @@ function renderDocs(){
 // entry point for the cross-links other tabs will add later
 function openTimeseries(viewval){
   showView('timeseries');
-  const vsel=document.getElementById('tsviewsel');
-  if(vsel){ vsel.value=viewval; renderTimeseries(); }
+  const vsel=document.getElementById('tsviewsel'); if(!vsel) return;
+  if(viewval && viewval.slice(0,4)==='met:'){
+    const rest=viewval.slice(4), ci=rest.indexOf(':'), cid=rest.slice(0,ci), mk=rest.slice(ci+1);
+    vsel.value='con:'+cid; renderTimeseries();                 // builds the metric dropdown for the concept
+    const msel=document.getElementById('tsmetsel');
+    if(msel){ msel.value=mk; renderTimeseries(); }             // focus the metric
+  } else {
+    vsel.value=viewval; renderTimeseries();
+  }
 }
 function openDoc(kind, key){
   showView('documentation');
@@ -1780,15 +1789,23 @@ function openDoc(kind, key){
 var _tsBandCache={};
 var tsHiPeers=[];
 var tsShowPeers=false;
+function decodeMH(rec){ if(!rec) return []; const y0=rec.y0, v=rec.v||[], out=[]; for(let i=0;i<v.length;i++){ if(v[i]!=null) out.push({y:y0+i, s:v[i]}); } return out; }
 function tsUniverse(kind, key){
   const ck=kind+':'+key;
   if(_tsBandCache[ck]) return _tsBandCache[ck];
   const byYear={};
-  const H=DATA.history||{};
-  for(const iso in H){ const rec=H[iso]; if(!rec) continue;
-    const series = kind==='cat' ? ((rec.cat||{})[key]) : ((rec.c||{})[key]);
-    if(!series) continue;
-    series.forEach(p=>{ (byYear[p.y]=byYear[p.y]||[]).push(p.s); }); }
+  if(kind==='metric'){
+    const MH=DATA.metricHistory||{};
+    for(const iso in MH){ const rec=(MH[iso]||{})[key]; if(!rec) continue;
+      const y0=rec.y0, v=rec.v||[];
+      for(let i=0;i<v.length;i++){ if(v[i]!=null){ (byYear[y0+i]=byYear[y0+i]||[]).push(v[i]); } } }
+  } else {
+    const H=DATA.history||{};
+    for(const iso in H){ const rec=H[iso]; if(!rec) continue;
+      const series = kind==='cat' ? ((rec.cat||{})[key]) : ((rec.c||{})[key]);
+      if(!series) continue;
+      series.forEach(p=>{ (byYear[p.y]=byYear[p.y]||[]).push(p.s); }); }
+  }
   const years=Object.keys(byYear).map(Number).sort((a,b)=>a-b);
   const q=(arr,p)=>{ const a=arr.slice().sort((x,y)=>x-y); const i=(a.length-1)*p, lo=Math.floor(i), hi=Math.ceil(i); return lo===hi?a[lo]:a[lo]+(a[hi]-a[lo])*(i-lo); };
   const out={years:[],p5:[],p25:[],p50:[],p75:[],p95:[],n:[]};
@@ -1825,7 +1842,27 @@ function renderTimeseries(){
     vsel.innerHTML=ho; vsel._built=1;
     vsel.onchange=()=>renderTimeseries();
   }
-  const view=(vsel&&vsel.value)||'all';
+  const view0=(vsel&&vsel.value)||'all';
+  // dependent metric dropdown: visible only when a concept is selected; lists that concept's metrics
+  const msel=document.getElementById('tsmetsel'), mctrl=document.getElementById('tsmetctrl');
+  const selCid=(view0.slice(0,3)==='con') ? view0.slice(4) : null;
+  const cmets=selCid ? ((DATA.meta.concept_metrics||{})[selCid]||[]) : [];
+  if(msel){
+    if(!msel._wired){ msel._wired=1; msel.onchange=()=>renderTimeseries(); }
+    if(selCid && cmets.length){
+      if(msel._forCid!==selCid){
+        const MM=DATA.meta.metrics||{};
+        let mo='<option value="__none__">Concept overall</option>';
+        cmets.forEach(mk=>{ const _m=MM[mk]||{}; const mn=_m.name||_m.label||mk; mo+='<option value="'+mk+'">'+esc(mn)+'</option>'; });
+        msel.innerHTML=mo; msel._forCid=selCid; msel.value='__none__';
+      }
+      if(mctrl) mctrl.style.display='';
+    } else {
+      if(mctrl) mctrl.style.display='none'; msel.value='__none__'; msel._forCid=null;
+    }
+  }
+  let view=view0;
+  if(selCid && cmets.length && msel && msel.value && msel.value!=='__none__'){ view='met:'+selCid+':'+msel.value; }
   const pbtn=document.getElementById('tspeerbtn');
   if(pbtn && !pbtn._built){ pbtn._built=1; pbtn.onclick=()=>{ tsShowPeers=!tsShowPeers; renderTimeseries(); }; }
   if(pbtn){ pbtn.textContent = tsShowPeers ? 'Hide peers' : 'Show peers'; pbtn.classList.toggle('on', tsShowPeers); }
@@ -1854,13 +1891,18 @@ function renderTimeseries(){
     const cw0=document.getElementById('tspeerchipwrap'); if(cw0) cw0.innerHTML='';
     return;
   }
-  // single item: focus line over universe percentile bands
-  const kind = view.slice(0,3)==='cat' ? 'cat' : 'concept';
-  const key = view.slice(4);
-  const itemName = kind==='cat' ? key : ((DATA.meta.concepts[key]||{}).name||('Concept '+key));
+  // single item: focus line over universe percentile bands (category, concept, or metric)
+  const _pfx = view.slice(0,3);
+  const kind = _pfx==='cat' ? 'cat' : _pfx==='met' ? 'metric' : 'concept';
+  let key, metCid=null;
+  if(kind==='metric'){ const _rest=view.slice(4); const _ci=_rest.indexOf(':'); metCid=_rest.slice(0,_ci); key=_rest.slice(_ci+1); }
+  else { key=view.slice(4); }
+  const _mmeta = (DATA.meta.metrics||{})[key]||{};
+  const itemName = kind==='cat' ? key : kind==='metric' ? (_mmeta.name||_mmeta.label||key) : ((DATA.meta.concepts[key]||{}).name||('Concept '+key));
   const focusSeries = kind==='cat' ? (((DATA.history[currentIso]||{}).cat||{})[key]||[])
-                                   : (((DATA.history[currentIso]||{}).c||{})[key]||[]);
-  const parentCat = kind==='cat' ? key : ((DATA.meta.concepts[key]||{}).cat||'');
+                    : kind==='metric' ? decodeMH(((DATA.metricHistory||{})[currentIso]||{})[key])
+                    : (((DATA.history[currentIso]||{}).c||{})[key]||[]);
+  const parentCat = kind==='cat' ? '' : kind==='metric' ? ((DATA.meta.concepts[metCid]||{}).name||('Concept '+metCid)) : ((DATA.meta.concepts[key]||{}).cat||'');
   const focusCol = 'rgb(201,106,74)';
   const focusTrace={x:focusSeries.map(p=>p.y),y:focusSeries.map(p=>p.s),mode:'lines',line:{color:focusCol,width:2.6},name:esc(nm),hovertemplate:'%{y:.3f}<extra>'+esc(nm)+'</extra>'};
   const U=tsUniverse(kind, key);
@@ -1869,7 +1911,7 @@ function renderTimeseries(){
   tsHiPeers=(tsHiPeers||[]).filter(p=>(activePeers||[]).includes(p));
   const peerTraces=[], annos=[]; let npeers=0;
   if(tsShowPeers) (activePeers||[]).forEach(pi=>{ const pc=DATA.countries[pi]; if(!pc) return;
-    const ps = kind==='cat' ? (((DATA.history[pi]||{}).cat||{})[key]||[]) : (((DATA.history[pi]||{}).c||{})[key]||[]);
+    const ps = kind==='cat' ? (((DATA.history[pi]||{}).cat||{})[key]||[]) : kind==='metric' ? decodeMH(((DATA.metricHistory||{})[pi]||{})[key]) : (((DATA.history[pi]||{}).c||{})[key]||[]);
     if(!ps.length) return; npeers++; const hi=tsHiPeers.includes(pi);
     peerTraces.push({x:ps.map(p=>p.y),y:ps.map(p=>p.s),mode:'lines',line:{color:peerCol,width:hi?2.6:1.1},opacity:hi?1:0.6,name:esc(pc.name),showlegend:false,hovertemplate:'%{y:.3f}<extra>'+esc(pc.name)+'</extra>'});
     if(hi){ const last=ps[ps.length-1]; annos.push({x:last.y,y:last.s,text:esc(pc.name),xanchor:'right',xshift:-5,showarrow:false,font:{color:peerCol,size:12},bgcolor:'rgba(245,242,235,0.82)',borderpad:1}); } });
@@ -1900,7 +1942,7 @@ function renderTimeseries(){
     const addb=document.getElementById('tsaddpeer'); if(addb) addb.onclick=()=>openTsAddPeer();
     } else { chipWrap.innerHTML=''; }
   }
-  renderCalc(kind==='cat'?'category':'concept', key, 'tscalc');
+  renderCalc(kind==='cat'?'category':kind==='metric'?'metric':'concept', key, 'tscalc');
   const cb=document.getElementById('tscalc');
   if(cb && cb.innerHTML) cb.innerHTML='<div class="ts-calc-note">Latest observation. The chart above is the full time series; this breakdown is for the most recent year only.</div>'+cb.innerHTML;
 }

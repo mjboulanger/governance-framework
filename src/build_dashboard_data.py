@@ -42,6 +42,44 @@ def _b(x):
     return bool(x) if x == x else False
 
 
+def _build_metric_history(np_df):
+    # Metric-level history for the time series page. Scope: P1/P2 metrics only
+    # (Sp dropped), all economies, years >= HISTORY_START, harmonized 0-1 values, 3dp.
+    # Encoding B: per series {"y0": firstYear, "v": [value or null per consecutive year]}.
+    # A build-time round-trip check (decode B == explicit (year, value) pairs) guards
+    # against positional misalignment on gappy series; the build ABORTS on any mismatch,
+    # so a broken encoding can never ship.
+    HISTORY_START = 2005
+    sel = pd.read_csv(os.path.join(PROC, "metric_selection.csv"))
+    keep = sel["tier"].isin(["P1", "P2"])
+    if "include" in sel.columns:
+        _inc = sel["include"].astype(str).str.strip().str.lower()
+        keep = keep & ~_inc.isin(["false", "0", "no", "nan", ""])
+    p1p2 = set(sel.loc[keep, "metric"].dropna())
+    d = np_df.dropna(subset=["harmonized"]).copy()
+    d = d[d["metric"].isin(p1p2)]
+    d = d[pd.to_numeric(d["year"], errors="coerce") >= HISTORY_START]
+    d["year"] = d["year"].astype(int)
+    hist = {}
+    n_series = 0
+    n_mismatch = 0
+    for (iso, met), g in d.groupby(["iso3", "metric"], sort=False):
+        g = g.sort_values("year")
+        ys = [int(y) for y in g["year"]]
+        vs = [round(float(v), 3) for v in g["harmonized"]]
+        y0, y1 = ys[0], ys[-1]
+        vmap = dict(zip(ys, vs))
+        arr = [vmap.get(y, None) for y in range(y0, y1 + 1)]
+        decoded = [(y0 + i, s) for i, s in enumerate(arr) if s is not None]
+        if decoded != list(zip(ys, vs)):
+            n_mismatch += 1
+        hist.setdefault(iso, {})[met] = {"y0": y0, "v": arr}
+        n_series += 1
+    assert n_mismatch == 0, ("metricHistory encoding round-trip FAILED on %d series; aborting build" % n_mismatch)
+    print("  metricHistory: %d P1/P2 metrics, %d series, round-trip OK" % (len(p1p2), n_series))
+    return hist
+
+
 def build():
     csrc = pd.DataFrame(to_rows()).drop_duplicates("concept_id")
     concept_name = dict(zip(csrc.concept_id, csrc.concept_name))
@@ -226,14 +264,16 @@ def build():
     # The panel is large (~56MB, all years); read only needed columns and keep the latest year
     # per (iso, metric). This is a build-time read of a regenerable artifact.
     _raw_by = {}
+    metric_history = {}
     _np_path = os.path.join(PROC, "normalized_panel.csv")
     if os.path.exists(_np_path):
-        _np = pd.read_csv(_np_path, usecols=["iso3", "year", "metric", "raw_value"])
-        _np = _np.dropna(subset=["raw_value"])
-        # latest year per (iso, metric)
-        _np = _np.sort_values("year").drop_duplicates(["iso3", "metric"], keep="last")
-        for _r in _np.itertuples():
+        _np = pd.read_csv(_np_path, usecols=["iso3", "year", "metric", "raw_value", "harmonized"])
+        # latest year per (iso, metric) for the raw value shown in the calc breakdown
+        _rawdf = _np.dropna(subset=["raw_value"]).sort_values("year").drop_duplicates(["iso3", "metric"], keep="last")
+        for _r in _rawdf.itertuples():
             _raw_by[(_r.iso3, _r.metric)] = _r.raw_value
+        # metric-level history (P1/P2, encoding B) for the time series page
+        metric_history = _build_metric_history(_np)
 
     # metric label lookup ONCE (dedup the 5.3MB of repeated strings)
     metrics_meta = {}
@@ -311,6 +351,26 @@ def build():
             if len(v):
                 pct["concepts"][cid] = {"p05": _n(v.quantile(.05)), "p25": _n(v.quantile(.25)), "p50": _n(v.quantile(.50)), "p75": _n(v.quantile(.75)), "p95": _n(v.quantile(.95))}
 
+    # concept -> ordered list of P1/P2 metric keys that have history, for the time
+    # series metric dropdown. A metric can sit under multiple concepts, so it may
+    # appear under more than one; the metric series itself is concept-independent.
+    _mh_metrics = set()
+    for _iso in metric_history:
+        _mh_metrics.update(metric_history[_iso].keys())
+    _seltier = pd.read_csv(os.path.join(PROC, "metric_selection.csv"))
+    _tier_by = dict(zip(_seltier["metric"], _seltier["tier"]))
+    _ccm = pd.read_csv(os.path.join(PROC, "concept_contributions.csv"))
+    if "present" in _ccm.columns:
+        _ccm = _ccm[_ccm["present"] == True]
+    _ccm["concept_id"] = pd.to_numeric(_ccm["concept_id"], errors="coerce")
+    concept_metrics = {}
+    for _cid in scored_cids:
+        _ms = [m for m in _ccm[_ccm["concept_id"] == _cid]["metric"].dropna().unique().tolist()
+               if m in _mh_metrics]
+        _ms.sort(key=lambda m: (0 if _tier_by.get(m) == "P1" else 1,
+                                (metric_labels.get(m, {}) or {}).get("label", m)))
+        if _ms:
+            concept_metrics[_cid] = _ms
 
     meta = {
         "concepts": {cid: {"name": concept_name.get(cid, "C%d" % cid),
@@ -321,12 +381,13 @@ def build():
         "percentiles": pct,
         "metric_percentiles": metric_pct,
         "metrics": metrics_meta,
+        "concept_metrics": concept_metrics,
         "generated": pd.Timestamp.today().strftime("%Y-%m-%d"),
         "n_countries": len(countries),
         "history_years": [int(ch.year.min()), int(ch.year.max())],
     }
 
-    data = {"meta": meta, "countries": countries, "history": history, "contributions": contributions}
+    data = {"meta": meta, "countries": countries, "history": history, "contributions": contributions, "metricHistory": metric_history}
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, "dashboard_data.json")
     with open(out, "w", encoding="utf-8") as f:

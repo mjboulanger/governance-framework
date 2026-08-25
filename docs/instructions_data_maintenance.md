@@ -259,7 +259,7 @@ The Documentation tab is a reader-facing summary of the framework, generated fro
 
 ## Time series tab
 
-The Time series tab plots governance scores over time (2005 to 2026). It is built by `renderTimeseries` in the template entirely from `DATA.history` (category and concept trajectories, each year scored on the fixed current baseline). No pipeline change was needed; the history is already emitted by `build_dashboard_data.py`.
+The Time series tab plots governance scores over time (2005 to 2026). It is built by `renderTimeseries` in the template entirely from `DATA.history` (category and concept trajectories, each year scored on the fixed current baseline). Category and concept trajectories need no pipeline change (the history is already emitted by `build_dashboard_data.py`); metric-level history is the one addition, described below.
 
 **Two modes.**
 
@@ -270,11 +270,15 @@ The Time series tab plots governance scores over time (2005 to 2026). It is buil
 
 **Score composition.** Below the chart, "How this score is built" reuses the drill-down's `renderCalc` via its `boxId` parameter (rendering into `tscalc`), so the two pages cannot drift. It is latest-observation only (the full series is the chart above) and labelled as such, and carries a "View in documentation" link.
 
-**Cross-links.** The drill-down calc panel has a "View time series" link (via `openTimeseries`) that switches to this tab, sets the View dropdown, and renders for the current focus country: a category opens its category series, a concept its concept series, and a metric falls back to its parent concept.
+**Cross-links.** The drill-down calc panel has a "View time series" link (via `openTimeseries`) that switches to this tab, sets the View dropdown, and renders for the current focus country: a category opens its category series, a concept its concept series, and a metric opens its own metric chart (for P1/P2 metrics; supplementary metrics, which carry no history, fall back to the concept).
 
 **No new manual input.** Everything derives from `DATA.history` and the shared state; nothing requires hard-coding for ongoing updates.
 
-**Metric-level time series is deliberately absent.** The dashboard inlines only latest-year metric values (into `contributions`), not per-year metric history; that lives in `normalized_panel.csv` (about 80MB), which is not inlined. A metric's line and its universe band therefore have no data source in the browser. Adding it would need a pipeline emit and would add several MB to the distributed file. Tracked in `docs/dashboard_worklist.md`.
+**Metric-level time series.** Selecting a concept reveals a dependent Metric dropdown (default "Concept overall"); choosing a metric refocuses the chart on that metric, with the same universe bands, focus line, and peer overlay as a concept. Per-year metric values come from `DATA.metricHistory`, emitted by `build_dashboard_data.py` from `normalized_panel.csv` for P1/P2 metrics only (supplementary metrics dropped), all economies, 2005 onward, harmonized 0 to 1, 3 decimal places.
+
+To keep the single self-contained file small enough to email (no hosting or gzip is available to us), each series is stored in encoding B: `{"y0": firstYear, "v": [value or null per consecutive year]}`. This is about 3.1MB, versus 8.6MB for explicit year/value pairs. `decodeMH` rebuilds the pairs in the browser; a `null` marks a missing year and draws as a line gap. The build runs a round-trip assertion (decode B must equal the explicit pairs for every series) and aborts on any mismatch, so a misaligned encoding cannot ship. The metric dropdown is populated from `meta.concept_metrics` (concept id to ordered P1/P2 metric keys that have history). With metric history the distributed file is about 14.9MB, up from about 11.8MB.
+
+The scope choice (P1/P2 only, encoding B, inline, all economies) was made deliberately after measuring the alternatives: full precision costs the least resolution for the size, precision trimming saves almost nothing (3dp to 1dp is about 0.8MB but collapses 1001 value buckets to 11), gzip would shrink transfer to about 1.3MB but needs a web server, and on-demand loading of a companion JSON is blocked by the browser under `file://`. Inlining encoding B is the only option that keeps the single emailable file.
 
 ---
 
