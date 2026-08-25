@@ -257,6 +257,27 @@ The Documentation tab is a reader-facing summary of the framework, generated fro
 
 ---
 
+## Time series tab
+
+The Time series tab plots governance scores over time (2005 to 2026). It is built by `renderTimeseries` in the template entirely from `DATA.history` (category and concept trajectories, each year scored on the fixed current baseline). No pipeline change was needed; the history is already emitted by `build_dashboard_data.py`.
+
+**Two modes.**
+
+- **Profile** (View = "All categories"): the focus country's five category lines.
+- **Single item** (View = a category or a concept): the focus country's line over the universe distribution, shown as shaded 5 to 95th and 25 to 75th percentile bands with a dotted median. The bands are computed client-side per year across all sovereigns scored that year (`tsUniverse`, cached per item), so the denominator shifts as coverage grows; the per-year country count appears in the median hover.
+
+**Peers.** A "Show peers" button overlays the peer set on the single-item chart (the bands stay on). The peer set is `activePeers`, shared with the map and drill-down in both directions: changing the focus country reseeds peers, and editing peers here carries across pages. Clicking a peer chip highlights that peer's line and pins its name at the right edge. Focus is drawn in the distribution's orange, peers in teal, matching the drill-down convention.
+
+**Score composition.** Below the chart, "How this score is built" reuses the drill-down's `renderCalc` via its `boxId` parameter (rendering into `tscalc`), so the two pages cannot drift. It is latest-observation only (the full series is the chart above) and labelled as such, and carries a "View in documentation" link.
+
+**Cross-links.** The drill-down calc panel has a "View time series" link (via `openTimeseries`) that switches to this tab, sets the View dropdown, and renders for the current focus country: a category opens its category series, a concept its concept series, and a metric falls back to its parent concept.
+
+**No new manual input.** Everything derives from `DATA.history` and the shared state; nothing requires hard-coding for ongoing updates.
+
+**Metric-level time series is deliberately absent.** The dashboard inlines only latest-year metric values (into `contributions`), not per-year metric history; that lives in `normalized_panel.csv` (about 80MB), which is not inlined. A metric's line and its universe band therefore have no data source in the browser. Adding it would need a pipeline emit and would add several MB to the distributed file. Tracked in `docs/dashboard_worklist.md`.
+
+---
+
 ## Data Update Instructions
 
 Run `print_stale_sources()` from `src/download_log.py` to identify sources needing refresh.

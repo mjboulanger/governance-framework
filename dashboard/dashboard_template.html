@@ -264,6 +264,30 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .drill-bucket{font-size:10px;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase;
   color:var(--muted);margin:12px 0 6px;padding-top:6px}
 .ts-wrap{padding:24px 28px;max-width:1100px;margin:0 auto;overflow-y:auto;flex:1 1 auto;min-height:0;width:100%}
+.ts-controls{display:flex;gap:20px;align-items:flex-end;margin-bottom:16px;flex-wrap:wrap}
+.ts-ctrl{display:flex;flex-direction:column;gap:4px}
+.ts-ctrl label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.ts-ctrl select{width:260px}
+#tsviewsel{width:340px}
+#tspeerchipwrap{margin:2px 0 18px}
+#tspeerchipwrap:empty{margin:0}
+.peerchips-lab{font-size:12px;color:var(--muted);align-self:center;margin-right:2px}
+.chip.hi{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip.hi .x{color:rgba(255,255,255,.85)}
+.ts-peerbtn{background:var(--panel-2);color:var(--ink);border:1px solid var(--border);padding:7px 13px;border-radius:7px;font-size:13px;cursor:pointer}
+.ts-peerbtn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.ts-head-parent{font-weight:400;color:var(--muted)}
+.ts-peerhint{font-size:12px;color:var(--muted);margin-top:6px}
+.ts-note{font-size:13px;color:var(--muted);line-height:1.5;margin-top:12px}
+.ts-head{margin-bottom:8px}
+.ts-head-title{font-size:15px;font-weight:700;color:var(--ink);line-height:1.2}
+.ts-head-sub{font-size:14px;color:var(--muted);margin-top:2px}
+.ts-calc{max-width:720px;margin-top:26px;padding-top:20px;border-top:1px solid var(--border)}
+.ts-calc:empty{display:none}
+.ts-calc-note{font-size:12.5px;color:var(--muted);font-style:italic;margin-bottom:12px}
+.ts-head-crumb{font-size:14px;color:var(--muted);font-weight:700;margin-top:3px}
+.ts-head-crumb:empty{display:none}
+.ts-chart{max-width:720px}
 .drill-wrap{padding:20px 24px;overflow:auto;flex:1 1 auto;min-height:0;width:100%}
 .drill-split{display:flex;gap:0;align-items:stretch;min-height:calc(100vh - 150px)}
 .drill-left{flex:1 1 auto;min-width:0;padding-right:22px;display:flex;flex-direction:column}
@@ -365,7 +389,20 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
   </div>
 </div>
 <div id="view-timeseries" class="view">
-  <div class="ts-wrap"><div class="empty">Time series view coming soon.</div></div>
+  <div class="ts-wrap" id="tswrap">
+    <div class="ts-controls">
+      <div class="ts-ctrl"><label>Country</label><select id="tscountrysel"></select></div>
+      <div class="ts-ctrl"><label>View</label><select id="tsviewsel"></select></div>
+      <div class="ts-ctrl" id="tspeerbtnctrl" style="display:none"><label>Peers</label><button type="button" class="ts-peerbtn" id="tspeerbtn">Show peers</button></div>
+    </div>
+    <div id="tspeerchipwrap"></div>
+    <div class="ts-chart">
+      <div class="ts-head"><div class="ts-head-title" id="tsheadtitle"></div><div class="ts-head-crumb" id="tsheadcrumb"></div><div class="ts-head-sub" id="tsheadsub"></div></div>
+      <div id="tsplot" style="width:100%;height:470px"></div>
+      <div class="ts-note" id="tsnote"></div>
+    </div>
+    <div id="tscalc" class="ts-calc"></div>
+  </div>
 </div>
 <div id="view-documentation" class="view">
   <nav class="doc-toc" id="doctoc"></nav>
@@ -1239,8 +1276,8 @@ function renderDrill(){
     if(useP){
       const ps=drillPeers();
       let ch='<div class="peerchips" id="drillpeerchips">';
-      ps.forEach(p=>{ const pc=DATA.countries[p]; if(!pc) return;
-        ch+='<span class="chip" data-iso="'+p+'">'+pc.name+
+      ps.forEach(p=>{ const pc=DATA.countries[p]; if(!pc) return; const pin=!!(window._distShown&&window._distShown.has(p));
+        ch+='<span class="chip'+(pin?' hi':'')+'" data-iso="'+p+'">'+pc.name+
           '<span class="x" data-iso="'+p+'">\u00d7</span></span>'; });
       ch+='<span class="chip addchip" id="drilladdpeer">+ Add</span></div>'+
         '<div id="drillpeersearch" style="display:none;margin-top:8px;max-width:280px"></div>';
@@ -1250,6 +1287,9 @@ function renderDrill(){
           activePeers=activePeers.filter(p=>p!==iso); _peerCache.tok=null; renderDrill();
           e.stopPropagation(); };
       });
+      chipWrap.querySelectorAll('#drillpeerchips .chip[data-iso]').forEach(chip=>{
+        chip.onclick=(e)=>{ if(e.target.classList.contains('x')) return; const iso=chip.getAttribute('data-iso');
+          const S=(window._distShown=window._distShown||new Set()); if(S.has(iso)) S.delete(iso); else S.add(iso); renderDist(); }; });
       const addb=document.getElementById('drilladdpeer');
       if(addb) addb.onclick=()=>openDrillAddPeer();
     } else {
@@ -1399,7 +1439,7 @@ function renderDist(){
   if(focus!=null) shapes.push({type:'line', x0:focus, x1:focus, y0:0, y1:yTop, line:{color:focusC, width:2.5}});
   [p25,p50,p75].forEach(q=>{ if(q!=null) shapes.push(
     {type:'line', x0:q, x1:q, y0:0, y1:yTop, line:{color:medC, width:1, dash:'dot'}}); });
-  peerLines.forEach(d=>{ shapes.push({type:'line', x0:d.v, x1:d.v, y0:0, y1:yTop, line:{color:peerC, width:1}}); });
+  peerLines.forEach(d=>{ shapes.push({type:'line', x0:d.v, x1:d.v, y0:0, y1:yTop, line:{color:peerC, width:(shownSet.has(d.iso)?2.5:1)}}); });
   // clickable DOT at the top of each peer line: a reliable hit target above the bars (thin lines are
   // hard to click and bars capture clicks). customdata carries iso for the click handler.
   if(peerLines.length){
@@ -1427,7 +1467,7 @@ function renderDist(){
   const anchorFor=x=>{ const f=(hi>lo)?(x-lo)/(hi-lo):0.5; return f>0.7?'right':(f<0.3?'left':'center'); };
   if(focus!=null) annotations.push({x:focus, y:1.03, yref:'paper', xref:'x', xanchor:anchorFor(focus),
     yanchor:'bottom', showarrow:false, font:{color:focusC, size:12},
-    text:(DATA.countries[currentIso].name)+' '+focus.toFixed(2)});
+    text:(DATA.countries[currentIso].name)});
   // individually clicked peers: horizontal labels on TOP, like the focus label (no empty bottom strip).
   pinned.forEach(d=>{ annotations.push({x:d.v, y:1.03, yref:'paper', xref:'x', xanchor:anchorFor(d.v),
     yanchor:'bottom', showarrow:false, font:{color:peerC, size:11}, text:d.name}); });
@@ -1484,8 +1524,8 @@ function renderDist(){
 // ---- calculation breakdown: how the focus country's number is built, ONE level down ----
 // category <- concepts (weighted); concept <- metrics (weighted); metric <- data (raw -> harmonized).
 function _fmt(x, dp){ if(x==null||isNaN(x)) return '\u2014'; return Number(x).toFixed(dp==null?3:dp); }
-function renderCalc(level, key){
-  const box=document.getElementById('drilldistcalc'); if(!box) return;
+function renderCalc(level, key, boxId){
+  const box=document.getElementById(boxId||'drilldistcalc'); if(!box) return;
   const c=DATA.countries[currentIso];
   if(level==='category'){
     // concepts in this category with score (s) and weight share (ws)
@@ -1567,7 +1607,11 @@ function renderCalc(level, key){
     box.innerHTML=h;
   }
   const _dl = (level==='metric') ? "openDoc('metric','"+key+"')" : (level==='concept') ? "openDoc('concept','"+key+"')" : (level==='category') ? "openDoc('overview')" : null;
-  if(_dl && box.innerHTML) box.innerHTML = box.innerHTML + '<a class="doc-jump" onclick="'+_dl+'">View in documentation →</a>';
+  const _tsv = (level==='category') ? ('cat:'+key) : (level==='concept') ? ('con:'+key) : (level==='metric' && typeof drillConcept!=='undefined' && drillConcept!=null) ? ('con:'+drillConcept) : null;
+  if(box.innerHTML){ var _lk='';
+    if(_dl) _lk += '<a class="doc-jump" onclick="'+_dl+'">View in documentation →</a>';
+    if(_tsv && boxId!=='tscalc') _lk += '<a class="doc-jump" style="margin-left:18px" onclick="openTimeseries(\''+_tsv+'\')">View time series →</a>';
+    box.innerHTML = box.innerHTML + _lk; }
 }
 function scrollDrillRight(){
   const w=document.getElementById('drillwrap');
@@ -1717,6 +1761,11 @@ function renderDocs(){
 
 
 // entry point for the cross-links other tabs will add later
+function openTimeseries(viewval){
+  showView('timeseries');
+  const vsel=document.getElementById('tsviewsel');
+  if(vsel){ vsel.value=viewval; renderTimeseries(); }
+}
 function openDoc(kind, key){
   showView('documentation');
   const sl=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -1728,6 +1777,158 @@ function openDoc(kind, key){
   if(id){ const el=document.getElementById(id); if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}), 60); }
 }
 
+var _tsBandCache={};
+var tsHiPeers=[];
+var tsShowPeers=false;
+function tsUniverse(kind, key){
+  const ck=kind+':'+key;
+  if(_tsBandCache[ck]) return _tsBandCache[ck];
+  const byYear={};
+  const H=DATA.history||{};
+  for(const iso in H){ const rec=H[iso]; if(!rec) continue;
+    const series = kind==='cat' ? ((rec.cat||{})[key]) : ((rec.c||{})[key]);
+    if(!series) continue;
+    series.forEach(p=>{ (byYear[p.y]=byYear[p.y]||[]).push(p.s); }); }
+  const years=Object.keys(byYear).map(Number).sort((a,b)=>a-b);
+  const q=(arr,p)=>{ const a=arr.slice().sort((x,y)=>x-y); const i=(a.length-1)*p, lo=Math.floor(i), hi=Math.ceil(i); return lo===hi?a[lo]:a[lo]+(a[hi]-a[lo])*(i-lo); };
+  const out={years:[],p5:[],p25:[],p50:[],p75:[],p95:[],n:[]};
+  years.forEach(y=>{ const arr=byYear[y]; out.years.push(y); out.n.push(arr.length);
+    out.p5.push(q(arr,0.05)); out.p25.push(q(arr,0.25)); out.p50.push(q(arr,0.5)); out.p75.push(q(arr,0.75)); out.p95.push(q(arr,0.95)); });
+  _tsBandCache[ck]=out; return out;
+}
+function renderTimeseries(){
+  const wrap=document.getElementById('tswrap'); if(!wrap) return;
+  const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  // country selector (built once); drives currentIso + syncs the other tabs
+  const sel=document.getElementById('tscountrysel');
+  if(sel && !sel._built){
+    const opts=Object.keys(DATA.countries).map(iso=>({iso:iso,name:DATA.countries[iso].name})).sort((a,b)=>String(a.name).localeCompare(String(b.name)));
+    sel.innerHTML=opts.map(o=>'<option value="'+o.iso+'">'+esc(o.name)+'</option>').join('');
+    sel._built=1;
+    sel.onchange=()=>{ const iso=sel.value; if(!iso) return; currentIso=iso; const nc=DATA.countries[iso];
+      activePeers=(nc&&nc.peers)?nc.peers.slice():[]; tsHiPeers=[];
+      if(typeof syncCountrySel==='function') syncCountrySel();
+      if(typeof syncDrillCountrySel==='function') syncDrillCountrySel();
+      renderTimeseries(); };
+  }
+  if(sel && currentIso) sel.value=currentIso;
+  // view selector: all categories | a category | a concept (built once)
+  const vsel=document.getElementById('tsviewsel');
+  if(vsel && !vsel._built){
+    const CON=DATA.meta.concepts||{}, CATS=DATA.meta.categories||[];
+    const byCat={}; Object.keys(CON).forEach(cid=>{ const c=CON[cid].cat||''; (byCat[c]=byCat[c]||[]).push(cid); });
+    Object.keys(byCat).forEach(c=>byCat[c].sort((x,y)=>(+x)-(+y)));
+    const IND='\u00a0\u00a0\u00a0\u00a0';
+    let ho='<option value="all">All categories (profile)</option>';
+    CATS.forEach(cat=>{ ho+='<option value="cat:'+esc(cat)+'" style="font-weight:700">'+esc(cat)+'</option>';
+      (byCat[cat]||[]).forEach(cid=>{ ho+='<option value="con:'+cid+'">'+IND+esc(CON[cid].name)+'</option>'; }); });
+    vsel.innerHTML=ho; vsel._built=1;
+    vsel.onchange=()=>renderTimeseries();
+  }
+  const view=(vsel&&vsel.value)||'all';
+  const pbtn=document.getElementById('tspeerbtn');
+  if(pbtn && !pbtn._built){ pbtn._built=1; pbtn.onclick=()=>{ tsShowPeers=!tsShowPeers; renderTimeseries(); }; }
+  if(pbtn){ pbtn.textContent = tsShowPeers ? 'Hide peers' : 'Show peers'; pbtn.classList.toggle('on', tsShowPeers); }
+  const pbtnCtrl=document.getElementById('tspeerbtnctrl'); if(pbtnCtrl) pbtnCtrl.style.display=(view==='all')?'none':'';
+  const CATS0=DATA.meta.categories||[];
+  const PAL=[cv('--series-1')||'#7e57c2',cv('--series-2')||'#e0653f',cv('--series-3')||'#4f9bd0',cv('--score-25')||'#e0a95f',cv('--series-4')||'#7a8791'];
+  const catColor=cat=>PAL[Math.max(0,CATS0.indexOf(cat))%PAL.length];
+  const ink=cv('--ink')||'#22282e', bd=cv('--border')||'#d9d2c4', mut=cv('--muted')||'#6b7681';
+  const nm=(DATA.countries[currentIso]?DATA.countries[currentIso].name:currentIso);
+  const baseLayout={ margin:{l:52,r:16,t:8,b:52}, height:470,
+    xaxis:{dtick:5, gridcolor:bd, linecolor:bd, tickfont:{color:mut,size:14}, zeroline:false},
+    yaxis:{title:{text:'Score (0 to 1)',font:{color:mut,size:14}}, range:[0,1], gridcolor:bd, linecolor:bd, tickfont:{color:mut,size:14}, zeroline:false},
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)', font:{family:'Inter,sans-serif', size:15, color:ink},
+    legend:{orientation:'h', xanchor:'center', x:0.5, yanchor:'top', y:-0.11, font:{size:14,color:ink}}, hovermode:'x unified' };
+  const th=document.getElementById('tsheadtitle'), ths=document.getElementById('tsheadsub'), note=document.getElementById('tsnote');
+  if(view==='all'){
+    const H=((DATA.history[currentIso]||{}).cat)||{};
+    const cats=DATA.meta.categories||[];
+    const traces=cats.map((cat,i)=>{ const pts=H[cat]||[]; return { x:pts.map(p=>p.y), y:pts.map(p=>p.s), mode:'lines', name:cat, line:{color:PAL[i%PAL.length], width:2}, hovertemplate:'%{y:.3f}<extra>'+cat+'</extra>' }; });
+    Plotly.react('tsplot', traces, baseLayout, {displayModeBar:false, responsive:true});
+    if(th) th.textContent='Governance category trajectories';
+    const thc=document.getElementById('tsheadcrumb'); if(thc) thc.textContent='';
+    if(ths) ths.textContent=nm+' \u00b7 2005 to 2026';
+    if(note) note.innerHTML='Category scores for <strong>'+esc(nm)+'</strong>, 2005 to 2026, scored each year on the fixed current baseline. Each value is a 0 to 1 position in the cross-country distribution.';
+    const cb0=document.getElementById('tscalc'); if(cb0) cb0.innerHTML='';
+    const cw0=document.getElementById('tspeerchipwrap'); if(cw0) cw0.innerHTML='';
+    return;
+  }
+  // single item: focus line over universe percentile bands
+  const kind = view.slice(0,3)==='cat' ? 'cat' : 'concept';
+  const key = view.slice(4);
+  const itemName = kind==='cat' ? key : ((DATA.meta.concepts[key]||{}).name||('Concept '+key));
+  const focusSeries = kind==='cat' ? (((DATA.history[currentIso]||{}).cat||{})[key]||[])
+                                   : (((DATA.history[currentIso]||{}).c||{})[key]||[]);
+  const parentCat = kind==='cat' ? key : ((DATA.meta.concepts[key]||{}).cat||'');
+  const focusCol = 'rgb(201,106,74)';
+  const focusTrace={x:focusSeries.map(p=>p.y),y:focusSeries.map(p=>p.s),mode:'lines',line:{color:focusCol,width:2.6},name:esc(nm),hovertemplate:'%{y:.3f}<extra>'+esc(nm)+'</extra>'};
+  const U=tsUniverse(kind, key);
+  const bandFill1='rgba(122,135,145,0.13)', bandFill2='rgba(122,135,145,0.24)';
+  const peerCol=cv('--accent')||'#2f8f9e', medCol='#535d68';
+  tsHiPeers=(tsHiPeers||[]).filter(p=>(activePeers||[]).includes(p));
+  const peerTraces=[], annos=[]; let npeers=0;
+  if(tsShowPeers) (activePeers||[]).forEach(pi=>{ const pc=DATA.countries[pi]; if(!pc) return;
+    const ps = kind==='cat' ? (((DATA.history[pi]||{}).cat||{})[key]||[]) : (((DATA.history[pi]||{}).c||{})[key]||[]);
+    if(!ps.length) return; npeers++; const hi=tsHiPeers.includes(pi);
+    peerTraces.push({x:ps.map(p=>p.y),y:ps.map(p=>p.s),mode:'lines',line:{color:peerCol,width:hi?2.6:1.1},opacity:hi?1:0.6,name:esc(pc.name),showlegend:false,hovertemplate:'%{y:.3f}<extra>'+esc(pc.name)+'</extra>'});
+    if(hi){ const last=ps[ps.length-1]; annos.push({x:last.y,y:last.s,text:esc(pc.name),xanchor:'right',xshift:-5,showarrow:false,font:{color:peerCol,size:12},bgcolor:'rgba(245,242,235,0.82)',borderpad:1}); } });
+  const peerProxy = (tsShowPeers && npeers) ? [{x:[null],y:[null],mode:'lines',line:{color:peerCol,width:1.6},name:'Peers',hoverinfo:'skip'}] : [];
+  const traces=[
+    {x:U.years,y:U.p95,mode:'lines',line:{width:0},hoverinfo:'skip',showlegend:false},
+    {x:U.years,y:U.p5,mode:'lines',line:{width:0},fill:'tonexty',fillcolor:bandFill1,hoverinfo:'skip',name:'5 to 95th pct'},
+    {x:U.years,y:U.p75,mode:'lines',line:{width:0},hoverinfo:'skip',showlegend:false},
+    {x:U.years,y:U.p25,mode:'lines',line:{width:0},fill:'tonexty',fillcolor:bandFill2,hoverinfo:'skip',name:'25 to 75th pct'},
+    {x:U.years,y:U.p50,mode:'lines',line:{color:medCol,width:2.4,dash:'dot'},name:'Universe median',customdata:U.n,hovertemplate:'Median %{y:.3f} (n=%{customdata})<extra></extra>'}
+  ].concat(peerTraces, peerProxy, [focusTrace]);
+  const layout=Object.assign({}, baseLayout, {annotations:annos});
+  Plotly.react('tsplot', traces, layout, {displayModeBar:false, responsive:true});
+  if(th) th.innerHTML=esc(itemName)+(kind==='cat' ? '' : ' <span class="ts-head-parent">('+esc(parentCat)+')</span>');
+  const thc=document.getElementById('tsheadcrumb'); if(thc) thc.textContent='';
+  if(ths) ths.textContent=esc(nm)+' vs the sovereign universe';
+  if(note) note.innerHTML='<strong>'+esc(nm)+'</strong> against the distribution across all sovereigns scored each year: shaded 5 to 95th and 25 to 75th percentile bands with a darker dotted median (hover shows the year\u2019s country count).'+(tsShowPeers?(npeers?(' Teal lines are the '+npeers+' peer'+(npeers===1?'':'s')+'; click a peer chip to highlight and label its line.'):' No peers added yet; use + Add above.'):' Use the peer button to overlay peers; the peer set is shared with the map and drill-down.');
+  const chipWrap=document.getElementById('tspeerchipwrap');
+  if(chipWrap){
+    if(tsShowPeers){
+    let ch='<div class="peerchips" id="tspeerchips"><span class="peerchips-lab">Peers:</span>';
+    (activePeers||[]).forEach(p=>{ const pc=DATA.countries[p]; if(!pc) return; const hi=tsHiPeers.includes(p);
+      ch+='<span class="chip'+(hi?' hi':'')+'" data-iso="'+p+'">'+esc(pc.name)+'<span class="x" data-iso="'+p+'">\u00d7</span></span>'; });
+    ch+='<span class="chip addchip" id="tsaddpeer">+ Add</span></div>'+'<div class="ts-peerhint">Click a peer name to highlight its line and label it on the chart.</div>'+'<div id="tspeersearch" style="display:none;margin-top:8px;max-width:280px"></div>';
+    chipWrap.innerHTML=ch;
+    chipWrap.querySelectorAll('#tspeerchips .chip[data-iso]').forEach(chip=>{ chip.onclick=(e)=>{ if(e.target.classList.contains('x')) return; const iso=chip.getAttribute('data-iso'); if(tsHiPeers.includes(iso)) tsHiPeers=tsHiPeers.filter(p=>p!==iso); else tsHiPeers.push(iso); renderTimeseries(); }; });
+    chipWrap.querySelectorAll('#tspeerchips .x').forEach(x=>{ x.onclick=(e)=>{ const iso=e.target.getAttribute('data-iso'); activePeers=activePeers.filter(p=>p!==iso); tsHiPeers=tsHiPeers.filter(p=>p!==iso); renderTimeseries(); e.stopPropagation(); }; });
+    const addb=document.getElementById('tsaddpeer'); if(addb) addb.onclick=()=>openTsAddPeer();
+    } else { chipWrap.innerHTML=''; }
+  }
+  renderCalc(kind==='cat'?'category':'concept', key, 'tscalc');
+  const cb=document.getElementById('tscalc');
+  if(cb && cb.innerHTML) cb.innerHTML='<div class="ts-calc-note">Latest observation. The chart above is the full time series; this breakdown is for the most recent year only.</div>'+cb.innerHTML;
+}
+function openTsAddPeer(){
+  const box=document.getElementById('tspeersearch'); if(!box) return;
+  box.style.display='block';
+  box.innerHTML='<input id="tspeerq" type="text" placeholder="Type a country name\u2026" style="width:100%;padding:6px 9px;font-size:12px;border:1px solid var(--border);border-radius:6px;background:var(--panel);color:var(--ink)"><div id="tspeerhits" style="margin-top:4px;max-height:180px;overflow-y:auto"></div>';
+  const q=document.getElementById('tspeerq'); q.focus();
+  const render=()=>{ const term=q.value.trim().toLowerCase();
+    const hits=Object.keys(DATA.countries).filter(iso=>!DATA.countries[iso].terr && iso!==currentIso && !activePeers.includes(iso))
+      .filter(iso=> term.length>=1 && DATA.countries[iso].name.toLowerCase().includes(term))
+      .sort((a,b)=>DATA.countries[a].name.localeCompare(DATA.countries[b].name)).slice(0,8);
+    let hh=''; hits.forEach(iso=>{ hh+='<div class="peerhit" data-iso="'+iso+'">'+DATA.countries[iso].name+' <span style="color:var(--muted);font-family:var(--mono);font-size:10px">'+iso+'</span></div>'; });
+    document.getElementById('tspeerhits').innerHTML=hh;
+    document.querySelectorAll('#tspeerhits .peerhit').forEach(el=>{ el.onclick=()=>{ const iso=el.getAttribute('data-iso'); if(!activePeers.includes(iso)) activePeers.push(iso); renderTimeseries(); }; });
+  };
+  q.oninput=render;
+}
+
+
+
+
+
+
+
+
+
+
 function showView(name){
   currentTab=name;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
@@ -1736,6 +1937,7 @@ function showView(name){
   if(name==='map'){ if(currentIso) showProfile(); setTimeout(()=>{ try{Plotly.Plots.resize(document.getElementById('map'));}catch(e){} }, 30); }
   if(name==='drilldown'){ renderDrill(); }
   if(name==='documentation'){ renderDocs(); }
+  if(name==='timeseries'){ renderTimeseries(); setTimeout(()=>{ try{Plotly.Plots.resize(document.getElementById('tsplot')); }catch(e){} }, 30); }
 }
 window.addEventListener('resize', ()=>{
   try{ if(currentIso && currentTab==='map'){ showProfile(); } }catch(e){}
