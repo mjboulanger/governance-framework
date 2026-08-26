@@ -22,8 +22,10 @@ from metric_dictionary import DICT as METRIC_DICT
 
 PROC = PROCESSED_DIR
 OUT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "dashboard")
-CATEGORIES = ["Accountability", "Economic and fiscal governance",
-              "Political foundations", "Rule of law", "State capacity"]
+# Canonical category order (matches the master document); every surface inherits this
+# via DATA.meta.categories. Do not alphabetize downstream.
+CATEGORIES = ["Political foundations", "State capacity", "Rule of law",
+              "Accountability", "Economic and fiscal governance"]
 
 
 def _n(x, dp=3):
@@ -113,6 +115,14 @@ def build():
     cov = pd.read_csv(os.path.join(PROC, "country_coverage.csv")).set_index("iso3")
     sov = cov[~cov["is_territory"].astype(bool)].index  # sovereigns (hoisted: used by concept medians + percentiles)
     spine = pd.read_csv(os.path.join(PROC, "country_spine.csv")).set_index("iso3")
+    # latest-available GDP per capita (current USD) per country, from the WDI extract.
+    # The year varies by country (latest non-null) and is surfaced on hover; it comes
+    # from the data, not hard-coded. country_code is ISO3 (joins to the spine/coverage).
+    _wdi = pd.read_csv(os.path.join(PROC, "wdi_clean.csv"),
+                       usecols=["country_code", "year", "wdi_gdp_per_capita_usd"])
+    _wdi = _wdi.dropna(subset=["wdi_gdp_per_capita_usd"]).sort_values("year")
+    _wdi = _wdi.drop_duplicates("country_code", keep="last")
+    gdp_by = {r.country_code: (int(round(float(r.wdi_gdp_per_capita_usd))), int(r.year)) for r in _wdi.itertuples()}
     mom = pd.read_csv(os.path.join(PROC, "momentum.csv"))
     mom_by = {(r.iso3, int(r.concept_id)): r for r in mom.itertuples()}
     scored_cids = sorted(int(c[1:-6]) for c in cs.columns if c.endswith("_score"))
@@ -199,6 +209,8 @@ def build():
             "mc": metric_counts.get(iso, {"total": 0, "by_cat": {}}),
             "peers": peers_map.get(iso, []),
             "pop": (int(spine.loc[iso, "population"]) if (iso in spine.index and pd.notna(spine.loc[iso, "population"])) else None),
+            "gdp": (gdp_by[iso][0] if iso in gdp_by else None),
+            "gdpy": (gdp_by[iso][1] if iso in gdp_by else None),
             "cat": cats,
             "con": concepts,
         }

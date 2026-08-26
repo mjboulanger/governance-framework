@@ -23,7 +23,13 @@
   --map-border:#3f4650;  /* country borders on the map (near-ink hairline) */
   --radar-fill:#2f8f9e;    /* country shape fill/line on the radar */
   --radar-band:#c9d9d6;    /* 25-75 percentile band */
-  --radar-median:#8a8f96;  /* median reference line */
+  --radar-median:#8a8f96;
+  --uni-band-1:rgba(124,200,230,0.16);  /* universe 5-95 band (lightest) */
+  --uni-band-2:rgba(124,200,230,0.32);  /* universe 25-75 band */
+  --uni-hist:rgba(124,200,230,0.34);    /* distribution histogram bars */
+  --uni-median:#2688aa;                 /* universe median / percentile dotted lines (dark blue) */
+  --peer-line:#35808c;                  /* peer lines / dots (teal) */
+  --peer-median:#0d5560;                /* peer median (darkest teal) */  /* median reference line */
   --series-1:#7d8ca3;      /* individual peer lines */
   --series-1-dark:#3d4a5c; /* peer median (darker) */
 
@@ -67,8 +73,8 @@ header h1{font-size:16px;font-weight:600;letter-spacing:-.01em}
 header .sub{color:var(--muted);font-size:12px;margin-left:auto;font-family:var(--mono)}
 
 .main{flex:1 1 auto;display:flex;min-height:0}
-.map-wrap{flex:1 1 auto;position:relative;min-width:0;background:var(--bg)}
-#map{width:100%;height:100%}
+.map-wrap{flex:1 1 auto;position:relative;min-width:0;background:var(--bg);display:flex;flex-direction:column}
+#map{width:100%;flex:1 1 auto;min-height:0}
 .side{flex:0 0 clamp(340px,26vw,520px);border-left:1px solid var(--border);
   background:var(--panel);overflow-y:auto;display:flex;flex-direction:column}
 
@@ -82,6 +88,8 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%236b7681' stroke-width='1.5' fill='none'/></svg>");
   background-repeat:no-repeat;background-position:right 12px center}
 .caveat{font-size:12px;color:var(--muted);margin-top:9px;line-height:1.5}
+.map-links{margin-top:16px;padding-top:12px;border-top:1px solid var(--border)}
+.map-scalenote{flex:0 0 auto;font-size:11px;color:var(--muted);padding:8px 12px 10px;line-height:1.45}
 
 .profile{padding:20px;flex:1}
 .profile .empty{color:var(--muted);font-size:13px;text-align:center;
@@ -110,12 +118,15 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 #radarlegend{font-size:11px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin:2px 0 10px}
 #radarlegend .k{display:inline-flex;align-items:center;gap:5px}
 #radarlegend .sw{width:11px;height:11px;border-radius:2px;display:inline-block}
+.sw-line{width:16px;height:0;display:inline-block;vertical-align:middle;margin-top:1px}
 .rangebar-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
 .rangebar-row .nm{flex:0 0 40%;font-size:12px;line-height:1.25}
 .rangebar-row .track{position:relative;flex:1;height:16px;background:var(--panel-2);border-radius:4px}
-.rangebar-row .band{position:absolute;top:0;height:100%;background:var(--radar-band);border-radius:4px}
-.rangebar-row .med{position:absolute;top:-2px;height:20px;width:2px;background:var(--radar-median)}
-.rangebar-row .mark{position:absolute;top:-3px;height:22px;width:3px;background:var(--radar-fill);border-radius:2px}
+.rangebar-row .band{position:absolute;top:0;height:100%;background:var(--uni-band-2);border-radius:4px}
+.rangebar-row .med{position:absolute;top:-2px;height:20px;width:2px;background:var(--uni-median)}
+.rangebar-row .mark{position:absolute;top:-3px;height:22px;width:3px;background:rgb(201,106,74);border-radius:2px}
+.rangebar-row .peerdot{position:absolute;top:5px;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--peer-line);opacity:.85}
+.rangebar-row .peermed{position:absolute;top:-2px;height:20px;width:2px;background:var(--peer-median)}
 .rangebar-row .val{flex:0 0 auto;font-family:var(--mono);font-size:12px;font-weight:600}
 .cmpbtn{margin-top:8px;font-size:12px;font-family:var(--mono);background:var(--panel-2);
   border:1px solid var(--border);border-radius:6px;padding:5px 11px;cursor:pointer;color:var(--ink)}
@@ -167,6 +178,7 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .doc-title{font-size:22px;font-weight:700;color:var(--ink);margin:0 0 6px}
 .doc-lede{font-size:13px;color:var(--muted);margin:0 0 22px;line-height:1.5}
 .doc-h2{font-size:15px;font-weight:700;color:var(--accent);margin:26px 0 10px}
+.doc-cat{color:var(--ink);text-transform:uppercase;letter-spacing:.06em}
 .doc-h3{font-size:13px;font-weight:700;color:var(--ink);margin:16px 0 4px}
 .doc-tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;margin-bottom:8px}
 .doc-tbl th{text-align:left;color:var(--muted);font-weight:600;padding:6px 8px;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0;z-index:2;background:var(--bg);box-shadow:inset 0 -1px 0 var(--border)}
@@ -215,7 +227,7 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .drill-controls label{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--muted);font-family:var(--mono);margin-bottom:5px}
 .drill-controls select{width:280px;max-width:100%}
-.drill-refwrap{margin-top:0}
+.drill-refwrap{margin-left:auto}
 .drill-countrywrap{display:flex;flex-direction:column}
 .drill-reftoggle{display:inline-flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
 .drill-reftoggle .refbtn{background:var(--panel);border:none;padding:5px 14px;font-size:12px;
@@ -332,7 +344,7 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 </nav>
 <div id="view-map" class="view active">
 <div class="main">
-  <div class="map-wrap"><div id="map"></div><div id="simlist" style="display:none"></div></div>
+  <div class="map-wrap"><div id="map"></div><div id="simlist" style="display:none"></div><div class="map-scalenote" id="mapscalenote"></div></div>
   <aside class="side">
     <div class="controls">
       <label for="countrysel">Country</label>
@@ -351,6 +363,7 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
       <div id="radarlegend" style="display:none"></div>
       <div id="comparectl"></div>
       <div id="valuelist"></div>
+      <div id="maplinks" class="map-links" style="display:none"></div>
     </div>
   </aside>
 </div>
@@ -468,7 +481,7 @@ function scoreFor(iso, view){
   if(view===OVERALL) return overallScore(c);
   return c.cat[view]!=null ? c.cat[view] : null;
 }
-// map a 0-1 score to a ramp colour (for bars), matching the choropleth scale
+// map a 0-1 score to a ramp colour for the inline score bars, on the absolute 0 to 1 scale (the map applies its own per-view stretch)
 function rampColor(v){
   if(v==null) return cv('--score-null');
   const stops=SCALE, n=stops.length;
@@ -569,8 +582,25 @@ function drawMap(view){
   const opac = isos.map(i => 1.0);   // dimming dropped (Plotly choropleth opacity unreliable); border-only emphasis
   const lineCol = isos.map(i => emph.has(i) ? '#111' : BORDER.color);
   const lineW   = isos.map(i => emph.has(i) ? 1.4 : BORDER.width);
+  // per-view colour domain: 2nd to 98th percentile centred on the median, so the gradient is
+  // spent where scores actually sit (they cluster near the middle) without changing any score.
+  // A symmetric half-width keeps the median at the centre colour, so directionality stays
+  // consistent across views. Country labels still show the true 0 to 1 score.
+  const _zv=z.filter(v=>v!=null).slice().sort((a,b)=>a-b);
+  let _lo=0, _hi=1, _mid=0.5;
+  if(_zv.length){
+    const _q=p=>{ const i=(_zv.length-1)*p, l=Math.floor(i), h=Math.ceil(i); return l===h?_zv[l]:_zv[l]+(_zv[h]-_zv[l])*(i-l); };
+    _mid=_q(0.5); const _p02=_q(0.02), _p98=_q(0.98);
+    const _hw=Math.max(_mid-_p02, _p98-_mid, 0.02);
+    _lo=_mid-_hw; _hi=_mid+_hw;
+  }
+  window._scoreDomain={lo:_lo, hi:_hi, mid:_mid};
+  const _sn=document.getElementById('mapscalenote');
+  if(_sn) _sn.textContent = _zv.length
+    ? ('Map colour scale: the 2nd to 98th percentile of scores, centred on the median ('+_mid.toFixed(2)+') for '+view+', spanning '+_lo.toFixed(2)+' to '+_hi.toFixed(2)+'. Country labels show the actual 0 to 1 score.')
+    : '';
   const trace={type:'choropleth',locations:isos,z:z,text:text,
-    hovertemplate:'%{text}<extra></extra>',colorscale:SCALE,zmin:0,zmax:1,
+    hovertemplate:'%{text}<extra></extra>',colorscale:SCALE,zmin:_lo,zmax:_hi,
     marker:{opacity:opac, line:{color:lineCol,width:lineW}},
     colorbar:{title:{text:'Score',font:{color:cv('--muted'),size:11}},
       tickfont:{color:cv('--muted'),size:10},outlinewidth:0,len:0.55,thickness:10,
@@ -617,6 +647,8 @@ function _quantile(sorted, q){
   const k=(sorted.length-1)*q, f=Math.floor(k), c=Math.min(f+1,sorted.length-1);
   return sorted[f]+(sorted[c]-sorted[f])*(k-f);
 }
+function _swBox(c){ return '<span class="sw" style="background:'+c+'"></span>'; }
+function _swLine(c,w,dot){ return '<span class="sw-line" style="border-top:'+w+'px '+(dot?'dotted':'solid')+' '+c+'"></span>'; }
 function drawCompare(c, axes){
   const _old=document.getElementById('peersused'); if(_old) _old.remove();
   drawMap(currentView);  // keep peer highlight in sync with the active peer set
@@ -625,7 +657,7 @@ function drawCompare(c, axes){
   const theta=axes.map(a=>wrapLabel(axisLabel(a.label),12));
   const close=arr=>arr.concat([arr[0]]);
   const th=close(theta);
-  const fillC=cv('--radar-fill'), bandFill=cv('--radar-band'), medianC=cv('--radar-median');
+  const fillC='rgb(201,106,74)', bandFill=cv('--uni-band-2'), medianC=cv('--uni-median');
   const peers=activePeers.map(p=>DATA.countries[p]).filter(Boolean);
 
   // per-axis peer band (25-75 over peers) + median
@@ -635,18 +667,23 @@ function drawCompare(c, axes){
     pP25.push(_quantile(vals,.25)); pP75.push(_quantile(vals,.75)); pP50.push(_quantile(vals,.50));
   });
   const rVal=axes.map(a=>axisValue(c,a));
+  const _wB=axes.map(a=>axisBand(a));
+  const wP25=_wB.map(b=>b?b.p25:null), wP50=_wB.map(b=>b?b.p50:null), wP75=_wB.map(b=>b?b.p75:null);
 
   // shared radial max across focus + all peers + peer band
-  const all=[].concat(rVal,pP75,pP50);
+  const all=[].concat(rVal,pP75,pP50,wP75);
   peers.forEach(pc=>axes.forEach(a=>{const v=axisValue(pc,a); if(v!=null) all.push(v);}));
   const mx=Math.max(...all.filter(x=>x!=null),0.1);
   const RMAX=Math.min(1, Math.ceil((mx+0.02)*10)/10);
   const RTICKS=[0.25,0.5,0.75,1].filter(t=>t<=RMAX);
 
   const traces=[];
-  // (no shaded peer band in compare mode - the individual peer lines already show the spread)
+  // universe 25-75 band + median (grey), kept even when peers are shown; drawn first so it sits behind
+  traces.push({type:'scatterpolar',r:close(wP25),theta:th,mode:'lines',line:{color:'rgba(0,0,0,0)'},hoverinfo:'skip',showlegend:false});
+  traces.push({type:'scatterpolar',r:close(wP75),theta:th,mode:'lines',fill:'tonext',fillcolor:bandFill,line:{color:'rgba(0,0,0,0)'},hoverinfo:'skip',showlegend:false});
+  traces.push({type:'scatterpolar',r:close(wP50),theta:th,mode:'lines',line:{color:medianC,width:1,dash:'dot'},hoverinfo:'skip',showlegend:false});
   // thin peer lines (hoverable -> country name)
-  const peerLine=cv('--series-1')||'#7d8ca3';
+  const peerLine=cv('--peer-line');
   peers.forEach(pc=>{
     const r=close(axes.map(a=>axisValue(pc,a)));
     traces.push({type:'scatterpolar',r:r,theta:th,mode:'lines',
@@ -654,7 +691,7 @@ function drawCompare(c, axes){
       hovertemplate:'<b>'+pc.name+'</b><br>%{theta}: %{r:.2f}<extra></extra>'});
   });
   // peer median: darker + thicker + solid, drawn ON TOP of the peer lines (below focus)
-  const peerMed=cv('--series-1-dark')||'#3d4a5c';
+  const peerMed=cv('--peer-median');
   traces.push({type:'scatterpolar',r:close(pP50),theta:th,mode:'lines',
     line:{color:peerMed,width:2},name:'Peer median',
     hovertemplate:'Peer median<br>%{theta}: %{r:.2f}<extra></extra>'});
@@ -674,9 +711,11 @@ function drawCompare(c, axes){
 
   // legend
   const lg=document.getElementById('radarlegend'); lg.style.display='flex';
-  lg.innerHTML='<span class="k"><span class="sw" style="background:'+fillC+'"></span>'+c.name+'</span>'+
-    '<span class="k"><span class="sw" style="background:'+peerLine+'"></span>Peers ('+peers.length+')</span>'+
-    '<span class="k"><span class="sw" style="background:'+peerMed+'"></span>Peer median</span>';
+  lg.innerHTML='<span class="k">'+_swLine(fillC,3,false)+c.name+'</span>'+
+    '<span class="k">'+_swBox(bandFill)+'25\u201375th percentile</span>'+
+    '<span class="k">'+_swLine(medianC,2,true)+'Median</span>'+
+    '<span class="k">'+_swLine(peerLine,1.5,false)+'Peers ('+peers.length+')</span>'+
+    '<span class="k">'+_swLine(peerMed,2.5,false)+'Peer median</span>';
 
   // "Peers used" note under the legend (same muted font as peer labels), live-updates
   const peerNames = activePeers.map(p=>DATA.countries[p]?DATA.countries[p].name:p);
@@ -717,8 +756,38 @@ function drawCompare(c, axes){
   if(addb) addb.onclick=()=>openAddPeer();
 }
 function drawCompareBars(c, axes){
-  // <3 axes fallback in compare mode: reuse range bars for the focus, note peers in chips
-  drawRangeBars(c, axes);
+  // <3 axes: no radar is possible, so draw horizontal bars per concept comparing the focus
+  // against INDIVIDUAL peers (dots), matching the radar's treatment (individual peer lines +
+  // peer median, no band). Peer colour is --series-1 as on the radar; hover a dot for its name.
+  document.getElementById('radar').style.display='none';
+  document.getElementById('radarlegend').style.display='flex';
+  const fillC='rgb(201,106,74)', peerC=cv('--peer-line'), peerMedC=cv('--peer-median');
+  const peers=(activePeers||[]).map(p=>DATA.countries[p]).filter(Boolean);
+  document.getElementById('radarlegend').innerHTML=
+    '<span class="k">'+_swLine(fillC,3,false)+c.name+'</span>'+
+    '<span class="k">'+_swBox(cv('--uni-band-2'))+'25\u201375th pct</span>'+
+    '<span class="k">'+_swLine(cv('--uni-median'),2,true)+'Median</span>'+
+    '<span class="k">'+_swLine(peerC,1.5,false)+'Peers</span>'+
+    '<span class="k">'+_swLine(peerMedC,2.5,false)+'Peer median</span>';
+  let h='<div class="section-label">'+currentView+' \u2014 concepts vs peers</div>';
+  axes.forEach(a=>{
+    const v=axisValue(c,a);
+    const pv=peers.map(pc=>({v:axisValue(pc,a), name:pc.name})).filter(o=>o.v!=null);
+    const svals=pv.map(o=>o.v).slice().sort((x,y)=>x-y);
+    const pmed=svals.length?_quantile(svals,.5):null;
+    const pct=x=>x!=null?(x*100)+'%':'0%';
+    const wb=axisBand(a); const w25=wb?wb.p25:null, w50=wb?wb.p50:null, w75=wb?wb.p75:null;
+    h+='<div class="rangebar-row"><div class="nm">'+a.label+'</div>'+
+       '<div class="track">'+
+         (w25!=null&&w75!=null?'<span class="band" style="left:'+pct(w25)+';width:'+((w75-w25)*100)+'%"></span>':'')+
+         (w50!=null?'<span class="med" style="left:'+pct(w50)+'"></span>':'')+
+         pv.map(o=>'<span class="peerdot" title="'+o.name+' '+o.v.toFixed(2)+'" style="left:'+pct(o.v)+'"></span>').join('')+
+         (pmed!=null?'<span class="peermed" style="left:'+pct(pmed)+'"></span>':'')+
+         (v!=null?'<span class="mark" style="left:'+pct(v)+'"></span>':'')+
+       '</div>'+
+       '<div class="val">'+(v!=null?v.toFixed(2):'\u2014')+'</div></div>';
+  });
+  document.getElementById('valuelist').innerHTML=h;
 }
 function openAddPeer(){
   // inline country search: type a name, click a match to add as a peer.
@@ -758,11 +827,11 @@ function wrapLabel(s, maxlen){
 function drawRangeBars(c,axes){
   document.getElementById('radar').style.display='none';
   document.getElementById('radarlegend').style.display='flex';
-  const fillC=cv('--radar-fill'),bandC=cv('--radar-band'),medC=cv('--radar-median');
+  const fillC='rgb(201,106,74)',bandC=cv('--uni-band-2'),medC=cv('--uni-median');
   document.getElementById('radarlegend').innerHTML=
-    '<span class="k"><span class="sw" style="background:'+fillC+'"></span>'+c.name+'</span>'+
-    '<span class="k"><span class="sw" style="background:'+bandC+'"></span>25\u201375th percentile</span>'+
-    '<span class="k"><span class="sw" style="background:'+medC+'"></span>Median</span>';
+    '<span class="k">'+_swLine(fillC,3,false)+c.name+'</span>'+
+    '<span class="k">'+_swBox(bandC)+'25\u201375th percentile</span>'+
+    '<span class="k">'+_swLine(medC,2,true)+'Median</span>';
   let h='<div class="section-label">'+currentView+' \u2014 concepts</div>';
   axes.forEach(a=>{
     const v=axisValue(c,a); const b=axisBand(a);
@@ -866,11 +935,32 @@ function axisBand(ax){
   return P.concepts[ax.key]||P.concepts[String(ax.key)];
 }
 function syncCountrySel(){ const s=document.getElementById('countrysel'); if(s && currentIso) s.value=currentIso; }
+function _updateMapLinks(){
+  const ml=document.getElementById('maplinks'); if(!ml) return;
+  if(currentIso && currentView!==OVERALL){
+    const catEsc=String(currentView).replace(/'/g,"\\'");
+    ml.style.display='block';
+    ml.innerHTML='<a class="doc-jump" onclick="mapToDistribution(\''+catEsc+'\')">View distribution \u2192</a>'+
+      '<a class="doc-jump" style="margin-left:18px" onclick="mapToTimeseries(\''+catEsc+'\')">View time series \u2192</a>';
+  } else { ml.style.display='none'; ml.innerHTML=''; }
+}
+function mapToDistribution(cat){
+  if(compareMode) drillRef='peers';        // carry peers over if they were being viewed on the map
+  showView('drilldown');                    // renders the drill for the shared currentIso
+  drillCategory=cat; drillConcept=null; drillDist={level:'category', key:cat};
+  renderDrill();
+  if(typeof scrollDrillRight==='function') scrollDrillRight();
+}
+function mapToTimeseries(cat){
+  if(compareMode) tsShowPeers=true;         // carry peers over if they were being viewed on the map
+  openTimeseries('cat:'+cat);               // sets the View dropdown to the category and renders
+}
 function showProfile(){
   const iso=currentIso; if(!iso) return;
   syncCountrySel();
   {const _pu=document.getElementById('peersused'); if(_pu) _pu.remove();}
   const c=DATA.countries[iso]; if(!c) return;
+  _updateMapLinks();
   document.getElementById('emptymsg').style.display='none';
   const head=document.getElementById('profilehead');
   head.style.display='block';
@@ -925,7 +1015,7 @@ function showProfile(){
   let _mx=_allvals.length?Math.max(..._allvals):1;
   const RMAX=Math.min(1, Math.ceil((_mx+0.02)*10)/10);   // next 0.1 above max, capped at 1
   const RTICKS=[0.25,0.5,0.75,1].filter(t=>t<=RMAX);
-  const bandFill=cv('--radar-band'), medianC=cv('--radar-median'), fillC=cv('--radar-fill');
+  const bandFill=cv('--uni-band-2'), medianC=cv('--uni-median'), fillC='rgb(201,106,74)';
   // p75 outer (filled to p25 inner via two traces) - draw p75 area then p25 area in bg colour
   // draw inner (p25) first with no fill, then outer (p75) filling 'tonext' -> only the
   // ring between p25 and p75 fills; the centre stays clear (no masking polygon).
@@ -950,9 +1040,9 @@ function showProfile(){
 
   // legend
   const lg=document.getElementById('radarlegend'); lg.style.display='flex';
-  lg.innerHTML='<span class="k"><span class="sw" style="background:'+fillC+'"></span>'+c.name+'</span>'+
-    '<span class="k"><span class="sw" style="background:'+bandFill+'"></span>25\u201375th percentile</span>'+
-    '<span class="k"><span class="sw" style="background:'+medianC+'"></span>Median</span>';
+  lg.innerHTML='<span class="k">'+_swLine(fillC,3,false)+c.name+'</span>'+
+    '<span class="k">'+_swBox(bandFill)+'25\u201375th percentile</span>'+
+    '<span class="k">'+_swLine(medianC,2,true)+'Median</span>';
 
   // compact value list below the radar (exact numbers)
   let h='';
@@ -1401,6 +1491,85 @@ function _sovValuesFor(level, key){
 function _quantile(sorted, q){ if(!sorted.length) return null;
   const p=(sorted.length-1)*q, lo=Math.floor(p), hi=Math.ceil(p);
   return sorted[lo]+(sorted[hi]-sorted[lo])*(p-lo); }
+function _distModeToggle(ctrls){
+  const mode=(window._distMode||'hist');
+  const wrap=document.createElement('div');
+  wrap.style.cssText='display:inline-flex;margin-right:12px;border:1px solid var(--border);border-radius:6px;overflow:hidden;vertical-align:middle';
+  [['hist','Distribution'],['scatter','Score vs GDP per capita']].forEach(function(mm){
+    const m=mm[0], lbl=mm[1], on=(mode===m);
+    const b=document.createElement('button'); b.type='button'; b.textContent=lbl;
+    b.style.cssText='padding:6px 12px;font-size:12px;cursor:pointer;border:0;background:'+(on?(cv('--accent')||'#2f8f9e'):'transparent')+';color:'+(on?'#fff':'var(--ink)');
+    b.onclick=function(){ window._distMode=m; renderDist(); };
+    wrap.appendChild(b);
+  });
+  ctrls.appendChild(wrap);
+}
+function _drawDistScatter(vals, focus, label, sub){
+  const chartEl=document.getElementById('drilldistchart');
+  const focusC='rgb(201,106,74)', peerC=cv('--peer-line')||'#35808c', muted=cv('--muted'), edge=cv('--border')||'#d9d2c4';
+  const C=DATA.countries;
+  const useP=activePeer();
+  const peerSet=new Set(useP?drillPeers():[]);
+  const shownSet=(window._distShown=window._distShown||new Set());
+  const showAll=!!window._distShowAll;
+  const base=[], peerPts=[]; let fx=null, fy=null;
+  vals.forEach(function(d){ const c=C[d.iso]; if(!c||c.gdp==null) return;
+    const pt={iso:d.iso, x:c.gdp, y:d.v, name:c.name, gy:c.gdpy};
+    if(d.iso===currentIso){ fx=c.gdp; fy=d.v; }
+    else if(peerSet.has(d.iso)) peerPts.push(pt);
+    else base.push(pt);
+  });
+  const hov=function(p){ return p.name+'<br>Score '+p.y.toFixed(2)+'<br>GDP/capita $'+Math.round(p.x).toLocaleString()+(p.gy?' ('+p.gy+')':''); };
+  const traces=[];
+  traces.push({type:'scatter', mode:'markers', x:base.map(p=>p.x), y:base.map(p=>p.y),
+    customdata:base.map(p=>p.iso), text:base.map(hov),
+    marker:{color:cv('--radar-band')||'#c9d9d6', size:6, line:{color:edge,width:0.5}},
+    hovertemplate:'%{text}<extra></extra>', showlegend:false});
+  if(peerPts.length){ traces.push({type:'scatter', mode:'markers', x:peerPts.map(p=>p.x), y:peerPts.map(p=>p.y),
+    customdata:peerPts.map(p=>p.iso), text:peerPts.map(hov),
+    marker:{color:peerC, size:peerPts.map(p=>shownSet.has(p.iso)?12:8), line:{color:'#fff',width:0.6}},
+    hovertemplate:'%{text}<extra></extra>', showlegend:false}); }
+  if(fx!=null){ traces.push({type:'scatter', mode:'markers', x:[fx], y:[fy],
+    text:[hov({name:C[currentIso].name, y:fy, x:fx, gy:C[currentIso].gdpy})],
+    marker:{color:focusC, size:13, line:{color:'#fff',width:1}},
+    hovertemplate:'%{text}<extra></extra>', showlegend:false}); }
+  const annotations=[];
+  if(fx!=null) annotations.push({x:Math.log10(fx), y:fy, xref:'x', yref:'y', text:C[currentIso].name, font:{color:focusC,size:12}, showarrow:false, yshift:12});
+  const toLabel = showAll ? peerPts : peerPts.filter(p=>shownSet.has(p.iso));
+  toLabel.forEach(function(p){ annotations.push({x:Math.log10(p.x), y:p.y, xref:'x', yref:'y', text:p.name, font:{color:peerC,size:10}, showarrow:false, yshift:10}); });
+  const gxs=vals.map(d=>C[d.iso]&&C[d.iso].gdp).filter(g=>g!=null);
+  let lgmin=Math.log10(Math.min.apply(null,gxs)), lgmax=Math.log10(Math.max.apply(null,gxs));
+  const pad=(lgmax>lgmin)?(lgmax-lgmin)*0.05:0.3;
+  const plotH=330;
+  const layout={paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)', height:plotH,
+    margin:{l:46,r:16,t:14,b:46},
+    xaxis:{type:'log', title:{text:'GDP per capita (current US$, log scale)',font:{color:muted,size:12}}, range:[lgmin-pad,lgmax+pad], tickfont:{color:muted,size:11}, gridcolor:edge, zeroline:false, linecolor:edge},
+    yaxis:{title:{text:'Score (0 to 1)',font:{color:muted,size:12}}, range:[0,1], tickfont:{color:muted,size:11}, gridcolor:edge, zeroline:false, linecolor:edge},
+    annotations:annotations, showlegend:false, hovermode:'closest'};
+  document.getElementById('drilldisthead').innerHTML='<span class="lvl">'+sub+' vs GDP per capita</span>'+label;
+  const gd=document.getElementById('drilldistplot'); gd.style.height=plotH+'px';
+  Plotly.react(gd, traces, layout, {responsive:true, displayModeBar:false});
+  try{ if(gd.removeAllListeners) gd.removeAllListeners('plotly_click');
+    gd.on('plotly_click', function(ev){ const p=ev&&ev.points&&ev.points[0]; const iso=(p&&p.customdata!=null)?p.customdata:null; if(iso==null||iso===currentIso) return;
+      const S=(window._distShown=window._distShown||new Set()); if(S.has(iso)) S.delete(iso); else S.add(iso); renderDist(); }); }catch(e){}
+  let ctrls=document.getElementById('drilldistctrls');
+  if(!ctrls){ ctrls=document.createElement('div'); ctrls.id='drilldistctrls'; ctrls.style.margin='10px 0'; chartEl.insertBefore(ctrls, document.getElementById('drilldistcalc')); }
+  ctrls.style.display='block'; ctrls.innerHTML=''; _distModeToggle(ctrls);
+  if(useP && peerPts.length){
+    const btn=document.createElement('button'); btn.type='button';
+    btn.style.cssText='background:rgba(47,143,158,0.12);color:'+peerC+';border:1px solid rgba(47,143,158,0.5);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer';
+    btn.textContent= showAll ? 'Hide peer names' : 'Show all peer names';
+    btn.onclick=function(){ window._distShowAll=!window._distShowAll; renderDist(); };
+    ctrls.appendChild(btn);
+    const hint=document.createElement('span'); hint.style.cssText='margin-left:8px;font-size:11px;color:'+muted; hint.textContent='Or click a peer point to label just that one'; ctrls.appendChild(hint);
+  }
+  const note=document.getElementById('drilldistnote');
+  let html='Each point is a sovereign: score (vertical) against GDP per capita (horizontal, log scale, current US$). The orange point is '+C[currentIso].name+'.';
+  if(useP && peerPts.length){ html+=' Teal points are its '+peerPts.length+' peers.'; }
+  html+=' GDP year varies by country (latest available); see hover.';
+  note.innerHTML=html;
+  renderCalc(drillDist.level, drillDist.key);
+}
 function renderDist(){
   const emptyEl=document.getElementById('drilldistempty');
   const chartEl=document.getElementById('drilldistchart');
@@ -1410,13 +1579,14 @@ function renderDist(){
   const {vals, focus, label, sub}=_sovValuesFor(drillDist.level, drillDist.key);
   if(!vals.length){ emptyEl.style.display='block'; chartEl.style.display='none'; return; }
   emptyEl.style.display='none'; chartEl.style.display='block';
+  if((window._distMode||'hist')==='scatter'){ _drawDistScatter(vals, focus, label, sub); return; }
   document.getElementById('drilldisthead').innerHTML='<span class="lvl">'+sub+' distribution</span>'+label;
   const xs=vals.map(d=>d.v).sort((a,b)=>a-b);
   const lo=xs[0], hi=xs[xs.length-1];
   const p25=_quantile(xs,.25), p50=_quantile(xs,.5), p75=_quantile(xs,.75);
-  const fill=cv('--radar-band')||'#c9d9d6', edge=cv('--border')||'#d9d2c4';
-  const focusC='rgb(201,106,74)', medC=cv('--radar-median')||'#8a8f96';
-  const peerC=cv('--radar-fill')||'#2f8f9e', muted=cv('--muted');
+  const fill=cv('--uni-hist'), edge=cv('--border')||'#d9d2c4';
+  const focusC='rgb(201,106,74)', medC=cv('--uni-median')||'#2688aa';
+  const peerC=cv('--peer-line')||'#35808c', muted=cv('--muted');
   const _nb=24, _x0=lo, _x1=hi, _bw=(_x1-_x0)/_nb || 1;
   const _counts=new Array(_nb).fill(0);
   xs.forEach(v=>{ let bi=Math.floor((v-_x0)/_bw); if(bi<0)bi=0; if(bi>=_nb)bi=_nb-1; _counts[bi]++; });
@@ -1503,8 +1673,8 @@ function renderDist(){
   let ctrls=document.getElementById('drilldistctrls');
   if(!ctrls){ ctrls=document.createElement('div'); ctrls.id='drilldistctrls'; ctrls.style.margin='10px 0';
     chartEl.insertBefore(ctrls, document.getElementById('drilldistcalc')); }
+  ctrls.style.display='block'; ctrls.innerHTML=''; _distModeToggle(ctrls);
   if(useP && peerLines.length){
-    ctrls.style.display='block'; ctrls.innerHTML='';
     const btn=document.createElement('button'); btn.type='button';
     btn.style.cssText='background:rgba(47,143,158,0.12);color:'+(cv('--accent')||'#2f8f9e')+';border:1px solid rgba(47,143,158,0.5);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer';
     btn.textContent= showAll ? 'Hide peer names' : 'Show all peer names';
@@ -1514,7 +1684,7 @@ function renderDist(){
     hint.style.cssText='margin-left:8px;font-size:11px;color:'+muted;
     hint.textContent='Or click a peer dot to label just that one';
     ctrls.appendChild(hint);
-  } else if(ctrls){ ctrls.style.display='none'; }
+  }
   const note=document.getElementById('drilldistnote');
   const nsov=xs.length;
   let html='Distribution across '+nsov+' sovereigns. The orange line marks '+
@@ -1629,6 +1799,7 @@ function renderDocs(){
   const CATS=DATA.meta.categories||[];
   const CON=DATA.meta.concepts||{};
   const wtxt=cid=>{ const w=CON[cid]&&CON[cid].w; return (w!=null)?(' <span class="doc-w">('+w+')</span>'):''; };
+  const wtxtFull=cid=>{ const w=CON[cid]&&CON[cid].w; return (w!=null)?(' <span class="doc-w">(relative weight = '+w+')</span>'):''; };
   const MET=DATA.meta.metrics||{};
   const cm={};
   const contribs=DATA.contributions||{};
@@ -1672,7 +1843,7 @@ function renderDocs(){
     +'the terrain, <strong>State capacity</strong> the engine, <strong>Rule of law</strong> and '
     +'<strong>Accountability</strong> the two rails that keep it on course, and <strong>Economic and fiscal '
     +'governance</strong> the direction of travel.</p>';
-  h+='<h2 class="doc-h2" id="doc-hierarchy">Category, concept and metric hierarchy</h2>';
+  h+='<h2 class="doc-h2" id="doc-hierarchy" style="color:var(--ink)">Category, concept and metric hierarchy</h2>';
   h+='<table class="doc-tbl"><thead><tr><th>Category</th><th>Concept (relative weight)</th><th>Metrics</th></tr></thead><tbody>';
   CATS.forEach(cat=>{
     const cids=conByCat[cat]||[];
@@ -1700,10 +1871,10 @@ function renderDocs(){
 
   CATS.forEach(cat=>{
     h+='<section class="doc-sec" id="doc-cat-'+slug(cat)+'">';
-    h+='<h2 class="doc-h2">'+esc(cat)+'</h2>';
+    h+='<h2 class="doc-h2 doc-cat">'+esc(cat)+'</h2>';
     (conByCat[cat]||[]).forEach(cid=>{
       h+='<div class="doc-concept" id="doc-concept-'+cid+'">';
-      h+='<h3 class="doc-h3">'+esc(CON[cid].name)+wtxt(cid)+'</h3>';
+      h+='<h3 class="doc-h3">'+esc(CON[cid].name)+wtxtFull(cid)+'</h3>';
       if(CON[cid].desc) h+='<p class="doc-desc">'+esc(CON[cid].desc.charAt(0).toUpperCase()+CON[cid].desc.slice(1))+'</p>';
       const mets=metsOf(cid);
       if(mets.length){
@@ -1906,8 +2077,8 @@ function renderTimeseries(){
   const focusCol = 'rgb(201,106,74)';
   const focusTrace={x:focusSeries.map(p=>p.y),y:focusSeries.map(p=>p.s),mode:'lines',line:{color:focusCol,width:2.6},name:esc(nm),hovertemplate:'%{y:.3f}<extra>'+esc(nm)+'</extra>'};
   const U=tsUniverse(kind, key);
-  const bandFill1='rgba(122,135,145,0.13)', bandFill2='rgba(122,135,145,0.24)';
-  const peerCol=cv('--accent')||'#2f8f9e', medCol='#535d68';
+  const bandFill1=cv('--uni-band-1'), bandFill2=cv('--uni-band-2');
+  const peerCol=cv('--peer-line')||'#35808c', medCol=cv('--uni-median')||'#2688aa';
   tsHiPeers=(tsHiPeers||[]).filter(p=>(activePeers||[]).includes(p));
   const peerTraces=[], annos=[]; let npeers=0;
   if(tsShowPeers) (activePeers||[]).forEach(pi=>{ const pc=DATA.countries[pi]; if(!pc) return;

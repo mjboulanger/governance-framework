@@ -12,4 +12,11 @@ Tracked enhancements for the dashboard and its Documentation tab, to address aft
 
 ## Done
 
+- **GDP-per-capita scatter** (shipped). Drill-down distribution panel has a Distribution | Score vs GDP per capita toggle: score (y) against GDP per capita (x, log, current US$) per sovereign, focus orange, peers teal, with the same pin/show-all peer labelling. GDP (`gdp`/`gdpy`) is emitted per country from `wdi_clean.csv` (latest non-null per country). 211 of 213 have a value.
+- **Map colour scale** (shipped). Per-view 2nd to 98th percentile domain centred on the view's median (symmetric), stretching the colour scale not the scores, with a note under the map.
+- **Map cross-links** (shipped). "View distribution" and "View time series" from the map right panel (category views only), carrying country and peers.
+- **Compare with peers, small categories** (shipped). Political foundations (two concepts) and any sub-three-concept category now render peer bars; the world 25 to 75 band and median stay visible in peer view.
+- **Category order** (shipped). Set to the master-document order at the pipeline source; all surfaces inherit it.
+- **Chart palette and legends** (shipped). Colours centralised as CSS variables (blue universe ranges, teal peers, orange focus, dotted blue medians); radar legends now use line swatches (weight and dotted reflect the chart) for lines and box swatches for shaded ranges.
+- **Documentation and drill-down polish** (shipped). Category headers restyled off teal (black, uppercase); concept headers show "(relative weight = N)"; the drill-down Reference toggle moved beside the right panel.
 - **Metric-level time series** (shipped). The Time series tab supports metric level via a dependent Metric dropdown under a selected concept. Per-year metric history is emitted into `DATA.metricHistory` (P1/P2, all economies, 2005 onward, 3dp, encoding B with a build-time round-trip check) plus `meta.concept_metrics`; the client decodes and renders metric bands, focus, and peers; the drill-down "View time series" carries the metric through. Detail in `instructions_data_maintenance.md` -> "Time series tab". File about 14.9MB, up from 11.8MB.

@@ -137,7 +137,7 @@ python src/build_dashboard.py         # inlines the JSON + Plotly into the templ
   `data/processed/normalized_panel.csv`, attaching each to the contribution rows. These feed the
   metric-level calculation breakdown (see below); if either file is missing, those fields are
   omitted and the metric breakdown shows the method in words without the arithmetic. No new manual
-  input: method, params, and raw values all come from the data.
+  input: method, params, and raw values all come from the data. It also reads `data/processed/wdi_clean.csv` for GDP per capita: the latest non-null `wdi_gdp_per_capita_usd` per country (current US$), emitted as `gdp` and its year `gdpy` on each country (211 of 213 have a value; the two without simply omit it, and drop from the GDP scatter). The "latest available" year comes from the data per country, not hard-coded.
 - **`src/build_dashboard.py`** reads `dashboard/dashboard_template.html` (tracked - the UI),
   inlines the real `dashboard_data.json` and the Plotly JS bundle, and writes the
   self-contained `dashboard/governance_map.html`. It opens offline on `file://` (no internet),
@@ -227,7 +227,9 @@ rebuilding only the second step reuses the stale JSON.
 
 Clicking any category, concept, or metric row in the drill-down opens a right-hand panel with two parts.
 
-**Distribution histogram.** A real binned histogram (~24 bins, no smoothing) of that item's values across the 192 sovereigns, with the focus country marked (an orange line) and quartile ticks (p25/p50/p75, dotted). In Peers mode the peers are marked as teal lines, each with a clickable dot at the top. Colours are deliberate and shared with the rest of the UI: focus = the negative-callout orange (the `.dn` colour, `rgb(201,106,74)`); peers = teal (`--radar-fill`, `#2f8f9e`).
+**Distribution histogram.** A real binned histogram (~24 bins, no smoothing) of that item's values across the 192 sovereigns, with the focus country marked (an orange line) and quartile ticks (p25/p50/p75, dotted). In Peers mode the peers are marked as teal lines, each with a clickable dot at the top. Chart colours are centralised as CSS variables in `:root` and shared across every chart, so a role is retuned by changing one variable: focus = orange (`rgb(201,106,74)`); peers = teal (`--peer-line`, `#35808c`); peer median = the darkest teal (`--peer-median`); universe and distribution shaded ranges = light blue (`--uni-band-1` for 5 to 95, `--uni-band-2` for 25 to 75); universe median and percentile lines = a darker blue, dotted (`--uni-median`). Histogram bars use the light blue `--uni-hist`.
+
+**Score vs GDP per capita (toggle).** Above the distribution chart a Distribution | Score vs GDP per capita toggle replaces the histogram with a scatter: each sovereign is a point, x = GDP per capita (current US$, log scale, from `gdp`), y = the item's score. Focus is the orange point, peers teal, other sovereigns muted grey. The same peer identification applies (click a point or chip to pin its name, "Show all peer names", hover shows score, GDP, and the GDP year, which varies by country). Countries without a GDP value are absent from the scatter.
 
 **Peer identification (screenshot-safe).** Peer lines carry no label by default. Click a peer's dot to pin its country name as a horizontal label at the top (like the focus label); click again to remove it. Hovering a dot previews the name and value. A "Show all peer names" button lists every peer vertically along the bottom axis (the compact way to show ten at once), with a bounded left/right nudge so crowded names stay legible; at high peer density some overlap remains by design. The panel height is content-sized: it grows only enough to fit the longest visible name, so there is no empty band when names are hidden.
 
@@ -236,6 +238,16 @@ Clicking any category, concept, or metric row in the drill-down opens a right-ha
 **Screenshot-standalone principle (project-wide).** Charts are built to be lifted out and dropped into other materials. The chart plus its caption note is the exportable artifact; anything purely tool UI (buttons, click/hover hints, interaction affordances) is kept OUTSIDE that region so it never lands in a screenshot. Data that a click pins (a peer name, the focus label) is part of the chart and belongs in the shot; the control that produces it does not. The "Show all peer names" button and its hint therefore sit below the caption note, between the note and the methodology section. Apply this rule to any new chart or panel.
 
 ---
+
+## Map
+
+**Colour scale (per view, median-centred).** The choropleth does not stretch scores; it stretches the colour scale. For the selected view (Overall or a category) the domain is the 2nd to 98th percentile of the shown scores, made symmetric around that view's median, so the median sits at the centre colour and directionality stays consistent (below centre reads low, above reads high). This de-washes the map (scores cluster near the middle) without changing any score: the number under a country is still the true 0 to 1 value. It is computed in `drawMap` (stored in `window._scoreDomain`), and a note under the map states the median and the span for the current view. The inline profile score bars stay on the absolute 0 to 1 scale, since their widths are absolute.
+
+**Cross-links.** When a country and a category (not Overall) are selected, the map's right panel shows "View distribution" and "View time series" links that open the drill-down or time series for that country and category, carrying the peer set over when peers are being viewed (`compareMode`).
+
+**Compare with peers, small categories.** Political foundations has only two concepts, too few for a radar, so compare mode there (and for any category with fewer than three concepts) draws horizontal bars per concept with individual peer dots, the peer median, and the world 25 to 75 band and median, matching the radar's information. The 25 to 75 band and median stay visible in peer view on the radar as well.
+
+**Category order** is set once in `build_dashboard_data.py` (`CATEGORIES`) and flows to every surface via `DATA.meta.categories`; it matches the master document order. Do not alphabetise downstream.
 
 ## Documentation tab
 
