@@ -223,12 +223,12 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .doc-catlist li{margin-bottom:6px}
 .doc-catlist strong{color:var(--ink)}
 #view-map.view.active{flex-direction:row}
-.drill-controls{margin-bottom:18px;display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap}
+.drill-controls{margin-bottom:18px;display:flex;align-items:flex-start;gap:22px;flex-wrap:nowrap}
 .drill-controls label{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--muted);font-family:var(--mono);margin-bottom:5px}
 .drill-controls select{width:280px;max-width:100%}
-.drill-refwrap{margin-left:auto}
-.drill-countrywrap{display:flex;flex-direction:column}
+.drill-refwrap{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end}
+.drill-countrywrap{flex:0 0 auto;display:flex;flex-direction:column}
 .drill-reftoggle{display:inline-flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
 .drill-reftoggle .refbtn{background:var(--panel);border:none;padding:5px 14px;font-size:12px;
   color:var(--muted);cursor:pointer;font-family:inherit}
@@ -236,9 +236,9 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
 .drill-reftoggle .refbtn:not(.active):hover{background:var(--panel-2)}
 .drill-reftoggle .refbtn:disabled{opacity:.4;cursor:not-allowed}
 .drill-refnote{font-size:11px;color:rgb(201,106,74);margin-top:6px;max-width:280px;line-height:1.4}
-#drillpeerchipwrap{margin:6px 4px 26px}
+#drillpeerchipwrap{flex:1 1 auto;min-width:0;margin:20px 0 0;display:flex;flex-wrap:wrap;justify-content:flex-end;align-content:flex-start;gap:6px}
 #drillpeerchipwrap:empty{margin:0}
-#drillpeerchipwrap .peerchips{margin-top:0}
+#drillpeerchipwrap .peerchips{margin-top:0;width:100%;justify-content:flex-end}
 .drill-cols{display:flex;gap:0;align-items:flex-start;overflow-x:auto}
 .drill-note{max-width:900px;margin:18px 4px 4px;font-size:11px;line-height:1.5;color:var(--muted)}
 .drill-col{flex:0 0 360px;max-width:360px;border-right:1px solid var(--border);padding:0 16px}
@@ -377,6 +377,7 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
           <label for="drillcountrysel">Country</label>
           <select id="drillcountrysel"></select>
         </div>
+        <div id="drillpeerchipwrap"></div>
         <div class="drill-refwrap">
           <label>Reference</label>
           <div class="drill-reftoggle" id="drillreftoggle">
@@ -386,7 +387,6 @@ select{width:100%;background:var(--panel-2);color:var(--ink);
           <div class="drill-refnote" id="drillrefpeernote"></div>
         </div>
       </div>
-      <div id="drillpeerchipwrap"></div>
       <div class="empty" id="drillempty">Select a country to dig into its governance profile.</div>
       <div id="drillbody"></div>
      </div>
@@ -2142,15 +2142,44 @@ function openTsAddPeer(){
 
 
 
+function _syncDrillToTs(){
+  // carry the drill-down's selected item into the time-series dropdowns (country + peers already shared)
+  if(!drillDist){ return; }
+  const vsel=document.getElementById('tsviewsel'); if(!vsel) return;
+  if(!vsel._built){ renderTimeseries(); }  // first switch: build the View dropdown options before setting a value
+  if(drillDist.level==='category'){ vsel.value='cat:'+drillDist.key; }
+  else if(drillDist.level==='concept'){ vsel.value='con:'+drillDist.key; }
+  else if(drillDist.level==='metric' && drillConcept!=null){
+    vsel.value='con:'+drillConcept; renderTimeseries();          // build the metric dropdown for the concept
+    const msel=document.getElementById('tsmetsel'); if(msel){ msel.value=drillDist.key; }  // falls back to Concept overall if no history
+  }
+}
+function _syncTsToDrill(){
+  // carry the time-series selection into the drill-down state
+  const vsel=document.getElementById('tsviewsel'); if(!vsel) return;
+  const v0=vsel.value||'all';
+  if(v0==='all'){ return; }                                       // no single item to carry; leave the drill as-is
+  if(v0.slice(0,3)==='cat'){
+    const cat=v0.slice(4);
+    drillCategory=cat; drillConcept=null; drillDist={level:'category', key:cat};
+  } else if(v0.slice(0,3)==='con'){
+    const cid=v0.slice(4);                                        // string, matches the drill's data-cid
+    drillCategory=(DATA.meta.concepts[cid]||{}).cat||null; drillConcept=cid;
+    const msel=document.getElementById('tsmetsel');
+    const mk=(msel && msel.value && msel.value!=='__none__') ? msel.value : null;
+    drillDist = mk ? {level:'metric', key:mk} : {level:'concept', key:cid};
+  }
+}
 function showView(name){
+  const _prevTab=currentTab;
   currentTab=name;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.getAttribute('data-view')===name));
   if(name==='map'){ if(currentIso) showProfile(); setTimeout(()=>{ try{Plotly.Plots.resize(document.getElementById('map'));}catch(e){} }, 30); }
-  if(name==='drilldown'){ renderDrill(); }
+  if(name==='drilldown'){ if(_prevTab==='timeseries') _syncTsToDrill(); renderDrill(); }
   if(name==='documentation'){ renderDocs(); }
-  if(name==='timeseries'){ renderTimeseries(); setTimeout(()=>{ try{Plotly.Plots.resize(document.getElementById('tsplot')); }catch(e){} }, 30); }
+  if(name==='timeseries'){ if(_prevTab==='drilldown') _syncDrillToTs(); renderTimeseries(); setTimeout(()=>{ try{Plotly.Plots.resize(document.getElementById('tsplot')); }catch(e){} }, 30); }
 }
 window.addEventListener('resize', ()=>{
   try{ if(currentIso && currentTab==='map'){ showProfile(); } }catch(e){}
