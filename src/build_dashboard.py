@@ -1,6 +1,6 @@
 """
 Inline the real dashboard_data.json + Plotly into the dashboard template,
-producing the final self-contained dashboard/dashboard.html (works offline, file://).
+producing the final self-contained dashboard/governance_map.html (works offline, file://).
 Run after any data regeneration:  python src/build_dashboard.py
 """
 import os, re, sys
@@ -23,6 +23,6 @@ cdn = re.search(r'<script src="https://cdn\.plot\.ly/[^"]+"[^>]*></script>', new
 assert cdn, "CDN plotly tag not found"
 new = new.replace(cdn.group(0), "<script>" + pjs + "</script>", 1)
 
-out = os.path.join(DASH, "dashboard.html")
+out = os.path.join(DASH, "governance_map.html")
 open(out, "w", encoding="utf-8", newline="").write(new)
 print("wrote %s  (%.1f MB)" % (out, os.path.getsize(out) / 1e6))

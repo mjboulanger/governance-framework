@@ -102,7 +102,7 @@ Marty wants the collection/update/maintenance of data to be **as automatic as po
 
 ### Config / hygiene
 - **`.gitattributes`** — enforces LF storage for CSVs (cross-machine determinism).
-- **`.gitignore`** — ignores regenerable large artifacts: `dashboard/governance_map.html`, `dashboard/dashboard.html`, `dashboard/dashboard_data.json`, `data/processed/normalized_panel.csv`, etc.
+- **`.gitignore`** — ignores regenerable large artifacts: `dashboard/governance_map.html`, `dashboard/dashboard_data.json`, `data/processed/normalized_panel.csv`, etc.
 
 ---
 
