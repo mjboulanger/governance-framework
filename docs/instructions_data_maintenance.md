@@ -150,6 +150,22 @@ python src/build_dashboard.py         # inlines the JSON + Plotly into the templ
   opened directly during development (with internet, for the CDN Plotly); the build step
   replaces that sample with the full data and inlines Plotly for the shippable file.
 
+## Category-score CSV export
+
+`src/export_category_history.py` writes a tidy CSV time series of category-level scores for every economy, for use outside the dashboard (analysis, BI tools).
+
+Run from the repo root:
+
+```bash
+python src/export_category_history.py
+```
+
+It reads the canonical `data/processed/category_history.csv` (the same file the dashboard's category time series is built from) and joins country names and the territory flag from `data/processed/country_coverage.csv`. No scores are recomputed, so the export cannot diverge from the dashboard.
+
+Output: `data/outputs/category_score_history.csv`, long and tidy, one row per economy, category, and year: `iso3, country_name, is_territory, category, year, category_score`. Scores are full precision from the source (not the dashboard's 3dp display rounding). The year range and the country set come from the data. `data/outputs/` is gitignored, so the CSV is a regenerable local artifact; run the script to produce it.
+
+Hard-coded value (the only manual input in this script): it mirrors the canonical category ORDER (`CATEGORY_ORDER`, five names), used only to order rows, because that order lives in the master document and `build_dashboard_data.py`, not in a data file. If categories are ever renamed, reordered, or added, update `CATEGORY_ORDER` in the script and keep it in sync with `build_dashboard_data.py`.
+
 ## Drill-down contribution decomposition
 
 The drill-down shows two kinds of bar per row, which use **different references on purpose**:
